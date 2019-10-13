@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  정적 리소스이므로 변경한다고 운영상에 바뀌거나 하지 않는것들 -->
+<config>
+	<database>
+		<!-- DB 선택 방싱 : mybatis / hibernate -->
+		<select>hibernate</select>
+	</database>
+	<!--  보안부분  -->
+	<security>
+		<!--  비밀번호 암호화 타입 (encType)
+			Default : sha256 -->
+		<encType>sha256</encType>
+	</security>
+	<!--  서버 시간대 (Timezone)
+		Default : UTC -->
+	<timezone>UTC</timezone>
+</config>

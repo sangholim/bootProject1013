@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+a {
+	text-decoration: none;
+}
+
+fieldset {
+	border: 0;
+}
+
+body {
+	font-size: 12px;
+	font-family: Dotum, '돋움', Helvetica, "Apple SD Gothic Neo", sans-serif;
+}
+
+body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input,
+	legend, li, ol, p, select, table, td, textarea, th, ul {
+	padding: 0;
+	margin: 0;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+address, em {
+	font-style: normal;
+}
+
+.wrap {
+	position: relative;
+	overflow: hidden;
+	min-width: 1100px;
+	background: #f2f4f7;
+}
+
+.login_padding .ico_local_login {
+	background-image: url('/img/index/sp_login.png');
+	background-repeat: no-repeat;
+}
+
+.search .ico_search_submit, .area_logo .naver_logo {
+	background-image: url('/img/index/sp_search.svg');
+	background-repeat: no-repeat;
+}
+
+.area_links .al_happybean .al_ico, .area_links .al_jr .al_ico,
+	.area_whale .aw_qr, .area_flower .af_qr, .area_service .as_ico_all {
+	background-image: url('/img/index/sp_main.png');
+	background-repeat: no-repeat;
+}
+
+.sign_banner .bill_img_pc {
+	display: block;
+	margin: 0 auto;
+	max-width: 460px;
+	height: 166px;
+	background:
+		url(' /img/banner/pc_banner_tax.png')
+		no-repeat 0 0;
+	-webkit-background-size: contain;
+	background-size: contain;
+}
+
+.blind {
+	position: absolute;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	margin: -1px;
+	width: 1px;
+	height: 1px;
+}
+
+.sign_banner, .whale_set_banner {
+	display: block;
+	margin: 47px 0 15px;
+}

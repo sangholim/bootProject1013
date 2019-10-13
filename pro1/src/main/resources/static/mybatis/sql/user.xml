@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pro1.main.dao.DeptDAO">
+	
+	<sql id="userParam">
+		userUid,
+		id,
+        pw,
+        userName,
+        addrEmail,
+		active,
+	    addrPlace,
+	    mailNum,
+	    phoneNumber,
+	    country,
+	    city,
+	    photoPath,
+	    createDate,
+	    modifyDate,
+	    authType
+	</sql>
+
+	<sql id="authUserParam">
+       userUid,
+       id,
+       pw,
+       userName,
+       addrEmail,
+       active
+	</sql>
+	
+	
+	<select id="selectUserList" resultType="userVO">
+		SELECT <include refid="userParam"/> FROM USER
+	</select>
+	
+	<insert id="insertUser" parameterType="userVO">
+	INSERT INTO USER (
+	<include refid="userParam" /> )
+	VALUES ( #{userUid}, #{id}, #{pw}, #{userName}, #{addrEmail}, #{active}, #{addrPlace}, #{mailNum},
+			 #{phoneNumber}, #{country}, #{city}, #{photoPath}, #{createDate}, #{modifyDate}, #{authType} )
+	</insert>
+	
+	<delete id="deleteUser" parameterType="userVO">
+		delete from USER where userUid = #{userUid}
+	</delete>
+	 
+	<!--  로그인 시 인증 체크 쿼리 -->
+	<select id="isChekcUser" resultType="AuthUserVO" parameterType="string">
+		SELECT <include refid="authUserParam"/> FROM USER
+		WHERE id = #{id}
+	</select>
+	
+</mapper>

@@ -1,0 +1,548 @@
+@charset "UTF-8";
+/* index 페이지 css */
+.margin_bottom {
+	margin-bottom: 8px;
+}
+
+.section_border {
+	position: relative;
+	margin-bottom: 8px;
+	height: 44px;
+	border: 1px solid #dee3eb;
+	background: #fff;
+}
+
+}
+/* index_top css */
+.index_top {
+	z-index: 100;
+	border-bottom: 1px solid #d1d8e4;
+	background: #fff;
+}
+
+.special_bg {
+	position: relative;
+	height: 130px;
+	transition: height .3s ease;
+	background: #fff;
+}
+
+.special_bg .area_flex {
+	position: relative;
+	margin: 0 auto;
+	width: 1080px;
+	height: 100%;
+}
+
+.area_logo {
+	position: relative;
+	margin: 0 auto;
+	height: 100%;
+}
+
+.area_logo h1 {
+	position: absolute;
+	top: 50%;
+	left: -2px;
+	margin-top: -25px;
+}
+
+.area_logo h1 a {
+	display: block;
+}
+
+.area_logo .naver_logo {
+	display: block;
+	overflow: hidden;
+	width: 198px;
+	height: 48px;
+	background-position: -4px -4px;
+	text-indent: 101%;
+	white-space: nowrap;
+}
+
+.area_links:after {
+	display: table;
+	clear: both;
+	table-layout: fixed;
+	content: "";
+}
+
+.area_links {
+	position: absolute;
+	top: 11px;
+	right: -5px;
+	zoom: 1;
+}
+
+.area_links .al_favorite {
+	float: left;
+	height: 21px;
+	color: #888;
+	letter-spacing: -1px;
+	font-size: 11px;
+	line-height: 22px;
+}
+
+.area_links .al_jr {
+	float: left;
+	padding: 5px;
+}
+
+.area_links .al_happybean {
+	float: left;
+	padding: 5px;
+}
+
+.area_links .al_ico_link {
+	display: inline-block;
+	margin-left: 5px;
+	width: 6px;
+	height: 7px;
+	background-position: -200px -115px;
+}
+
+.area_links .al_jr {
+	float: left;
+	padding: 5px;
+}
+
+.area_links .al_jr .al_ico {
+	display: block;
+	width: 58px;
+	height: 11px;
+	background-position: 0 -157px;
+}
+
+.area_links .al_happybean {
+	float: left;
+	padding: 5px;
+}
+
+.area_links .al_happybean .al_ico {
+	display: block;
+	width: 34px;
+	height: 11px;
+	background-position: -143px -94px;
+}
+
+.search {
+	position: absolute;
+	top: 50%;
+	left: 219px;
+	margin-top: -20px;
+	width: 521px;
+}
+
+/* 검색 입력창 */
+.search .green_window {
+	display: inline-block;
+	width: 470px;
+	height: 45px;
+	border: 2px solid #03cf5d;
+	background-color: #fff;
+}
+
+.search .sch_smit {
+	position: absolute;
+	top: 0;
+	right: 0;
+	overflow: visible;
+	width: 49px;
+	height: 49px;
+	border: 0;
+	background: #03cf5d;
+}
+
+.search .ico_search_submit {
+	position: absolute;
+	top: 14px;
+	left: 14px;
+	width: 21px;
+	height: 21px;
+	background-position: -4px -60px;
+}
+/* index middle css */
+.index_mid {
+	margin: 0 auto;
+	padding: 8px 10px 0;
+	width: 1080px;
+	text-align: left;
+	zoom: 1;
+}
+
+.column_left {
+	float: left;
+	width: 740px;
+}
+
+/* 게시판 1 섹션은 언제든지 만들수 잇음*/
+.area_section_board {
+	position: relative;
+	height: 244px;
+	border: 1px solid #dee3eb;
+	background: #fff;
+}
+
+.column_right {
+	position: relative;
+	float: right;
+	width: 332px;
+}
+
+.area_section_login {
+	position: relative;
+	height: 118px;
+	border: 1px solid #dee3eb;
+	background: #fff;
+}
+
+.login_padding {
+	padding: 15px 25px;
+}
+
+.login_padding .login_text {
+	color: #888;
+	font-size: 12px;
+	line-height: 14px;
+}
+
+.login_padding .login_btn {
+	display: block;
+	margin-top: 12px;
+}
+
+.login_padding .ico_local_login {
+	width: 280px;
+	height: 37px;
+	background-position: 0 -47px;
+	display: block;
+}
+
+.login_addinfo {
+	position: absolute;
+	bottom: 0;
+	left: 25px;
+	overflow: hidden;
+	width: 280px;
+	font-size: 12px;
+	line-height: 38px;
+}
+
+.login_addinfo .login_reg {
+	float: right;
+	color: #666;
+}
+
+.login_addinfo .login_find {
+	color: #666;
+}
+
+}
+.area_section_right_img {
+	display: inline-block;
+	position: relative;
+	border: 1px solid #dee3eb;
+	background: #fff;
+}
+
+.index_mid:after {
+	display: table;
+	clear: both;
+	table-layout: fixed;
+	content: "";
+}
+
+/* index bot css */
+.index_bot {
+	margin-top: 8px;
+	border-top: 1px solid #e3e7ee;
+	background: #fff;
+	text-align: left;
+}
+
+/* 하단 section 상단 */
+.index_bot_head {
+	position: relative;
+	border-bottom: 1px solid #f1f3f6;
+}
+
+.area_notice {
+	position: relative;
+	margin: 0 auto;
+	padding-top: 16px;
+	width: 1080px;
+	height: 29px;
+	zoom: 1;
+}
+
+.area_notice .an_tit {
+	float: left;
+	color: #000;
+	vertical-align: top;
+	font-size: 12px;
+	line-height: 16px;
+	letter-spacing: -1px;
+}
+
+.area_notice .an_ta {
+	margin-left: 13px;
+}
+
+.area_service {
+	position: absolute;
+	top: 16px;
+	right: 50%;
+	margin-right: -540px;
+}
+
+.area_service .as_a {
+	color: #000;
+	vertical-align: top;
+	letter-spacing: -1px;
+	font-weight: 700;
+	font-size: 12px;
+	line-height: 16px;
+}
+
+.area_service .as_ico_all {
+	display: inline-block;
+	margin-left: 7px;
+	width: 5px;
+	height: 11px;
+	background-position: -200px -94px;
+	vertical-align: -1px;
+}
+
+/* 하단 section 중간 */
+.index_bot_body {
+	position: relative;
+	margin: 0 auto;
+	max-width: 1080px;
+	height: 110px;
+	zoom: 1;
+}
+
+.index_bot_body:after {
+	display: table;
+	clear: both;
+	table-layout: fixed;
+	content: "";
+}
+
+.area_flower {
+	position: relative;
+	z-index: 10;
+	float: right;
+	margin-top: 25px;
+	padding-left: 23px;
+	height: 50px;
+	border-left: 1px solid #f1f3f6;
+}
+
+.area_flower .af_tw {
+	display: inline-block;
+	vertical-align: top;
+	zoom: 1;
+}
+
+.area_flower .af_tit {
+	margin-top: -1px;
+	color: #444;
+	vertical-align: top;
+	font-size: 12px;
+	line-height: 17px;
+}
+
+.area_flower .af_a {
+	display: inline-block;
+	margin-top: 4px;
+	color: #888;
+	vertical-align: top;
+	font-size: 12px;
+	line-height: 17px;
+	zoom: 1;
+}
+
+.area_flower .af_mw {
+	display: inline-block;
+	margin-left: 5px;
+	zoom: 1;
+}
+
+.area_flower .af_qr {
+	display: block;
+	width: 47px;
+	height: 50px;
+	background-position: -143px 0;
+}
+
+.area_whale {
+	position: relative;
+	z-index: 10;
+	float: right;
+	margin-top: 25px;
+	padding-right: 24px;
+	padding-left: 23px;
+	height: 50px;
+	border-left: 1px solid #f1f3f6;
+}
+
+.area_whale .aw_tw {
+	float: left;
+}
+
+.area_whale .aw_tit {
+	margin-top: -1px;
+	color: #444;
+	vertical-align: top;
+	font-size: 12px;
+	line-height: 17px;
+}
+
+.area_whale .aw_a {
+	display: inline-block;
+	margin-top: 4px;
+	color: #888;
+	vertical-align: top;
+	font-size: 12px;
+	line-height: 17px;
+	zoom: 1;
+	*display: inline;
+}
+
+.area_whale .aw_mw {
+	float: right;
+	margin-left: 6px;
+}
+
+.area_whale .aw_qr {
+	display: block;
+	width: 50px;
+	height: 50px;
+	background-position: 0 -60px;
+}
+
+.area_user {
+	position: absolute;
+	top: 23px;
+	left: 0;
+}
+
+.area_user .au_wrap:first-child {
+	padding-top: 0;
+}
+
+.area_user .au_wrap {
+	overflow: hidden;
+	padding-top: 7px;
+}
+
+.area_user .au_tit {
+	float: left;
+	min-width: 91px;
+	color: #000;
+	font-size: 13px;
+}
+
+.area_user .au_item:first-child {
+	margin-left: 0;
+}
+
+.area_user .au_item {
+	float: left;
+	margin: 1px 0 0 14px;
+}
+
+.area_user .au_l {
+	position: relative;
+	float: left;
+	width: 650px;
+	zoom: 1;
+}
+
+.area_user .au_bar {
+	display: inline-block;
+	margin-right: 14px;
+	width: 1px;
+	height: 11px;
+	background: #e8e9ec;
+	vertical-align: -2px;
+}
+
+.area_user .au_a {
+	color: #888;
+	vertical-align: top;
+	letter-spacing: -1px;
+	font-size: 12px;
+	line-height: 16px;
+}
+
+.area_user .au_l:after {
+	display: table;
+	clear: both;
+	table-layout: fixed;
+	content: "";
+}
+/* 하단 section 꼬리 */
+.index_bot_footer {
+	position: relative;
+	border-top: 1px solid #f1f3f6;
+}
+
+.area_terms {
+	margin: 0 auto;
+	padding-top: 24px;
+	max-width: 1080px;
+	height: 132px;
+	zoom: 1;
+}
+
+.area_terms .at_l {
+	position: relative;
+	float: left;
+	margin-right: 14px;
+	zoom: 1;
+}
+
+.area_terms .at_cr {
+	float: left;
+	vertical-align: top;
+	font-weight: 700;
+	font-size: 12px;
+	line-height: 16px;
+}
+
+.area_terms .at_item:first-child {
+	margin-left: 0;
+}
+
+.area_terms .at_item {
+	float: left;
+	margin-left: 14px;
+}
+
+.area_terms .at_a {
+	color: #888;
+	vertical-align: top;
+	letter-spacing: -1px;
+	font-size: 12px;
+	line-height: 16px;
+}
+
+.area_terms .at_bar {
+	display: inline-block;
+	margin-right: 14px;
+	width: 1px;
+	height: 11px;
+	background: #e8e9ec;
+	vertical-align: -2px;
+}
+
+.area_terms .at_st {
+	letter-spacing: -1px;
+}
+
+.area_terms .at_ca {
+	color: #444;
+}
