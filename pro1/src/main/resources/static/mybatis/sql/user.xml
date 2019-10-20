@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pro1.main.dao.DeptDAO">
+<mapper namespace="com.pro1.main.dao.UserDAO">
 	
 	<sql id="userParam">
-		userUid,
-		id,
-        pw,
-        userName,
-        addrEmail,
-		active,
-	    addrPlace,
-	    mailNum,
-	    phoneNumber,
-	    country,
-	    city,
-	    photoPath,
-	    createDate,
-	    modifyDate,
-	    authType
+		us.userUid,
+		us.id,
+        us.pw,
+        us.userName,
+        us.addrEmail,
+		us.active,
+	    us.addrPlace,
+	    us.mailNum,
+	    us.phoneNumber,
+	    us.country,
+	    us.city,
+	    us.photoPath,
+	    us.createDate,
+	    us.modifyDate,
+	    us.authType
 	</sql>
 
 	<sql id="authUserParam">
-       userUid,
-       id,
-       pw,
-       userName,
-       addrEmail,
-       active
+       us.userUid,
+       us.id,
+       us.pw,
+       us.userName,
+       us.addrEmail,
+       us.active
 	</sql>
 	
 	
 	<select id="selectUserList" resultType="userVO">
-		SELECT <include refid="userParam"/> FROM USER
+		SELECT <include refid="userParam"/> FROM USER us
 	</select>
 	
 	<insert id="insertUser" parameterType="userVO">
@@ -48,8 +48,8 @@
 	 
 	<!--  로그인 시 인증 체크 쿼리 -->
 	<select id="isChekcUser" resultType="AuthUserVO" parameterType="string">
-		SELECT <include refid="authUserParam"/> FROM USER
-		WHERE id = #{id}
+		SELECT <include refid="authUserParam"/> FROM USER us
+		WHERE us.id = #{id}
 	</select>
 	
 </mapper>

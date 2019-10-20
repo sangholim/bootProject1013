@@ -12,14 +12,6 @@ var login = {};
 (function() {
 	var login_input_nodes = document.getElementsByClassName("login_input");
 	var login_btn = document.getElementsByClassName("login_btn")[0];
-	// login_btn 이벤트를 등록한다.
-	/*
-	if (login_btn.addEventListener) {
-		login_btn.addEventListener('click', function(event) {
-			login.doLogin(login_input_nodes);
-		});
-	}
-	*/
 	
 })();
 

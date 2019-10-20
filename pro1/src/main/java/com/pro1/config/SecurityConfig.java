@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -39,8 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
 	// 기본 접근 허용 경로
-	web.ignoring().antMatchers("/css/**", "/img/**", "/js/**", "/", "/index", "/login", "/board");
+	web.ignoring().antMatchers("/css/" + Constant.DIR_ROW, "/img/" + Constant.DIR_ROW, "/js/" + Constant.DIR_ROW,
+		'/' + Constant.LOGIN_POS, '/' + Constant.BOARD_TYPE, "/login/register");
     }
+    
+    
+    @Override
+    public void setAuthenticationConfiguration(AuthenticationConfiguration authenticationConfiguration) {
+	// TODO Auto-generated method stub
+	super.setAuthenticationConfiguration(authenticationConfiguration);
+	}
 
     /**
      * spring security 기본 설정
@@ -54,12 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 수 있습니다. "/css/**", "./img/**", "/js/**"
 	 */
 	http.csrf().disable().authorizeRequests()
-		.antMatchers("/board/admin/**").hasAnyAuthority(Constant.AUTH_PREFIX + Constant.ADMIN_ROLE).anyRequest().authenticated()
-		.and()
-		.authorizeRequests().antMatchers("/board/user/**").hasAnyAuthority(Constant.AUTH_PREFIX + Constant.USER_ROLE, Constant.AUTH_PREFIX + Constant.ADMIN_ROLE).anyRequest().authenticated()
-		.and()
-		.formLogin().loginPage("/login/doLogin").usernameParameter("id").passwordParameter("pw")
-		.successHandler(new AuthSuccessHandler()).failureUrl("/error").permitAll(); 
-	}
+		.antMatchers("/", "/index/**", "/img/" + Constant.DIR_ROW).permitAll().and()
+		.authorizeRequests().antMatchers('/' + Constant.CAFE_TYPE + '/' + Constant.DIR_ROW)
+		.hasAnyAuthority(Constant.AUTH_PREFIX + Constant.USER_ROLE, Constant.AUTH_PREFIX + Constant.ADMIN_ROLE)
+		.anyRequest().authenticated().and().formLogin().loginPage("/login/doLogin").usernameParameter("id")
+		.passwordParameter("pw").successHandler(new AuthSuccessHandler()).failureUrl("/error").permitAll();
+    }
 
 }

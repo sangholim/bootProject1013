@@ -26,6 +26,18 @@ public class Constant {
 
     public static final String BOARD_TYPE = "boardType";
 
+    public static final String CAFE_TYPE = "cafe";
+    
+    public static final String AUTH_TYPE = "auth";
+    
+    public static final String DIR_ROW = "**";
+
+    public static final String MAIN = "main";
+    
+    public static final String CRLF = "\r\n";
+    
+    public static final String ADD = "add";
+    
     /**
      * 권한 관리 맵
      */

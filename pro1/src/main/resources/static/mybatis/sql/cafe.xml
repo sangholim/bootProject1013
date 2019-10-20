@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pro1.main.dao.CafeDAO">
+	
+	<sql id="ALL_CAFE_COLUMN">
+		cf.cafeUid,
+		cf.cafeName,
+		cf.cafeCategory,
+		cf.cafeDomTop,
+		cf.cafeDomMid,
+		cf.cafeDomBot,
+	</sql>
+
+	<select id="selectCafeList" resultType="cafeVO">
+		SELECT <include refid="ALL_CAFE_COLUMN"/> FROM CAFE
+	</select>
+
+	<!--  유저에 따라서 카페 리스트 출력 -->
+	<select id="getCafeListByUserUid" resultType="relationVO" parameterType="relationVO">
+		SELECT <include refid="ALL_CAFE_COLUMN"/> FROM CAFE cf
+	</select>
+	
+	
+</mapper>

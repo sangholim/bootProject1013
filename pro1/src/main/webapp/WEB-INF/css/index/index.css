@@ -238,7 +238,122 @@
 	color: #666;
 }
 
+/* 로그인 후 ui */
+.login_profile {
+	padding: 10px 16px 12px 14px;
+    border: 1px solid #dee3eb;
+    border-bottom: 0;
 }
+.login_profile .login_user_thumbnail {
+    position: relative;
+    float: left;
+    width: 56px;
+    height: 56px;
+    padding: 2px;
+    margin-right: 8px;
+}
+
+.login_profile .login_user_thumbnail .mask{
+	position: absolute;
+    top: 1px;
+    left: 1px;
+    background-image: url('/img/index/sp_mask.png');
+	background-size: 251px 232px;
+    background-position: 0 0;
+    width: 58px;
+    height: 58px;
+    display: inline-block;
+}
+
+.login_profile .login_user_thumbnail img{
+	width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 100%;
+}
+
+.login_profile .login_private{
+    overflow: hidden;
+    padding: 12px 0 4px;
+}
+
+.login_profile .login_private .userName{
+	font-size: 14px;
+    font-weight: 700;
+    margin-right: 6px;
+    vertical-align: top;
+}
+
+.login_profile .login_private .userName a{
+    color: #222;
+    vertical-align: top;
+}
+
+.login_profile .login_private .userName a strong {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    max-width: 150px;
+    vertical-align: top;
+    padding-right: 3px;
+ }
+
+.login_profile .login_private .link_myInfo {
+    font-size: 12px;
+    color: #888;
+    text-decoration: underline;
+    vertical-align: top;
+    margin-right: 2px;
+ }
+
+
+.login_profile .my_service{
+    overflow: hidden;
+    line-height: 24px;
+    padding-left: 1px;
+    font-size: 0;
+}
+
+.login_profile .my_service .btn_logout{
+	font-size: 12px;
+    color: #444;
+    float: right;
+    border: 1px solid #e5e8ef;
+    padding: 0 5px;
+    height: 22px;
+    line-height: 23px;
+    text-decoration: none!important;
+}
+
+.login_profile .my_service .link_cover {
+	display: inline-block;
+    vertical-align: top;
+}
+
+.login_profile .my_service .link_cover .link_cafe {
+	min-width: 62px;
+}
+
+.login_profile .my_service .link_cover a {
+    font-size: 13px;
+    color: #222;
+    display: inline-block;
+    vertical-align: top;
+    text-decoration: none!important;
+}
+
+.login_profile .my_service .link_cover a i {
+    font-style: normal;
+}
+
+.login_profile .my_service .link_cover .cnt {
+    font-weight: 700;
+    color: #00ab33;
+    padding-left: 1px;
+}
+
 .area_section_right_img {
 	display: inline-block;
 	position: relative;

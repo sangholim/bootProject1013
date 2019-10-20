@@ -15,6 +15,13 @@ public class LoginMainFrame {
     @RequestMapping("")
     public String getLoginMain(Model model, HttpServletRequest requeset) {
 	model.addAttribute(Constant.PAGE_TYPE, Constant.LOGIN_POS);
-	return "main";
+	return Constant.MAIN;
     }
+
+    @RequestMapping("/register")
+    public String doRegister(Model model, HttpServletRequest requeset) {
+	model.addAttribute(Constant.PAGE_TYPE, Constant.LOGIN_POS + "/register");
+	return Constant.MAIN;
+    }
+
 }

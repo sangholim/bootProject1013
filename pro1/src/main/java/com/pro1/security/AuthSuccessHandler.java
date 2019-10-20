@@ -32,7 +32,8 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
 	
 	// sendRedirect 이용시에는 헤더를 작성하여 경로로 이동 , 그냥 마음대로 보내는건 불법
 	logger.info(authentication.getName() + "is passed. go to redirect page /");
-	response.setStatus(HttpServletResponse.SC_TEMPORARY_REDIRECT);
+	response.setStatus(HttpServletResponse.SC_OK);
+	response.setContentType("image/png;charset=UTF-8");
 	redirectStrategy.sendRedirect(request, response, "/");
     }
 
