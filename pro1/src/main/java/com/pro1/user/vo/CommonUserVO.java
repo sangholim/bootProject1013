@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 @MappedSuperclass
 public class CommonUserVO {
@@ -12,11 +13,38 @@ public class CommonUserVO {
     @Column(name = "userUid")
     @GeneratedValue // auto increment
     protected long userUid;
+
     protected String id;
+
     protected String pw;
+
     protected String userName;
+
     protected String addrEmail;
+
     protected int active;
+
+    @Transient
+    private boolean isExist = true;
+
+    @Transient
+    private String responseText;
+
+    public String getResponseText() {
+	return responseText;
+    }
+
+    public void setResponseText(String responseText) {
+	this.responseText = responseText;
+    }
+
+    public boolean isExist() {
+	return isExist;
+    }
+
+    public void setExist(boolean isExist) {
+	this.isExist = isExist;
+    }
 
     public long getUserUid() {
 	return userUid;

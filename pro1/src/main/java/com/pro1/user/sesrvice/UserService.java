@@ -28,13 +28,22 @@ public class UserService {
 	return userList;
     }
 
-    public AuthUserVO isChekcUser(String id) {
+    public boolean existUser(String id) {
+
 	AuthUserVO resultVO = null;
 	try {
-	    resultVO = userDAO.isChekcUser(id);
+	    resultVO = getUser(id);
 	} catch (Exception e) {
 	    e.getStackTrace();
 	}
+
+	return (resultVO == null) ? false : true;
+    }
+
+    public AuthUserVO getUser(String id) throws Exception {
+
+	AuthUserVO resultVO = userDAO.existUser(id);
+
 	return resultVO;
     }
 

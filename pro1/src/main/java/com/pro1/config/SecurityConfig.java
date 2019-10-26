@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 수 있습니다. "/css/**", "./img/**", "/js/**"
 	 */
 	http.csrf().disable().authorizeRequests()
-		.antMatchers("/", "/index/**", "/img/" + Constant.DIR_ROW).permitAll().and()
+		.antMatchers("/", "/index/**", "/img/" + Constant.DIR_ROW, "/login/"+Constant.DIR_ROW).permitAll().and()
 		.authorizeRequests().antMatchers('/' + Constant.CAFE_TYPE + '/' + Constant.DIR_ROW)
 		.hasAnyAuthority(Constant.AUTH_PREFIX + Constant.USER_ROLE, Constant.AUTH_PREFIX + Constant.ADMIN_ROLE)
 		.anyRequest().authenticated().and().formLogin().loginPage("/login/doLogin").usernameParameter("id")

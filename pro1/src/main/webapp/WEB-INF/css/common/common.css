@@ -85,3 +85,7 @@ address, em {
 	display: block;
 	margin: 47px 0 15px;
 }
+
+.green {
+    color: #08a600!important;
+}

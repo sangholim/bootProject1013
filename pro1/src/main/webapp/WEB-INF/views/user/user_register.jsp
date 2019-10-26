@@ -30,8 +30,8 @@
 								<span id="pswd1Span" class="step_txt"></span>
 							</span>
 						</span>
-						<span class="error_next_box" id="idMsg" style="display: none;" role="alert">
-						5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.
+						<span class="error_next_box" id="pswdmsg" style="display: none;" role="alert">
+							5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.
 						</span>
 						<h3 class="join_title">
 							<label for="pswd2">비밀번호 재확인</label>
@@ -44,7 +44,7 @@
 								</span>
 							</span>
 						</span>
-						<span class="error_next_box" id="idMsg" style="display: none;" role="alert">
+						<span class="error_next_box" id="pswd2Msg" style="display: none;" role="alert">
 						</span>
 						
 					</div>
@@ -67,7 +67,7 @@
 						<h3 class="join_title">
 							<label for="yy">생년월일</label>
 						</h3>
-						<div class="bir_wrap">
+						<div id="bir_wrap" class="bir_wrap">
 							<div class="bir_yy">
 								<span class="ps_box">
 									<input type="text" id="yy" placeholder="년(4자)" aria-label="년(4자)" class="int" maxlength="4">

@@ -52,7 +52,7 @@ public class UserDAO extends CommonDBSession {
 	processHibernateSession(user.getClass(), user, DBQueryType.DELETE);
     }
 
-    public AuthUserVO isChekcUser(String id) throws Exception {
+    public AuthUserVO existUser(String id) throws Exception {
 	if (sqlSession != null) {
 	    return sqlSession.selectOne("isChekcUser", id);
 	}

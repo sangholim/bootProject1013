@@ -40,7 +40,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	Collection<GrantedAuthority> grantedAuthList = null;
 	AuthUserVO authUser = null;
 	try {
-	    authUser = userService.isChekcUser(id);
+	    authUser = userService.getUser(id);
 	    // 버번 구현 로직
 	    // String hashedPassword = passwordEncoder.encodePassword(password,
 	    // saltSource.getSalt(user));
