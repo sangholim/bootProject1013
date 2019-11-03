@@ -2,6 +2,7 @@ package com.pro1.user.vo;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
@@ -11,7 +12,7 @@ public class CommonUserVO {
 
     @Id // primary key
     @Column(name = "userUid")
-    @GeneratedValue // auto increment
+    @GeneratedValue(strategy=GenerationType.IDENTITY) //auto_increment
     protected long userUid;
 
     protected String id;
@@ -20,15 +21,32 @@ public class CommonUserVO {
 
     protected String userName;
 
+    /**
+     * 인증하고자 하는 주소
+     */
     protected String addrEmail;
 
     protected int active;
 
     @Transient
-    private boolean isExist = true;
+    private boolean isValid = true;
 
     @Transient
     private String responseText;
+
+    /**
+     * 인증 키코드
+     */
+    @Transient
+    private int keyCode = -1;
+
+    public int getKeyCode() {
+	return keyCode;
+    }
+
+    public void setKeyCode(int keyCode) {
+	this.keyCode = keyCode;
+    }
 
     public String getResponseText() {
 	return responseText;
@@ -38,12 +56,12 @@ public class CommonUserVO {
 	this.responseText = responseText;
     }
 
-    public boolean isExist() {
-	return isExist;
+    public boolean isValid() {
+	return isValid;
     }
 
-    public void setExist(boolean isExist) {
-	this.isExist = isExist;
+    public void setValid(boolean isValid) {
+	this.isValid = isValid;
     }
 
     public long getUserUid() {

@@ -24,11 +24,28 @@ common.sync = function(method, url, data, contentType, nodeId) {
 				 * 사용불가능 : red
 				 * 사용 가능 : green
 				 */
-				if(!json.exist) {
+				if(json.valid) {
 					nodeId.classList.add( 'green' );
 				} else {
 					nodeId.classList.remove( 'green' );
 				}
+			} else if (url.indexOf("authEmail.json") != -1) {
+				nodeId.innerHTML=json.responseText;
+				nodeId.style.display = "";
+				/*
+				 * Text Color
+				 * 사용불가능 : red
+				 * 사용 가능 : yellow
+				 */
+				if(json.valid) {
+					sessionStorage.setItem("authCode",json.keyCode);
+					sessionStorage.setItem("addrEmail",json.addrEmail);
+					nodeId.classList.add( 'yellow' );
+				} else {
+					nodeId.classList.remove( 'yellow' );
+				}
+			} else if (url.indexOf("findAddr.json") != -1) {
+				login.createAddrBody(json.post);
 			}
 		}
 		//xhttp.abort();
@@ -62,6 +79,17 @@ common.createForm = function(url, dataNodes) {
 
 
 /*
+ * 이메일 유효성 검사 : rfc 의거해서 찾아보기
+ */
+common.validEmail = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}";
+
+/*
+ * 3자리-4자리-4자리
+ */
+common.validPhone = "^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$";
+
+
+/*
  * 이름 유효성 검사 : 문자만 허용 
  */
 common.validName = "[a-zA-Z0-9가-힣]{3,12}$";
@@ -82,3 +110,7 @@ common.validPW = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
 common.Regex = function (pattern , text) {
 	return new RegExp(pattern).test(text);
 };
+
+common.addEvent = function (node) {
+	
+}

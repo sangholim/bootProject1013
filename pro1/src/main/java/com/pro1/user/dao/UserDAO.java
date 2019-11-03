@@ -1,7 +1,9 @@
 package com.pro1.user.dao;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -13,11 +15,14 @@ import org.springframework.stereotype.Repository;
 import com.pro1.common.DBQueryType;
 import com.pro1.common.utils.CommonDBSession;
 import com.pro1.common.vo.DbSessionInfo;
+import com.pro1.login.web.LoginMainAsync;
 import com.pro1.user.vo.AuthUserVO;
 import com.pro1.user.vo.UserVO;
 
 @Repository
 public class UserDAO extends CommonDBSession {
+
+    private static final Logger logger = Logger.getLogger(LoginMainAsync.class.getName());
 
     public List<UserVO> selectUserList() throws Exception {
 
@@ -56,7 +61,7 @@ public class UserDAO extends CommonDBSession {
 	if (sqlSession != null) {
 	    return sqlSession.selectOne("isChekcUser", id);
 	}
-
+	
 	DbSessionInfo sessionInfo = processHibernateSession(AuthUserVO.class, null, DBQueryType.SELECT);
 	try (Session session = sessionInfo.getSession()) {
 	    CriteriaBuilder builder = sessionInfo.getCriteriaBuilder();
@@ -65,6 +70,10 @@ public class UserDAO extends CommonDBSession {
 	    Predicate predicate = builder.equal(root.get("id"), id);
 	    criteriaQuery.select(root).distinct(true).where(predicate);
 	    return session.createQuery(criteriaQuery).getSingleResult();
+	} catch (NoResultException nRE) {
+	    // 쿼리 결과가 없을때
+	    logger.warning("No Found Result at query Id : " + id);
+	    return null;
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    return null;

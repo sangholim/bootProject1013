@@ -18,6 +18,24 @@ public class UserVO extends CommonUserVO {
     private String photoPath;
     private long createDate;
     private long modifyDate;
+    private String gender;
+    private String birthday;
+
+    public String getGender() {
+	return gender;
+    }
+
+    public void setGender(String gender) {
+	this.gender = gender;
+    }
+
+    public String getBirthday() {
+	return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+	this.birthday = birthday;
+    }
 
     public String getAddrPlace() {
 	return addrPlace;
@@ -83,4 +101,11 @@ public class UserVO extends CommonUserVO {
 	this.modifyDate = modifyDate;
     }
 
+    @Override
+    public String toString() {
+	
+	return "id: "+id;
+    }
+
+    
 }

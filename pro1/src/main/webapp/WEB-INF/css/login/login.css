@@ -304,7 +304,7 @@ body {
 }
 
 .join_title {
-	margin: 19px 0 8px;
+	margin: 20px 0 8px;
     font-size: 14px;
     font-weight: 700;
 }
@@ -361,9 +361,50 @@ body {
     box-sizing: border-box;
 }
 
+.join_email, .join_addr {
+	position: relative;
+    margin-top: 10px;
+    padding: 0 125px 0 0;
+}
+.join_addr_result {
+	position: relative;
+    margin-top: 10px;
+}
+.join_addr_result .join_addr_tbl {
+	padding-left: 46px;
+	border-collapse: collapse;
+	display: inline-block;
+	cursor : pointer;
+}
+
+td {
+    border: solid 1px #dadada;
+	padding : 3px;
+	background: #fff;
+ }
+
+.join_addr_tbl > tbody > tr > td:nth-child(1), .join_addr_tbl > thead{
+	text-align: center;
+}
 .join_email .terms_choice {
     font-size: 12px;
     font-weight: 400;
+}
+
+.join_email .btn_verify, .join_addr .btn_verify{
+	position: absolute;
+	top: 25px;
+	right: 0;
+	width: 115px;
+	height: 51px;
+	padding: 18px 0 16px;
+	text-align: center;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	text-decoration: none;
+	text-decoration-line: none;
+	text-decoration-style: initial;
+	text-decoration-color: initial;
 }
 
 .join_mobile {
@@ -488,7 +529,7 @@ body {
 
 .error_next_box {
     display: block;
-    margin: 9px 0 -2px;
+    margin: 10px 0 -2px;
     font-size: 12px;
     line-height: 14px;
     color: red;

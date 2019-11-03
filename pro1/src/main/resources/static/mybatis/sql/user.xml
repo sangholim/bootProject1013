@@ -38,7 +38,7 @@
 	<insert id="insertUser" parameterType="userVO">
 	INSERT INTO USER (
 	<include refid="userParam" /> )
-	VALUES ( #{userUid}, #{id}, #{pw}, #{userName}, #{addrEmail}, #{active}, #{addrPlace}, #{mailNum},
+	VALUES ( null , #{id}, #{pw}, #{userName}, #{addrEmail}, #{active}, #{addrPlace}, #{mailNum},
 			 #{phoneNumber}, #{country}, #{city}, #{photoPath}, #{createDate}, #{modifyDate}, #{authType} )
 	</insert>
 	

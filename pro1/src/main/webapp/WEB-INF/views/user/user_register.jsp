@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<!--  TODO : 우편번호(mailNum) , 거주처(addrPlace), 우편 주소(addrMail)
+			 국가(country), city(도시), 사진(구현) 하기 
+			 
+			 우편 관한거는 
+			 http://biz.epost.go.kr/KpostPortal/openapi2?regkey=0816e1f0684a07ff51572676736488&target=postNew&countPerPage=50&currentPage=1&query=se
+			 
+			 이 api를 가지고 UI , server 로직 구현
+ -->
 <div class="login_middle">
 	<div class="login_content" role="main">
-		<form id="join_form" method="post" action="">
+		<form id="join_form" method="post" action="/login/addUser">
 			<h2 class="blind">회원가입</h2>
 			<div class="join_content">
 				<!--  id , pw , pw 재입력 -->
@@ -16,7 +24,7 @@
 							<input type="text" id="id" name="id" class="int" title="ID" maxlength="20">
 							<span class="step_url">@naver.com</span>
 						</span>
-						<span class="error_next_box" id="idMsg" style="display: none;" role="alert">
+						<span class="error_next_box blind" id="idMsg" role="alert">
 						</span>
 					</div>
 					<!--  비밀번호 -->
@@ -25,12 +33,12 @@
 							<label for="pswd1">비밀번호</label>
 						</h3>
 						<span class="ps_box int_pass" id="pswd1Img">
-							<input type="password" id="pswd1" name="pswd1" class="int" title="비밀번호 입력" aria-describedby="pswd1Msg" maxlength="20">
+							<input type="password" id="pswd1" name="pw" class="int" title="비밀번호 입력" aria-describedby="pswd1Msg" maxlength="20">
 							<span class="lbl">
 								<span id="pswd1Span" class="step_txt"></span>
 							</span>
 						</span>
-						<span class="error_next_box" id="pswdmsg" style="display: none;" role="alert">
+						<span class="error_next_box blind" id="pswdmsg" role="alert">
 							5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.
 						</span>
 						<h3 class="join_title">
@@ -44,7 +52,7 @@
 								</span>
 							</span>
 						</span>
-						<span class="error_next_box" id="pswd2Msg" style="display: none;" role="alert">
+						<span class="error_next_box blind" id="pswd2Msg" role="alert">
 						</span>
 						
 					</div>
@@ -58,9 +66,61 @@
 							<label for="name">이름</label>
 						</h3>
 						<span class="ps_box box_right_space">
-							<input type="text" id="name" name="name" title="이름" class="int" maxlength="40">
+							<input type="text" id="name" name="userName" title="이름" class="int" maxlength="40">
 						</span>
-						<span class="error_next_box" id="nameMsg" style="display: none;" role="alert"/>
+						<span class="error_next_box blind" id="nameMsg" role="alert"/>
+					</div>
+					<!--  주소 검색하기 -->
+					<div class="join_row join_addr">
+						<h3 class="join_title">
+							<label for="name">주소 찾기</label>
+						</h3>
+						<span class="ps_box box_right_space">
+							<input type="text" id="addrData" name="addrData" title="주소 찾기" class="int" maxlength="40">
+						</span>
+						<a href="javascript:void(0);" class="btn_verify btn_primary" id="findAddr" role="button">
+                       		찾기
+                       	</a>
+					</div>
+					<!--  주소 검색 결과 -->
+					<div class="join_row  join_addr_result blind" id="addrResult_container">
+						<h3 class="join_title">
+							<label for="name">주소 검색결과</label>
+						</h3>
+						<table class="join_addr_tbl" id="addrTable">
+							<thead>
+								<tr>
+									<td id="postcd">우편 번호</td>
+									<!--  지번으로 보기(addrjibun) / 도로명으로 보기(address) -->
+									<td id="address">주소</td>
+								</tr>
+							</thead>
+							<tbody id="addrDatas">
+								<!--  여긴 동적 데이터가 필요하므로 데이터 만드는 function 필요 -->
+							</tbody>
+						</table>
+					</div>
+					
+					
+					<!-- 우편번호 -->
+					<div class="join_row">
+						<h3 class="join_title">
+							<label for="name">우편번호</label>
+						</h3>
+						<span class="ps_box box_right_space">
+							<input type="text" id="mailNum" name="mailNum" title="우편번호" class="int" >
+						</span>
+						<span class="error_next_box blind" id="mailNumMsg" role="alert"/>
+					</div>
+					<!--  주소 -->
+					<div class="join_row">
+						<h3 class="join_title">
+							<label for="name">주소</label>
+						</h3>
+						<span class="ps_box box_right_space">
+							<input type="text" id="addrPlace" name="addrPlace" title="주소" class="int" >
+						</span>
+						<span class="error_next_box blind" id="addrPlaceMsg" role="alert"/>
 					</div>
 					<!--  생년월일 -->
 					<div class="join_row join_birthday">
@@ -99,7 +159,7 @@
 								</span>
 							</div>
 						</div>
-						<span class="error_next_box" id="birthdayMsg" style="display: none;" role="alert">
+						<span class="error_next_box blind" id="birthdayMsg" role="alert">
 							태어난 년도 4자리를 정확하게 입력하세요.
 						</span>
 					</div>
@@ -115,23 +175,27 @@
 								<option value="F">여자</option>
 							</select>
 						</span>
-						<span class="error_next_box" id="genderMsg" style="display: none;" role="alert"/>
+						<span class="error_next_box blind" id="genderMsg" role="alert"/>
 					</div>
 					<!--  본인 확인 이메일 -->
 					<div class="join_row join_email">
 						<h3 class="join_title">
-							<label for="email">본인 확인 이메일</label>
+							<label for="addrEmail">본인 확인 이메일</label>
 							<span class="terms_choice">(선택)</span>
 						</h3>
 						<span class="ps_box int_email box_right_space">
-							<input type="text" id="email" name="email" placeholder="선택입력" aria-lable="선택입력" class="int" maxlength="100">
+							<input type="text" id="addrEmail" name="addrEmail" placeholder="선택입력" aria-lable="선택입력" class="int" maxlength="100">
 						</span>
-						<span class="error_next_box" id="emailMsg" style="display: none;" role="alert"/>
+						<a href="javascript:void(0);" class="btn_verify btn_primary" id="authEmailSend" role="button">
+                       		본인 인증
+                       	</a>
+                       <span class="error_next_box blind" id="emailMsg" role="alert"/>
 					</div>
 					<!--  전화번호 인증 -->
+					<!--  Todo:   -->
 					<div class="join_row join_mobile" id="mobDiv">
 						<h3 class="join_title">
-							<label for="phoneNo">휴대전화</label>
+							<label for="phoneNo">휴대전화 (SMS 인증은 유료라 안함.)</label>
 						</h3>
 						<!--  지역번호선택 -->
 						<div class="ps_box country_code">
@@ -355,7 +419,7 @@
                         <!--  전화번호 입력 , 인증 번호 받기 -->
                         <div class="int_mobile_area">
                         	<span class="ps_box int_mobile">
-                        		<input type="tel" id="phoneNo" name="phoneNo" placeholder="전화번호 입력" class="int" maxlength="16">
+                        		<input type="tel" id="phoneNo" name="phoneNumber" placeholder="전화번호 입력" class="int" maxlength="16">
                         		<label for="phoneNo" class="lbl"/>
                         	</span>
                         	<a href="javascript:void(0);" class="btn_verify btn_primary" id="btnSend" role="button">
@@ -367,14 +431,11 @@
                       		<input type="tel" id="authNo" name="authNo" placeholder="인증번호 입력하세요." aria-label="인증번호 입력하세요." aria-describedby="wa_verify" class="int" disabled maxlength="4">
                       		<label for="authNo"  id="wa_verify" class="lbl">
                       			<span class="wa_blind">인증받은 후 인증번호를 입력해야 합니다.</span>
-                      			<span class="input_code" id="authNoCode" style="display: none;"></span>
                       		</label>
                       	</div>
-                        <span class="error_next_box" id="phoneNoMsg" style="display: none;" role="alert"/>
-						<span class="error_next_box" id="authNoMsg" style="display: none;" role="alert"/>
-						<span class="error_next_box" id="joinMsg" style="display: none;" role="alert"/>
-					</div>
-				
+                      	<span class="error_next_box blind" id="phoneNoMsg" role="alert"/>
+						
+                    </div>
 				</div>
 				<!-- TODO : 보호자 인증 -->
 				<!--  가입하기 -->

@@ -28,6 +28,9 @@
 					<c:when test="${fn:contains(page,'register')}">
 						<jsp:include page="user/user_register.jsp" />
 					</c:when>
+					<c:when test="${fn:contains(page,'findAddr')}">
+						<jsp:include page="user/findAddr.jsp" />
+					</c:when>
 					<c:otherwise>
 						<jsp:include page="login/login_middle.jsp" />
 					</c:otherwise>
@@ -39,13 +42,6 @@
 				<link class="personal_css" rel="stylesheet" href="/css/board/board.css?${applicationScope.cachetype}" type="text/css">
 				<jsp:include page="board/commonBoard.jsp"/>
 				<script class="personal_js" type="text/javascript" src="/js/board/board.js?${applicationScope.cachetype}" ></script>
-			</c:when>
-			<c:when test="${page eq 'cafe'}">
-				<link class="personal_css" rel="stylesheet" href="/css/cafe/cafe.css?${applicationScope.cachetype}" type="text/css">
-				<jsp:include page="cafe/cafe_top.jsp"/>
-				<jsp:include page="cafe/cafe_middle.jsp"/>
-				<jsp:include page="cafe/cafe_bot.jsp"/>
-				<script class="personal_js" type="text/javascript" src="/js/cafe/cafe.js?${applicationScope.cachetype}" ></script>
 			</c:when>
 			<c:when test="${page eq 'cafe'}">
 				<link class="personal_css" rel="stylesheet" href="/css/cafe/cafe.css?${applicationScope.cachetype}" type="text/css">
