@@ -40,11 +40,11 @@ public class _Post {
 	this.itemlist = itemlist;
     }
 
-    static class _Pageinfo {
+    public static class _Pageinfo {
 	private long totalCount;
 	private int totalPage;
-	private int countPerPage;
-	private int currentPage;
+	private int countPerPage = 10;
+	private int currentPage = 1;
 
 	public long getTotalCount() {
 	    return totalCount;
@@ -82,7 +82,7 @@ public class _Post {
     
     @XmlRootElement(name = "item")
     @XmlAccessorType (XmlAccessType.FIELD)
-    static class _Item {
+    public static class _Item {
 	private String postcd;
 	private String address;
 	private String addrjibun;

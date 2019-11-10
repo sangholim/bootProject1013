@@ -1,11 +1,10 @@
 package com.pro1.login.web;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Base64;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pro1.common.constant.ResponseText;
 import com.pro1.user.param.AddrForm;
 import com.pro1.user.param._Post;
@@ -38,6 +38,8 @@ public class LoginMainAsync {
     private static final Logger logger = Logger.getLogger(LoginMainAsync.class.getName());
 
     private final String post_form = "http://biz.epost.go.kr/KpostPortal/openapi2?regkey=%s&target=%s&countPerPage=%d&currentPage=%d&query=%s";
+    
+    private static final ObjectMapper MAPPER = new ObjectMapper();
     
     @Autowired
     private UserService userService;
@@ -165,8 +167,10 @@ public class LoginMainAsync {
 	// request
 	String regKey = "0816e1f0684a07ff51572676736488";
 	String target = "postNew";
-	int countPerPage = 50;
-	int currentPage = 1;
+	// post null is new Data
+	_Post post = addrForm.getPost();
+	int countPerPage = (post == null)? 10: post.getPageinfo().getCountPerPage();
+	int currentPage = (post == null)? 1 : post.getPageinfo().getCurrentPage();
 	String query = addrForm.getAddrData();
 	InputStream httpIs = null;
 	try {
@@ -174,11 +178,7 @@ public class LoginMainAsync {
 	    HttpURLConnection connectHttp = (HttpURLConnection) url.openConnection();
 	    connectHttp.setRequestMethod("GET");
 	    httpIs = new BufferedInputStream(connectHttp.getInputStream(), 4096);
-	    /*
-	     * StringBuilder response = new StringBuilder(); final byte[] readBytes = new
-	     * byte[4096]; while (httpIs.read(readBytes, 0, 4096) != -1) { // response를 차례대로
-	     * 출력 response.append(new String(readBytes)); }
-	     */
+	   
 	    // Jaxb 를 통해 xml string to pojo로 바인드
 	    JAXBContext xml = JAXBContext.newInstance(_Post.class);
 	    Unmarshaller unmarshaller = xml.createUnmarshaller();
@@ -188,7 +188,6 @@ public class LoginMainAsync {
 	} catch (Exception e) {
 	    logger.warning("Error getting post data > " + e.getMessage());
 	}
-
 	return addrForm;
     }
 }

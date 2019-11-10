@@ -32,9 +32,18 @@ var login = {};
 	var check_sms = document.getElementById('btnSend');
 	//우편 번호 , 주소 api 호출
 	var check_addr = document.getElementById('findAddr');
-
 	//form tag ui
 	var register_ui = document.getElementById('join_form');
+	//addr Table tbody 부분호출
+	var tbody = document.getElementById("addrDatas"); 
+	// 우편번호 ui
+	var mailNum_ui = document.getElementById("mailNum");
+	// 상제 주소 UI
+	var addrPlace_ui = document.getElementById("addrPlace");
+	// 우편번호 , 상세주소 에러 로그
+	var mailNumMsg = document.getElementById("mailNumMsg");
+	var addrPlaceMsg = document.getElementById("addrPlaceMsg");
+
 	
 	if(register_ui !== undefined && register_ui !=null) {
 		var register_btn = document.getElementById('btnJoin');
@@ -42,12 +51,10 @@ var login = {};
 			//혹시 입력란 마다 유효성을 체크하지않은 리스트들 확인.
 			//총 8개중에서 몇개 나오는지 확인
 			var validSize = document.getElementsByClassName('green').length;
-			if(validSize != 8) {
+			if(validSize != 10) {
 				alert("입력란에 기입하지 않거나, 형식에 맞지않습니다.");
 				return;
 			}
-			
-			
 			var birthDay = document.createElement("input");
 			birthDay.name = "birthday";
 			birthDay.type = "hidden";
@@ -171,18 +178,15 @@ var login = {};
 	// 우편찾기 버튼  이벤트 등록 , 우편번호 데이터는 비동기식으로 호출한다.
 	// 클릭시 상세 주소 아래에 데이터를 호출
 	if (check_addr !== undefined && check_addr !=null) {
-		var addrResult_container = document.getElementById("addrResult_container");
 		// 주소 찾기 데이터
 		var addrData = document.getElementById("addrData");
-		check_addr.addEventListener('click',function(event) {
-			addrResult_container.classList.remove('blind');
+		check_addr.addEventListener('click', function(event) {
 			var addrForm = {};
 			addrForm.addrData = addrData.value;
+			addrForm.inputNodes = addrData.value;
 			var json = JSON.stringify(addrForm);
-			// response 값을담는곳 node id
-			
-			common.sync("POST", "/login/findAddr.json", json,
-					"application/json", emailMsg);
+			// 비동기 페이지 앞 , 뒤 로가기 이벤트
+			document.location.hash = "addrBoard:"+common.Base64Encode(json);
 		
 		});
 	}
@@ -267,7 +271,6 @@ var login = {};
 			emailMsg.classList.remove('blind');
 			emailMsg.classList.remove('green');
 			authCode = sessionStorage.getItem("authCode");
-			
 			// 인증코드 유효성 검사 (반드시 인증코드 전송체크 확인)
 			if (emailMsg.classList.contains('yellow')) {
 				emailMsg.classList.remove('yellow');
@@ -283,13 +286,11 @@ var login = {};
 				return;
 
 			}
-
 			// ID란에 입력하지 않으면 fail
 			if (emailUI.value.length == 0) {
 				emailMsg.innerHTML = "이메일 주소를 입력하세요";
 				return;
 			}
-
 			// email 주소 유효성 검사
 			if (!common.Regex(common.validEmail, emailUI.value)) {
 				// 회원가입시 유효성검사
@@ -324,14 +325,69 @@ var login = {};
 				phoneNoMsg.innerHTML = "전화번호 형식이 맞지 안습니다.";
 				return;
 			}
-			
 			phoneNoMsg.innerHTML = "올바른 전화번호입니다.";
 			phoneNoMsg.classList.add('green');
 			
 
 		});
 	}
-
+	
+	// 우편번호 이벤트 등록
+	if (mailNum_ui !== undefined && mailNum_ui !=null) {
+		mailNum_ui.addEventListener('focusout',function(event) {
+			mailNumMsg.classList.remove('blind');
+			mailNumMsg.classList.remove('green');
+			
+			if (mailNum_ui.value == "") {
+				mailNumMsg.innerHTML = "우편번호를 입력하세요";
+				return;
+			}
+			if (!common.Regex(common.validNum, mailNum_ui.value)) {
+				mailNumMsg.innerHTML = "우편번호 형식이 맞지 안습니다.";
+				return;
+			}
+			mailNumMsg.innerHTML = "올바른 우편번호입니다..";
+			mailNumMsg.classList.add('green');
+			
+		});
+	}
+	
+	// 상제 주소 이벤트 등록
+	if (addrPlace_ui !== undefined && addrPlace_ui !=null) {
+		addrPlace_ui.addEventListener('focusout',function(event) {
+			addrPlaceMsg.classList.remove('blind');
+			addrPlaceMsg.classList.remove('green');
+			
+			if (addrPlace_ui.value == "") {
+				addrPlaceMsg.innerHTML = "주소를 입력하세요";
+				return;
+			}
+			
+			addrPlaceMsg.innerHTML = "올바른 주소입니다..";
+			addrPlaceMsg.classList.add('green');
+			
+		});
+	}
+	
+	
+	// 주소 데이터중 하나 클릭시 input에 데이터 전달하도록 이벤트 등록
+	tbody.addEventListener('click', function(event){
+		var addrNode = event.target.parentNode;
+		if(addrNode.classList.contains("addrValue")) {
+			mailNumMsg.classList.remove('blind');
+			mailNumMsg.classList.add("green");
+			mailNumMsg.innerHTML = "올바른 주소입니다..";
+			mailNum_ui.value = addrNode.cells[0].textContent;
+			
+			addrPlace_ui.value = addrNode.cells[1].textContent;
+			addrPlaceMsg.classList.add("green");
+			addrPlaceMsg.classList.remove("blind");
+			addrPlaceMsg.innerHTML = "올바른 주소입니다..";
+			
+		}
+		
+	});
+	
 })();
 //회원 가입시 입력란에 정상적으로 처리햇는지 확인 (8)
 // 아이디 체크후 이벤트 처리
@@ -343,24 +399,104 @@ login.doLogin = function(login_input) {
 }
 
 /**
+ * 비동기 url 처리대상
  * post Api로 나온 결과를 가지고 Node 생성
  */
-login.createAddrBody = function (postData) {
-	 var tbody = document.getElementById("addrDatas"); //addr Table tbody 부분호출
-	 var itemlist = postData.itemlist;
-	 var addrlistLengh = itemlist.length;
-	 var pageinfo = postData.pageinfo;
+login.createAddrBody = function (addrForm) {
 	
-	// 주소 검색 결과 데이터 생성
-		
+	document.getElementById("addrData").value = addrForm.addrData;
+	var errorAddr = document.getElementById("addr_search");
+	var addrResult_container = document.getElementById("addrResult_container");
+	 	
+	// 검색하지 못한경우.
+	if(addrForm.post === undefined || addrForm.post == null || addrForm.post.pageinfo.totalPage == 0) {
+		addrResult_container.classList.add('blind');
+		errorAddr.classList.remove('blind');
+		errorAddr.innerHTML = "검색 결과가 없습니다.";
+		return;
+	}
+
+	errorAddr.classList.add('blind');
+	addrResult_container.classList.remove('blind');
+	
+	var tbody = document.getElementById("addrDatas"); //addr Table tbody 부분호출
+	var itemlist = addrForm.post.itemlist;
+	var addrlistLengh = itemlist.length;
+	var pageinfo = addrForm.post.pageinfo;
+	//현재 페이지
+	var currentPage = pageinfo.currentPage;
+	// 총 페이지
+	var totalPage = pageinfo.totalPage;
+	//[선택 가능한 페이지] 1, 2, 3, 4, 5, 6, 7, 8, 9. 10.. 이렇게 쪼개는 단위
+	var pagePos = parseInt((currentPage-1) / addrlistLengh);
+
+	//초기화 
+	tbody.innerHTML = "";
+	//검색 결과 데이터
 	for (var i=0; i < addrlistLengh; i++) {
 		var item = itemlist[i];
 		var row = tbody.insertRow(0);
+		row.classList.add("addrValue");
 		row.insertCell(0).innerHTML = item.postcd;
 		row.insertCell(1).innerHTML = item.address;
-		//tbody.appendChild(row);
 	}
 
+	var currentMinPage = pagePos * addrlistLengh + 1;
+	var currentMaxPage= (pagePos + 1 ) * addrlistLengh;
+	if (currentMaxPage > totalPage) {
+		currentMaxPage = totalPage;
+	}
+	//접근 가능한 페이지 리스트
+	var pageNode = tbody.insertRow(-1);
+	pageNode.classList.add('pageList');
+	var pageCell = pageNode.insertCell(0);
+	pageCell.colSpan = 2;
+	
+	//[선택 가능한 페이지] 1, 2, 3, 4, 5, 6, 7, 8, 9. 10.. 이렇게 쪼개자
+	if (currentMinPage > 1) {
+		common.createPageNode(pageCell, "<<", ["page","min_page"], "min_page");
+		common.createPageNode(pageCell, "<", ["page","prev_page"], "prev_page");
+	}
+	
+	for (var i = currentMinPage; i <= currentMaxPage; i++ ) {
+		if (i == currentPage) {
+			common.createPageNode(pageCell, i, ["page", "bold"], "page_"+i);
+			continue;
+		}
+		common.createPageNode(pageCell, i, ["page"], "page_"+i);
+	}
+
+	// 첫 페이지 리스트 단위보다 크면 <
+	if (currentMaxPage < totalPage ) {
+		// <
+		common.createPageNode(pageCell, ">", ["page","next_page"], "next_page");
+		// <<
+		common.createPageNode(pageCell, ">>", ["page","max_page"], "max_page");
+	}
+	
+	//페이지 리스트 번호 깜싸는 태그의 하위노드 에게 이벤트 위임
+	pageNode.addEventListener('click', function(event){
+        var clickedNode = event.target;
+        var addrData = document.getElementById("addrData");
+        // 다음 넘어가기일때
+        if(clickedNode.textContent == ">") {
+    		addrForm.post.pageinfo.currentPage = currentMaxPage + 1;
+		} else if (clickedNode.textContent == ">>") {
+			addrForm.post.pageinfo.currentPage = totalPage;
+		} else if (clickedNode.textContent == "<<") {
+			addrForm.post.pageinfo.currentPage = 1;
+		} else if(clickedNode.textContent == "<") {
+			addrForm.post.pageinfo.currentPage = currentMinPage -addrlistLengh;
+		} else if(clickedNode.classList.contains("page")){
+    		addrForm.post.pageinfo.currentPage = clickedNode.textContent;
+		}
+        //page목록 리스트 비워버림
+        addrForm.post.itemlist = null;
+        var json = JSON.stringify(addrForm);
+    	document.location.hash = "addrBoard:"+common.Base64Encode(json);
+
+	});
+	
 }
 
 

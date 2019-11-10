@@ -81,6 +81,7 @@
 						<a href="javascript:void(0);" class="btn_verify btn_primary" id="findAddr" role="button">
                        		찾기
                        	</a>
+						<span class="error_next_box blind" id="addr_search" role="alert"/>
 					</div>
 					<!--  주소 검색 결과 -->
 					<div class="join_row  join_addr_result blind" id="addrResult_container">
@@ -88,6 +89,10 @@
 							<label for="name">주소 검색결과</label>
 						</h3>
 						<table class="join_addr_tbl" id="addrTable">
+							<colgroup>
+								<col width="50px" />
+								<col width="410px" />
+							</colgroup>
 							<thead>
 								<tr>
 									<td id="postcd">우편 번호</td>
@@ -96,7 +101,7 @@
 								</tr>
 							</thead>
 							<tbody id="addrDatas">
-								<!--  여긴 동적 데이터가 필요하므로 데이터 만드는 function 필요 -->
+							<!--  여긴 동적 데이터가 필요하므로 데이터 만드는 function 필요 -->
 							</tbody>
 						</table>
 					</div>

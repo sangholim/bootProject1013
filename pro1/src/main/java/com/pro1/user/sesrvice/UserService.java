@@ -84,6 +84,7 @@ public class UserService {
 	    uservo.setModifyDate(createDate);
 	    uservo.setActive(1);
 	    userDAO.insertUser(uservo);
+	    //인증  추가
 	    Authentication authentication = new UsernamePasswordAuthenticationToken(uservo.getId(), uservo.getPw());
 	    SecurityContextHolder.getContext()
 		    .setAuthentication(customAuthenticationProvider.authenticate(authentication));

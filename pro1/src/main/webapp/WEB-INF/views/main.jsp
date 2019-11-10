@@ -51,7 +51,12 @@
 				<script class="personal_js" type="text/javascript" src="/js/cafe/cafe.js?${applicationScope.cachetype}" ></script>
 			</c:when>
 		</c:choose>
+		<!--  base64 js -->
+		<script class="personal_js" type="text/javascript" src="/js/utils/base64js.min.js?${applicationScope.cachetype}" ></script>
 		<script type="text/javascript" src="/js/common/common.js?${applicationScope.cachetype}" ></script>
+	</div>
+	<div class="loading_wrap blind" id="loadNode">
+		<div class="loader_img"/>
 	</div>
 </body>
 </html>

@@ -366,14 +366,16 @@ body {
     margin-top: 10px;
     padding: 0 125px 0 0;
 }
+
 .join_addr_result {
 	position: relative;
     margin-top: 10px;
 }
+
 .join_addr_result .join_addr_tbl {
-	padding-left: 46px;
+	width: 100%;
 	border-collapse: collapse;
-	display: inline-block;
+	display: table;
 	cursor : pointer;
 }
 
@@ -676,3 +678,5 @@ td {
 .btn_area {
     margin: 30px 0 9px;
 }
+
+

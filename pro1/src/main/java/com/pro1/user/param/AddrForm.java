@@ -10,7 +10,17 @@ public class AddrForm {
 
     private String addrData;
 
+    private int pagePos = 1;
+
     private _Post post;
+
+    public int getPagePos() {
+	return pagePos;
+    }
+
+    public void setPagePos(int pagePos) {
+	this.pagePos = pagePos;
+    }
 
     public _Post getPost() {
 	return post;

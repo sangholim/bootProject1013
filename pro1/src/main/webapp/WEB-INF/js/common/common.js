@@ -7,7 +7,9 @@ var common = {};
 // load page (이동할 페이지 , 현재 페이지 , pushState여부)
 
 common.sync = function(method, url, data, contentType, nodeId) {
-
+	var loadNode = document.getElementById("loadNode");
+	loadNode.classList.remove('blind');
+	
 	var xhttp = new XMLHttpRequest();
 	xhttp.open(method, url);
 	xhttp.setRequestHeader("Content-Type", contentType);
@@ -45,13 +47,32 @@ common.sync = function(method, url, data, contentType, nodeId) {
 					nodeId.classList.remove( 'yellow' );
 				}
 			} else if (url.indexOf("findAddr.json") != -1) {
-				login.createAddrBody(json.post);
+				//document.location.hash = json.popState;
+				login.createAddrBody(json);
 			}
 		}
+		loadNode.classList.add('blind');
 		//xhttp.abort();
 	}
 
 	xhttp.send(data);
+}
+
+window.onhashchange = function () {
+	
+	if (location.hash.length < 1) {
+		return;
+	}
+	// #type=[data]
+	// form [0] = type , form[1] json data
+	var popState = location.hash.split(":");
+	// 주소 게시판 비동기 호출시 페이지 처리
+	if(popState[0] == "#addrBoard") {
+	    var json = common.Base64Decode (popState[1]);
+	    common.sync("POST", "/login/findAddr.json", json,
+				"application/json");
+	
+	}
 }
 
 /**
@@ -105,12 +126,40 @@ common.validId = "^[a-zA-Z][a-zA-Z0-9]{4,12}$";
 common.validPW = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
 
 /*
+ * 숫자 유효성 검사
+ */
+common.validNum = "^\\d+$";
+
+/*
  * Regex 확인 로직
  */
 common.Regex = function (pattern , text) {
 	return new RegExp(pattern).test(text);
 };
 
-common.addEvent = function (node) {
+/*
+ *  Base64 decoding
+ */
+common.Base64Decode = function (str, encoding = 'utf-8') {
+    var bytes = base64js.toByteArray(str);
+    return new (TextDecoder || TextDecoderLite)(encoding).decode(bytes);
+}
+
+/*
+ *  Base64 encoding
+ */
+common.Base64Encode = function (str, encoding = 'utf-8') {
+    var bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str);        
+    return base64js.fromByteArray(bytes);
+}
+
+common.createPageNode = function (pageCell, value, classList, id) {
+	var span = document.createElement("span");
+	span.id = id;
+	for (i = 0; i < classList.length; i++) {
+		span.classList.add(classList[i]);
+	}
 	
+	span.innerHTML = value;
+	pageCell.appendChild(span);
 }
