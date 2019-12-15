@@ -21,7 +21,7 @@
 					<div class="input_row">
 						<span class="input_box">
 							<label for="pw" class="label_lg_pw">비밀번호</label>
-							<input id="pw" name="pw" type="text" class="login_input" placeholder="비밀번호">
+							<input id="pw" name="pw" type="password" class="login_input" placeholder="비밀번호">
 						</span>
 					</div>
 				</div>

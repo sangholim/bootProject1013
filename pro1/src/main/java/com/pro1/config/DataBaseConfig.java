@@ -10,6 +10,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.annotation.Order;
+
+import com.pro1.board.dao.UserCafeBoardDAO;
+import com.pro1.board.service.UserCafeBoardService;
+import com.pro1.cafe.dao.CafeDAO;
+import com.pro1.cafe.service.CafeManager;
 import com.pro1.common.vo.CommonDataSource;
 import com.pro1.config.comp._Config;
 import com.pro1.config.comp.database._Database;
@@ -57,6 +62,18 @@ public class DataBaseConfig {
 	applicationContext.registerBean(DataSource.class, () -> hikariDataSource);
 	// sqlsession , transactionmanger 부분 각각 구성
 	dataBase.setEachHikariDS(hikariDataSource, applicationContext);
+
+	// database 호출하는 bean들 다등록
+	// Cafe create bean
+	applicationContext.registerBean("com.pro1.cafe.dao.CafeDAO", CafeDAO.class, () -> new CafeDAO());
+	applicationContext.registerBean("com.pro1.cafe.service.CafeManager", CafeManager.class,
+		() -> new CafeManager());
+	// UserCafeBoards createBean
+
+	applicationContext.registerBean("com.pro1.board.dao.UserCafeBoardDAO", UserCafeBoardDAO.class,
+		() -> new UserCafeBoardDAO());
+	applicationContext.registerBean("com.pro1.board.service.UserCafeBoardService", UserCafeBoardService.class,
+		() -> new UserCafeBoardService());
 
     }
 

@@ -22,6 +22,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -32,6 +33,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pro1.config.comp._Config;
 import com.pro1.config.comp.security._Security;
+import com.pro1.security.interceptor.UserCheckInterceptor;
 
 @EnableWebMvc
 @Configuration
@@ -39,6 +41,9 @@ public class ModelAndViewConfig implements WebMvcConfigurer {
 
     @Autowired
     private ConfigManagement configManagement;
+
+    @Autowired
+    private UserCheckInterceptor interceptor;
 
     private final String ENC_TYPE = "enctype";
 
@@ -48,6 +53,13 @@ public class ModelAndViewConfig implements WebMvcConfigurer {
 
     public ModelAndViewConfig(ServletContext servletContext) {
 	this.servletContext = servletContext;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+	// TODO Auto-generated method stub
+	WebMvcConfigurer.super.addInterceptors(registry);
+	registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns("**.json");
     }
 
     /**
@@ -82,6 +94,7 @@ public class ModelAndViewConfig implements WebMvcConfigurer {
 	registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/");
 	registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/img/");
 	registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
+	registry.addResourceHandler("/store/**").addResourceLocations("/WEB-INF/store/");
     }
 
     /**
@@ -145,7 +158,6 @@ public class ModelAndViewConfig implements WebMvcConfigurer {
 	servletContext.setAttribute(ENC_TYPE, security.getEncType());
 	try {
 	    servletContext.setAttribute(CACHE_TYPE, "v=" + RandomStringUtils.random(5));
-
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}

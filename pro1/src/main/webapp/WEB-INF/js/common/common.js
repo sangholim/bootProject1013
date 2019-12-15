@@ -5,46 +5,48 @@
 var common = {};
 
 // load page (이동할 페이지 , 현재 페이지 , pushState여부)
-
-common.sync = function(method, url, data, contentType, nodeId) {
+//common.sync = function(method, url, data, nodeId) {
+common.sync = function(requestParams) {
 	var loadNode = document.getElementById("loadNode");
 	loadNode.classList.remove('blind');
-	
+	var nodeId = requestParams.nodeId;
+	var url = requestParams.url;
 	var xhttp = new XMLHttpRequest();
-	xhttp.open(method, url);
-	xhttp.setRequestHeader("Content-Type", contentType);
+	xhttp.open(requestParams.method, requestParams.url);
+	xhttp.setRequestHeader("Content-Type", "application/json");
+
 	xhttp.onreadystatechange = function() {
-		
+
 		if (xhttp.readyState == 4 && xhttp.status == 200) {
 			var json = JSON.parse(xhttp.responseText);
 			//비동기 url checkExistUser.json 처리
 			if (url.indexOf("checkExistUser.json") != -1) {
-				nodeId.innerHTML=json.responseText;
+				nodeId.innerHTML = json.responseText;
 				nodeId.style.display = "";
 				/*
 				 * Text Color
 				 * 사용불가능 : red
 				 * 사용 가능 : green
 				 */
-				if(json.valid) {
-					nodeId.classList.add( 'green' );
+				if (json.valid) {
+					nodeId.classList.add('green');
 				} else {
-					nodeId.classList.remove( 'green' );
+					nodeId.classList.remove('green');
 				}
 			} else if (url.indexOf("authEmail.json") != -1) {
-				nodeId.innerHTML=json.responseText;
+				nodeId.innerHTML = json.responseText;
 				nodeId.style.display = "";
 				/*
 				 * Text Color
 				 * 사용불가능 : red
 				 * 사용 가능 : yellow
 				 */
-				if(json.valid) {
-					sessionStorage.setItem("authCode",json.keyCode);
-					sessionStorage.setItem("addrEmail",json.addrEmail);
-					nodeId.classList.add( 'yellow' );
+				if (json.valid) {
+					sessionStorage.setItem("authCode", json.keyCode);
+					sessionStorage.setItem("addrEmail", json.addrEmail);
+					nodeId.classList.add('yellow');
 				} else {
-					nodeId.classList.remove( 'yellow' );
+					nodeId.classList.remove('yellow');
 				}
 			} else if (url.indexOf("findAddr.json") != -1) {
 				//document.location.hash = json.popState;
@@ -55,11 +57,11 @@ common.sync = function(method, url, data, contentType, nodeId) {
 		//xhttp.abort();
 	}
 
-	xhttp.send(data);
+	xhttp.send(requestParams.data);
 }
 
-window.onhashchange = function () {
-	
+window.onhashchange = function() {
+
 	if (location.hash.length < 1) {
 		return;
 	}
@@ -67,11 +69,13 @@ window.onhashchange = function () {
 	// form [0] = type , form[1] json data
 	var popState = location.hash.split(":");
 	// 주소 게시판 비동기 호출시 페이지 처리
-	if(popState[0] == "#addrBoard") {
-	    var json = common.Base64Decode (popState[1]);
-	    common.sync("POST", "/login/findAddr.json", json,
-				"application/json");
-	
+	if (popState[0] == "#addrBoard") {
+		var decryptedMessage = CryptoJS.AES.decrypt(popState[1], "test")
+				.toString(CryptoJS.enc.Utf8);
+		var requestParams = common.requestParams(false, "POST",
+				"/login/findAddr.json", decryptedMessage, "application/json");
+		common.sync(requestParams);
+
 	}
 }
 
@@ -98,7 +102,6 @@ common.createForm = function(url, dataNodes) {
 	form.submit();
 }
 
-
 /*
  * 이메일 유효성 검사 : rfc 의거해서 찾아보기
  */
@@ -108,7 +111,6 @@ common.validEmail = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}";
  * 3자리-4자리-4자리
  */
 common.validPhone = "^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$";
-
 
 /*
  * 이름 유효성 검사 : 문자만 허용 
@@ -130,36 +132,34 @@ common.validPW = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
  */
 common.validNum = "^\\d+$";
 
+common.requestParams = function(useForm) {
+	return common.requestParams(useForm, null, null, null, null);
+}
+
+common.requestParams = function(useForm, method, url, data, nodeId) {
+	return {
+		"useForm" : useForm,
+		"method" : method,
+		"url" : url,
+		"data" : data,
+		"nodeId" : nodeId
+	};
+}
+
 /*
  * Regex 확인 로직
  */
-common.Regex = function (pattern , text) {
+common.Regex = function(pattern, text) {
 	return new RegExp(pattern).test(text);
 };
 
-/*
- *  Base64 decoding
- */
-common.Base64Decode = function (str, encoding = 'utf-8') {
-    var bytes = base64js.toByteArray(str);
-    return new (TextDecoder || TextDecoderLite)(encoding).decode(bytes);
-}
-
-/*
- *  Base64 encoding
- */
-common.Base64Encode = function (str, encoding = 'utf-8') {
-    var bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str);        
-    return base64js.fromByteArray(bytes);
-}
-
-common.createPageNode = function (pageCell, value, classList, id) {
+common.createPageNode = function(pageCell, value, classList, id) {
 	var span = document.createElement("span");
 	span.id = id;
 	for (i = 0; i < classList.length; i++) {
 		span.classList.add(classList[i]);
 	}
-	
+
 	span.innerHTML = value;
 	pageCell.appendChild(span);
 }

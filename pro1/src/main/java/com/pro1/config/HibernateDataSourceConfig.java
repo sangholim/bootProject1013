@@ -1,6 +1,5 @@
 package com.pro1.config;
 
-import java.io.IOException;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -92,7 +91,7 @@ public class HibernateDataSourceConfig extends CommonDataSource {
             sessionFactory.setDataSource(hikariDataSource);
             sessionFactory.setPackagesToScan("com.pro1");
             sessionFactory.afterPropertiesSet();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         applicationContext.registerBean(LocalSessionFactoryBean.class, () -> sessionFactory);

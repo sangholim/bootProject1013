@@ -1,6 +1,6 @@
 create table user (
  userUid bigint(20) unsigned NOT NULL AUTO_INCREMENT,
- id varchar(255) NOT NULL default '',
+ id varchar(255) NOT NULL default '' unique,
  pw varchar(255) NOT NULL default '',
  userName varchar(255) NOT NULL default '',
  active tinyint(2) default '1',
@@ -16,8 +16,11 @@ create table user (
  createDate bigint(20) unsigned NOT NULL,
  modifyDate bigint(20) unsigned default '0',
  grantAuthLevel varchar(20) default 'user',
+ userNickName varchar(255) default '',
  PRIMARY KEY (userUid)
 )
+
+ALTER TABLE user ADD COLUMN  userNickName varchar(255) default '';
 
 
 ## 관리자 추가
@@ -32,22 +35,69 @@ INSERT INTO USER VALUES (NULL,'TEST','1234','TEST','1','TEST','111-11','admin@na
 
 ## cafe 
 create table cafe (
- cafeUid bigint(20) unsigned not null AUTO_INCREMENT,
- cafeName varchar(255) not null,
- cafeCategory varchar(255) not null,
- cafeDomTop text,
- cafeDomMid text,
- cafeDomBot text,
- PRIMARY KEY (cafeUid)
+ uid bigint(20) unsigned not null AUTO_INCREMENT,
+ name nvarchar(255) not null default '',
+ url nvarchar(255) not null default '',
+ usePrivate tinyint(1) unsigned default 1,
+ joinType tinyint(1) unsigned default 1,
+ useNickname tinyint(1) unsigned default 1,
+ showMember tinyint(1) unsigned default 0,
+ title_mainSort tinyint(2) default -1,
+ title_subSort tinyint(2) default -1,
+ region_mainSort tinyint(2) default -1,
+ region_subSort tinyint(2) default -1,
+ keywordList nvarchar(255) default '',
+ icon nvarchar(255) default '',
+ visitCnt bigint(20) unsigned not null default '0',
+ writingCnt bigint(20) unsigned not null default '0',
+ memberCnt bigint(20) unsigned not null default '0',
+ PRIMARY KEY (uid)
 )
 
+## table column 변경
 
-## user_relation
+ALTER TABLE cafe ADD COLUMN  visitCnt bigint(20) unsigned not null default '0';
+ALTER TABLE cafe ADD COLUMN  writingCnt bigint(20) unsigned not null default '0';
+ALTER TABLE cafe ADD COLUMN  memberCnt bigint(20) unsigned not null default '0';
+
+
+## cafe 샘플 테이블 하나 만들기
+INSERT INTO cafe VALUES (NULL,'TEST_CAFE','test','1','1','1','0','1',
+						'1','1','1','','');
+INSERT INTO cafe VALUES (NULL,'TEST_CAFE2','t2t2t','1','1','1','0','1',
+						'1','1','1','','','0','0');
+
+## 유저가 카페 가입하거나 생성시 이용되는 테이블
 						
-create table user_relation (
+create table user_cafe (
  userUid bigint(20) unsigned NOT NULL,
  cafeUid bigint(20) unsigned NOT NULL,
  cafeLevel varchar(20) NOT NULL,
  FOREIGN KEY (userUid) REFERENCES user (userUid),
- FOREIGN KEY (cafeUid) REFERENCES cafe (cafeUid)
+ FOREIGN KEY (cafeUid) REFERENCES cafe (uid)
 )
+
+//0 -> 운영자
+## 유저가 카페 가입하거나 생성
+INSERT INTO user_cafe VALUES ('21','1','0');
+
+
+## cafeBoard 게시판 schema
+
+create table userCafeBoard (
+	boardUid bigint(20) unsigned NOT NULL,
+	userUid bigint(20) unsigned NOT NULL,
+	cafeUid bigint(20) unsigned NOT NULL,
+	subject varchar(255) NOT NULL,
+	content text NOT NULL default '',
+	writer varchar(255) NOT NULL,
+	addfile varchar(255) NOT NULL,
+	createDate bigint(20) unsigned NOT NULL,
+	modifiedDate bigint(20) unsigned NOT NULL,
+	PRIMARY KEY (boardUid),
+	FOREIGN KEY (userUid) REFERENCES user_cafe (userUid),
+	FOREIGN KEY (cafeUid) REFERENCES user_cafe (cafeUid)
+)
+
+
+

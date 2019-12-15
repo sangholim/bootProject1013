@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.GenericApplicationContext;
 
 /**
@@ -20,6 +21,7 @@ import org.springframework.context.support.GenericApplicationContext;
  *
  */
 @Configuration
+@Primary
 @Order(1)
 public class ConfigManagement {
 

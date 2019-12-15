@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<!--  TODO : 우편번호(mailNum) , 거주처(addrPlace), 우편 주소(addrMail)
-			 국가(country), city(도시), 사진(구현) 하기 
-			 
-			 우편 관한거는 
-			 http://biz.epost.go.kr/KpostPortal/openapi2?regkey=0816e1f0684a07ff51572676736488&target=postNew&countPerPage=50&currentPage=1&query=se
-			 
-			 이 api를 가지고 UI , server 로직 구현
- -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <div class="login_middle">
 	<div class="login_content" role="main">
-		<form id="join_form" method="post" action="/login/addUser">
+		<form id="join_form" method="post" action=
+			<c:if test="${not empty user}">"/login/update"</c:if> 
+			<c:if test="${empty user}">"/login/addUser"</c:if> 
+		>
 			<h2 class="blind">회원가입</h2>
 			<div class="join_content">
 				<!--  id , pw , pw 재입력 -->
@@ -21,10 +19,13 @@
 							<label for="id">아이디</label>
 						</h3>
 						<span class="ps_box int_id">
-							<input type="text" id="id" name="id" class="int" title="ID" maxlength="20">
+							<input type="text" id="id" name="id" class="int <c:if test='${not empty user}'> click-focus-false</c:if>
+							 	 title="ID" maxlength="20" autocomplete="off"  
+								<c:if test="${not empty user}">tabindex="-1" value="${user.id}"</c:if> 
+							>
 							<span class="step_url">@naver.com</span>
 						</span>
-						<span class="error_next_box blind" id="idMsg" role="alert">
+						<span class='error_next_box blind <c:if test="${not empty user}"> green</c:if>' id="idMsg" role="alert">
 						</span>
 					</div>
 					<!--  비밀번호 -->
@@ -66,9 +67,11 @@
 							<label for="name">이름</label>
 						</h3>
 						<span class="ps_box box_right_space">
-							<input type="text" id="name" name="userName" title="이름" class="int" maxlength="40">
+							<input type="text" id="name" name="userName" title="이름" class="int" maxlength="40" autocomplete="off"
+								<c:if test="${not empty user}"> value="${user.userName}"</c:if> 
+							>
 						</span>
-						<span class="error_next_box blind" id="nameMsg" role="alert"/>
+						<span class="error_next_box blind <c:if test="${not empty user}"> green</c:if>" id="nameMsg" role="alert"/>
 					</div>
 					<!--  주소 검색하기 -->
 					<div class="join_row join_addr">
@@ -76,7 +79,7 @@
 							<label for="name">주소 찾기</label>
 						</h3>
 						<span class="ps_box box_right_space">
-							<input type="text" id="addrData" name="addrData" title="주소 찾기" class="int" maxlength="40">
+							<input type="text" id="addrData" name="addrData" title="주소 찾기" class="int" maxlength="40" autocomplete="off">
 						</span>
 						<a href="javascript:void(0);" class="btn_verify btn_primary" id="findAddr" role="button">
                        		찾기
@@ -113,9 +116,11 @@
 							<label for="name">우편번호</label>
 						</h3>
 						<span class="ps_box box_right_space">
-							<input type="text" id="mailNum" name="mailNum" title="우편번호" class="int" >
+							<input type="text" id="mailNum" name="mailNum" title="우편번호" class="int" autocomplete="off"
+								<c:if test="${not empty user}"> value="${user.mailNum}"</c:if> 
+							>
 						</span>
-						<span class="error_next_box blind" id="mailNumMsg" role="alert"/>
+						<span class="error_next_box blind <c:if test="${not empty user}">green</c:if>" id="mailNumMsg" role="alert"/>
 					</div>
 					<!--  주소 -->
 					<div class="join_row">
@@ -123,9 +128,11 @@
 							<label for="name">주소</label>
 						</h3>
 						<span class="ps_box box_right_space">
-							<input type="text" id="addrPlace" name="addrPlace" title="주소" class="int" >
+							<input type="text" id="addrPlace" name="addrPlace" title="주소" class="int" autocomplete="off"
+								<c:if test="${not empty user}"> value="${user.addrPlace}"</c:if> 
+							>
 						</span>
-						<span class="error_next_box blind" id="addrPlaceMsg" role="alert"/>
+						<span class="error_next_box blind <c:if test="${not empty user}">green</c:if>" id="addrPlaceMsg" role="alert"/>
 					</div>
 					<!--  생년월일 -->
 					<div class="join_row join_birthday">
@@ -135,36 +142,40 @@
 						<div id="bir_wrap" class="bir_wrap">
 							<div class="bir_yy">
 								<span class="ps_box">
-									<input type="text" id="yy" placeholder="년(4자)" aria-label="년(4자)" class="int" maxlength="4">
+									<input type="text" id="yy" placeholder="년(4자)" aria-label="년(4자)" class="int" maxlength="4" autocomplete="off"
+										<c:if test="${not empty user}"> value="${fn:substring(user.birthday,0,4)}"</c:if> 
+									>
 								</span>
 							</div>
 							<div class="bir_mm">
 								<span class="ps_box">
 									<select id="mm" class="sel" aria-lable="월">
+											<c:if test="${not empty user}"> 
+												<fmt:parseNumber value='${fn:substring(user.birthday,4,6)}' type='number' var="usermon" />
+											</c:if> 
 										<option>월</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
+										<c:forEach var="month" begin="1" end="12">
+											<option value="${month}"
+												<c:if test="${usermon eq month }"> 
+												  selected
+												</c:if>
+											> ${month} </option>
+										</c:forEach>
 									</select>
 								</span>
 							</div>
 							<div class="bir_dd">
 								<span class="ps_box">
-									<input type="text" id="dd" placeholder="일" aria-label="일" class="int" maxlength="2">
+									<input type="text" id="dd" placeholder="일" aria-label="일" class="int" maxlength="2"
+										<c:if test="${not empty user}"> 
+											value="<fmt:parseNumber value='${fn:substring(user.birthday,6,fn:length(user.birthday))}' type='number'/>"
+										</c:if> 
+									>
 									<label for="dd" class="lbl"></label>
 								</span>
 							</div>
 						</div>
-						<span class="error_next_box blind" id="birthdayMsg" role="alert">
+						<span class="error_next_box blind <c:if test="${not empty user}">green</c:if>" id="birthdayMsg" role="alert">
 							태어난 년도 4자리를 정확하게 입력하세요.
 						</span>
 					</div>
@@ -175,12 +186,12 @@
 						</h3>
 						<span class="ps_box gender_code">
 							<select id="gender" name="gender" class="sel" aria-lable="성별">
-								<option value selected="selected">성별</option>
-								<option value="M">남자</option>
-								<option value="F">여자</option>
+								<option value >성별</option>
+								<option value="M" <c:if test="${not empty user && user.gender eq 'M'}"> selected </c:if> >남자</option>
+								<option value="F" <c:if test="${not empty user && user.gender eq 'F'}"> selected </c:if>>여자</option>
 							</select>
 						</span>
-						<span class="error_next_box blind" id="genderMsg" role="alert"/>
+						<span class="error_next_box blind <c:if test="${not empty user}">green</c:if>" id="genderMsg" role="alert"/>
 					</div>
 					<!--  본인 확인 이메일 -->
 					<div class="join_row join_email">
@@ -189,12 +200,14 @@
 							<span class="terms_choice">(선택)</span>
 						</h3>
 						<span class="ps_box int_email box_right_space">
-							<input type="text" id="addrEmail" name="addrEmail" placeholder="선택입력" aria-lable="선택입력" class="int" maxlength="100">
+							<input type="text" id="addrEmail" name="addrEmail" placeholder="선택입력" aria-lable="선택입력" class="int" maxlength="100" autocomplete="off"
+								<c:if test="${not empty user}">value="${user.addrEmail}"</c:if>
+							>
 						</span>
 						<a href="javascript:void(0);" class="btn_verify btn_primary" id="authEmailSend" role="button">
                        		본인 인증
                        	</a>
-                       <span class="error_next_box blind" id="emailMsg" role="alert"/>
+                       <span class="error_next_box blind <c:if test="${not empty user}">green</c:if>" id="emailMsg" role="alert"/>
 					</div>
 					<!--  전화번호 인증 -->
 					<!--  Todo:   -->
@@ -424,7 +437,9 @@
                         <!--  전화번호 입력 , 인증 번호 받기 -->
                         <div class="int_mobile_area">
                         	<span class="ps_box int_mobile">
-                        		<input type="tel" id="phoneNo" name="phoneNumber" placeholder="전화번호 입력" class="int" maxlength="16">
+                        		<input type="tel" id="phoneNo" name="phoneNumber" placeholder="전화번호 입력" class="int" maxlength="16" autocomplete="off"
+	                        		<c:if test="${not empty user}"> value="${user.phoneNumber}"</c:if> 
+                        		>
                         		<label for="phoneNo" class="lbl"/>
                         	</span>
                         	<a href="javascript:void(0);" class="btn_verify btn_primary" id="btnSend" role="button">
@@ -433,12 +448,12 @@
                         </div>
                         <!--  받은 인증번호 입력 -->
 						<div class="ps_box_disable box_right_space" id="authNoBox">
-                      		<input type="tel" id="authNo" name="authNo" placeholder="인증번호 입력하세요." aria-label="인증번호 입력하세요." aria-describedby="wa_verify" class="int" disabled maxlength="4">
+                      		<input type="tel" id="authNo" name="authNo" placeholder="인증번호 입력하세요." aria-label="인증번호 입력하세요." aria-describedby="wa_verify" class="int" disabled maxlength="4" autocomplete="off">
                       		<label for="authNo"  id="wa_verify" class="lbl">
                       			<span class="wa_blind">인증받은 후 인증번호를 입력해야 합니다.</span>
                       		</label>
                       	</div>
-                      	<span class="error_next_box blind" id="phoneNoMsg" role="alert"/>
+                      	<span class="error_next_box blind <c:if test="${not empty user}">green</c:if>" id="phoneNoMsg" role="alert"/>
 						
                     </div>
 				</div>
@@ -446,7 +461,15 @@
 				<!--  가입하기 -->
 				<div class="btn_area">
 					<button type="button" id="btnJoin" class="btn_type btn_primary">
-						<span>가입하기</span>
+						<span>
+						<c:choose>
+							<c:when test="${not empty user}">
+								변경하기
+							</c:when>
+							<c:otherwise>
+								가입하기
+							</c:otherwise>
+						</c:choose>
 					</button>
 				</div>
 			</div>

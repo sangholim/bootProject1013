@@ -10,10 +10,7 @@ var login = {};
  * @returns
  */
 (function() {
-	/*
-	 * var login_input_nodes = document.getElementsByClassName("login_input");
-	 * var login_btn = document.getElementsByClassName("login_btn")[0];
-	 */
+	
 	// id ui
 	var check_id = document.getElementById('id');
 	// pw ui
@@ -44,7 +41,6 @@ var login = {};
 	var mailNumMsg = document.getElementById("mailNumMsg");
 	var addrPlaceMsg = document.getElementById("addrPlaceMsg");
 
-	
 	if(register_ui !== undefined && register_ui !=null) {
 		var register_btn = document.getElementById('btnJoin');
 		register_btn.addEventListener('click', function(event) {
@@ -73,6 +69,7 @@ var login = {};
 	// id 이벤트 등록
 	if (check_id !== undefined && check_id !=null) {
 		var idMsg = document.getElementById("idMsg");
+		
 		check_id.addEventListener('focusout', function(event) {
 			
 			idMsg.classList.remove('blind');
@@ -94,8 +91,9 @@ var login = {};
 			user.id = check_id.value;
 			var json = JSON.stringify(user);
 			// response 값을담는곳 node id
-			common.sync("POST", "/login/checkExistUser.json", json,
-					"application/json", idMsg);
+			//common.sync("POST", "/login/checkExistUser.json", json, idMsg);
+			var requestParams = common.requestParams(false,"POST", "/login/checkExistUser.json", json, idMsg);
+			common.sync(requestParams);
 
 		}, false);
 	}
@@ -186,7 +184,7 @@ var login = {};
 			addrForm.inputNodes = addrData.value;
 			var json = JSON.stringify(addrForm);
 			// 비동기 페이지 앞 , 뒤 로가기 이벤트
-			document.location.hash = "addrBoard:"+common.Base64Encode(json);
+			document.location.hash = "addrBoard:"+CryptoJS.AES.encrypt(json, "test").toString();
 		
 		});
 	}
@@ -302,8 +300,8 @@ var login = {};
 			user.addrEmail = emailUI.value;
 			var json = JSON.stringify(user);
 			// response 값을담는곳 node id
-			common.sync("POST", "/login/authEmail.json", json,
-					"application/json", emailMsg);
+			var requestParams = common.requestParams(false,"POST", "/login/checkExistUser.json", json, idMsg);
+			common.sync(requestParams);
 
 		}, false);
 	}
@@ -493,7 +491,7 @@ login.createAddrBody = function (addrForm) {
         //page목록 리스트 비워버림
         addrForm.post.itemlist = null;
         var json = JSON.stringify(addrForm);
-    	document.location.hash = "addrBoard:"+common.Base64Encode(json);
+    	document.location.hash = "addrBoard:"+CryptoJS.AES.encrypt(json, "test").toString();
 
 	});
 	

@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Base64;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pro1.common.constant.ResponseText;
 import com.pro1.user.param.AddrForm;
 import com.pro1.user.param._Post;
@@ -39,13 +37,11 @@ public class LoginMainAsync {
 
     private final String post_form = "http://biz.epost.go.kr/KpostPortal/openapi2?regkey=%s&target=%s&countPerPage=%d&currentPage=%d&query=%s";
     
-    private static final ObjectMapper MAPPER = new ObjectMapper();
-    
     @Autowired
     private UserService userService;
 
     /**
-     * 로그인시 서비스 체크 로직 doLogin `
+     * 웹상에서 유저가 있는지 체크
      * 
      * @param user
      * @param requeset
@@ -56,7 +52,7 @@ public class LoginMainAsync {
 	userVO.setValid(true);
 	userVO.setResponseText(ResponseText.USABLE_ID);
 
-	if (userService.existUser(userVO.getId())) {
+	if (userService.existUser(userVO.getId(), null)) {
 	    userVO.setValid(false);
 	    userVO.setResponseText(ResponseText.EXIST_ID);
 	}

@@ -12,7 +12,11 @@
 </head>
 <body>
 	<input type="hidden" id="pageInfo" value="index">
+	<input type="hidden" id="jwt" value="index">
 	<div class="wrap">
+		<!--  Crypt: aes js -->
+		<script class="personal_js" type="text/javascript" src="/js/utils/Crypto/rollups/aes.js?${applicationScope.cachetype}" ></script>
+		<script type="text/javascript" src="/js/common/common.js?${applicationScope.cachetype}" ></script>
 		<c:choose>
 			<c:when test="${page eq 'index'}">
 				<link class="personal_css" rel="stylesheet" href="/css/index/index.css?${applicationScope.cachetype}" type="text/css">
@@ -28,9 +32,6 @@
 					<c:when test="${fn:contains(page,'register')}">
 						<jsp:include page="user/user_register.jsp" />
 					</c:when>
-					<c:when test="${fn:contains(page,'findAddr')}">
-						<jsp:include page="user/findAddr.jsp" />
-					</c:when>
 					<c:otherwise>
 						<jsp:include page="login/login_middle.jsp" />
 					</c:otherwise>
@@ -43,7 +44,7 @@
 				<jsp:include page="board/commonBoard.jsp"/>
 				<script class="personal_js" type="text/javascript" src="/js/board/board.js?${applicationScope.cachetype}" ></script>
 			</c:when>
-			<c:when test="${page eq 'cafe'}">
+			<c:when test="${fn:startsWith(page,'cafe')}">
 				<link class="personal_css" rel="stylesheet" href="/css/cafe/cafe.css?${applicationScope.cachetype}" type="text/css">
 				<jsp:include page="cafe/cafe_top.jsp"/>
 				<jsp:include page="cafe/cafe_middle.jsp"/>
@@ -51,9 +52,6 @@
 				<script class="personal_js" type="text/javascript" src="/js/cafe/cafe.js?${applicationScope.cachetype}" ></script>
 			</c:when>
 		</c:choose>
-		<!--  base64 js -->
-		<script class="personal_js" type="text/javascript" src="/js/utils/base64js.min.js?${applicationScope.cachetype}" ></script>
-		<script type="text/javascript" src="/js/common/common.js?${applicationScope.cachetype}" ></script>
 	</div>
 	<div class="loading_wrap blind" id="loadNode">
 		<div class="loader_img"/>

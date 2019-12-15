@@ -14,7 +14,7 @@
 			</a>
 		</span>
 		<!--  내 정보 -->
-		<a class="link_myInfo" href="javascript:void(0);">
+		<a class="link_myInfo need_auth" href="/login/register">
 			내정보
 		</a>
 	</div>
@@ -23,7 +23,7 @@
 			<span>로그아웃</span>
 		</a>
 		<span class="link_cover">
-			<a class="link_cafe" href="/cafe">
+			<a class="link_cafe need_auth" href="/cafe">
 				<i>
 					카페<span class="cnt">100</span>
 				</i>

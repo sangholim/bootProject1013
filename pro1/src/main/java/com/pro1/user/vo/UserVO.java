@@ -3,10 +3,13 @@ package com.pro1.user.vo;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity(name = "user")
 @Table(name = "USER")
+@DynamicUpdate
 @JsonSerialize
 public class UserVO extends CommonUserVO {
 
@@ -103,9 +106,8 @@ public class UserVO extends CommonUserVO {
 
     @Override
     public String toString() {
-	
-	return "id: "+id;
+
+	return "id: " + id;
     }
 
-    
 }

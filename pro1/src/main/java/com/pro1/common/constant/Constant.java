@@ -27,16 +27,26 @@ public class Constant {
     public static final String BOARD_TYPE = "boardType";
 
     public static final String CAFE_TYPE = "cafe";
-    
+
     public static final String AUTH_TYPE = "auth";
-    
+
     public static final String DIR_ROW = "**";
 
     public static final String MAIN = "main";
-    
+
     public static final String CRLF = "\r\n";
-    
+
     public static final String ADD = "add";
+
+    public static final String PUBLIC_KEY = "publicKey";
+
+    public static final String PRIVATE_KEY = "privateKey";
+
+    public static final String CSRF_TOKEN = "_CSRF_TOKEN_";
+    
+    public static final String TOKEN_HEADER = "authorization";
+    
+    public static final String TOKEN_PREFIX = "jwt ";
     
     /**
      * 권한 관리 맵

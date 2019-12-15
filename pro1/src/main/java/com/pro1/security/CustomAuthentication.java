@@ -47,4 +47,8 @@ public class CustomAuthentication extends AbstractAuthenticationToken {
 	details += Constant.CRLF + Constant.AUTH_TYPE + ':' + authUser.getGrantAuthLevel();
     }
 
+    public AuthUserVO getAuthUser() {
+	return authUser;
+    }
+
 }

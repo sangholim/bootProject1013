@@ -21,6 +21,9 @@ import com.pro1.security.CustomAuthenticationProvider;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    private AuthSuccessHandler authSuccessHandler;
+
+    @Autowired
     private CustomAuthenticationProvider authProvider;
 
     public SecurityConfig() {
@@ -40,16 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
 	// 기본 접근 허용 경로
-	web.ignoring().antMatchers("/css/" + Constant.DIR_ROW, "/img/" + Constant.DIR_ROW, "/js/" + Constant.DIR_ROW,
-		'/' + Constant.LOGIN_POS, '/' + Constant.BOARD_TYPE, "/login/register");
+	web.ignoring().antMatchers("/css/" + Constant.DIR_ROW, "/img/" + Constant.DIR_ROW, "/js/" + Constant.DIR_ROW);
     }
-    
-    
+
     @Override
     public void setAuthenticationConfiguration(AuthenticationConfiguration authenticationConfiguration) {
-	// TODO Auto-generated method stub
 	super.setAuthenticationConfiguration(authenticationConfiguration);
-	}
+    }
 
     /**
      * spring security 기본 설정
@@ -63,11 +63,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 수 있습니다. "/css/**", "./img/**", "/js/**"
 	 */
 	http.csrf().disable().authorizeRequests()
-		.antMatchers("/", "/index/**", "/img/" + Constant.DIR_ROW, "/login/"+Constant.DIR_ROW).permitAll().and()
-		.authorizeRequests().antMatchers('/' + Constant.CAFE_TYPE + '/' + Constant.DIR_ROW)
+		.antMatchers("/", "/index/**", "/img/" + Constant.DIR_ROW, "/login", "/login/addUser",
+			"/login/register", "/login/*.json")
+		.permitAll().and().authorizeRequests()
+		.antMatchers('/' + Constant.CAFE_TYPE + '/' + Constant.DIR_ROW, "/login/update/")
 		.hasAnyAuthority(Constant.AUTH_PREFIX + Constant.USER_ROLE, Constant.AUTH_PREFIX + Constant.ADMIN_ROLE)
 		.anyRequest().authenticated().and().formLogin().loginPage("/login/doLogin").usernameParameter("id")
-		.passwordParameter("pw").successHandler(new AuthSuccessHandler()).failureUrl("/error").permitAll();
+		.passwordParameter("pw").successHandler(authSuccessHandler).failureUrl("/error").permitAll();
     }
 
 }

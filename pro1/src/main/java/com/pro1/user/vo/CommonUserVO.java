@@ -12,7 +12,7 @@ public class CommonUserVO {
 
     @Id // primary key
     @Column(name = "userUid")
-    @GeneratedValue(strategy=GenerationType.IDENTITY) //auto_increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     protected long userUid;
 
     protected String id;
@@ -27,6 +27,10 @@ public class CommonUserVO {
     protected String addrEmail;
 
     protected int active;
+    /**
+     * 유저 토큰
+     */
+    protected String user_token;
 
     @Transient
     private boolean isValid = true;
@@ -39,6 +43,9 @@ public class CommonUserVO {
      */
     @Transient
     private int keyCode = -1;
+
+    // 로그인시 유저 닉네임
+    private String userNickName;
 
     public int getKeyCode() {
 	return keyCode;
@@ -110,6 +117,22 @@ public class CommonUserVO {
 
     public void setActive(int active) {
 	this.active = active;
+    }
+
+    public String getUser_token() {
+	return user_token;
+    }
+
+    public String getUserNickName() {
+	return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+	this.userNickName = userNickName;
+    }
+
+    public void setUser_token(String user_token) {
+	this.user_token = user_token;
     }
 
 }

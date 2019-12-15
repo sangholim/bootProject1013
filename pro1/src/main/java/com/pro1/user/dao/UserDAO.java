@@ -1,5 +1,6 @@
 package com.pro1.user.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -17,6 +18,7 @@ import com.pro1.common.utils.CommonDBSession;
 import com.pro1.common.vo.DbSessionInfo;
 import com.pro1.login.web.LoginMainAsync;
 import com.pro1.user.vo.AuthUserVO;
+import com.pro1.user.vo.CommonUserVO;
 import com.pro1.user.vo.UserVO;
 
 @Repository
@@ -57,27 +59,48 @@ public class UserDAO extends CommonDBSession {
 	processHibernateSession(user.getClass(), user, DBQueryType.DELETE);
     }
 
-    public AuthUserVO existUser(String id) throws Exception {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public CommonUserVO existUser(String id, Object pw, Class<?> userType) throws Exception {
 	if (sqlSession != null) {
 	    return sqlSession.selectOne("isChekcUser", id);
 	}
 	
-	DbSessionInfo sessionInfo = processHibernateSession(AuthUserVO.class, null, DBQueryType.SELECT);
+	DbSessionInfo sessionInfo =processHibernateSession(userType, null, DBQueryType.SELECT);
 	try (Session session = sessionInfo.getSession()) {
 	    CriteriaBuilder builder = sessionInfo.getCriteriaBuilder();
-	    CriteriaQuery<AuthUserVO> criteriaQuery = builder.createQuery(AuthUserVO.class);
-	    Root<AuthUserVO> root = criteriaQuery.from(AuthUserVO.class);
-	    Predicate predicate = builder.equal(root.get("id"), id);
-	    criteriaQuery.select(root).distinct(true).where(predicate);
-	    return session.createQuery(criteriaQuery).getSingleResult();
+	    CriteriaQuery criteriaQuery = builder.createQuery(userType);
+	    Root root = criteriaQuery.from(userType);
+	
+	    List<Predicate> predicates = new ArrayList<>();
+	    predicates.add(builder.equal(root.get("id"), id));
+	    if(pw != null) {
+		predicates.add(builder.equal(root.get("pw"), pw));
+	    }
+	    
+	    criteriaQuery.select(root).distinct(true).where(predicates.toArray(new Predicate[] {}));
+		    
+	    return (CommonUserVO) session.createQuery(criteriaQuery).getSingleResult();
+
+	
 	} catch (NoResultException nRE) {
 	    // 쿼리 결과가 없을때
 	    logger.warning("No Found Result at query Id : " + id);
 	    return null;
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    return null;
 	}
+	//나머지 Exception 나는 부분은 위로 던져서 유효성 검사 실패로 가야한다.
+    }
+
+    public void updateUser(UserVO user) throws Exception {
+
+	if (sqlSession != null) {
+	    sqlSession.insert("updateUser");
+	}
+	processHibernateSession(user.getClass(), user, DBQueryType.UPDATE);
+    }
+
+    public void updateUser(AuthUserVO user) throws Exception {
+
+	processHibernateSession(user.getClass(), user, DBQueryType.UPDATE);
     }
 
 }

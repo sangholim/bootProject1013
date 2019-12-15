@@ -3,12 +3,16 @@ package com.pro1.login.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pro1.common.constant.Constant;
+import com.pro1.security.CustomAuthentication;
 import com.pro1.user.sesrvice.UserService;
 import com.pro1.user.vo.UserVO;
 
@@ -19,37 +23,63 @@ public class LoginMainFrame {
     @Autowired
     private UserService userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(LoginMainFrame.class);
+
     @RequestMapping("")
-    public String getLoginMain(Model model, HttpServletRequest requeset) {
+    public String getLoginMain(Authentication auth, Model model, HttpServletRequest request) {
 	model.addAttribute(Constant.PAGE_TYPE, Constant.LOGIN_POS);
+	logger.info("Request > {}", request.getParameter(Constant.TOKEN_HEADER));
 	return Constant.MAIN;
     }
 
-    @RequestMapping("/register")
-    public String doRegister(Model model, HttpServletRequest requeset) {
+    /**
+     * 로그인 후에는 정보변경 페이지로 이동 로그인 전에는 회원가입 페이지로 이동
+     * 
+     * @param auth
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/register")
+    public String doRegister(Authentication auth, Model model, HttpServletRequest request,
+	    HttpServletResponse response) {
+	// test
+	logger.info("Request > {}", request.getParameter(Constant.TOKEN_HEADER));
+
 	model.addAttribute(Constant.PAGE_TYPE, Constant.LOGIN_POS + "/register");
+	if (auth != null) {
+	    userService.getUserForUpdate(auth, model, response);
+	}
 	return Constant.MAIN;
     }
 
     /**
      * 회원 유저 추가 , 로그인 , 인증 부여
+     * 
      * @param uservo
      * @return
      */
     @RequestMapping("/addUser")
-    public void doRegister(UserVO uservo, HttpServletResponse response) {
+    public void doRegister(Authentication auth, UserVO uservo, HttpServletRequest request,
+	    HttpServletResponse response) {
 	// 성공시 > Main으로 Redirect
 	// 실패시 그냥 페이지 유지
-	userService.addUser(uservo, response);
+	userService.addUser(uservo, request, response);
     }
 
-    @RequestMapping("/findAddr")
-    public String findAddr(Model model ,HttpServletResponse response) {
-	model.addAttribute(Constant.PAGE_TYPE, Constant.LOGIN_POS+"/findAddr");
+    /**
+     * 회원 유저 정보 변경
+     * 
+     * @param uservo
+     * @return
+     */
+    @RequestMapping("/update")
+    public void doUpdateUser(CustomAuthentication auth, UserVO uservo, HttpServletResponse response) {
 	// 성공시 > Main으로 Redirect
 	// 실패시 그냥 페이지 유지
-	// 나중에 우편찾기 웹페이지 실행전에 필요한 요소 추가
-	return Constant.MAIN;
+	uservo.setUserUid(auth.getUid());
+	userService.doUpdateUser(uservo, response);
     }
 
 }
