@@ -2081,6 +2081,15 @@ em, address {
     letter-spacing: -1px;
 }
 
+.section_create .cafe_input td .txt strong {
+    display: inline-block;
+    padding: 0 0 0 16px;
+    background: url(https://ssl.pstatic.net/static/cafe/section/bg_sprite_3_160720.gif) no-repeat 0 -2306px;
+    color: #ff7914;
+    font-weight: normal;
+    line-height: 12px;
+}
+
 .section_create .cafe_input td .spot_off {
     color: #323232;
     font-size: 14px;
@@ -2486,4 +2495,58 @@ em, address {
     color: #222;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+.section_create .srch_word_area li p {
+    width: 85px;
+    margin: 7px 0 6px 6px;
+    font-family: 돋움,dotum;
+    font-size: 12px;
+    font-weight: normal;
+    color: #424242;
+    line-height: 16px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.section_create .srch_word_area .full em {
+    display: none;
+}
+
+.section_create .srch_word_area li .btn_del {
+    position: absolute;
+    top: -2px;
+    right: -3px;
+    padding: 6px 7px;
+    font-size: 0;
+    line-height: 0;
+}
+
+.btn_find {
+	-webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    min-width: 60px;
+    height: 24px;
+    padding: 0 9px;
+    border: solid 1px #e5e5e5;
+    color: #999;
+    background: #fff;
+}
+
+.sel_img {
+	border: none;
+	border-left : 10px solid rgb(128,128,128);
+	border-right : 10px solid rgb(128,128,128);
+	width: 500px;
+    height: 300px;
+}
+
+
+li .img_name  {
+	border-color: #B5B5B5 #DDDDDD #DDDDDD #B5B5B5;
+	border-style: solid;
+	border-width: 1px;
+	height: 14px;
+	width: 274px;
+	display: inline-block;
 }

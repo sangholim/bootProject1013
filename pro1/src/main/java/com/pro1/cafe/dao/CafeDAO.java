@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pro1.cafe.vo.CafeVO;
+import com.pro1.cafe.vo.UserCafeVO;
 import com.pro1.common.DBQueryType;
 import com.pro1.common.utils.CommonDBSession;
 import com.pro1.common.vo.DbSessionInfo;
@@ -31,7 +32,7 @@ public class CafeDAO extends CommonDBSession {
 	    CriteriaQuery<CafeVO> criteria = builder.createQuery(CafeVO.class);
 	    Root<CafeVO> root = criteria.from(CafeVO.class);
 	    criteria.select(root);
-	    
+
 	    return session.createQuery(criteria).getResultList();
 
 	} catch (Exception e) {
@@ -40,4 +41,43 @@ public class CafeDAO extends CommonDBSession {
 	}
 
     }
+
+    /**
+     * CAFE 추가 , UserCafe 테이블 추가한다.
+     * 
+     * @param cafeVO
+     * @param userCafeVO
+     * @return
+     * @throws Exception
+     */
+    public boolean addCafe(CafeVO cafeVO, UserCafeVO userCafeVO) throws Exception {
+
+	boolean result = false;
+	if (sqlSession != null) {
+	    sqlSession.insert("addCafe");
+	}
+	Session currentSession = null;
+	try {
+	    currentSession = openSession();
+	    result = processHibernateSession(currentSession, DBQueryType.INSERT, cafeVO);
+
+	    /*
+	     * 정상적으로 카페 데이터가 추가되면 카페 유저 관계도도 추가.
+	     */
+	    if (result) {
+		userCafeVO.setCafeUid(cafeVO.getUid());
+		result = processHibernateSession(currentSession, DBQueryType.INSERT, userCafeVO);
+	    }
+	    
+	} catch (Exception e) {
+	    logger.error("Error Transaction Cafe, UserCafe tables > {}", e.getMessage(), e);
+	} finally {
+	    if (currentSession != null) {
+		currentSession.close();
+	    }
+	}
+
+	return result;
+    }
+
 }

@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 import com.pro1.cafe.dao.CafeDAO;
+import com.pro1.cafe.vo.CafeVO;
+import com.pro1.cafe.vo.UserCafeVO;
+import com.pro1.common.constant.Constant;
+import com.pro1.security.CustomAuthentication;
 
 public class CafeManager {
     // 제목 분류 max index 값들
@@ -28,5 +32,20 @@ public class CafeManager {
 	    logger.warn("Error Connection DataBase : {}", e.getMessage(), e);
 	}
 
+    }
+
+    /**
+     * 카페 추가 로직
+     * 
+     * @param authetication
+     * @param cafeVO
+     */
+    public void addCafe(CustomAuthentication authetication, CafeVO cafeVO) {
+	try {
+	    UserCafeVO userCafeVO = new UserCafeVO(authetication.getUid(), Constant.ADMIN_ROLE);
+	    cafeDAO.addCafe(cafeVO, userCafeVO);
+	} catch (Exception e) {
+	    logger.error("Insert Cafe , user_cafe Error > {}", e.getMessage(), e);
+	}
     }
 }

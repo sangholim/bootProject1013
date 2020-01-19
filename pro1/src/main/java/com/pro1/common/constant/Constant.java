@@ -48,6 +48,8 @@ public class Constant {
     
     public static final String TOKEN_PREFIX = "jwt ";
     
+    public static final String USER_PROFILE = "profile_";
+    
     /**
      * 권한 관리 맵
      */

@@ -34,6 +34,21 @@ public class UserCafeVO implements Serializable {
 
     private String cafeLevel;
 
+    public UserCafeVO() {
+	// TODO Auto-generated constructor stub
+    }
+
+    public UserCafeVO(long userUid, long cafeUid, String cafeLevel) {
+
+	this.userUid = userUid;
+	this.cafeUid = cafeUid;
+	this.cafeLevel = cafeLevel;
+    }
+
+    public UserCafeVO(long userUid, String cafeLevel) {
+	this(userUid, -1l, cafeLevel);
+    }
+
     public long getUserUid() {
 	return userUid;
     }

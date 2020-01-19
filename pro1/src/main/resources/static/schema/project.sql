@@ -43,14 +43,16 @@ create table cafe (
  useNickname tinyint(1) unsigned default 1,
  showMember tinyint(1) unsigned default 0,
  title_mainSort tinyint(2) default -1,
- title_subSort tinyint(2) default -1,
+ title_subSort varchar(10) default -1,
  region_mainSort tinyint(2) default -1,
- region_subSort tinyint(2) default -1,
+ region_subSort varchar(10) default -1,
  keywordList nvarchar(255) default '',
  icon nvarchar(255) default '',
  visitCnt bigint(20) unsigned not null default '0',
  writingCnt bigint(20) unsigned not null default '0',
  memberCnt bigint(20) unsigned not null default '0',
+ `desc` bigint(20) unsigned not null default '0',
+ `useShortCut` tinyint(2) unsigned not null default '0',
  PRIMARY KEY (uid)
 )
 
@@ -59,13 +61,17 @@ create table cafe (
 ALTER TABLE cafe ADD COLUMN  visitCnt bigint(20) unsigned not null default '0';
 ALTER TABLE cafe ADD COLUMN  writingCnt bigint(20) unsigned not null default '0';
 ALTER TABLE cafe ADD COLUMN  memberCnt bigint(20) unsigned not null default '0';
+ALTER TABLE cafe ADD COLUMN `desc` nvarchar(255) default '';
+ALTER TABLE cafe ADD COLUMN `useShortCut` tinyint(2) default 0 not null;
+ALTER TABLE cafe MODIFY  COLUMN `region_subSort` varchar(10) default 0 not null;
+ALTER TABLE cafe MODIFY  COLUMN `title_subSort` varchar(10) default 0 not null;
 
 
 ## cafe 샘플 테이블 하나 만들기
 INSERT INTO cafe VALUES (NULL,'TEST_CAFE','test','1','1','1','0','1',
 						'1','1','1','','');
-INSERT INTO cafe VALUES (NULL,'TEST_CAFE2','t2t2t','1','1','1','0','1',
-						'1','1','1','','','0','0');
+INSERT INTO cafe VALUES ('TEST_CAFE2','t2t2t','1','1','1','0','1',
+						'1','1','1','0','0','0','0','0','0','0');
 
 ## 유저가 카페 가입하거나 생성시 이용되는 테이블
 						

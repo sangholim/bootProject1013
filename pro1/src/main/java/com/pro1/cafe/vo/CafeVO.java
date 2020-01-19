@@ -9,35 +9,74 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity(name = "cafe")
-@Table(name = "CAFE")
+@Table(name = "cafe")
 @DynamicUpdate
+@JsonSerialize
 public class CafeVO {
 
     @Id // primary key
     @Column(name = "uid")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private long uid;
+    
+    @Column(name = "name")
     private String name;
+    
+    @Column(name = "url")
     private String url;
-    private int usePrivate;
-    private int joinType;
-    private String useNickname;
-    private int showMember;
-    private int title_mainSort;
-    private int title_subSort;
-    private int region_mainSort;
-    private int region_subSort;
-    private String keywordList;
-    // 카페의 아이콘 경로
+    
+    @Column(name = "usePrivate")
+    private int usePrivate = 0;
+    
+    @Column(name = "joinType")
+    private int joinType = 0 ;
+    
+    @Column(name = "useNickname")
+    private int useNickname = 0;
+    
+    @Column(name = "showMember")
+    private int showMember = 0 ;
+    
+    @Column(name = "title_mainSort")
+    private int title_mainSort = -1;
+    
+    @Column(name = "title_subSort")
+    private int title_subSort = -1;
+    
+    @Column(name = "region_mainSort")
+    private int region_mainSort = -1;
+    
+    @Column(name = "region_subSort")
+    private int region_subSort = -1;
+    
+    @Column(name = "keywordList")
+    private String keywordList = "";
+   
     /**
      * 카페의 아이콘 경로 store/cafe/카페명+uid/
      */
-    private String icon;
-    private long visitCnt;
-    private long writingCnt;
-    private long memberCnt;
-
+    @Column(name = "icon")
+    private String icon = "defaultPath";
+    
+    @Column(name = "visitCnt")
+    private long visitCnt = 0;
+    
+    @Column(name = "writingCnt")
+    private long writingCnt = 0;
+    
+    @Column(name = "memberCnt")
+    private long memberCnt = 0;
+    
+    @Column(name = "`desc`")
+    private String desc = "";
+    
+    @Column(name = "useShortCut")
+    private int useShortCut = 0;
+    
+    
     public long getUid() {
 	return uid;
     }
@@ -78,11 +117,11 @@ public class CafeVO {
 	this.joinType = joinType;
     }
 
-    public String getUseNickname() {
+    public int getUseNickname() {
 	return useNickname;
     }
 
-    public void setUseNickname(String useNickname) {
+    public void setUseNickname(int useNickname) {
 	this.useNickname = useNickname;
     }
 
@@ -166,4 +205,20 @@ public class CafeVO {
 	this.memberCnt = memberCnt;
     }
 
+    public String getDesc() {
+	return desc;
+    }
+
+    public void setDesc(String desc) {
+	this.desc = desc;
+    }
+
+    public int getUseShortCut() {
+        return useShortCut;
+    }
+
+    public void setUseShortCut(int useShortCut) {
+        this.useShortCut = useShortCut;
+    }
+    
 }

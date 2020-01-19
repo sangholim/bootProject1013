@@ -13,7 +13,7 @@ common.sync = function(requestParams) {
 	var url = requestParams.url;
 	var xhttp = new XMLHttpRequest();
 	xhttp.open(requestParams.method, requestParams.url);
-	xhttp.setRequestHeader("Content-Type", "application/json");
+	xhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
 
 	xhttp.onreadystatechange = function() {
 
@@ -162,4 +162,24 @@ common.createPageNode = function(pageCell, value, classList, id) {
 
 	span.innerHTML = value;
 	pageCell.appendChild(span);
+}
+
+common.calUtf8Bytes = function(ch) {
+	//char > hex to decimail
+	var dec = 	ch.charCodeAt(0).toString(16);
+	
+	//16진수 : '00007F' > 10진수: 127
+	//16진수 : '0007FF' > 10진수: 2047
+	//16진수 : '00FFFF' > 10진수: 65535
+	
+	if (dec <= 127) {
+		return 1;
+	} else if (dec <=2047) {
+		return 2;
+	} else if (dec <= 65535) {
+		return 3;
+	} else {
+		return 4;
+	}
+
 }

@@ -37,11 +37,11 @@
 					</th>
 					<td>
 						<div class="input_area">
-							<input type="text" title="카페이름" class="input_txt spot_off" style="width: 631px;">
+							<input class="validate invalid">
 							<span class="byte"><strong>0</strong> / 60 bytes</span>
 						</div>
 						<p class="txt">카페주제와 어울리는 이름으로 입력하면 많은 사람들이 카페를 찾기가 쉬워집니다.</p>
-						<p class="txt" style="display: none;"></p>
+						<p class="txt alert" style="display: none;"><strong>글자수가 초과되었습니다.</strong></p>
 					</td>
 				</tr>
 				<tr>
@@ -64,10 +64,10 @@
 						<div class="input_area">
 							<label for="cafe_addr">https://cafe.naver.com/</label> 
 							<!-- value="카페 주소를 입력해 주세요." -->
-							<input type="text" id="cafe_addr" title="카페주소" class="input_txt spot_off" style="width: 500px;">
-								<span class="byte"><strong>0</strong> / 20 bytes</span>
+							<input class="validate invalid">
+							<span class="byte"><strong>0</strong> / 20 bytes</span>
 						</div>
-						<p class="txt" style="display: none;"></p>
+						<p class="txt alert" style="display: none;"><strong>글자수가 초과되었습니다.</strong></p>
 					</td>
 				</tr>
 				<tr>
@@ -76,10 +76,10 @@
 					</th>
 					<td class="th_priv">
 						<div class="txt_area">
-							<input type="radio" id="open1" name="" value="Y" class="input_rdo">
-								<label for="open1">공개</label> 
-								<input type="radio" id="close1" name="" value="N" class="input_rdo">
-								<label for="close1">비공개</label>
+							<input class="validate invalid">
+							<label for="open1">공개</label> 
+							<input class="validate invalid">
+							<label for="close1">비공개</label>
 							<p class="txt" style="display: none;">
 								<span class="note">비공개 카페는 검색에 노출되지 않고, 카페 주소를 통해서도 방문할 수 없습니다.</span>
 							</p>
@@ -95,9 +95,9 @@
 					</th>
 					<td class="th_join">
 						<div class="txt_area radio">
-							<input type="radio" id="join_nosign" name="" value="O" class="input_rdo">
+							<input class="validate invalid">
 							<label for="join_nosign">가입 신청시 바로 가입할 수 있습니다.</label><br>
-							<input type="radio" id="join_sign" name="" value="C" class="input_rdo">
+							<input class="validate invalid">
 							<label for="join_sign">가입 신청 시 운영진 승인을 거쳐 가입할 수 있습니다.</label>
 						</div>
 						<div class="txt_area" style="display: none;">비공개 카페는 운영진의 초대를 통해서만 가입할 수 있습니다.</div>
@@ -109,11 +109,17 @@
 					</th>
 					<td class="th_maddr">
 						<div class="txt_area">
-							<input type="radio" id="use_nick" name="" value="N" disabled="disabled" class="input_rdo">
-								<label for="use_nick">별명사용</label>
-								<input type="radio" id="use_name" name="" value="Y" disabled="disabled" class="input_rdo">
-								<label for="use_name">이름사용</label>
-								<span class="note" style="display: none;">멤버관리메뉴에 이름이 공개됩니다.</span>
+							<input class="validate invalid">
+							<!-- 
+							<input type="radio" id="use_nick" name="" value="N" disabled="disabled" class="input_rdo validate">
+							 -->
+							<label for="use_nick">별명사용</label>
+							<input class="validate invalid">
+							<!-- 
+							<input type="radio" id="use_name" name="" value="Y" disabled="disabled" class="input_rdo validate">
+							 -->
+							<label for="use_name">이름사용</label>
+							<span class="note" style="display: none;">멤버관리메뉴에 이름이 공개됩니다.</span>
 						</div>
 					</td>
 				</tr>
@@ -123,9 +129,9 @@
 					</th>
 					<td class="th_priv">
 						<div class="txt_area">
-							<input type="radio" id="open" name="rdo" value="1" class="input_rdo">
+							<input class="validate invalid">
 							<label for="open">공개</label>
-							<input type="radio" id="close" name="rdo" value="0" class="input_rdo">
+							<input class="validate invalid">
 							<label for="close">비공개</label>
 							<p class="txt" style="display: none;">멤버목록을 모든 멤버가 열람할 수 있습니다.</p>
 							<p class="txt">멤버목록을 매니저, 부매니저, 멤버등급스탭 이상만 열람할 수 있습니다.</p>
@@ -153,8 +159,9 @@
 					<td>
 						<div class="rel">
 							<label for="group">주제</label>
-							<select id="group" title="대분류 선택" style="width: 280px;">
+							<select id="group"  class="invalid" title="대분류 선택" style="width: 280px;">
 								<!--  이건 cafe.js 소스에 있음 -->
+								<option value="-1">대분류 선택</option>
 								<!-- 
 								<option value="-1">대분류 선택</option>
 								<option value="1">게임</option>
@@ -184,12 +191,12 @@
 								<option value="25">종교/봉사</option>
 								 -->
 							</select>
-							<select title="소분류 선택" style="width: 280px;">
+							<select title="소분류 선택" class="invalid" style="width: 280px;">
 								<option value="-1">소분류 선택</option>
 							</select>
 							<div>
 								<label for="group2">지역</label>
-								<select id="group2" title="대분류 선택" style="width: 280px;">
+								<select id="group2" title="대분류 선택" class="invalid"  style="width: 280px;">
 									<!--  이미 소스에 있음 -->
 									<option value="-1">대분류 선택</option>
 									<!-- 
@@ -216,7 +223,7 @@
 									<option value="1020">아프리카</option>
 									 -->
 								</select>
-								<select title="소분류 선택" style="width: 280px;">
+								<select title="소분류 선택" class="invalid" style="width: 280px;">
 									<option value="-1">소분류 선택</option>
 								</select>
 							</div>
@@ -248,10 +255,13 @@
 						<input type="text" name="cafeKeyword" title="카페검색어" maxlength="40" class="input_txt2" style="width: 205px;">
 						<button type="button" title="검색어 등록" class="btn_srch"></button>
 						<span class="byte">
-							<strong class="vm">0</strong> / 20 bytes</span>
-						<p class="txt" style="display: none;"></p>
+							<strong class="vm">0</strong> / 20 bytes
+						</span>
+						<p class="txt alert" style="display: none;">
+							<strong>글자수가 초과되었습니다.</strong>
+						</p>
 						<div id="CafeKeywordListArea" class="srch_word_area">
-							<ul>
+							<ul class="validate">
 								<li class="">
 									<em>1</em>
 									<input type="hidden" name="cafeKeywords" value="">
@@ -320,10 +330,14 @@
 					</th>
 					<td>
 						<div class="input_area">
+							<!-- 
 							<textarea cols="30" rows="5" title="카페설명" class="input_txt3"></textarea>
+							 -->
+							<textarea class="validate"></textarea>
 							<span class="byte"><strong>0</strong> / 100 bytes</span>
 						</div>
 						<p class="txt">입력한 내용이 카페 메인, 검색결과등의 카페리스트에 반영 됩니다.</p>
+						<p class="txt alert" style="display: none"><strong>카페 설명 글자수가 초과되었습니다.</strong></p>
 						<!---->
 					</td>
 				</tr>
@@ -334,7 +348,7 @@
 					<td>
 						<div class="major_img">
 							<div class="thmb">
-								<img src="https://ssl.pstatic.net/static/cafe/thumb/make_cafe_thumb_default.png" width="114" height="114" alt="이미지를 등록하세요">
+								<img class="validate">
 							</div>
 							<div class="detail">
 								<div class="ly_btn">
@@ -374,15 +388,64 @@
 									</li>
 								</ul>
 							</div>
-						</div></td>
+						</div>
+					</td>
 				</tr>
+				<!--  Test -->
+				<tr style="display: none;">
+					<th scope="row" class="th_major">
+					</th>
+					<td>
+						<div>
+							<div style="background-color: #f8f9fa; padding: 12px 0 6px 6px;">
+								<p><b>프로필 사진 올리기</b></p>
+							</div>
+							<div style="padding: 12px 0 6px 6px;">
+								<p><b>프로필 사진 설정 방법</b></p>
+							</div>
+							<ul style="list-style:circle; padding: 6px 0 6px 15px;">
+								<li>이미지 중앙에 생긴 점선창을 조절하여 프로필 사진으로 만들고 싶은 영역이 점선 안에 보이도록 합니다.</li>
+								<li>점선창의 비율은 1:1로 크기는 1:1비율로만 커지고, 작아집니다.</li>
+								<li><b style="color: green;">하단 저장 버튼</b>을 클릭하거나, 점선창 더블클릭시 프로필 사진으로 등록됩니다.</li>
+							
+							</ul>
+							<ul style="list-style:circle; padding: 6px 0 6px 15px; border-top: 1px solid #ededed;">
+								<li>등록할 수 있는 사진의 크기는 <b style="color: green;">150*150픽셀 이상, 최대용량은 10MB미만</b> 입니다.</li>
+								<li>파일 이름이 영문, 숫자가 아닐 경우 이미지가 안 보일 수 있습니다.</li>
+								<li>확장자가 gif인 움직이는 이미지 파일의 경우 정지된 이미지로 제공됩니다.</li>
+								<li style="list-style:none;">
+									<span class="img_name"></span>
+									<button class="btn_find">찾아보기</button>	
+									<!--  찾아보기 버튼을 눌렀을떄 아래 input file 을 누름 -->
+									<input  class="int_file" type="file" value="찾아보기" style="display: none;" >
+								</li>
+							</ul>
+							
+							현재사진:<span class="img_name">현재 사용중인 파일이 없습니다.</span>
+							<div class="sel_img">
+								<!--  cropper에 의해서 이미지 조절 -->
+								<img src="https://ssl.pstatic.net/static/phinf/profile/default_v2.jpg"  style="max-width:100%; width: 461px; height: 300px;" class="_crop_source info" id="tmp_img" alt="프로필이미지">
+								<!-- masking - 배경화면 -->
+							</div>
+							<!--  선택 영역 저장 -->
+							<div style="padding: 12px 0 6px 6px;">
+								<!--  선택 영역 저장[crop] -->
+							    <img class="btn_srch" src="https://ssl.pstatic.net/static/phinf/profile/btn01.gif" alt="선택영역저장" style="cursor:pointer">
+							    <!--  전체 영역 저장 -->
+							    <img class="btn_srch" src="https://ssl.pstatic.net/static/phinf/profile/btn02.gif" width="100" height="28" alt="" style="cursor:pointer">
+							    <!--  자른 파일의 영역의 중심으로 부터 150X150으로만 저장한다. -->
+							</div>
+						</div>
+					</td>
+				</tr>
+								
 				<tr>
 					<th scope="row" class="th_shortcut">
 						<label for="group_set1" class="stit">지름길 설정</label>
 					</th>
 					<td>
 						<div class="group_select">
-							<select id="group_set1" style="width: 202px;">
+							<select id="group_set1" class="invalid" style="width: 202px;">
 								<option value="999">기본 그룹</option>
 							</select>
 						</div>
@@ -411,73 +474,3 @@
 	</div>	
 
 </div>
-
-<!-- 
-<div class="section_create">
-	<table class="cafe_input">
-		<caption>
-			<span class="blind">카페 만들기 입력 양식</span>
-		</caption>
-		<colgroup>
-			<col width="114">
-			<col width="545">
-		</colgroup>
-		<tbody>
-			<tr>
-				<th scope="row" class="th_name">
-					<div class="stit">
-						* 카페이름
-						<button class="help">
-							<span class="blind">도움말</span>
-						</button>
-						<div class="layer_pop">
-							<div class="cont">
-								<p>카페이름은 마지막 변경일을 기준으로 <br>6개월 이후에 수정할 수 있습니다. 
-									<br>단, 카페 개설 후 최초 2회는 기간에 관계없이 <br>변경 가능합니다.
-								</p>
-							</div>
-							<a href="#" class="btn_close">닫기</a>
-							<span class="arr"></span>
-						</div>
-					</div>
-				</th>
-				<td>
-					<div class="input_area">
-						<input type="text" title="카페이름" class="input_txt spot_off" style="width: 631px;">
-						<span class="byte"><strong>0</strong> / 60 bytes</span>
-					</div>
-					<p class="txt">카페주제와 어울리는 이름으로 입력하면 많은 사람들이 카페를 찾기가 쉬워집니다.</p>
-					<p class="txt" style="display: none;"></p>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row" class="th_addr">
-					<div class="stit">
-						* 카페주소
-						<button class="help">
-							<span class="blind">도움말</span>
-						</button>
-						<div class="layer_pop">
-							<div class="cont">
-								<p>카페 주소는 추후 변경이 불가능합니다.</p>
-							</div>
-							<a href="#" class="btn_close">닫기</a>
-								<span class="arr"></span>
-						</div>
-					</div>
-				</th>
-				<td>
-					<div class="input_area">
-						<label for="cafe_addr">https://cafe.naver.com/</label> <input
-							type="text" id="cafe_addr" title="카페주소" value="카페 주소를 입력해 주세요."
-							class="input_txt spot_off" style="width: 500px;"> <span
-							class="byte"><strong>0</strong> / 20 bytes</span>
-					</div>
-					<p class="txt" style="display: none;"></p></td>
-			</tr>
-
-		</tbody>
-	</table>
-</div>
-
- -->

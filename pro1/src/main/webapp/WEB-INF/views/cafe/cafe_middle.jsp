@@ -6,8 +6,10 @@
 <div id="container">
 	 <c:choose>
 	 	<c:when test="${fn:contains(page,'register')}">
+	 		<link rel="stylesheet" href="/css/utils/cropper/cropper.css?${applicationScope.cachetype}" type="text/css">
 	 		<jsp:include page="cafe_register.jsp"></jsp:include>
-	 	</c:when>
+	 		<script class="personal_js" type="text/javascript" src="/js/utils/cropper/cropper.js?${applicationScope.cachetype}" ></script>
+		</c:when>
 	 	<c:otherwise>
 	 		<jsp:include page="cafe_middle_main.jsp"></jsp:include>
 	 	</c:otherwise>
