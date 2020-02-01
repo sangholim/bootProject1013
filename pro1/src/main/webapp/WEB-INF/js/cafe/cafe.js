@@ -591,15 +591,10 @@ var cafe = {
 				} else if (selected == buttonTag2[0]) {
 					
 					//등록 버튼
-					var c = document.createElement("canvas");
-					c.width = 114;
-					c.height = 114;
-					var ctx = c.getContext("2d");
-					ctx.drawImage(imgTag, 0, 0, 114, 114); // destination rectangle
-					
+					var cafeForm = {};
+				    
 					// 서버에 저정할 파일 이름 부여
-					result["icon"] = img_name[0].text;
-					
+					result["icon"] = img_name[0].textContent;
 					//만약 이미지 등록이되어있지 않다면 기본 경로
 					if(result["icon"] !== undefined && result["icon"].length > 0 ){
 						//등록 버튼
@@ -608,7 +603,7 @@ var cafe = {
 						c.height = 114;
 						var ctx = c.getContext("2d");
 						ctx.drawImage(imgTag, 0, 0, 114, 114); // destination rectangle
-						var base64Data = c.toDataURL('image/jpeg');
+						//var base64Data = c.toDataURL('image/jpeg');
 						cafeForm['imageDatas'] = c.toDataURL('image/jpeg');
 					} else {
 						result["icon"] ='https://ssl.pstatic.net/static/phinf/profile/default_v2.jpg';
@@ -624,8 +619,7 @@ var cafe = {
 						return;
 					}
 					
-					var cafeForm = {};
-				    result['keywordList'] = result['keywordList'].toString();
+					result['keywordList'] = result['keywordList'].toString();
 				    cafeForm['cafeVO'] = result;
 				    
 				    

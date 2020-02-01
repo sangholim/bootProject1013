@@ -14,4 +14,6 @@
 	<!--  서버 시간대 (Timezone)
 		Default : UTC -->
 	<timezone>UTC</timezone>
+	<!-- store[저장경로] -->
+	<store>store</store>
 </config>

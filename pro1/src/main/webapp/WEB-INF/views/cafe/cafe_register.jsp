@@ -445,7 +445,11 @@
 					</th>
 					<td>
 						<div class="group_select">
+							<!-- 
 							<select id="group_set1" class="invalid" style="width: 202px;">
+							 -->
+							
+							<select id="group_set1" style="width: 202px;">
 								<option value="999">기본 그룹</option>
 							</select>
 						</div>

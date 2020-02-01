@@ -51,6 +51,12 @@ common.sync = function(requestParams) {
 			} else if (url.indexOf("findAddr.json") != -1) {
 				//document.location.hash = json.popState;
 				login.createAddrBody(json);
+			} else if (url.indexOf("/cafe/add.json") != -1){
+				var responseCode = json.code;
+				alert(json.reesult);
+				if(responseCode == 200) {
+					window.location.href = "/cafe";
+				} 
 			}
 		}
 		loadNode.classList.add('blind');
@@ -166,7 +172,8 @@ common.createPageNode = function(pageCell, value, classList, id) {
 
 common.calUtf8Bytes = function(ch) {
 	//char > hex to decimail
-	var dec = 	ch.charCodeAt(0).toString(16);
+	//var dec = 	ch.charCodeAt(0).toString(16);
+	var dec = 	ch.charCodeAt(0);
 	
 	//16진수 : '00007F' > 10진수: 127
 	//16진수 : '0007FF' > 10진수: 2047

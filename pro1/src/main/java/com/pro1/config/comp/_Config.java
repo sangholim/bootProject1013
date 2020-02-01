@@ -8,12 +8,14 @@ import com.pro1.config.comp.security._Security;
 
 @XmlRootElement(name = "config")
 public class _Config {
-    
+
     private _Database database;
 
     private _Security security;
 
     private String timezone;
+
+    private String store;
 
     @XmlElement(name = "database")
     public _Database getDatabase() {
@@ -40,6 +42,14 @@ public class _Config {
 
     public void setTimezone(String timezone) {
 	this.timezone = timezone;
+    }
+
+    public String getStore() {
+	return store;
+    }
+
+    public void setStore(String store) {
+	this.store = store;
     }
 
 }
