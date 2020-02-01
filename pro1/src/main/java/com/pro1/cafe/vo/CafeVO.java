@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
@@ -21,62 +22,61 @@ public class CafeVO {
     @Column(name = "uid")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private long uid;
-    
+
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "url")
     private String url;
-    
+
     @Column(name = "usePrivate")
     private int usePrivate = 0;
-    
+
     @Column(name = "joinType")
-    private int joinType = 0 ;
-    
+    private int joinType = 0;
+
     @Column(name = "useNickname")
     private int useNickname = 0;
-    
+
     @Column(name = "showMember")
-    private int showMember = 0 ;
-    
+    private int showMember = 0;
+
     @Column(name = "title_mainSort")
     private int title_mainSort = -1;
-    
+
     @Column(name = "title_subSort")
     private int title_subSort = -1;
-    
+
     @Column(name = "region_mainSort")
     private int region_mainSort = -1;
-    
+
     @Column(name = "region_subSort")
     private int region_subSort = -1;
-    
+
     @Column(name = "keywordList")
     private String keywordList = "";
-   
+
     /**
      * 카페의 아이콘 경로 store/cafe/카페명+uid/
      */
     @Column(name = "icon")
     private String icon = "defaultPath";
-    
+
     @Column(name = "visitCnt")
     private long visitCnt = 0;
-    
+
     @Column(name = "writingCnt")
     private long writingCnt = 0;
-    
+
     @Column(name = "memberCnt")
     private long memberCnt = 0;
-    
+
     @Column(name = "`desc`")
     private String desc = "";
-    
+
     @Column(name = "useShortCut")
     private int useShortCut = 0;
-    
-    
+
     public long getUid() {
 	return uid;
     }
@@ -214,11 +214,11 @@ public class CafeVO {
     }
 
     public int getUseShortCut() {
-        return useShortCut;
+	return useShortCut;
     }
 
     public void setUseShortCut(int useShortCut) {
-        this.useShortCut = useShortCut;
+	this.useShortCut = useShortCut;
     }
-    
+
 }

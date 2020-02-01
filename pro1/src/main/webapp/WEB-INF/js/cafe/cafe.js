@@ -628,7 +628,7 @@ var cafe = {
 				    //form tag 안쓰고 xmlHttpRequest 사용.
 					//common.createForm('/cafe/add',json);
 					// response 값을담는곳 node id
-					var requestParams = common.requestParams(true ,"POST", "/cafe/add", json, null);
+					var requestParams = common.requestParams(true ,"POST", "/cafe/add.json", json, null);
 					common.sync(requestParams);
 				} else if (selected == buttonTag2[1]) {
 					//취소 버튼

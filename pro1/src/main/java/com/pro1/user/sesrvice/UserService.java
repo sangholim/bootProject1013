@@ -136,10 +136,9 @@ public class UserService {
 		    .setAuthentication(customAuthenticationProvider.authenticate(authentication));
 	    response.setContentType("text/html; charset=UTF-8");
 
-	    String auth_token = Constant.TOKEN_PREFIX + jwtUtils.createJWT(request, authentication.getPrincipal());
+	    //String auth_token = Constant.TOKEN_PREFIX + jwtUtils.createJWT(request, authentication.getPrincipal());
 
-	    out.println("<script>alert('정상적으로 회원가입이 되었습니다.'); localStorage.setItem(" + Constant.TOKEN_HEADER + ","
-		    + auth_token + "); window.location.href='../';</script>");
+	    out.println("<script>alert('정상적으로 회원가입이 되었습니다.'); window.location.href='/';</script>");
 	} catch (Exception e) {
 	    logger.error("Error Occuring addUser > user: " + uservo.toString() + ", msg:" + e.getCause());
 	    response.setContentType("text/html; charset=UTF-8");

@@ -48,11 +48,9 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
 	    // 인증 성공후 token 생성 > 웹 취약점 방어 , csrf 방어 가능 , 다수 서버시 session 유지 가능.
 	    // token data 전달
 	    // 1. session에 저장
-	    auth_token = Constant.TOKEN_PREFIX + jwtUtils.createJWT(request, authentication.getPrincipal());
+	    //sauth_token = Constant.TOKEN_PREFIX + jwtUtils.createJWT(request, authentication.getPrincipal());
 	    response.setContentType("text/html; charset=UTF-8");
-	    // 토큰 storage에 저장
-	    out.println("<script>localStorage.setItem('" + Constant.TOKEN_HEADER + "','" + auth_token + "'"
-		    + "); window.location.href='/';</script>");
+	    out.println("<script>window.location.href='/';</script>");
 	} catch (Exception e) {
 	    logger.error("Error Create Web Token > {}", e.getMessage(), e);
 	    redirectStrategy.sendRedirect(request, response, "/");

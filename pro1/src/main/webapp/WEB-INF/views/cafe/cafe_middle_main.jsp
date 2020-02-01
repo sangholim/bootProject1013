@@ -13,7 +13,7 @@
 			<li>
 				<a href="#" class="link">
 					<div class="pick_thumb">
-						<img src="https://cafefiles.pstatic.net/MjAxOTEyMDVfMTY3/MDAxNTc1NTIzNDQwOTQz.BUni_YmTT03puysDt1EinuEt5PJvJZCIKDgPrNnomB0g.t4rou2ve_w0Too7o2g_yWp2R9uwZvuN6chHEgKIcMbwg.PNG/default.png?type=f500_500" width="250" height="250" alt="">
+						<img src="/img/cafe/test_cafe_img2.png" width="250" height="250" alt="">
 					</div>
 					<div class="pick_info">
 						<strong class="title">
@@ -83,7 +83,7 @@
 			 		<div class="user_mycafe_box">
 			 			<div class="user_mycafe_thumb">
 			 				<a href="#" class="link">
-			 					<img src="https://cafeptthumb-phinf.pstatic.net/MjAxOTA4MjVfMTAw/MDAxNTY2NzMyNzQ2MTU1.zXFwfKNJq3xdfgOpaXqulac4lTC2sWPlvwx1CmwslVQg.-t0KLqXuxEjOXbkN9HQ8sM6qeH9EOhmIYwwTU4p_zx8g.PNG/빠직.PNG?type=f72_72_mask" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'" width="55" height="55" alt="">
+			 					<img src="/img/cafe/test_cafe_img1.png" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'" width="55" height="55" alt="">
 			 				</a>
 			 			</div>
 				 		<div class="user_mycafe_info">

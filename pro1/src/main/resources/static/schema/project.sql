@@ -65,6 +65,8 @@ ALTER TABLE cafe ADD COLUMN `desc` nvarchar(255) default '';
 ALTER TABLE cafe ADD COLUMN `useShortCut` tinyint(2) default 0 not null;
 ALTER TABLE cafe MODIFY  COLUMN `region_subSort` varchar(10) default 0 not null;
 ALTER TABLE cafe MODIFY  COLUMN `title_subSort` varchar(10) default 0 not null;
+ALTER TABLE cafe MODIFY  COLUMN `useShortCut` varchar(10) default '0';
+ALTER TABLE cafe DROP COLUMN `cafeFav`;
 
 
 ## cafe 샘플 테이블 하나 만들기
@@ -79,9 +81,13 @@ create table user_cafe (
  userUid bigint(20) unsigned NOT NULL,
  cafeUid bigint(20) unsigned NOT NULL,
  cafeLevel varchar(20) NOT NULL,
+ cafeFav tinyInt(1) default 0,
  FOREIGN KEY (userUid) REFERENCES user (userUid),
  FOREIGN KEY (cafeUid) REFERENCES cafe (uid)
 )
+
+
+ALTER TABLE user_cafe ADD COLUMN `cafeFav` tinyint(1) default 0;
 
 //0 -> 운영자
 ## 유저가 카페 가입하거나 생성

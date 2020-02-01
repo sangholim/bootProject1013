@@ -300,7 +300,7 @@ var login = {};
 			user.addrEmail = emailUI.value;
 			var json = JSON.stringify(user);
 			// response 값을담는곳 node id
-			var requestParams = common.requestParams(false,"POST", "/login/checkExistUser.json", json, idMsg);
+			var requestParams = common.requestParams(false,"POST", "/login/authEmail.json", json, emailMsg);
 			common.sync(requestParams);
 
 		}, false);

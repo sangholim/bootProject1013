@@ -82,11 +82,11 @@ public class CafeMainAsync {
 
 	try {
 	    cafeManager.addCafe((CustomAuthentication) authetication, cafeVO);
-	    resultMap.put(code, 200);
-	    resultMap.put(result, "정상적으로 카페가 생성되었습니다.");
 	} catch (Exception e) {
 	    logger.error("ERROR SAVE CAFE CUZ: {}", e.getMessage());
 	}
+	resultMap.put(code, 200);
+	resultMap.put(result, "정상적으로 카페가 생성되었습니다.");
 
 	return resultMap;
     }

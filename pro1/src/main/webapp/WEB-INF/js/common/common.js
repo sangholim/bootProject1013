@@ -53,7 +53,7 @@ common.sync = function(requestParams) {
 				login.createAddrBody(json);
 			} else if (url.indexOf("/cafe/add.json") != -1){
 				var responseCode = json.code;
-				alert(json.reesult);
+				alert(json.result);
 				if(responseCode == 200) {
 					window.location.href = "/cafe";
 				} 
@@ -93,17 +93,7 @@ common.createForm = function(url, dataNodes) {
 	form.setAttribute("charset", "UTF-8");
 	form.setAttribute("method", "Post"); // Post 방식
 	form.setAttribute("action", url); // 요청 보낼 주소
-	/*
-	 * var hiddenField = document.createElement("input");
-	 * hiddenField.setAttribute("type", "hidden");
-	 * hiddenField.setAttribute("name", "mName");
-	 * hiddenField.setAttribute("value", mName); form.appendChild(hiddenField);
-	 * 
-	 * hiddenField = document.createElement("input");
-	 * hiddenField.setAttribute("type", "hidden");
-	 * hiddenField.setAttribute("name", "mEmail");
-	 * hiddenField.setAttribute("value", mEmail); form.appendChild(hiddenField);
-	 */
+
 	document.body.appendChild(form);
 	form.submit();
 }

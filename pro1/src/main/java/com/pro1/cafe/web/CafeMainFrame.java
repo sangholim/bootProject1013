@@ -1,25 +1,15 @@
 package com.pro1.cafe.web;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pro1.cafe.service.CafeManager;
-import com.pro1.cafe.vo.CafeForm;
-import com.pro1.cafe.vo.CafeVO;
 import com.pro1.common.constant.Constant;
-import com.pro1.common.utils.FileUtils;
 import com.pro1.config.ConfigManagement;
-import com.pro1.config.comp._Config;
 import com.pro1.security.CustomAuthentication;
 
 @Controller
@@ -35,11 +25,13 @@ public class CafeMainFrame {
 
     @RequestMapping(value = "")
     public String getBoardView(Authentication authetication, String cafeType, Model model) {
-
-	cafeManager.getCafeList(model);
+	
+	//cafeManager.getCafeList(model);
+	CustomAuthentication userAuth = (CustomAuthentication) authetication;
 	model.addAttribute(Constant.PAGE_TYPE, Constant.CAFE_TYPE);
-	model.addAttribute("nickName", ((CustomAuthentication) authetication).getAuthUser().getUserNickName());
-
+	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
+	cafeManager.getCafeListByUserUid(model, userAuth.getUid());
+	
 	return Constant.MAIN;
     }
 

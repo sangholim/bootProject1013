@@ -20,6 +20,34 @@ public class CafeDAO extends CommonDBSession {
 
     private static final Logger logger = LoggerFactory.getLogger(CafeDAO.class);
 
+    public List<CafeVO> getCafeListByUserUid(long userUid) throws Exception {
+
+	if (sqlSession != null) {
+	    return sqlSession.selectList("getCafeListByUserUid");
+	}
+
+	DbSessionInfo sessionInfo = processHibernateSession(CafeVO.class, null, DBQueryType.SELECT);
+	try (Session session = sessionInfo.getSession()) {
+	    
+	    // TEST SELECT * FROM cafe c JOIN user_cafe uc ON c.uid = uc.cafeUid  where uc.userUid = 26 \G;
+	    CriteriaBuilder builder = sessionInfo.getCriteriaBuilder();
+	    CriteriaQuery<CafeVO> criteria = builder.createQuery(CafeVO.class);
+
+	    Root<UserCafeVO> ucRoot = criteria.from(UserCafeVO.class);
+	    ucRoot.alias("uc");
+	    Root<CafeVO> cRoot = criteria.from(CafeVO.class);
+	    cRoot.alias("c");
+	    criteria.select(cRoot);
+	    criteria.where(builder.equal(ucRoot.get("userUid"), userUid));
+	    return session.createQuery(criteria).getResultList();
+
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return null;
+	}
+
+    }
+
     public List<CafeVO> getCafeList() throws Exception {
 
 	if (sqlSession != null) {

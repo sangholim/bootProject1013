@@ -204,7 +204,7 @@
 								<c:if test="${not empty user}">value="${user.addrEmail}"</c:if>
 							>
 						</span>
-						<a href="javascript:void(0);" class="btn_verify btn_primary" id="authEmailSend" role="button">
+						<a class="btn_verify btn_primary" id="authEmailSend" role="button">
                        		본인 인증
                        	</a>
                        <span class="error_next_box blind <c:if test="${not empty user}">green</c:if>" id="emailMsg" role="alert"/>
