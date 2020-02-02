@@ -28,6 +28,17 @@
 				</a>	
 			</li>
 			<li>전체 카페 게시글중에서 인기 있는거 몇가지 추려내는곳</li>
+
+			<!--
+			@author skydrive860
+			@brief board로 가는 테스트 임시 링크
+			-->
+			<a class="link_board need_auth" href="/board">
+				<i>
+					보드<span class="boardlink">100</span>
+				</i>
+			</a>
+
 		</ul>
 		<div class="common_btn_side">
 			<button type="button" title="이전" disabled="disabled" class="btn_side_prev">

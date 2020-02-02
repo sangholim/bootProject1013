@@ -39,9 +39,9 @@
 				<jsp:include page="login/login_bot.jsp" />
 				<script class="personal_js" type="text/javascript" src="/js/login/login.js?${applicationScope.cachetype}" ></script>
 			</c:when>
-			<c:when test="${page eq 'board'}">
+			<c:when test="${page eq 'boardType'}">
 				<link class="personal_css" rel="stylesheet" href="/css/board/board.css?${applicationScope.cachetype}" type="text/css">
-				<jsp:include page="board/commonBoard.jsp"/>
+				<jsp:include page="board/commonBoardView.jsp"/>
 				<script class="personal_js" type="text/javascript" src="/js/board/board.js?${applicationScope.cachetype}" ></script>
 			</c:when>
 			<c:when test="${fn:startsWith(page,'cafe')}">

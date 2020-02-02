@@ -1,5 +1,9 @@
 package com.pro1.board.web;
 
+import com.pro1.cafe.service.CafeManager;
+import com.pro1.security.CustomAuthentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,28 +13,35 @@ import com.pro1.common.constant.Constant;
 
 @Controller
 //@RequestMapping("/board/{boardAuth}")
-@RequestMapping("/board/")
+@RequestMapping("/board")
 public class BoardMainFrame {
 
-    private final String root_path = "/board/";
+/*    private final String root_path = "/board/";
 
-    private final String commonBoardFrame = "commonBoard";
+    private final String commonBoardFrame = "commonBoard";*/
 
-    @RequestMapping(value = "/{boardType}")
+/*    @RequestMapping(value = "/{boardType}")
     public String getBoardView(@PathVariable("boardAuth") String boardAuth, @PathVariable("boardType") String boardType,
 	    Model model) {
 	// TEST
 	model.addAttribute("auth", boardAuth);
 
-	/**
+	*//**
 	 * boardAuth > admin , user , free boardType > view , insert , delete , update
 	 * .. .etc
-	 */
+	 *//*
 	model.addAttribute(Constant.BOARD_TYPE, boardType);
 	return root_path + commonBoardFrame;
-    }
+    }*/
 
-    @RequestMapping(value = "/commonBoardView")
-	public void cafetestjsp() {}
+    @RequestMapping(value = "")
+	public String getBoardView(Authentication authetication, String boardType, Model model) {
+
+		CustomAuthentication userAuth = (CustomAuthentication) authetication;
+		model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
+		model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
+
+		return Constant.MAIN;
+	}
 
 }
