@@ -30,7 +30,8 @@ public class CafeMainFrame {
 	CustomAuthentication userAuth = (CustomAuthentication) authetication;
 	model.addAttribute(Constant.PAGE_TYPE, Constant.CAFE_TYPE);
 	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
-	cafeManager.getCafeListByUserUid(model, userAuth.getUid());
+	//cafeManager.getCafeListByUserUid(model, userAuth.getUid());
+	cafeManager.getCafeMapByUserUid(model, userAuth.getUid());
 	
 	return Constant.MAIN;
     }

@@ -251,7 +251,91 @@ var cafe = {
 			registerUi.href = "/cafe/register";
 			// 이벤트 리스너 추가
 
+			//cafe 개별 정보 INFO
+			// 1. 카페홈/주제별/지역별/랭킹/대표카페/내소식/채팅 기능
+			// 2. Editor pick 기능
+			// 3. 내 카페 새글 피드 기능
+			// 4. 전체/ 즐겨찾는 카페/ 운영카페 클릭스 해당 카페 리스트 뿌리기
+			// 5. 추천 카페 뿌리기
+			
+			
+			// 4. 전체/즐겨찾는 카페/운영카페 클릭스 해당 카페 리스트 뿌리기
+			var myCafeType = document.getElementsByClassName("common_option_list")[0].getElementsByTagName("li");
+			var bodyTag = document.getElementById("content");
+			// 나의 카페 정보를 보여주는 큰 덩어리 
+			var user_mycafe_area = document.getElementsByClassName("user_mycafe_area");
+			var user_mycafe_area_size =user_mycafe_area.length;
+			
+			// 5. 추천 카페 뿌리기.
+			// 추천카페 분류 데이터가 있는 node 가져오기 
+			var recommaendCafeType = document.getElementsByClassName("scroll_box_swiper")[0].getElementsByTagName("li");
+			bodyTag.addEventListener('click', function(event) {
+				var selectedTag = event.target;
+				var myCafeTypeSize = myCafeType.length;
+				/*
+				 * 전체: 나의 카페 모든걸 공개
+				 * 즐겨 찾기: 즐겨찾기만 공개
+				 * 운영진 : 운영진만 공개
+				 * 카페의 큰 덩어리: user_mycafe_area
+				 */
+				if(myCafeType[0].firstElementChild == selectedTag) {
+					console.log("전체");
+					for (var k = 0; k <myCafeTypeSize; k++) {
+						myCafeType[k].classList.remove("on");
+					}
+					
+					myCafeType[0].classList.add("on");
+					
+					for (var i = 0; i < user_mycafe_area_size; i ++) {
+						user_mycafe_area[i].style ="";
+					}
+					
+				}else if (myCafeType[1].firstElementChild == selectedTag) {
+					console.log("즐겨찾기");
+					
+					for (var k = 0; k <myCafeTypeSize; k++) {
+						myCafeType[k].classList.remove("on");
+					}
+					
+					myCafeType[1].classList.add("on");
+					
+					for (var i = 0; i < user_mycafe_area_size; i ++) {
+						user_mycafe_area[i].style ="";
+						// 나의 카페 리스트에서 즐겨찾기 시에 추가되는 class가 없다면 감춘다.
+						var cafeFav = user_mycafe_area[i].getElementsByClassName("info_area")[0];
+						if (!cafeFav.firstElementChild.classList.contains("on")) {
+							user_mycafe_area[i].style.display ="none";
+						}
+					}
+				
+				}else if (myCafeType[2].firstElementChild == selectedTag) {
+					console.log("운영");
+					
+					for (var k = 0; k <myCafeTypeSize; k++) {
+						myCafeType[k].classList.remove("on");
+					}
+					
+					myCafeType[2].classList.add("on");
+					
+					for (var i = 0; i < user_mycafe_area_size; i ++) {
+						// 나의 카페중 운영자일떄 새성되는 클래스가 존재하는지 체크후 없다면 감춤
+						user_mycafe_area[i].style ="";
+						var cafeFav = user_mycafe_area[i].getElementsByClassName("icon_manager");
+						if (cafeFav === undefined || cafeFav.length == 0) {
+							user_mycafe_area[i].style.display ="none";
+						}
+					}
+				} // 추천 카페 카테고리의 버튼 tag의 어머니 태그중 'scroll_box_swiper' 가 존재시 이벤트 진행
+				else if (selectedTag.parentNode.parentNode.classList.contains("scroll_box_swiper")) {
+					console.log(selectedTag.textContent.trim());
+					var selected_title_mainSort = selectedTag.textContent.trim();
+					// 값을 매칭시켜서 해당 배열 데이터값이 많은것들만 호출
+				}
+			});
+			
+				
 		} else if (path == "/register" || path == "/register/") {
+			// 카페 생성 UI
 			// cafe 생성 > form tag로 추가
 			// 카페이름 , 카페주소는, 카페 설명 상위태그 검색
 			var input_areas = document.getElementsByClassName("input_area");

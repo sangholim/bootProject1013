@@ -1,10 +1,11 @@
 package com.pro1.cafe.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
@@ -22,6 +23,16 @@ public class CafeDAO extends CommonDBSession {
 
     private static final Logger logger = LoggerFactory.getLogger(CafeDAO.class);
 
+    /**
+     * User가 가입한 카페에 필요한 정보 카페레벨,즐겨찾기, 카페이름,카페아이콘
+     */
+    private final String userCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafeLevel, uc.cafeFav, uc.cafe.uid, uc.cafe.name, uc.cafe.icon) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid";
+
+    /**
+     * 추천하는 카페에 필요한 정보 카페이름,카페아이콘, 멤버수, 랭킹점수 (todo)
+     */
+    private final String recommandCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafe.uid, uc.cafe.name, uc.cafe.icon,uc.cafe.memberCnt) from UserCafeVO uc join uc.cafe c where uc.userUid != :userUid";
+
     public List<UserCafeVO> getCafeListByUserUid(long userUid) throws Exception {
 
 	if (sqlSession != null) {
@@ -31,27 +42,8 @@ public class CafeDAO extends CommonDBSession {
 	DbSessionInfo sessionInfo = processHibernateSession(CafeVO.class, null, DBQueryType.SELECT);
 	try (Session session = sessionInfo.getSession()) {
 
-	    // TEST SELECT * FROM cafe c JOIN user_cafe uc ON c.uid = uc.cafeUid where
-	    // uc.userUid = 26 \G;
-	    // Query<UserCafeVO> query = session.createQuery("from cafe c join c.user_cafe
-	    // uc where uc.userUid = :userUid",
-	    // UserCafeVO.class);
-	    Query<UserCafeVO> query = session.createQuery(
-		    "select NEW UserCafeVO(0l, 0l, uc.cafeLevel, uc.cafeFav, uc.cafe) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid",
-		    UserCafeVO.class);
-	    // Query<UserCafeVO> query = session
-	    // .createQuery("select uc.cafe, uc.cafeLevel, uc.cafeFav from UserCafeVO uc
-	    // join uc.cafe c where uc.userUid = :userUid", UserCafeVO.class);
+	    Query<UserCafeVO> query = session.createQuery(userCafeJoin, UserCafeVO.class);
 	    query.setParameter("userUid", userUid);
-	    // CriteriaBuilder builder = sessionInfo.getCriteriaBuilder();
-	    // CriteriaQuery<UserCafeVO> criteria = builder.createQuery(UserCafeVO.class);
-	    // "from cafe c join c.user_cafe uc"
-	    // Root<UserCafeVO> ucRoot = criteria.from(UserCafeVO.class);
-	    // ucRoot.alias("uc");
-	    // ucRoot.join("cafe",JoinType.INNER);
-	    // criteria.select(ucRoot);
-	    // criteria.multiselect(ucRoot.get("cafe"));
-	    // criteria.where(builder.equal(ucRoot.get("userUid"), userUid));
 	    return query.getResultList();
 
 	} catch (Exception e) {
@@ -61,6 +53,43 @@ public class CafeDAO extends CommonDBSession {
 
     }
 
+    /**
+     * 유저가 로그인후 볼수있는 cafe들을 추출 (추천 카페들 , 내가 가입한 카페들)
+     * @param userUid
+     * @return
+     * @throws Exception
+     */
+    public Map<String, List<UserCafeVO>> getCafeMapByUserUid(long userUid) throws Exception {
+	/*
+	if (sqlSession != null) {
+	    return sqlSession.selectList("getCafeListByUserUid");
+	}
+	*/
+	Map<String, List<UserCafeVO>> userCafeMap = new HashMap<>();
+	
+	DbSessionInfo sessionInfo = processHibernateSession(CafeVO.class, null, DBQueryType.SELECT);
+	try (Session session = sessionInfo.getSession()) {
+
+	    Query<UserCafeVO> query = session.createQuery(userCafeJoin, UserCafeVO.class);
+	    query.setParameter("userUid", userUid);
+	    userCafeMap.put("userCafeList", query.getResultList());
+	    
+	    //추천 카페 데이터
+	    query = session.createQuery(recommandCafeJoin, UserCafeVO.class);
+	    query.setParameter("userUid", userUid);
+	    userCafeMap.put("recommandCafeList", query.getResultList());
+	    
+	    return userCafeMap;
+
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return null;
+	}
+
+    }
+
+    
+    
     public List<CafeVO> getCafeList() throws Exception {
 
 	if (sqlSession != null) {

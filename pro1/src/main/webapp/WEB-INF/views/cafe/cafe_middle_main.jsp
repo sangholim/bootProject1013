@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
-<div class="content">
+<div id="content" class="content">
 	<!--  전체 카페 통틀어서 추천 게시글 -->
 	<div class="home_editors">
 		<div class="common_title">
@@ -68,7 +68,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="home_user_mycafe">
+				<div class="home_user_mycafe">
 			<div class="home_user_tab">
 				<ul class="common_option_list">
 					<li class="on">
@@ -80,16 +80,69 @@
 						<a href="#" class="link">즐겨찾는카페<!----></a>
 					</li>
 					<li>
-				,		<a href="#" class="link">운영카페<!----></a>
+						<a href="#" class="link">운영카페<!----></a>
 					</li>
 				</ul>
 				<a href="/cafe-home/mycafe/join" class="btn_mycafe_edit">내 카페 관리</a>
 			</div>
 			 <!----> <!----> <!----> <!---->
 			 <div class="user_mycafe_list">
-			 	<c:forEach var="cafe" items="${cafeList }">
-			 	
+			 	<c:forEach var="user_cafe" items="${cafeList.userCafeList}">
+				 	<div cafe="data" class="user_mycafe_area">
+				 		<div class="user_mycafe_box">
+				 			<div class="user_mycafe_thumb">
+				 				<a href="#" class="link">
+				 					<img src="${user_cafe.cafe.icon }" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'" width="55" height="55" alt="">
+				 				</a>
+				 			</div>
+					 		<div class="user_mycafe_info">
+					 			<a href="#" class="name_area">
+					 				<strong class="name">${user_cafe.cafe.name }</strong>
+									<div class="common_icon_box">
+									<c:if test="${user_cafe.cafeLevel eq 'admin' }">
+										<em class="icon_manager">
+											<span class="blind">운영</span>
+										</em>
+									</c:if>
+									<!----> <!----> <!----> <!----> <!----> <!----></div>
+								</a>
+								<div class="info_area">
+									<a href="#" title="즐겨찾기" class="user_mycafe_bookmark<c:if test = '${user_cafe.cafeFav eq 1}'> on</c:if>">
+										<span class="blind">즐겨찾기 선택 시 등록됨</span>
+									</a>
+									<a href="#" class="user_mycafe_new">새글 114(TODO: board table 완성대면 join으로 들고오기)</a>
+								</div>
+					 		</div>
+					 		<button type="button" class="btn_mycafe_user on">
+					 			<span class="blind">최근 게시글 목록 닫기</span>
+					 		</button>
+					 	
+				 		</div>
+				 		<!-- 
+				 		TODO board ui 완성대면 Join 으로 들고오기
+				 		<div class="user_mycafe_recent">
+				 			<ul class="recent_list">
+				 				<li article="게시글">
+				 					<div class="recent_info">
+				 						<span class="nickname">엄준</span>
+										<span class="time">32분 전</span>
+				 					</div>
+				 					<div class="recent_title">
+				 						<div class="inner">
+				 							<a href="#" class="tit">
+				 								<em class="blind">글제목</em>
+				 								무무형 방송안키는이유그거임
+				 							</a>	
+				 						</div>
+				 					</div>
+				 				</li>
+				 				<li>해당 카페에 게시글을 생성</li>
+				 			</ul>	
+				 		</div>
+				 		 -->
+				 	</div>
 			 	</c:forEach>
+			 	<!-- 
 			 	<div cafe="data" class="user_mycafe_area">
 			 		<div class="user_mycafe_box">
 			 			<div class="user_mycafe_thumb">
@@ -100,7 +153,7 @@
 				 		<div class="user_mycafe_info">
 				 			<a href="#" class="name_area">
 				 				<strong class="name">엄준식 공식 카페</strong>
-								<div class="common_icon_box"><!----> <!----> <!----> <!----> <!----> <!----></div>
+								<div class="common_icon_box"></div>
 							</a>
 							<div class="info_area">
 								<a href="#" title="즐겨찾기" class="user_mycafe_bookmark">
@@ -134,11 +187,8 @@
 			 			</ul>	
 			 		</div>
 			 	</div>
-			 	
-			 	<div cafe="이곳은 나의 카페에서 최근에 올라온 글을 보여주는 UI" class="user_mycafe_area">
-			 		내가 가입한 다른카페의 정보를 노출
-			 	</div>
-			 	
+			 	 -->
+			 	 
 			 	<!-- 
 			 	<div cafe="이곳은 나의 카페에서 최근에 올라온 글을 보여주는 UI"></div>
 			 	 -->
@@ -303,7 +353,44 @@
 			</div>
 		</div>
 		<div class="home_theme_frame">
-			관심 분야에 따른 카페 리스트
+			<ul class="common_list">
+				<li>
+					<a href="#" class="list_link">
+						<div class="list_thumb">
+							<!---->
+							<img
+								src="https://cafethumb.pstatic.net/20141224_264/mmmagic_1419411381399Mj5pl_PNG/%C0%FC%BB%E7.png?type=f150_150_mask"
+								width="80" height="80"
+								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+								alt="">
+						</div>
+						<div class="list_info">
+							<div class="name_area">
+								<strong class="name"> 전산실 사람들</strong>
+								<div class="common_icon_box">
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="txt_area">
+								<p class="txt">전산실에서 업무를 보는 사람들의 이야기를 담아보려합니다.</p>
+							</div>
+							<div class="info_area">
+								<span class="info">컴퓨터일반</span> <span class="info">멤버
+									28,887명</span>
+								<!---->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</a>
+				</li>
+			</ul>
+
 		</div>
 	</div>
 </div>

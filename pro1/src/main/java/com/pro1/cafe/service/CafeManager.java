@@ -1,7 +1,5 @@
 package com.pro1.cafe.service;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +23,12 @@ public class CafeManager {
     @Autowired
     private CafeDAO cafeDAO;
 
-    public void getCafeListByUserUid(Model model, long userUid) {
+    public void getCafeMapByUserUid(Model model, long userUid) {
 
 	try {
 
 	    //List<UserCafeVO> list = cafeDAO.getCafeListByUserUid(userUid);
-	    model.addAttribute("cafeList", cafeDAO.getCafeListByUserUid(userUid));
+	    model.addAttribute("cafeList", cafeDAO.getCafeMapByUserUid(userUid));
 	} catch (Exception e) {
 
 	    logger.warn("Error Connection DataBase : {}", e.getMessage(), e);
