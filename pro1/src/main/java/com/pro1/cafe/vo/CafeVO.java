@@ -83,8 +83,25 @@ public class CafeVO {
     private int useShortCut = 0;
 
     @OneToMany
-    @JoinTable(name="cafe")
+    @JoinTable(name = "cafe")
     private List<UserCafeVO> usercafeList = new ArrayList<>();
+
+    public CafeVO() {
+
+    }
+
+    public CafeVO(long uid, String name, String icon) {
+	this.uid = uid;
+	this.name = name;
+	this.icon = icon;
+    }
+
+    public CafeVO(long uid, String name, String icon, long memberCnt) {
+	this.uid = uid;
+	this.name = name;
+	this.icon = icon;
+	this.memberCnt = memberCnt;
+    }
 
     public List<UserCafeVO> getUsercafeList() {
 	return usercafeList;

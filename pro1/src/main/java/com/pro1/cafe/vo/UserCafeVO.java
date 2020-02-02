@@ -59,6 +59,42 @@ public class UserCafeVO implements Serializable {
 	this(userUid, cafeUid, cafeLevel, 0, null, null);
     }
 
+    /**
+     * user_cafe , cafe table join시 필요한 컬럼 entity 생성
+     * 
+     * @param userUid
+     * @param cafeUid
+     * @param cafeLevel
+     * @param cafeFav
+     * @param uid
+     * @param name
+     * @param icon
+     */
+    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, long uid, String name, String icon) {
+	this.userUid = userUid;
+	this.cafeUid = cafeUid;
+	this.cafeLevel = cafeLevel;
+	this.cafeFav = cafeFav;
+	this.cafe = new CafeVO(uid, name, icon);
+    }
+
+    /**
+     * user_cafe , cafe table join시 필요한 컬럼 entity 생성
+     * 
+     * @param userUid
+     * @param cafeUid
+     * @param cafeLevel
+     * @param cafeFav
+     * @param uid
+     * @param name
+     * @param icon
+     */
+    public UserCafeVO(long userUid, long cafeUid, long uid, String name, String icon, long memberCnt) {
+	this.userUid = userUid;
+	this.cafeUid = cafeUid;
+	this.cafe = new CafeVO(uid, name, icon, memberCnt);
+    }
+
     public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, CafeVO cafe) {
 	this(userUid, cafeUid, cafeLevel, 0, cafe, null);
     }

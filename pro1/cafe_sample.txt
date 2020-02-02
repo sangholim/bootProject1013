@@ -1,0 +1,328 @@
+#sample cate main sortType list
+
+<li>
+					<a href="#" class="list_link">
+						<div class="list_thumb">
+							<!---->
+							<img
+								src="https://cafethumb.pstatic.net/MjAxOTAzMDFfNTAg/MDAxNTUxNDM4NDA1MzEw.2cbVsEzCYJWqaK6qJTCTcm7BAJNU7ZrVRcuEEPeSy0Yg.AYSEcmjp5s_wvnCIt5XDAbLXEtoHJaqnucP8MngHf8Ug.JPEG.dorrong2/JPG%C1%A4%BB%E7%B0%A2%C7%FC%B7%CE%B0%ED.jpg?type=f150_150_mask"
+								width="80" height="80"
+								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+								alt="">
+						</div>
+						<div class="list_info">
+							<div class="name_area">
+								<strong class="name"> 아이스페인 트래블 iSPAiN :: 스페인여행정보카페</strong>
+								<div class="common_icon_box">
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="txt_area">
+								<p class="txt">스페인여행정보를 함께 공유하는 아이스페인 트래블 입니다
+									#스페인여행#스페인세미패키지#스페인투어</p>
+							</div>
+							<div class="info_area">
+								<span class="info">유럽</span> <span class="info">멤버
+									16,846명</span>
+								<!---->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="list_link">
+						<div class="list_thumb">
+							<!---->
+							<img
+								src="https://cafethumb.pstatic.net/20160606_19/yschoun_1465143963637NoLT3_JPEG/earthquake.jpg?type=f150_150_mask"
+								width="80" height="80"
+								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+								alt="">
+						</div>
+						<div class="list_info">
+							<div class="name_area">
+								<strong class="name"> 지진을 이기는 지혜 - 지진, 내진, 면진, 제진 이야기</strong>
+								<div class="common_icon_box">
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="txt_area">
+								<p class="txt">우리 카페는 지진, 내진, 면진, 제진에 대한 정보를 함께 나누고 이야기 하고
+									싶은 사람들의 공간입니다.</p>
+							</div>
+							<div class="info_area">
+								<span class="info">건축/토목공학</span> <span class="info">멤버
+									2,534명</span>
+								<!---->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="list_link">
+						<div class="list_thumb">
+							<!---->
+							<img
+								src="https://cafethumb.pstatic.net/MjAxODA4MDVfMTM2/MDAxNTMzNDU2NjU5OTQy.EYppc0W9snuPvJbLrk_3eHSkwS70vJo1IHCoh66SRBgg.tTmPI_Xi8Ozvu1aeLtzEJVGPcwbncQfwUHIfxV8MHtkg.JPEG.dayeon0626/P20170108_230911000_E0692210-7158-47C2-83FC-2F2CDDD8642C.JPG?type=f150_150_mask"
+								width="80" height="80"
+								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+								alt="">
+						</div>
+						<div class="list_info">
+							<div class="name_area">
+								<strong class="name"> 무결추의 새 이름, 한결협 (한국결혼산업 협동조합)</strong>
+								<div class="common_icon_box">
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="txt_area">
+								<p class="txt">컨설팅 마진 안받는 유일무이한 웨딩상담소. 캐시백까지?! 웨딩준비중이라면 필수
+									코스!!</p>
+							</div>
+							<div class="info_area">
+								<span class="info">결혼</span> <span class="info">멤버
+									14,992명</span>
+								<!---->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="list_link">
+					<div class="list_thumb">
+							<!---->
+							<img
+								src="https://cafethumb.pstatic.net/MjAxOTEyMDlfNDUg/MDAxNTc1ODk2NTI2MDk3.PDueQAaHqC61ioemZcJr1XtGutykLzsiZ9fWIHlLiJgg.L55aVAOICMbMe7xDhZdPzby9hDFFjvJou6dFn9U1CUog.JPEG/externalFile.jpg?type=f150_150_mask"
+								width="80" height="80"
+								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+								alt="">
+						</div>
+						<div class="list_info">
+							<div class="name_area">
+								<strong class="name"> GAGA QUEEN 레이디 가가 팬카페</strong>
+								<div class="common_icon_box">
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="txt_area">
+								<p class="txt">GAGA QUEEN 레이디 가가 팬카페입니다.</p>
+							</div>
+							<div class="info_area">
+								<span class="info">해외가수</span> <span class="info">멤버
+									5,136명</span>
+								<!---->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="list_link">
+						<div class="list_thumb">
+							<!---->
+							<img
+								src="https://cafethumb.pstatic.net/20150808_286/isid6622_1438961910534kKwEz_PNG/asset.png?type=f150_150_mask"
+								width="80" height="80"
+								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+								alt="">
+						</div>
+						<div class="list_info">
+							<div class="name_area">
+								<strong class="name">
+									투어리스[캠핑/등산/낚시/캠핑용품/등산용품/여행정보/거래장터]</strong>
+								<div class="common_icon_box">
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="txt_area">
+								<p class="txt">
+									투어리스[캠핑/등산/낚시/국내여행/해외여행/배낭여행/캠핑용품/등산용품/여행정보/거래장터/중고거래장터]</p>
+							</div>
+							<div class="info_area">
+								<span class="info">여행일반</span> <span class="info">멤버 754명</span>
+								<!---->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="list_link">
+						<div class="list_thumb">
+							<!---->
+							<img
+								src="https://cafethumb.pstatic.net/20130417_146/0_1366206610946_1ijTX1_jpg/187.jpg?type=f150_150_mask"
+								width="80" height="80"
+								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+								alt="">
+						</div>
+						<div class="list_info">
+							<div class="name_area">
+								<strong class="name"> 행복한염소</strong>
+								<div class="common_icon_box">
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="txt_area">
+								<p class="txt">염소를 사랑하는 모두가 "행복한 그날"을 만들기위한, 정보교류와 보어종 염소분양
+									및 개량종 흑염소분양</p>
+							</div>
+							<div class="info_area">
+								<span class="info">반려동물/동물일반</span> <span class="info">멤버
+									4,540명</span>
+								<!---->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="list_link">
+						<div class="list_thumb">
+							<!---->
+							<img
+								src="https://cafethumb.pstatic.net/MjAxOTA4MjJfMjMg/MDAxNTY2NDM4ODY0ODM3.9yOzUsgJPqdYlmyKbauKXA8GTN7Vl3W7WnjWmVMO7fsg.Y14PIXY5NmJkJTcQizI2yIE_ZUdY-b01oNotKORYlRsg.PNG/082201.png?type=f150_150_mask"
+								width="80" height="80"
+								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+								alt="">
+						</div>
+						<div class="list_info">
+							<div class="name_area">
+								<strong class="name"> 위러브 태국 - 치앙마이 방콕 파타야 푸켓 끄라비 코사무이
+									여행</strong>
+								<div class="common_icon_box">
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="txt_area">
+								<p class="txt">태국 치앙마이 방콕 파타야 푸켓 끄라비 코사무이 자유여행 방쎈 후아힌 골프
+									치앙라이 호텔 투어 항공권</p>
+							</div>
+							<div class="info_area">
+								<span class="info">동남아시아</span> <span class="info">멤버
+									27,112명</span>
+								<!---->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="list_link">
+						<div class="list_thumb">
+							<!---->
+							<img
+								src="https://cafethumb.pstatic.net/MjAxNzExMTBfMjM4/MDAxNTEwMzAxNjUyMzI0.EIZ0yNdJr_Zhv2zCfsviAne_8QR_RpTtdvA48dGpap8g.9aO9gqI26mn7_4ln2zSmo4USNakyG-QP7jmDnCYXIzAg.PNG.overpace81/externalFile.png?type=f150_150_mask"
+								width="80" height="80"
+								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+								alt="">
+						</div>
+						<div class="list_info">
+							<div class="name_area">
+								<strong class="name"> 접이식 미니벨로 버디(Birdy)</strong>
+								<div class="common_icon_box">
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="txt_area">
+								<p class="txt">고성능 접이식 자전거 버디 (Birdy) 모임입니다. 미니벨로에 관심 있는 분들
+									모이세요! ^^</p>
+							</div>
+							<div class="info_area">
+								<span class="info">자전거</span> <span class="info">멤버
+									12,435명</span>
+								<!---->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="list_link">
+						<div class="list_thumb">
+							<!---->
+							<img
+								src="https://cafethumb.pstatic.net/20150403_108/kino1216_14280396885027WRu4_JPEG/Untitled-4.jpg?type=f150_150_mask"
+								width="80" height="80"
+								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+								alt="">
+						</div>
+						<div class="list_info">
+							<div class="name_area">
+								<strong class="name"> K5 매니아 클럽 올뉴 K5 DL3 동호회
+									[K5풀체인지&amp;k5터보]K5신형</strong>
+								<div class="common_icon_box">
+									<!---->
+									<!---->
+									<em class="icon-powercafe"><span class="blind">대표카페</span></em>
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="txt_area">
+								<p class="txt">
+									K5풀체인지동호회.k5신형.k5가격.k5결함.k5시승기.k5튜닝.K5풀체인지,k5하이브리드,k5터보,K5디젤
+									정보제공</p>
+							</div>
+							<div class="info_area">
+								<span class="info">자동차</span> <span class="info">멤버
+									303,672명</span>
+								<!---->
+								<!---->
+								<!---->
+							</div>
+						</div>
+					</a>
+				</li>
