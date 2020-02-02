@@ -18,7 +18,8 @@ public class WebAppStart extends SpringBootServletInitializer {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(WebAppStart.class, args);
+        //SpringApplication.run(WebAppStart.class, args);
+        SpringApplication.run(WebAppStart.class,args);
     }
 
 }

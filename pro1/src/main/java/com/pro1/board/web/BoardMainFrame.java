@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.pro1.common.constant.Constant;
 
 @Controller
-@RequestMapping("/board/{boardAuth}")
+//@RequestMapping("/board/{boardAuth}")
+@RequestMapping("/board/")
 public class BoardMainFrame {
 
     private final String root_path = "/board/";
@@ -28,5 +29,8 @@ public class BoardMainFrame {
 	model.addAttribute(Constant.BOARD_TYPE, boardType);
 	return root_path + commonBoardFrame;
     }
+
+    @RequestMapping(value = "/commonBoardView")
+	public void cafetestjsp() {}
 
 }
