@@ -1,11 +1,19 @@
 package com.pro1.user.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import com.pro1.cafe.vo.UserCafeVO;
 
 @MappedSuperclass
 public class CommonUserVO {
@@ -46,6 +54,18 @@ public class CommonUserVO {
 
     // 로그인시 유저 닉네임
     private String userNickName;
+
+    @OneToMany
+    @JoinTable(name="user")
+    List<UserCafeVO> userCafeList = new ArrayList<>();
+
+    public List<UserCafeVO> getUserCafeList() {
+	return userCafeList;
+    }
+
+    public void setUserCafeList(List<UserCafeVO> userCafeList) {
+	this.userCafeList = userCafeList;
+    }
 
     public int getKeyCode() {
 	return keyCode;

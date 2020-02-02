@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +22,7 @@ public class CafeDAO extends CommonDBSession {
 
     private static final Logger logger = LoggerFactory.getLogger(CafeDAO.class);
 
-    public List<CafeVO> getCafeListByUserUid(long userUid) throws Exception {
+    public List<UserCafeVO> getCafeListByUserUid(long userUid) throws Exception {
 
 	if (sqlSession != null) {
 	    return sqlSession.selectList("getCafeListByUserUid");
@@ -28,18 +30,29 @@ public class CafeDAO extends CommonDBSession {
 
 	DbSessionInfo sessionInfo = processHibernateSession(CafeVO.class, null, DBQueryType.SELECT);
 	try (Session session = sessionInfo.getSession()) {
-	    
-	    // TEST SELECT * FROM cafe c JOIN user_cafe uc ON c.uid = uc.cafeUid  where uc.userUid = 26 \G;
-	    CriteriaBuilder builder = sessionInfo.getCriteriaBuilder();
-	    CriteriaQuery<CafeVO> criteria = builder.createQuery(CafeVO.class);
 
-	    Root<UserCafeVO> ucRoot = criteria.from(UserCafeVO.class);
-	    ucRoot.alias("uc");
-	    Root<CafeVO> cRoot = criteria.from(CafeVO.class);
-	    cRoot.alias("c");
-	    criteria.select(cRoot);
-	    criteria.where(builder.equal(ucRoot.get("userUid"), userUid));
-	    return session.createQuery(criteria).getResultList();
+	    // TEST SELECT * FROM cafe c JOIN user_cafe uc ON c.uid = uc.cafeUid where
+	    // uc.userUid = 26 \G;
+	    // Query<UserCafeVO> query = session.createQuery("from cafe c join c.user_cafe
+	    // uc where uc.userUid = :userUid",
+	    // UserCafeVO.class);
+	    Query<UserCafeVO> query = session.createQuery(
+		    "select NEW UserCafeVO(0l, 0l, uc.cafeLevel, uc.cafeFav, uc.cafe) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid",
+		    UserCafeVO.class);
+	    // Query<UserCafeVO> query = session
+	    // .createQuery("select uc.cafe, uc.cafeLevel, uc.cafeFav from UserCafeVO uc
+	    // join uc.cafe c where uc.userUid = :userUid", UserCafeVO.class);
+	    query.setParameter("userUid", userUid);
+	    // CriteriaBuilder builder = sessionInfo.getCriteriaBuilder();
+	    // CriteriaQuery<UserCafeVO> criteria = builder.createQuery(UserCafeVO.class);
+	    // "from cafe c join c.user_cafe uc"
+	    // Root<UserCafeVO> ucRoot = criteria.from(UserCafeVO.class);
+	    // ucRoot.alias("uc");
+	    // ucRoot.join("cafe",JoinType.INNER);
+	    // criteria.select(ucRoot);
+	    // criteria.multiselect(ucRoot.get("cafe"));
+	    // criteria.where(builder.equal(ucRoot.get("userUid"), userUid));
+	    return query.getResultList();
 
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -96,7 +109,7 @@ public class CafeDAO extends CommonDBSession {
 		userCafeVO.setCafeUid(cafeVO.getUid());
 		result = processHibernateSession(currentSession, DBQueryType.INSERT, userCafeVO);
 	    }
-	    
+
 	} catch (Exception e) {
 	    logger.error("Error Transaction Cafe, UserCafe tables > {}", e.getMessage(), e);
 	} finally {

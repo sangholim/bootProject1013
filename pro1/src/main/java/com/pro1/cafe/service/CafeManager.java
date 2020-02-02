@@ -29,7 +29,7 @@ public class CafeManager {
 
 	try {
 
-	    List<CafeVO> list = cafeDAO.getCafeListByUserUid(userUid);
+	    //List<UserCafeVO> list = cafeDAO.getCafeListByUserUid(userUid);
 	    model.addAttribute("cafeList", cafeDAO.getCafeListByUserUid(userUid));
 	} catch (Exception e) {
 

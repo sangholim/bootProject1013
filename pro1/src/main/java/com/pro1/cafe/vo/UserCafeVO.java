@@ -4,14 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.pro1.user.vo.UserVO;
 
 /**
  * User , Cafe 간의 관계 테이블
@@ -29,17 +28,27 @@ public class UserCafeVO implements Serializable {
      */
     private static final long serialVersionUID = -5008558653692869369L;
 
-    @Id
-    @Column(name = "userUid")
     private long userUid;
 
-    @Id
-    @Column(name = "cafeUid")
     private long cafeUid;
 
+    @Column(name = "cafeLevel")
     private String cafeLevel;
 
+    @Column(name = "cafeFav")
     private int cafeFav;
+
+    @Id
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "userUid", insertable = false, updatable = false)
+    // @JoinColumn(name = "userUid")
+    private UserVO user;
+
+    @Id
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "cafeUid", insertable = false, updatable = false)
+    // @JoinColumn(name = "cafeUid")
+    private CafeVO cafe;
 
     public UserCafeVO() {
 	// TODO Auto-generated constructor stub
@@ -47,9 +56,20 @@ public class UserCafeVO implements Serializable {
 
     public UserCafeVO(long userUid, long cafeUid, String cafeLevel) {
 
+	this(userUid, cafeUid, cafeLevel, 0, null, null);
+    }
+
+    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, CafeVO cafe) {
+	this(userUid, cafeUid, cafeLevel, 0, cafe, null);
+    }
+
+    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, CafeVO cafe, UserVO user) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
 	this.cafeLevel = cafeLevel;
+	this.cafeFav = cafeFav;
+	this.cafe = cafe;
+	this.user = user;
     }
 
     public UserCafeVO(long userUid, String cafeLevel) {
@@ -86,6 +106,26 @@ public class UserCafeVO implements Serializable {
 
     public void setCafeFav(int cafeFav) {
 	this.cafeFav = cafeFav;
+    }
+
+    public UserVO getUser() {
+	return user;
+    }
+
+    public void setUser(UserVO user) {
+	this.user = user;
+    }
+
+    public CafeVO getCafe() {
+	return cafe;
+    }
+
+    public void setCafe(CafeVO cafe) {
+	this.cafe = cafe;
+    }
+
+    public static long getSerialversionuid() {
+	return serialVersionUID;
     }
 
 }

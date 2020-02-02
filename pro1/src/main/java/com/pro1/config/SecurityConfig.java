@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/", "/index/**", "/img/" + Constant.DIR_ROW, "/login", "/login/addUser",
 			"/login/register", "/login/*.json")
 		.permitAll().and().authorizeRequests()
-		.antMatchers('/' + Constant.CAFE_TYPE + '/' + Constant.DIR_ROW, "/login/update/")
+		.antMatchers('/' + Constant.CAFE_TYPE + '/' + Constant.DIR_ROW, "/login/update/","/board/**")
 		.hasAnyAuthority(Constant.AUTH_PREFIX + Constant.USER_ROLE, Constant.AUTH_PREFIX + Constant.ADMIN_ROLE)
 		.anyRequest().authenticated().and().formLogin().loginPage("/login/doLogin").usernameParameter("id")
 		.passwordParameter("pw").successHandler(authSuccessHandler).failureUrl("/error").permitAll();
