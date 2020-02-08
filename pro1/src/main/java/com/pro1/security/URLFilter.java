@@ -2,11 +2,7 @@ package com.pro1.security;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -19,7 +15,12 @@ public class URLFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginMainFrame.class);
 
-    @Override
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+
+	}
+
+	@Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 	    throws IOException, ServletException {
 	String jwt = ((HttpServletRequest) request).getHeader(Constant.TOKEN_HEADER);
@@ -29,5 +30,10 @@ public class URLFilter implements Filter {
 	}
 
     }
+
+	@Override
+	public void destroy() {
+
+	}
 
 }

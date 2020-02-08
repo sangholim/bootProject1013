@@ -121,8 +121,8 @@
                 <a href="/MyCafeIntro.nhn?clubid=29995789">
 					<span class="cafe_default">
 						<span class="inner_default">
-							<strong class="cafe_name">유림회관</strong>
-							<p class="cafe_url">https://cafe.naver.com/yulimhall</p>
+							<strong class="cafe_name">${cafe_name}</strong>
+							<p class="cafe_url">${cafe_url}</p>
 						</span>
 					</span>
                 </a>
@@ -174,13 +174,11 @@
                                            class="id mlink gm-tcol-c"
                                            onclick="clickcr(this, 'cia*i.manager', '', '', event);">
                                             <div class="ellipsis gm-tcol-c">
-                                                <div class="ellipsis">이승헌</div>
+                                                <div class="ellipsis">${cafe_manager}</div>
                                             </div>
                                         </a>
                                         <div class="thm"><a href="/CafeHistoryView.nhn?clubid=29995789"
-                                                            class="gm-tcol-c" target="cafe_main"
-                                                            onclick="clickcr(this, 'cia*i.history', '', '', event); targetCleaner(this);">since
-                                            2020.02.01.</a></div>
+                                                            class="gm-tcol-c" target="cafe_main">${cafe_createdate}</a></div>
                                         <div class="info-view"><a href="#"
                                                                   onclick="cafeProfile();clickcr(this, 'cia*i.intro', '', '', event);return false;"
                                                                   class="u gm-tcol-c">카페소개</a></div>

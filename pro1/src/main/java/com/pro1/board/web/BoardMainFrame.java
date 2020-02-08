@@ -19,7 +19,6 @@ public class BoardMainFrame {
 	CustomAuthentication userAuth = (CustomAuthentication) authetication;
 	model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
 	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
-
 	return Constant.MAIN;
     }
 
