@@ -96,10 +96,13 @@ public class CafeVO {
 	this.icon = icon;
     }
 
+    public CafeVO(long uid, String name, String icon, String url) {
+	this(uid, name, icon);
+	this.url = url;
+    }
+
     public CafeVO(long uid, String name, String icon, long memberCnt) {
-	this.uid = uid;
-	this.name = name;
-	this.icon = icon;
+	this(uid, name, icon);
 	this.memberCnt = memberCnt;
     }
 

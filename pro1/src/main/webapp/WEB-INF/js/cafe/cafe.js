@@ -272,6 +272,13 @@ var cafe = {
 			bodyTag.addEventListener('click', function(event) {
 				var selectedTag = event.target;
 				var myCafeTypeSize = myCafeType.length;
+				
+				
+				
+				/*
+				 * 카페 이미지, 카페 제목 클릭시 카페 url로 이동
+				 */
+				
 				/*
 				 * 전체: 나의 카페 모든걸 공개
 				 * 즐겨 찾기: 즐겨찾기만 공개

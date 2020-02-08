@@ -70,12 +70,13 @@ public class UserCafeVO implements Serializable {
      * @param name
      * @param icon
      */
-    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, long uid, String name, String icon) {
+    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, long uid, String name, String icon,
+	    String url) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
 	this.cafeLevel = cafeLevel;
 	this.cafeFav = cafeFav;
-	this.cafe = new CafeVO(uid, name, icon);
+	this.cafe = new CafeVO(uid, name, icon, url);
     }
 
     /**

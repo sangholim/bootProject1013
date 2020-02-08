@@ -91,17 +91,18 @@
 				 	<div cafe="data" class="user_mycafe_area">
 				 		<div class="user_mycafe_box">
 				 			<div class="user_mycafe_thumb">
-				 				<a href="#" class="link">
+				 				<a href="/board/${user_cafe.cafe.url}" class="link">
 				 					<img src="${user_cafe.cafe.icon }" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'" width="55" height="55" alt="">
 				 				</a>
 				 			</div>
 					 		<div class="user_mycafe_info">
-					 			<a href="#" class="name_area">
+					 			<a href="/board/${user_cafe.cafe.url}" class="name_area">
 					 				<strong class="name">${user_cafe.cafe.name }</strong>
 									<div class="common_icon_box">
 									<c:if test="${user_cafe.cafeLevel eq 'admin' }">
 										<em class="icon_manager">
 											<span class="blind">운영</span>
+											<!-- 카페 경로를 숨김 -->
 										</em>
 									</c:if>
 									<!----> <!----> <!----> <!----> <!----> <!----></div>

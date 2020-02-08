@@ -1,8 +1,6 @@
 package com.pro1.board.web;
 
-import com.pro1.cafe.service.CafeManager;
 import com.pro1.security.CustomAuthentication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,36 +10,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.pro1.common.constant.Constant;
 
 @Controller
-//@RequestMapping("/board/{boardAuth}")
 @RequestMapping("/board")
 public class BoardMainFrame {
 
-/*    private final String root_path = "/board/";
+    @RequestMapping(value = "/{cafe_url}")
+    public String getBoardMain(Authentication authetication, @PathVariable String cafe_url, Model model) {
 
-    private final String commonBoardFrame = "commonBoard";*/
+	CustomAuthentication userAuth = (CustomAuthentication) authetication;
+	model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
+	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 
-/*    @RequestMapping(value = "/{boardType}")
-    public String getBoardView(@PathVariable("boardAuth") String boardAuth, @PathVariable("boardType") String boardType,
+	return Constant.MAIN;
+    }
+
+    @RequestMapping(value = "/{cafe_url}/{board}")
+    public String getBoardView(Authentication authetication, @PathVariable String cafe_url, @PathVariable String board,
 	    Model model) {
-	// TEST
-	model.addAttribute("auth", boardAuth);
 
-	*//**
-	 * boardAuth > admin , user , free boardType > view , insert , delete , update
-	 * .. .etc
-	 *//*
-	model.addAttribute(Constant.BOARD_TYPE, boardType);
-	return root_path + commonBoardFrame;
-    }*/
+	CustomAuthentication userAuth = (CustomAuthentication) authetication;
+	model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
+	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 
-    @RequestMapping(value = "")
-	public String getBoardView(Authentication authetication, String boardType, Model model) {
-
-		CustomAuthentication userAuth = (CustomAuthentication) authetication;
-		model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
-		model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
-
-		return Constant.MAIN;
-	}
-
+	return Constant.MAIN;
+    }
+ 
 }
