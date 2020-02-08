@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -90,20 +89,18 @@ public class CafeVO {
 
     }
 
-    public CafeVO(long uid, String name, String icon) {
+    public CafeVO(long uid, String name, String icon, String url) {
 	this.uid = uid;
 	this.name = name;
 	this.icon = icon;
-    }
-
-    public CafeVO(long uid, String name, String icon, String url) {
-	this(uid, name, icon);
 	this.url = url;
     }
 
-    public CafeVO(long uid, String name, String icon, long memberCnt) {
-	this(uid, name, icon);
+    public CafeVO(long uid, String name, String icon, String url, String desc,int title_mainSort, long memberCnt) {
+	this(uid, name, icon, url);
+	this.title_mainSort = title_mainSort;
 	this.memberCnt = memberCnt;
+	this.desc = desc;
     }
 
     public List<UserCafeVO> getUsercafeList() {

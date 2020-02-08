@@ -268,7 +268,10 @@ var cafe = {
 			
 			// 5. 추천 카페 뿌리기.
 			// 추천카페 분류 데이터가 있는 node 가져오기 
-			var recommaendCafeType = document.getElementsByClassName("scroll_box_swiper")[0].getElementsByTagName("li");
+			var recommaendCafeType = document.getElementsByClassName("recommed_cafe_wrapper");
+			// 추천 카페 분류 이전 버튼 
+			var btn_scroll_next = document.getElementsByClassName("btn_scroll_next")[0];
+			var lastOpenCafeIdx = -1;
 			bodyTag.addEventListener('click', function(event) {
 				var selectedTag = event.target;
 				var myCafeTypeSize = myCafeType.length;
@@ -286,19 +289,16 @@ var cafe = {
 				 * 카페의 큰 덩어리: user_mycafe_area
 				 */
 				if(myCafeType[0].firstElementChild == selectedTag) {
-					console.log("전체");
 					for (var k = 0; k <myCafeTypeSize; k++) {
 						myCafeType[k].classList.remove("on");
 					}
-					
 					myCafeType[0].classList.add("on");
 					
 					for (var i = 0; i < user_mycafe_area_size; i ++) {
 						user_mycafe_area[i].style ="";
 					}
 					
-				}else if (myCafeType[1].firstElementChild == selectedTag) {
-					console.log("즐겨찾기");
+				} else if (myCafeType[1].firstElementChild == selectedTag) {
 					
 					for (var k = 0; k <myCafeTypeSize; k++) {
 						myCafeType[k].classList.remove("on");
@@ -315,13 +315,11 @@ var cafe = {
 						}
 					}
 				
-				}else if (myCafeType[2].firstElementChild == selectedTag) {
-					console.log("운영");
+				} else if (myCafeType[2].firstElementChild == selectedTag) {
 					
 					for (var k = 0; k <myCafeTypeSize; k++) {
 						myCafeType[k].classList.remove("on");
 					}
-					
 					myCafeType[2].classList.add("on");
 					
 					for (var i = 0; i < user_mycafe_area_size; i ++) {
@@ -336,8 +334,33 @@ var cafe = {
 				else if (selectedTag.parentNode.parentNode.classList.contains("scroll_box_swiper")) {
 					console.log(selectedTag.textContent.trim());
 					var selected_title_mainSort = selectedTag.textContent.trim();
-					// 값을 매칭시켜서 해당 배열 데이터값이 많은것들만 호출
+					
+					//cafe.mainTitleList 과  데이터를 뿌린 태그랑 일치
+					
+					for (var i=0; i <25; i++) {
+						if(selected_title_mainSort == cafe.mainTitleList[i]) {
+							recommaendCafeType[i].style="";
+							break;
+						}
+					}
+				
+					
+				//이전에 오픈한 카페리스트를 감춤
+				if(lastOpenCafeIdx != -1) {
+					recommaendCafeType[lastOpenCafeIdx].stylce ="display:none";
 				}
+				lastOpenCafeIdx = i;
+			} else if (selectedTag == btn_scroll_next) {
+				// 추천 메뉴 좌우
+				// 추천 메뉴 카테고리 리스트 scroll_box_swiper
+				// maring을 통하여 UL 을 잡아당김
+				var recommend_cafeType_list = document.getElementsByClassName("scroll_box_swiper")[0].getElementsByTagName("li");
+				for(var i = 0; i < 7; i++) {
+					recommend_cafeType_list[i].style="display:none";
+				}
+			}
+			
+				
 			});
 			
 				

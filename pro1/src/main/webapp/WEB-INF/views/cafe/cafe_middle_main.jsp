@@ -41,7 +41,7 @@
 
 		</ul>
 		<div class="common_btn_side">
-			<button type="button" title="이전" disabled="disabled" class="btn_side_prev">
+			<button type="button" title="이전" class="btn_side_prev">
 				<span class="blind">이전</span>
 			</button>
 			<button type="button" title="다음" class="btn_side_next">
@@ -214,135 +214,161 @@
 			<div class="common_box_tab">
 				<strong data-v-bf233b6c="" class="blind">'카페 카테고리'</strong>
 				<ul class="tab_list scroll_box_swiper" style="transform: translateX(0px);">
-					<li data-v-bf233b6c="" class="on"><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+					<li data-v-bf233b6c="" class="on">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							추천카페<span data-v-bf233b6c="" class="blind">선택됨</span>
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							생활
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							반려동물/동물
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							방송/연예
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							음악
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							친목/모임
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							교육
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							영화
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							만화/애니
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							문학/창작
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							컴퓨터/통신
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							가족/육아
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							팬카페
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							패션/미용
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							건강/다이어트
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							동창/동문
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							취미
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							정치/사회
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							경제/금융
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							인문/과학
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							종교/봉사
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							스포츠/레저
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							외국어
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							문화/예술
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							여행
 							<!---->
-						</button></li>
-					<li data-v-bf233b6c="" class=""><button data-v-bf233b6c=""
-							type="button" class="btn_tab">
+						</button>
+					</li>
+					<li data-v-bf233b6c="" class="">
+						<button data-v-bf233b6c="" type="button" class="btn_tab">
 							게임
 							<!---->
-						</button></li>
+						</button>
+					</li>
 
 				</ul>
 				<button data-v-bf233b6c="" type="button" class="btn btn_scroll_prev" disabled="">
@@ -355,41 +381,72 @@
 		</div>
 		<div class="home_theme_frame">
 			<ul class="common_list">
-				<li>
-					<a href="#" class="list_link">
-						<div class="list_thumb">
-							<!---->
-							<img
-								src="https://cafethumb.pstatic.net/20141224_264/mmmagic_1419411381399Mj5pl_PNG/%C0%FC%BB%E7.png?type=f150_150_mask"
-								width="80" height="80"
-								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
-								alt="">
-						</div>
-						<div class="list_info">
-							<div class="name_area">
-								<strong class="name"> 전산실 사람들</strong>
-								<div class="common_icon_box">
+				<!-- TODO: 추천카페 탭 리스트 만들기 -->
+				<c:forEach var="rec_cafe" items="${cafeList.recommend_CafeMap}" varStatus="status">
+					<!-- key별로 list 호출 -->
+					<div class="recommed_cafe_wrapper"  style="display: none;">	
+					<c:forEach var="cafeVO" items="${rec_cafe.value}">
+						<li>
+							<a href="#" class="list_link">
+								<div class="list_thumb">
 									<!---->
-									<!---->
-									<!---->
-									<!---->
-									<!---->
-									<!---->
+									<img src="${cafeVO.cafe.icon}" width="80" height="80" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"alt="">
+								</div>
+								<div class="list_info">
+									<div class="name_area">
+										<strong class="name">${cafeVO.cafe.name}</strong>
+										<div class="common_icon_box">
+											<!---->
+											<!---->
+											<!---->
+											<!---->
+											<!---->
+											<!---->
+										</div>
+									</div>
+									<div class="txt_area">
+										<p class="txt">${cafeVO.cafe.desc}</p>
+									</div>
+									<div class="info_area">
+										<span class="info">멤버 28,887명</span>
+										<span class="info">${cafeVO.cafe.memberCnt}</span>
+										<!---->
+										<!---->
+										<!---->
+									</div>
+								</div>
+							</a>
+						</li>
+					</c:forEach>
+					</div>
+				</c:forEach>
+				<!-- 
+					<li>
+						<a href="#" class="list_link">
+							<div class="list_thumb">
+								<img
+									src="https://cafethumb.pstatic.net/20141224_264/mmmagic_1419411381399Mj5pl_PNG/%C0%FC%BB%E7.png?type=f150_150_mask"
+									width="80" height="80"
+									onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
+									alt="">
+							</div>
+							<div class="list_info">
+								<div class="name_area">
+									<strong class="name"> 전산실 사람들</strong>
+									<div class="common_icon_box">
+									</div>
+								</div>
+								<div class="txt_area">
+									<p class="txt">전산실에서 업무를 보는 사람들의 이야기를 담아보려합니다.</p>
+								</div>
+								<div class="info_area">
+									<span class="info">컴퓨터일반</span> <span class="info">멤버
+										28,887명</span>
 								</div>
 							</div>
-							<div class="txt_area">
-								<p class="txt">전산실에서 업무를 보는 사람들의 이야기를 담아보려합니다.</p>
-							</div>
-							<div class="info_area">
-								<span class="info">컴퓨터일반</span> <span class="info">멤버
-									28,887명</span>
-								<!---->
-								<!---->
-								<!---->
-							</div>
-						</div>
-					</a>
-				</li>
+						</a>
+					</li>
+				 -->
 			</ul>
 
 		</div>

@@ -60,7 +60,7 @@ public class UserCafeVO implements Serializable {
     }
 
     /**
-     * user_cafe , cafe table join시 필요한 컬럼 entity 생성
+     * 내카페 호출시 필요한 params
      * 
      * @param userUid
      * @param cafeUid
@@ -80,7 +80,7 @@ public class UserCafeVO implements Serializable {
     }
 
     /**
-     * user_cafe , cafe table join시 필요한 컬럼 entity 생성
+     * 추천카페 질의시 필요한 params
      * 
      * @param userUid
      * @param cafeUid
@@ -90,10 +90,12 @@ public class UserCafeVO implements Serializable {
      * @param name
      * @param icon
      */
-    public UserCafeVO(long userUid, long cafeUid, long uid, String name, String icon, long memberCnt) {
+    public UserCafeVO(long userUid, long cafeUid, long uid, String name, String icon, String url, String desc,
+	    int title_mainSort, long memberCnt) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
-	this.cafe = new CafeVO(uid, name, icon, memberCnt);
+	this.cafe = new CafeVO(uid, name, icon, url, desc, title_mainSort, memberCnt);
+
     }
 
     public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, CafeVO cafe) {
