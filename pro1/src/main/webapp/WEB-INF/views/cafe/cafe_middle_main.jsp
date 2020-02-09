@@ -408,8 +408,7 @@
 										<p class="txt">${cafeVO.cafe.desc}</p>
 									</div>
 									<div class="info_area">
-										<span class="info">멤버 28,887명</span>
-										<span class="info">${cafeVO.cafe.memberCnt}</span>
+										<span class="info">멤버 ${cafeVO.cafe.memberCnt}명</span>
 										<!---->
 										<!---->
 										<!---->

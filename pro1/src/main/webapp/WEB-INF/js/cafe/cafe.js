@@ -384,11 +384,18 @@ var cafe = {
 					//cafe.mainTitleList 과  데이터를 뿌린 태그랑 일치
 					var selected = -1;
 					for (var i = 0; i <25; i++) {
+						if(cafe.mainTitleList[i].indexOf(selected_title_mainSort) != -1) {
+							recommaendCafeType[i].style="";
+							selected = i;
+							break;
+						}
+						/*
 						if(selected_title_mainSort == cafe.mainTitleList[i]) {
 							recommaendCafeType[i].style="";
 							selected = i;
 							break;
 						}
+						*/
 					}
 				
 					
@@ -408,8 +415,6 @@ var cafe = {
 				 * 이전 다음 버튼을 누르게 되면 현재 보여지는 추천 카페 리스트 들은 초기화 되고  이전,다음 버튼을 눌러 나온 첫번쩆 카페 리스트 출력.
 				 * 0번 index [7]번 index , 14번 index 21번 index
 				 */
-				// 너비 구하기
-				//TODO: refactoring
 				if(selectedTag.className == btn_scroll_next.className  ) {
 					recommed_cafeTypeList = recommed_cafeTypeList.previousElementSibling;
 					recommend_cafe_Cate_list = recommed_cafeTypeList.children;
