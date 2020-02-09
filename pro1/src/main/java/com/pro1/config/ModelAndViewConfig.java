@@ -94,7 +94,7 @@ public class ModelAndViewConfig implements WebMvcConfigurer {
 	registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/");
 	registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/img/");
 	registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
-	registry.addResourceHandler("/store/**").addResourceLocations("/WEB-INF/store/");
+	registry.addResourceHandler("/store/**").addResourceLocations("file:///C:/Local_repo/pro1/store/");
     }
 
     /**

@@ -92,7 +92,7 @@
 				 		<div class="user_mycafe_box">
 				 			<div class="user_mycafe_thumb">
 				 				<a href="/board/${user_cafe.cafe.url}" class="link">
-				 					<img src="${user_cafe.cafe.icon }" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'" width="55" height="55" alt="">
+				 					<img src="/${user_cafe.cafe.icon }" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'" width="55" height="55" alt="">
 				 				</a>
 				 			</div>
 					 		<div class="user_mycafe_info">
@@ -387,7 +387,7 @@
 					<div class="recommed_cafe_wrapper"  style="display: none;">	
 					<c:forEach var="cafeVO" items="${rec_cafe.value}">
 						<li>
-							<a href="#" class="list_link">
+							<a href="/board/${cafeVO.cafe.url}" class="list_link">
 								<div class="list_thumb">
 									<!---->
 									<img src="${cafeVO.cafe.icon}" width="80" height="80" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"alt="">
