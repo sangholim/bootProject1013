@@ -138,8 +138,7 @@
                     <div id="cafe-info-data">
                         <ul class="info-action-tab">
                             <li class="tit-bookmark">
-                                <a class="_rosRestrict" href="#" title="즐겨찾는 카페 등록"
-                                   onclick="setupFavoriteCafe(false, false, 29995789);clickcr(this, 'cia.fav', '', '', event);return false;"><img
+                                <a class="_rosRestrict" href="#" title="즐겨찾는 카페 등록"><img
                                         src="https://cafe.pstatic.net/cafe4/hidden.gif" width="27" height="28"
                                         alt="즐겨찾는 카페 등록" class="btn-bookmark-off" id="favoriteCafeInCafeInfo"></a>
                             </li>
@@ -147,8 +146,7 @@
                                 <p class="gm-tcol-t">카페정보</p>
                             </li>
                             <li class="tit-action">
-                                <p><a href="#" class="_rosRestrict"
-                                      onclick="showMyAction();clickcr(this, 'cia.my', '', '', event);return false;">나의활동</a>
+                                <p><a href="#" class="_rosRestrict">나의활동</a>
                                 </p>
                             </li>
                         </ul>
@@ -171,17 +169,14 @@
                                     <li class="gm-tcol-c">
                                         <em class="ico-manager">매니저</em>
                                         <a href="/yulimhall/member/ued_123/article" target="_blank"
-                                           class="id mlink gm-tcol-c"
-                                           onclick="clickcr(this, 'cia*i.manager', '', '', event);">
+                                           class="id mlink gm-tcol-c">
                                             <div class="ellipsis gm-tcol-c">
                                                 <div class="ellipsis">${cafe_manager}</div>
                                             </div>
                                         </a>
                                         <div class="thm"><a href="/CafeHistoryView.nhn?clubid=29995789"
                                                             class="gm-tcol-c" target="cafe_main">${cafe_createdate}</a></div>
-                                        <div class="info-view"><a href="#"
-                                                                  onclick="cafeProfile();clickcr(this, 'cia*i.intro', '', '', event);return false;"
-                                                                  class="u gm-tcol-c">카페소개</a></div>
+                                        <div class="info-view"><a href="#" class="u gm-tcol-c">카페소개</a></div>
                                     </li>
 
                                 </ul>
@@ -190,8 +185,7 @@
                             <div class="ia-info-data2">
                                 <ul>
                                     <li class="level-info border-sub">
-                                        <a href="#" class="gm-tcol-c"
-                                           onclick="cafeRanking();clickcr(this, 'cia*i.grade', '', '', event);return false;">
+                                        <a href="#" class="gm-tcol-c">
                                             <strong class="d-none">카페등급</strong>
                                             <span class="ico_rank rank1"></span><em>씨앗1단계</em>
                                         </a>
@@ -212,8 +206,7 @@
                                     <li class="mem-cnt-info" style="cursor:pointer;">
                                         <strong class="d-none">카페멤버수</strong>
 
-
-                                        <a href="#" onclick="$('hiddenOpenMemberInfoLayer').style.display = '';">
+                                        <a href="#">
                                             <span class="ico"></span>
                                             <em>1<span class="ico_lock2">비공개</span></em>
                                         </a>
@@ -274,18 +267,13 @@
 
                         <!-- 카페 가입 버튼 -->
                         <div class="cafe-write-btn">
-
-
-                            <a href="#" class="_rosRestrict" onclick="joinCafe();return false;">카페 가입하기</a>
-
-
+                            <a href="#" class="_rosRestrict" id="boardwrite">카페 글쓰기</a>
                         </div>
 
                         <!-- 카페 채팅 버튼 -->
                         <div class="ia-info-btn">
                             <ul class="ia-info-list">
                                 <li><a href="#"
-                                       onclick="chatting(true);clickcr(this, 'cia*i.chat', '', '', event);return false;"
                                        class="link_chat _tabletRestrict(채팅)" target="_blank">카페 채팅</a></li>
                             </ul>
                         </div>
@@ -313,9 +301,7 @@
                         </div>
 
                         <div class="cafe-write-btn">
-                            <a href="#" class="_rosRestrict"
-                               onclick="writeBoard();clickcr(this, 'mnu.write', '', '', event);return false;">카페
-                                글쓰기</a>
+                            <a href="#" class="_rosRestrict">카페 글쓰기</a>
                         </div>
 
                         <div class="ia-info-btn">
@@ -391,19 +377,22 @@
 
             <!-- 센터 영역 -->
             <div id="main-area" class="skin-1080 fr">
-                <input id="gateOpen" type="hidden" value="1">
-                <input id="searchviewtype" type="hidden" value="title">
-                <iframe name="cafe_main" id="cafe_main" title="카페 메인"
-                        src="//cafe.naver.com/MyCafeIntro.nhn?clubid=29995789&amp;tc=naver_search" width="860"
-                        height="100%"
-                        frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowtransparency="true"
-                        allowfullscreen="" style="height: 1598px;"></iframe>
+                <div class="main_content">
+                    <%--<input id="gateOpen" type="hidden" value="1">
+                    <input id="searchviewtype" type="hidden" value="title">
+                    <iframe name="cafe_main" id="cafe_main" title="카페 메인"
+                            src="//cafe.naver.com/MyCafeIntro.nhn?clubid=29995789&amp;tc=naver_search" width="860"
+                            height="100%"
+                            frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowtransparency="true"
+                            allowfullscreen="" style="height: 1598px;"></iframe>--%>
+                       <jsp:include page="./commonBoardInsert.jsp" flush="true"/>
+                </div>
             </div>
-
         </div>
         <!-- 본문 내용 -->
     </div>
     <script type="text/javascript" src="/js/board/board.js"></script>
+
 
 </body>
 </html>
