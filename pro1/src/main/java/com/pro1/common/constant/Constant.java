@@ -10,6 +10,8 @@ public class Constant {
 
     public static final String PAGE_TYPE = "page";
 
+    public static final String PAGE_SUB_TYPE = "sub_page";
+
     public static final String INDEX_POS = "index";
 
     public static final String LOGIN_POS = "login";

@@ -120,17 +120,17 @@
 		<div class="menu_inner">
 			<ul class="lnb">
 				<li class="on">
-					<a href="#" class="lnb_link">카페홈</a> 
+					<a href="/cafe/sub_main" class="lnb_link">카페홈</a> 
 					<span class="blind">선택됨</span>
 				</li>
 				<li>
-					<a href="#" class="lnb_link">주제별</a> 
+					<a href="/cafe/sub_theme" class="lnb_link">주제별</a> 
 				</li>
 				<li>
-					<a href="#" class="lnb_link">지역별</a> 
+					<a href="/cafe/sub_area" class="lnb_link">지역별</a> 
 				</li>
 				<li>
-					<a href="#" class="lnb_link">랭킹</a> 
+					<a href="/cafe/sub_ranking" class="lnb_link">랭킹</a> 
 				</li>
 				<li>
 					<a href="#" class="lnb_link">대표카페</a> 

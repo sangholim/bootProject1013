@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pro1.cafe.service.CafeManager;
@@ -23,12 +24,13 @@ public class CafeMainFrame {
     @Autowired
     private CafeManager cafeManager;
 
-    @RequestMapping(value = "")
-    public String getBoardView(Authentication authetication, String cafeType, Model model) {
+    @RequestMapping(value = "/{sub_type}")
+    public String getBoardView(Authentication authetication, String cafeType, Model model, @PathVariable String sub_type) {
 	
 	//cafeManager.getCafeList(model);
 	CustomAuthentication userAuth = (CustomAuthentication) authetication;
 	model.addAttribute(Constant.PAGE_TYPE, Constant.CAFE_TYPE);
+	model.addAttribute(Constant.PAGE_SUB_TYPE, sub_type);
 	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 	//cafeManager.getCafeListByUserUid(model, userAuth.getUid());
 	cafeManager.getCafeMapByUserUid(model, userAuth.getUid());
@@ -36,6 +38,7 @@ public class CafeMainFrame {
 	return Constant.MAIN;
     }
 
+    
     /**
      * Cafe 생성 로직
      * 

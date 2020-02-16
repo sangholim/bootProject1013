@@ -23,7 +23,7 @@
 			<span>로그아웃</span>
 		</a>
 		<span class="link_cover">
-			<a class="link_cafe need_auth" href="/cafe">
+			<a class="link_cafe need_auth" href="/cafe/sub_main">
 				<i>
 					카페<span class="cnt">100</span>
 				</i>

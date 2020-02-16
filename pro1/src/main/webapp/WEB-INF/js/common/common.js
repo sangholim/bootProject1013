@@ -55,7 +55,7 @@ common.sync = function(requestParams) {
 				var responseCode = json.code;
 				alert(json.result);
 				if(responseCode == 200) {
-					window.location.href = "/cafe";
+					window.location.href = "/cafe/sub_main";
 				} 
 			}
 		}
