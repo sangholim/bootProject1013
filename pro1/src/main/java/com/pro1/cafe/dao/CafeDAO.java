@@ -1,8 +1,10 @@
 package com.pro1.cafe.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,6 +15,7 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pro1.cafe.vo.CafeForm;
 import com.pro1.cafe.vo.CafeVO;
 import com.pro1.cafe.vo.UserCafeVO;
 import com.pro1.common.DBQueryType;
@@ -31,7 +34,7 @@ public class CafeDAO extends CommonDBSession {
     /**
      * 추천하는 카페에 필요한 정보 카페이름,카페아이콘, 멤버수, 랭킹점수 (todo)
      */
-    private final String recommandCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafe.uid, uc.cafe.name, uc.cafe.icon,uc.cafe.memberCnt) from UserCafeVO uc join uc.cafe c where uc.userUid != :userUid";
+    private final String recommandCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url, uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.memberCnt) from UserCafeVO uc join uc.cafe c where uc.userUid != :userUid";
 
     public List<UserCafeVO> getCafeListByUserUid(long userUid) throws Exception {
 
@@ -59,27 +62,45 @@ public class CafeDAO extends CommonDBSession {
      * @return
      * @throws Exception
      */
-    public Map<String, List<UserCafeVO>> getCafeMapByUserUid(long userUid) throws Exception {
+    public CafeForm getCafeMapByUserUid(long userUid) throws Exception {
 	/*
 	if (sqlSession != null) {
 	    return sqlSession.selectList("getCafeListByUserUid");
 	}
 	*/
-	Map<String, List<UserCafeVO>> userCafeMap = new HashMap<>();
+	CafeForm cafeForm = new CafeForm();
+	Map<Integer, List<UserCafeVO>> recommend_CafeMap = new HashMap<>();
 
 	DbSessionInfo sessionInfo = processHibernateSession(CafeVO.class, null, DBQueryType.SELECT);
 	try (Session session = sessionInfo.getSession()) {
-
 	    Query<UserCafeVO> query = session.createQuery(userCafeJoin, UserCafeVO.class);
 	    query.setParameter("userUid", userUid);
-	    userCafeMap.put("userCafeList", query.getResultList());
+	    cafeForm.setUserCafeList(query.getResultList());
+	    //userCafeMap.put("userCafeList", query.getResultList());
 
 	    //추천 카페 데이터
 	    query = session.createQuery(recommandCafeJoin, UserCafeVO.class);
 	    query.setParameter("userUid", userUid);
-	    userCafeMap.put("recommandCafeList", query.getResultList());
+	    List<UserCafeVO> recommandCafeList = query.getResultList();
 
-	    return userCafeMap;
+	    Set<Integer> title_mainSortSet = recommend_CafeMap.keySet();
+
+	    // 카테고리별로 재분료해서 추가한다.
+	    for (UserCafeVO user_cafeVO : recommandCafeList) {
+		int title_mainSort = user_cafeVO.getCafe().getTitle_mainSort();
+		List<UserCafeVO> user_cafeList = null;
+		if (!title_mainSortSet.contains(title_mainSort)) {
+		    user_cafeList = new ArrayList<>();
+		    user_cafeList.add(user_cafeVO);
+		    recommend_CafeMap.put(title_mainSort, user_cafeList);
+		} else {
+		    user_cafeList = recommend_CafeMap.get(title_mainSort);
+		    user_cafeList.add(user_cafeVO);
+		}
+	    }
+	    cafeForm.setRecommend_CafeMap(recommend_CafeMap);
+
+	    return cafeForm;
 
 	} catch (Exception e) {
 	    e.printStackTrace();
