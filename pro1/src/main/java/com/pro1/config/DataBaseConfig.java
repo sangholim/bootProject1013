@@ -3,6 +3,8 @@ package com.pro1.config;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
+import com.pro1.board.dao.BoardDAO;
+import com.pro1.board.service.BoardManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -75,6 +77,10 @@ public class DataBaseConfig {
 	applicationContext.registerBean("com.pro1.board.service.UserCafeBoardService", UserCafeBoardService.class,
 		() -> new UserCafeBoardService());
 
+	applicationContext.registerBean("com.pro1.board.dao.BoardDAO", BoardDAO.class,
+		() -> new BoardDAO());
+	applicationContext.registerBean("com.pro1.board.service.BoardManager", BoardManager.class,
+		() -> new BoardManager());
     }
 
     public DataBaseConfig(GenericApplicationContext applicationContext) {
