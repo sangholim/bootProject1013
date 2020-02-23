@@ -23,44 +23,44 @@ public class UserCafeBoardVO implements Serializable {
 
     @Id // primary key
     @GeneratedValue // auto increment
-    private long boardUid;
+    private Long boardUid;
 
-    @Id
-    @Column(name = "userUid") // foreignKey
-    private long userUid;
+     @Id
+     @Column(name = "userUid") // foreignKey
+     private Long userUid;
 
-    @Id
-    @Column(name = "cafeUid") // foreignKey
-    private long cafeUid;
+     @Id
+     @Column(name = "cafeUid") // foreignKey
+     private Long cafeUid;
 
     private String subject;
     private String content;
     private String writer;
     private String addfile;
-    private long createDate;
-    private long modifiedDate;
+    private Long createDate;
+    private Long modifiedDate;
 
-    public long getBoardUid() {
+    public Long getBoardUid() {
 	return boardUid;
     }
 
-    public void setBoardUid(long boardUid) {
+    public void setBoardUid(Long boardUid) {
 	this.boardUid = boardUid;
     }
 
-    public long getUserUid() {
+    public Long getUserUid() {
 	return userUid;
     }
 
-    public void setUserUid(long userUid) {
+    public void setUserUid(Long userUid) {
 	this.userUid = userUid;
     }
 
-    public long getCafeUid() {
+    public Long getCafeUid() {
 	return cafeUid;
     }
 
-    public void setCafeUid(long cafeUid) {
+    public void setCafeUid(Long cafeUid) {
 	this.cafeUid = cafeUid;
     }
 
@@ -96,19 +96,19 @@ public class UserCafeBoardVO implements Serializable {
 	this.addfile = addfile;
     }
 
-    public long getCreateDate() {
+    public Long getCreateDate() {
 	return createDate;
     }
 
-    public void setCreateDate(long createDate) {
+    public void setCreateDate(Long createDate) {
 	this.createDate = createDate;
     }
 
-    public long getModifiedDate() {
+    public Long getModifiedDate() {
 	return modifiedDate;
     }
 
-    public void setModifiedDate(long modifiedDate) {
+    public void setModifiedDate(Long modifiedDate) {
 	this.modifiedDate = modifiedDate;
     }
 

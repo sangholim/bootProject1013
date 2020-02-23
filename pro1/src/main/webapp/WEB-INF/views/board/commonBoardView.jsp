@@ -86,7 +86,7 @@
 
                 <!-- 채팅 ? -->
                 <div class="chatting-cafe">
-                    <a href="#" class="link_chatting" onclick="openCafeTalk();return false;">채팅</a>
+                    <a href="#" class="link_chatting">채팅</a>
                     <img src="https://cafe.pstatic.net/cafe4/ico-blank.gif" width="1" height="10" alt="" class="tcol-c">
                 </div>
                 <!-- GNB 템플릿 적용부 -->
@@ -243,9 +243,7 @@
                                                class="gm-tcol-c" target="_blank">0</a><span
                                                 class="gm-tcol-c">회</span></em>
                                     </li>
-                                    <li class="info3" id="cafePopularityLog_info3"
-                                        onmouseover="showAppCafeDescView(true);"
-                                        onmouseout="showAppCafeDescView(false);">
+                                    <li class="info3" id="cafePopularityLog_info3">
                                         <span class="tit"><span class="ico_mbl"></span><strong
                                                 class="gm-tcol-c">우리카페앱 수</strong></span>
                                         <em>0<span class="gm-tcol-c">회</span></em>
@@ -281,14 +279,12 @@
                     <div id="member-action-data" style="display:none">
                         <ul class="info-action-tab" role="tablist">
                             <li class="tit-bookmark">
-                                <a class="_rosRestrict" href="#" title="즐겨찾는 카페 등록"
-                                   onclick="setupFavoriteCafe(false, false, 29995789);clickcr(this, 'cia.fav', '', '', event);return false;"><img
+                                <a class="_rosRestrict" href="#" title="즐겨찾는 카페 등록"><img
                                         src="https://cafe.pstatic.net/cafe4/hidden.gif" width="27" height="28"
                                         alt="즐겨찾는 카페 등록" class="btn-bookmark-off" id="favoriteCafeInMemberInfo"></a>
                             </li>
                             <li class="tit-info" role="presentation">
-                                <p role="tab"><a href="#"
-                                                 onclick="showCafeInfo();clickcr(this, 'cia.cafe', '', '', event);return false;">카페정보</a>
+                                <p role="tab"><a href="#">카페정보</a>
                                 </p>
                             </li>
                             <li class="tit-action-on" role="presentation">
@@ -307,7 +303,6 @@
                         <div class="ia-info-btn">
                             <ul class="ia-info-list">
                                 <li><a href="#"
-                                       onclick="chatting(true);clickcr(this, 'cia*i.chat', '', '', event);return false;"
                                        class="link_chat _tabletRestrict(채팅)" target="_blank">카페 채팅</a></li>
                             </ul>
                         </div>
@@ -324,7 +319,6 @@
                                      class="ico-list"
                                      alt=""><a href="/ArticleList.nhn?search.clubid=29995789&amp;search.boardtype=L"
                                                target="cafe_main"
-                                               onclick="goMenu('0');clickcr(this, 'mnu.all','','',event);"
                                                class="gm-tcol-c"
                                                id="menuLink0">전체글보기</a>
                                 <span class="gm-tcol-c total">1</span>
@@ -337,7 +331,7 @@
                                      class="ico-list"
                                      alt="">
                                 <a href="/ArticleList.nhn?search.clubid=29995789&amp;search.menuid=1&amp;search.boardtype=L"
-                                   target="cafe_main" onclick="goMenu('1');clickcr(this, 'mnu.normal','','',event);"
+                                   target="cafe_main"
                                    class="gm-tcol-c" id="menuLink1">
                                     자유게시판
                                 </a>
@@ -378,20 +372,23 @@
             <!-- 센터 영역 -->
             <div id="main-area" class="skin-1080 fr">
                 <div class="main_content">
-                    <%--<input id="gateOpen" type="hidden" value="1">
+                    <input id="gateOpen" type="hidden" value="1">
                     <input id="searchviewtype" type="hidden" value="title">
                     <iframe name="cafe_main" id="cafe_main" title="카페 메인"
                             src="//cafe.naver.com/MyCafeIntro.nhn?clubid=29995789&amp;tc=naver_search" width="860"
                             height="100%"
                             frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowtransparency="true"
-                            allowfullscreen="" style="height: 1598px;"></iframe>--%>
-                       <jsp:include page="./commonBoardInsert.jsp" flush="true"/>
+                            allowfullscreen="" style="height: 1598px;"></iframe>
+
+                </div>
+                <div id="smart_editor" style="visibility: hidden">
+                    <jsp:include page="./commonBoardInsert.jsp" flush="true"/>
                 </div>
             </div>
         </div>
         <!-- 본문 내용 -->
     </div>
-    <script type="text/javascript" src="/js/board/board.js"></script>
+<%--    <script type="text/javascript" src="/js/board/board.js"></script>--%>
 
 
 </body>
