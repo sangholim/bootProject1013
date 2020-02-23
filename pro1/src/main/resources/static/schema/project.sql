@@ -82,12 +82,14 @@ create table user_cafe (
  cafeUid bigint(20) unsigned NOT NULL,
  cafeLevel varchar(20) NOT NULL,
  cafeFav tinyInt(1) default 0,
+ cafeOfficial tinyInt(1) default 0,
  FOREIGN KEY (userUid) REFERENCES user (userUid),
  FOREIGN KEY (cafeUid) REFERENCES cafe (uid)
 )
 
 
 ALTER TABLE user_cafe ADD COLUMN `cafeFav` tinyint(1) default 0;
+ALTER TABLE user_cafe ADD COLUMN `cafeOfficial` tinyint(1) default 0;
 
 //0 -> 운영자
 ## 유저가 카페 가입하거나 생성

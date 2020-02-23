@@ -277,10 +277,202 @@ var cafe = {
 		var path = window.location.pathname.substring(window.location.pathname
 				.indexOf("/", 2));
 
-		// 나의 cafe Main화면
-		if (path == "/cafe" || path == "/cafe/") {
+		// cafe 상위 메뉴 UI에서 카페홈/ 주제별/ 지역별/ 랭킹/  공통 기능
+		// ui a 태그의 href 부분과 상위 변수 'path'가 포함되면 색깔 변하게 처리
+		var cafe_top_list = document.getElementsByClassName("lnb_link");
+		
+		for(var i = 0; i < cafe_top_list.length; i++) {
+			var href = cafe_top_list[i].href;
+			var li = cafe_top_list[i].parentElement;
+			if(href.indexOf(path) > -1) {
+				li.classList.add("on");
+				var span = document.createElement("span"); 
+				span.classList.add('blind');
+				span.innerText = "선택됨";
+				li.append(span);
+				break;
+			}
+		}
+		
+		
+	
+		
+		// 카페 메인 , 카페 주제 , 카페 지역 공통 기능 추가
+		if(path.indexOf("/sub_main") > -1 || path.indexOf("/sub_theme") > -1 || path.indexOf("/sub_area") > -1) {
 			var registerUi = document.getElementsByClassName("btn_cafe_make")[0];
 			registerUi.href = "/cafe/register";
+		
+			// 마지막으로 확인한 추천 카페 리스트
+			var lastOpenCafeIdx = 0;
+			// 마지막으로 클릭한 카페 목록 위치
+			var lastSelectCafeTab = 0;
+			// 마지막으로 누른 슬라이더 idex [0,1,2]
+			var lastGetRecommendSliderIdx = 0;
+			// 추천카페 분류 데이터가 있는 node 가져오기 
+			var recommaendCafeType = document.getElementsByClassName("recommed_cafe_wrapper");
+			// 마지막으로 확인한 추천 카페 리스트
+			var lastOpenCafeIdx = 0;
+			// 마지막으로 클릭한 카페 목록 위치
+			var lastSelectCafeTab = 0;
+			
+			var bodyTag = document.getElementById("content");
+			bodyTag.addEventListener('click', function(event) {
+
+				var selectedTag = event.target;
+		
+			
+				// 추천 카페 분류 이전,이후 버튼 
+				var btn_scroll_next = document.getElementsByClassName("btn_scroll_next")[0];
+				var btn_scroll_prev = document.getElementsByClassName("btn_scroll_prev")[0];
+				if (selectedTag.parentNode.parentNode.classList.contains("scroll_box_swiper")) {
+						// 추천 카페 카테고리의 버튼 tag의 어머니 태그중 'scroll_box_swiper' 가 존재시 이벤트 진행
+						
+						var selected_title_mainSort = selectedTag.textContent.trim();
+						var recommend_cafe_Cate_list = selectedTag.parentNode.parentNode.getElementsByTagName("li");
+				
+						// 추가전 on class 제거
+						recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
+						selectedTag.parentNode.classList.add("on");
+						// 선택한 tab의 idx 저장
+						for(var i = 0; i < recommend_cafe_Cate_list.length; i++) {
+							if(selectedTag.parentNode == recommend_cafe_Cate_list[i]) {
+								lastSelectCafeTab = i;
+								break;
+							}
+						}
+						
+						//cafe.mainTitleList 과  데이터를 뿌린 태그랑 일치
+						var selected = 0;
+						for (var i = 0; i <recommend_cafe_Cate_list.length; i++) {
+							
+							if(selected_title_mainSort.indexOf(cafe.mainTitleList[i]) == 0) {
+								recommaendCafeType[i].style="";
+								selected = i;
+								break;
+							}
+							/*
+							if(cafe.mainTitleList[i].indexOf(selected_title_mainSort) != -1) {
+								recommaendCafeType[i].style="";
+								selected = i;
+								break;
+							}
+							*/
+						}
+					
+						
+					//이전에 오픈한 카페리스트를 감춤
+					if(lastOpenCafeIdx != -1 && selected !=lastOpenCafeIdx) {
+						recommaendCafeType[lastOpenCafeIdx].style ="display:none";
+					}
+					lastOpenCafeIdx = selected;
+					
+				} else if (selectedTag == btn_scroll_next ||selectedTag == btn_scroll_prev ) {
+					// 이전, 다음 스크롤 체크 스크롤 
+					var recommed_cafeTypeList = selectedTag.previousElementSibling;
+					var recommend_cafe_Cate_list;
+					//0번 index [7]번 index , 14번 index 21번 index
+					
+					/*
+					 * 이전 다음 버튼을 누르게 되면 현재 보여지는 추천 카페 리스트 들은 초기화 되고  이전,다음 버튼을 눌러 나온 첫번쩆 카페 리스트 출력.
+					 * 0번 index [7]번 index , 14번 index 21번 index
+					 */
+					if(selectedTag.className == btn_scroll_next.className  ) {
+						recommed_cafeTypeList = recommed_cafeTypeList.previousElementSibling;
+						recommend_cafe_Cate_list = recommed_cafeTypeList.children;
+						//translateX(0px); 이런 형태를 숫자로 반환
+						var translateInfo = parseInt(recommed_cafeTypeList.style.transform.replace(/[^-^\d.]/g, ''));
+						lastGetRecommendSliderIdx++;
+						translateInfo -=cafe.recommend_slider(lastGetRecommendSliderIdx);
+					} else if (selectedTag.className == btn_scroll_prev.className ) {
+						recommend_cafe_Cate_list = recommed_cafeTypeList.children;
+						var translateInfo = parseInt(recommed_cafeTypeList.style.transform.replace(/[^-^\d.]/g, ''));
+						translateInfo +=cafe.recommend_slider(lastGetRecommendSliderIdx);
+						lastGetRecommendSliderIdx--;
+					}
+					// slider 적용
+					recommed_cafeTypeList.style.transform = "translateX("+translateInfo +"px)";
+					
+					
+					
+					/* 추천 메뉴 좌우 슬라이더
+					 * idx 0 : 좌측 버튼 비활성화 > 추천 카페에 해당하는 카페 리스트  출력  
+					 * 	   1 : 좌측,우측 활성화   > 영화에 해당하는 카페리스트 출력
+					 *     2 : 좌측,우측 활성화   > 건강/다이어트에 해당하는 카페리스트 출력
+					 *     3 : 우측 버튼 비활성화  > 스포츠 레저 에 해당하는 카페리스트 출력
+					 */
+					switch (lastGetRecommendSliderIdx) {
+						case 0:
+							btn_scroll_prev.disabled = true;
+							if(lastOpenCafeIdx != -1) {
+								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
+							}
+	
+							recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
+							lastSelectCafeTab = 0;
+							recommend_cafe_Cate_list[0].classList.add("on");
+							
+							lastOpenCafeIdx = -1;
+							break;
+						case 1:
+							btn_scroll_prev.disabled = false;
+							btn_scroll_next.disabled = false;
+							if(lastOpenCafeIdx != -1) {
+								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
+							} 
+							// 카페 탭의 선택되었을때 ui 변화
+							recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
+							lastSelectCafeTab = 7;
+							recommend_cafe_Cate_list[lastSelectCafeTab].classList.add("on");
+							
+							// 선택된 카페의 카페리스트
+							lastOpenCafeIdx = 7;
+							recommaendCafeType[lastOpenCafeIdx].style = "";
+							break;
+						case 2:
+							btn_scroll_prev.disabled = false;
+							btn_scroll_next.disabled = false;
+							if(lastOpenCafeIdx != -1) {
+								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
+							} 
+							// 카페 탭의 선택되었을때 ui 변화
+							recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
+							lastSelectCafeTab = 14;
+							recommend_cafe_Cate_list[lastSelectCafeTab].classList.add("on");
+							
+							lastOpenCafeIdx = 14;
+							recommaendCafeType[lastOpenCafeIdx].style = "";
+							break;
+						case 3:
+							btn_scroll_next.disabled = true;
+							if(lastOpenCafeIdx != -1) {
+								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
+							} 
+							// 카페 탭의 선택되었을때 ui 변화
+							recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
+							lastSelectCafeTab = 21;
+							recommend_cafe_Cate_list[lastSelectCafeTab].classList.add("on");
+							
+							lastOpenCafeIdx = 21;
+							recommaendCafeType[lastOpenCafeIdx].style = "";
+							break;
+		
+						default:
+							break;
+					}
+				}
+			});
+			
+			
+			//추천 카페 탭을 강제로 클릭이번트 작동
+			
+		}
+		
+		
+		
+		
+		
+		
+		if (path.indexOf("/sub_main") > -1) {
 			// 이벤트 리스너 추가
 
 			//cafe 개별 정보 INFO
@@ -288,7 +480,6 @@ var cafe = {
 			// 2. Editor pick 기능
 			// 3. 내 카페 새글 피드 기능
 			// 4. 전체/ 즐겨찾는 카페/ 운영카페 클릭스 해당 카페 리스트 뿌리기
-			// 5. 추천 카페 뿌리기
 			
 			// 1. 카페홈/주제별/지역별/랭킹/대표카페/내소식/채팅 기능
 			// 내가 가입하거나 만든 카페들의 갯수가 5개 단위로 보여주며, 그 이후로는 숨긴다.
@@ -312,17 +503,18 @@ var cafe = {
 			
 			// 5. 추천 카페 뿌리기.
 			// 추천카페 분류 데이터가 있는 node 가져오기 
-			var recommaendCafeType = document.getElementsByClassName("recommed_cafe_wrapper");
+			//var recommaendCafeType = document.getElementsByClassName("recommed_cafe_wrapper");
 			// 마지막으로 확인한 추천 카페 리스트
-			var lastOpenCafeIdx = -1;
+			//var lastOpenCafeIdx = -1;
 			// 마지막으로 클릭한 카페 목록 위치
-			var lastSelectCafeTab = 0;
+			//var lastSelectCafeTab = 0;
 			
 			// 추천 카페 분류 이전,이후 버튼 
-			var btn_scroll_next = document.getElementsByClassName("btn_scroll_next")[0];
-			var btn_scroll_prev = document.getElementsByClassName("btn_scroll_prev")[0];
+			//var btn_scroll_next = document.getElementsByClassName("btn_scroll_next")[0];
+			//var btn_scroll_prev = document.getElementsByClassName("btn_scroll_prev")[0];
 			// 마지막으로 누른 슬라이더 idex [0,1,2]
-			var lastGetRecommendSliderIdx = 0;
+			//var lastGetRecommendSliderIdx = 0;
+			
 			bodyTag.addEventListener('click', function(event) {
 
 				var selectedTag = event.target;
@@ -406,141 +598,7 @@ var cafe = {
 						return;
 					} 
 					
-				} else if (selectedTag.parentNode.parentNode.classList.contains("scroll_box_swiper")) {
-					// 추천 카페 카테고리의 버튼 tag의 어머니 태그중 'scroll_box_swiper' 가 존재시 이벤트 진행
-					
-					var selected_title_mainSort = selectedTag.textContent.trim();
-					var recommend_cafe_Cate_list = selectedTag.parentNode.parentNode.getElementsByTagName("li");
-					
-					// 추가전 on class 제거
-					recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
-					selectedTag.parentNode.classList.add("on");
-					// 선택한 tab의 idx 저장
-					for(var i = 0; i < recommend_cafe_Cate_list.length; i++) {
-						if(selectedTag.parentNode == recommend_cafe_Cate_list[i]) {
-							lastSelectCafeTab = i;
-							break;
-						}
-					}
-					
-					//cafe.mainTitleList 과  데이터를 뿌린 태그랑 일치
-					var selected = -1;
-					for (var i = 0; i <25; i++) {
-						if(cafe.mainTitleList[i].indexOf(selected_title_mainSort) != -1) {
-							recommaendCafeType[i].style="";
-							selected = i;
-							break;
-						}
-						/*
-						if(selected_title_mainSort == cafe.mainTitleList[i]) {
-							recommaendCafeType[i].style="";
-							selected = i;
-							break;
-						}
-						*/
-					}
-				
-					
-				//이전에 오픈한 카페리스트를 감춤
-				if(lastOpenCafeIdx != -1 && selected !=lastOpenCafeIdx) {
-					recommaendCafeType[lastOpenCafeIdx].style ="display:none";
 				}
-				lastOpenCafeIdx = selected;
-				
-			} else if (selectedTag == btn_scroll_next ||selectedTag == btn_scroll_prev ) {
-				// 이전, 다음 스크롤 체크 스크롤 
-				var recommed_cafeTypeList = selectedTag.previousElementSibling;
-				var recommend_cafe_Cate_list;
-				//0번 index [7]번 index , 14번 index 21번 index
-				
-				/*
-				 * 이전 다음 버튼을 누르게 되면 현재 보여지는 추천 카페 리스트 들은 초기화 되고  이전,다음 버튼을 눌러 나온 첫번쩆 카페 리스트 출력.
-				 * 0번 index [7]번 index , 14번 index 21번 index
-				 */
-				if(selectedTag.className == btn_scroll_next.className  ) {
-					recommed_cafeTypeList = recommed_cafeTypeList.previousElementSibling;
-					recommend_cafe_Cate_list = recommed_cafeTypeList.children;
-					//translateX(0px); 이런 형태를 숫자로 반환
-					var translateInfo = parseInt(recommed_cafeTypeList.style.transform.replace(/[^-^\d.]/g, ''));
-					lastGetRecommendSliderIdx++;
-					translateInfo -=cafe.recommend_slider(lastGetRecommendSliderIdx);
-				} else if (selectedTag.className == btn_scroll_prev.className ) {
-					recommend_cafe_Cate_list = recommed_cafeTypeList.children;
-					var translateInfo = parseInt(recommed_cafeTypeList.style.transform.replace(/[^-^\d.]/g, ''));
-					translateInfo +=cafe.recommend_slider(lastGetRecommendSliderIdx);
-					lastGetRecommendSliderIdx--;
-				}
-				// slider 적용
-				recommed_cafeTypeList.style.transform = "translateX("+translateInfo +"px)";
-				
-				
-				
-				/* 추천 메뉴 좌우 슬라이더
-				 * idx 0 : 좌측 버튼 비활성화 > 추천 카페에 해당하는 카페 리스트  출력  
-				 * 	   1 : 좌측,우측 활성화   > 영화에 해당하는 카페리스트 출력
-				 *     2 : 좌측,우측 활성화   > 건강/다이어트에 해당하는 카페리스트 출력
-				 *     3 : 우측 버튼 비활성화  > 스포츠 레저 에 해당하는 카페리스트 출력
-				 */
-				switch (lastGetRecommendSliderIdx) {
-					case 0:
-						btn_scroll_prev.disabled = true;
-						if(lastOpenCafeIdx != -1) {
-							recommaendCafeType[lastOpenCafeIdx].style ="display:none";
-						}
-
-						recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
-						lastSelectCafeTab = 0;
-						recommend_cafe_Cate_list[0].classList.add("on");
-						
-						lastOpenCafeIdx = -1;
-						break;
-					case 1:
-						btn_scroll_prev.disabled = false;
-						btn_scroll_next.disabled = false;
-						if(lastOpenCafeIdx != -1) {
-							recommaendCafeType[lastOpenCafeIdx].style ="display:none";
-						} 
-						// 카페 탭의 선택되었을때 ui 변화
-						recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
-						lastSelectCafeTab = 7;
-						recommend_cafe_Cate_list[lastSelectCafeTab].classList.add("on");
-						
-						// 선택된 카페의 카페리스트
-						lastOpenCafeIdx = 7;
-						recommaendCafeType[lastOpenCafeIdx].style = "";
-						break;
-					case 2:
-						btn_scroll_prev.disabled = false;
-						btn_scroll_next.disabled = false;
-						if(lastOpenCafeIdx != -1) {
-							recommaendCafeType[lastOpenCafeIdx].style ="display:none";
-						} 
-						// 카페 탭의 선택되었을때 ui 변화
-						recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
-						lastSelectCafeTab = 14;
-						recommend_cafe_Cate_list[lastSelectCafeTab].classList.add("on");
-						
-						lastOpenCafeIdx = 14;
-						recommaendCafeType[lastOpenCafeIdx].style = "";
-						break;
-					case 3:
-						btn_scroll_next.disabled = true;
-						if(lastOpenCafeIdx != -1) {
-							recommaendCafeType[lastOpenCafeIdx].style ="display:none";
-						} 
-						// 카페 탭의 선택되었을때 ui 변화
-						recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
-						lastSelectCafeTab = 21;
-						recommend_cafe_Cate_list[lastSelectCafeTab].classList.add("on");
-						
-						lastOpenCafeIdx = 21;
-						recommaendCafeType[lastOpenCafeIdx].style = "";
-						break;
-	
-					default:
-						break;
-				}
-			}
 			
 				
 			});

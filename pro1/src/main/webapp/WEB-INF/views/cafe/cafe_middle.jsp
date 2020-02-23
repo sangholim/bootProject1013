@@ -16,22 +16,25 @@
 	 </c:choose>
  	<!--  side menu -->
 	<div class="aside">
-		<div class="cafe_banner">
-			<div class="banner_btns">
-				<div class="common_btn_side">
-					<button type="button" title="이전" class="btn_side_prev">
-						<span class="blind">이전</span>
-					</button>
-					<button type="button" title="다음" class="btn_side_next" disabled="disabled">
-						<span class="blind">다음</span>
-					</button>
+		<c:if test="${sub_page eq 'sub_main'}">
+			<div class="cafe_banner">
+				<div class="banner_btns">
+					<div class="common_btn_side">
+						<button type="button" title="이전" class="btn_side_prev">
+							<span class="blind">이전</span>
+						</button>
+						<button type="button" title="다음" class="btn_side_next" disabled="disabled">
+							<span class="blind">다음</span>
+						</button>
+					</div>
+				</div>
+				<div class="banner">
+					<img src="/img/cafe/sp-cafe-meeting-banner.png" width="300" height="250" alt="정모기념품 지원.카페 이름이 새겨진 기념품을 받아보세요. 여러분의 정모 흥행을 응원합니다!" class="">
+					<a href="https://cafe.naver.com/cafesupport/129693"></a>
 				</div>
 			</div>
-			<div class="banner">
-				<img src="/img/cafe/sp-cafe-meeting-banner.png" width="300" height="250" alt="정모기념품 지원.카페 이름이 새겨진 기념품을 받아보세요. 여러분의 정모 흥행을 응원합니다!" class="">
-				<a href="https://cafe.naver.com/cafesupport/129693"></a>
-			</div>
-		</div>
+		</c:if>
+	
 		<div class="login_area">
 			<div class="user_info">
 				<h2 class="blind">사용자 정보</h2>

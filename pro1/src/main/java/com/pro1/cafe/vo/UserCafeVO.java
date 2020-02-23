@@ -38,6 +38,9 @@ public class UserCafeVO implements Serializable {
     @Column(name = "cafeFav")
     private int cafeFav;
 
+    @Column(name = "cafeOfficial")
+    private int cafeOfficial;
+    
     @Id
     @ManyToOne(optional = false)
     @JoinColumn(name = "userUid", insertable = false, updatable = false)
@@ -78,7 +81,29 @@ public class UserCafeVO implements Serializable {
 	this.cafeFav = cafeFav;
 	this.cafe = new CafeVO(uid, name, icon, url);
     }
-
+    
+    /**
+     * 유저가 가입한 카페 호출시 필요한 params
+     * @param userUid
+     * @param cafeUid
+     * @param cafeLevel
+     * @param cafeFav
+     * @param cafeOfficial
+     * @param uid
+     * @param name
+     * @param icon
+     * @param url
+     */
+    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, int cafeOfficial, long uid, String name, String icon,
+	    String url) {
+	this.userUid = userUid;
+	this.cafeUid = cafeUid;
+	this.cafeLevel = cafeLevel;
+	this.cafeFav = cafeFav;
+	this.cafeOfficial = cafeOfficial;
+	this.cafe = new CafeVO(uid, name, icon, url);
+    }
+    
     /**
      * 추천카페 질의시 필요한 params
      * 
@@ -98,6 +123,29 @@ public class UserCafeVO implements Serializable {
 
     }
 
+    /**
+     * 추천카페 질의시 필요한 params
+     * @param userUid
+     * @param cafeUid
+     * @param cafeOfficial
+     * @param uid
+     * @param name
+     * @param icon
+     * @param url
+     * @param desc
+     * @param title_mainSort
+     * @param memberCnt
+     */
+    public UserCafeVO(long userUid, long cafeUid, int cafeOfficial, long uid, String name, String icon, String url, String desc,
+	    int title_mainSort, long memberCnt) {
+	this.userUid = userUid;
+	this.cafeUid = cafeUid;
+	this.cafeOfficial = cafeOfficial;
+	this.cafe = new CafeVO(uid, name, icon, url, desc, title_mainSort, memberCnt);
+
+    }
+    
+    
     public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, CafeVO cafe) {
 	this(userUid, cafeUid, cafeLevel, 0, cafe, null);
     }
@@ -165,6 +213,14 @@ public class UserCafeVO implements Serializable {
 
     public static long getSerialversionuid() {
 	return serialVersionUID;
+    }
+
+    public int getCafeOfficial() {
+        return cafeOfficial;
+    }
+
+    public void setCafeOfficial(int cafeOfficial) {
+        this.cafeOfficial = cafeOfficial;
     }
 
 }

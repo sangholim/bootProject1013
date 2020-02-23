@@ -119,9 +119,14 @@
 	<div id="gnbmenu" class="menu">
 		<div class="menu_inner">
 			<ul class="lnb">
+				<!-- 
 				<li class="on">
+				 -->
+				<li>
 					<a href="/cafe/sub_main" class="lnb_link">카페홈</a> 
+					<!-- 
 					<span class="blind">선택됨</span>
+					 -->
 				</li>
 				<li>
 					<a href="/cafe/sub_theme" class="lnb_link">주제별</a> 
