@@ -375,11 +375,10 @@
                     <input id="gateOpen" type="hidden" value="1">
                     <input id="searchviewtype" type="hidden" value="title">
                     <iframe name="cafe_main" id="cafe_main" title="카페 메인"
-                            src="//cafe.naver.com/MyCafeIntro.nhn?clubid=29995789&amp;tc=naver_search" width="860"
+                            src="/board/boardCenter" width="860"
                             height="100%"
                             frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowtransparency="true"
                             allowfullscreen="" style="height: 1598px;"></iframe>
-
                 </div>
                 <div id="smart_editor" style="visibility: hidden">
                     <jsp:include page="./commonBoardInsert.jsp" flush="true"/>
@@ -390,6 +389,9 @@
     </div>
 <%--    <script type="text/javascript" src="/js/board/board.js"></script>--%>
 
-
+    <div id="login_info">
+        <input type="hidden" name="useruid" value="${userUid}" />
+        <input type="hidden" name="nickname" value="${nickName}" />
+    </div>
 </body>
 </html>

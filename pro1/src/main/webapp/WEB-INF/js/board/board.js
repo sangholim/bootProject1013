@@ -4,7 +4,7 @@
 
 var board = {
 
-    boardWrite : function () {
+    boardWrite : function (login_info) {
 
         var ir1 = document.getElementsByName("ir1");
 
@@ -15,11 +15,10 @@ var board = {
         var postInfo = {};
 
         postInfo['content'] = ir1[0].value;
-        postInfo['userUid'] = 21;
-        postInfo['boardUid'] = 1;
+        postInfo['userUid'] = login_info.childNodes[1].value;
         postInfo['cafeUid'] = 8;
-        postInfo['subject'] = "testSubject";
-        postInfo['writer'] = "seongheon";
+        postInfo['subject'] = document.getElementById("post_subject").value;
+        postInfo['writer'] = login_info.childNodes[3].value;;
         postInfo['addfile'] = "jell";
         postInfo['createDate'] = 100000;
         postInfo['modifiedDate'] = 100000;
@@ -32,6 +31,8 @@ var board = {
     },
 
     init : function () {
+
+        var login_info = document.getElementById("login_info");
 
         var bodyTag = document.getElementById("content-area");
         bodyTag.addEventListener('click', function(event) {
@@ -63,7 +64,7 @@ var board = {
                 }
             }
             else if(selectedTag == saveBtn) {
-                board.boardWrite();
+                board.boardWrite(login_info);
                 alert("글쓰기");
             }
         });

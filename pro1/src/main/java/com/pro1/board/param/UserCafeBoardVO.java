@@ -124,4 +124,25 @@ public class UserCafeBoardVO implements Serializable {
 	return super.hashCode();
     }
 
+    public UserCafeBoardVO() {}
+
+    public UserCafeBoardVO(Long boardUid, Long userUid, Long cafeUid, String subject, String content, String writer, String addfile, Long createDate, Long modifiedDate) {
+        this.boardUid = boardUid;
+        this.userUid = userUid;
+        this.cafeUid = cafeUid;
+        this.subject = subject;
+        this.content = content;
+        this.writer = writer;
+        this.addfile = addfile;
+        this.createDate = createDate;
+        this.modifiedDate = modifiedDate;
+    }
+
+    public UserCafeBoardVO(String subject, String content, String writer, String addfile, Long modifiedDate) {
+        this.subject = subject;
+        this.content = content;
+        this.writer = writer;
+        this.addfile = addfile;
+        this.modifiedDate = modifiedDate;
+    }
 }
