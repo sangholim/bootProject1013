@@ -93,7 +93,7 @@
 		 	<c:forEach var="user_cafe" items="${cafeList.userCafeList}" varStatus="status">
 		 		
 		 		<c:if test="${status.index % 5 eq 0 }">
-		 		<div class="user_mycafe_container">
+		 		<div class="user_mycafe_container" style="display:none">
 		 		</c:if>
 				
 				 	<div cafe="data" class="user_mycafe_area">
@@ -465,11 +465,11 @@
 					</c:when>
 				</c:choose>
 				<c:forEach var="cafeVO" items="${rec_cafe.value}">
-					<li>
+					<li style="display:none;">
 						<a href="/board/${cafeVO.cafe.url}" class="list_link">
 							<div class="list_thumb">
 								<!---->
-								<img src="${cafeVO.cafe.icon}" width="80" height="80" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"alt="">
+								<img src="/${cafeVO.cafe.icon}" width="80" height="80" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"alt="">
 							</div>
 							<div class="list_info">
 								<div class="name_area">
@@ -531,6 +531,15 @@
 				</li>
 			 -->
 		</ul>
-
+		<div class="common_page"><!----> 
+			<c:forEach begin="1" end="10" var="count">
+				<button type="button" class='btn <c:if test="${count eq 1 }"> on</c:if>' style="display: none">
+					${count }
+					<c:if test="${count eq 1 }">
+						<span class="blind">선택됨</span>
+					</c:if>
+				</button>
+			</c:forEach>
+		</div>
 	</div>
 </div>
