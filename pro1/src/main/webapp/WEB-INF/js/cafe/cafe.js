@@ -463,7 +463,8 @@ var cafe = {
 					switch (lastGetRecommendSliderIdx) {
 						case 0:
 							btn_scroll_prev.disabled = true;
-							if(lastOpenCafeIdx != -1) {
+							
+							if(lastOpenCafeIdx != -1 && recommaendCafeType.length > 0) {
 								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
 							}
 	
@@ -476,7 +477,8 @@ var cafe = {
 						case 1:
 							btn_scroll_prev.disabled = false;
 							btn_scroll_next.disabled = false;
-							if(lastOpenCafeIdx != -1) {
+							
+							if(lastOpenCafeIdx != -1 && recommaendCafeType.length > 0) {
 								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
 							} 
 							// 카페 탭의 선택되었을때 ui 변화
@@ -486,12 +488,14 @@ var cafe = {
 							
 							// 선택된 카페의 카페리스트
 							lastOpenCafeIdx = 7;
-							recommaendCafeType[lastOpenCafeIdx].style = "";
+							if (recommaendCafeType.length > 0) {
+								recommaendCafeType[lastOpenCafeIdx].style = "";
+							}
 							break;
 						case 2:
 							btn_scroll_prev.disabled = false;
 							btn_scroll_next.disabled = false;
-							if(lastOpenCafeIdx != -1) {
+							if(lastOpenCafeIdx != -1 && recommaendCafeType.length > 0) {
 								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
 							} 
 							// 카페 탭의 선택되었을때 ui 변화
@@ -500,11 +504,13 @@ var cafe = {
 							recommend_cafe_Cate_list[lastSelectCafeTab].classList.add("on");
 							
 							lastOpenCafeIdx = 14;
-							recommaendCafeType[lastOpenCafeIdx].style = "";
+							if (recommaendCafeType.length > 0) {
+								recommaendCafeType[lastOpenCafeIdx].style = "";
+							}
 							break;
 						case 3:
 							btn_scroll_next.disabled = true;
-							if(lastOpenCafeIdx != -1) {
+							if(lastOpenCafeIdx != -1 && recommaendCafeType.length > 0) {
 								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
 							} 
 							// 카페 탭의 선택되었을때 ui 변화
@@ -513,7 +519,9 @@ var cafe = {
 							recommend_cafe_Cate_list[lastSelectCafeTab].classList.add("on");
 							
 							lastOpenCafeIdx = 21;
-							recommaendCafeType[lastOpenCafeIdx].style = "";
+							if (recommaendCafeType.length > 0) {
+								recommaendCafeType[lastOpenCafeIdx].style = "";
+							}
 							break;
 		
 						default:
