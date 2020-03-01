@@ -801,7 +801,7 @@ var cafe = {
 			 * select[0]에 있는 option 클릭시 select[1] options추가
 			 * select[2]에 있는 option 클릭시 select[3] options추가
 			 */
-			selectWrap.addEventListener('click', function(event) {
+			selectWrap.addEventListener('change', function(event) {
 				var selecgtedTag = -1;
 				// 선택된 select tag  찾기
 				for (var i = 0; i < selectSize; i++) {
@@ -815,6 +815,7 @@ var cafe = {
 				if(selecgtedTag == 0 || selecgtedTag == 2 ) {
 					var optionsList = event.target.options;
 					// 대분류 선택을 클릭했을떄는 처리하지 않는다.
+					console.log(optionsList.selectedIndex);
 					if(optionsList.selectedIndex == 0 ) {
 						return;
 					}
