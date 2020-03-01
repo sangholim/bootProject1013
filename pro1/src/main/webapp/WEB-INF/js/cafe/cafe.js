@@ -338,7 +338,11 @@ var cafe = {
 					// 추천 카페 카테고리의 버튼 tag의 어머니 태그중 'scroll_box_swiper' 가 존재시 이벤트 진행
 					var selected_title_mainSort = selectedTag.textContent.trim();
 					var recommend_cafe_Cate_list = selectedTag.parentNode.parentNode.getElementsByTagName("li");
-			
+					
+					if (recommend_cafe_Cate_list.length == 0) {
+						return;
+					}
+					
 					// 추천 카페 탭에서 클릭시 해당 주제에 대한 카페리스트호출
 					recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
 					selectedTag.parentNode.classList.add("on");
@@ -383,6 +387,8 @@ var cafe = {
 					}
 					lastOpenCafeIdx = selected;
 					lastpageNum = 1;
+					
+					
 				}else if (pageUi == selectedTag.parentNode) {
 					//페이지 번호에 따라 카페 리스트 뿌리기
 					//추천카페 목록에서 클릭후, 존재하는 카페들을 담은 데이터
