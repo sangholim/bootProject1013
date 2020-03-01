@@ -315,28 +315,27 @@ var cafe = {
 			// 마지막으로 클릭한 카페 목록 위치
 			var lastSelectCafeTab = 0;
 			
-			// pageUI
-			var pageUi = document.getElementsByClassName("common_page")[0].children;
+			// pageUI (페이지 번호)
+			var pageUi = document.getElementsByClassName("common_page")[0];
+			
+			var lastpageNum = 1;
+			
+			
 			// 페이지를 선택된 카페에 있는 데이터 리스트에 따라 나눔
-			var selectedRecommendCafeList = recommaendCafeType[lastOpenCafeIdx].getElementsByTagName("li");
-			
-			if(selectedRecommendCafeList !== undefined ) {
-			}
-			
-			
+			var selectedRecommendCafeList = (recommaendCafeType.length == 0) ? null : recommaendCafeType[lastOpenCafeIdx].getElementsByTagName("li");			
 			
 			var bodyTag = document.getElementById("content");
 			bodyTag.addEventListener('click', function(event) {
 
 				var selectedTag = event.target;
-		
 			
 				// 추천 카페 분류 이전,이후 버튼 
 				var btn_scroll_next = document.getElementsByClassName("btn_scroll_next")[0];
 				var btn_scroll_prev = document.getElementsByClassName("btn_scroll_prev")[0];
 				if (selectedTag.parentNode.parentNode.classList.contains("scroll_box_swiper")) {
+					// 추천 카페 분류 이전,이후 선택시 이벤트 
+						
 					// 추천 카페 카테고리의 버튼 tag의 어머니 태그중 'scroll_box_swiper' 가 존재시 이벤트 진행
-					
 					var selected_title_mainSort = selectedTag.textContent.trim();
 					var recommend_cafe_Cate_list = selectedTag.parentNode.parentNode.getElementsByTagName("li");
 			
@@ -364,30 +363,76 @@ var cafe = {
 					var allCafeList = recommaendCafeType[selected].getElementsByTagName("li");
 					var allCafeLength = allCafeList.length;
 					// 최대 페이지 계산
-					var maxPage = (allCafeLength%10 == 0)? allCafeLength/10 : allCafeLength/10 +1;
+					var maxPage = (allCafeLength%8 == 0)? allCafeLength/8 : allCafeLength/8 +1;
 					
-					// 숨겨진 페이지 노출
+					// 페이지 번호 노출
 					for(var i = 0; i < maxPage; i++) {
-						pageUi[i].style.display="";
+						pageUi.children[i].style.display="";
+						pageUi.children[i].classList.remove("on");
 					}
+					pageUi.children[0].classList.add("on");
+					
 					// 페이지에 따라 보여줄수 있는 데이터 노출 8페이지 단위
 					for(var i = 0 ; i < 8; i++) {
 						allCafeList[i].style="";
 					}
-					
-					
 					
 					//이전에 오픈한 카페리스트를 감춤
 					if(lastOpenCafeIdx != -1 && selected !=lastOpenCafeIdx) {
 						recommaendCafeType[lastOpenCafeIdx].style ="display:none";
 					}
 					lastOpenCafeIdx = selected;
+					lastpageNum = 1;
+				}else if (pageUi == selectedTag.parentNode) {
+					//페이지 번호에 따라 카페 리스트 뿌리기
+					//추천카페 목록에서 클릭후, 존재하는 카페들을 담은 데이터
+					var currentPage = parseInt(selectedTag.innerText);
+					
+					if(lastpageNum == currentPage) {
+						return;
+					}
+					
+					var allCafeList = recommaendCafeType[lastOpenCafeIdx].getElementsByTagName("li");
+					var allCafeLength = allCafeList.length;
+					// 최대 페이지 계산, 카페리스트 갯수가 페이지 수보다 작으면 10으로
+					var maxPage = (allCafeLength%8 == 0)? allCafeLength/8 : allCafeLength/8 +1;
+					maxPage = (maxPage > 10) ? 10 : maxPage;
+					
+					// 페이지 번호 노출
+					for(var i = 0; i < maxPage; i++) {
+						pageUi.children[i].style.display="";
+						pageUi.children[i].classList.remove("on");
+					}
+					selectedTag.classList.add("on");
+					if(maxPage < 10) {
+						for(var i = maxPage; i < 10; i++) {
+							pageUi.children[i].style.display="none";
+						}
+					}
+					
+				
+					var minNum = (lastpageNum - 1) * 8;
+					currentPage = lastpageNum * 8;
+					//이전에 노출된 페이지 감춤
+					for(var i = minNum ; i < currentPage; i++) {
+						allCafeList[i].style.display="none";
+					}
+					
+					currentPage = parseInt(selectedTag.innerText);
+					//마지막 페이지 번호 저장
+					lastpageNum = currentPage;
+				
+					minNum = (currentPage-1) * 8;
+					currentPage = currentPage * 8;
+					// 페이지에 따라 보여줄수 있는 데이터 노출 8페이지 단위
+					for(var i = minNum ; i < currentPage; i++) {
+						allCafeList[i].style="";
+					}
 					
 				} else if (selectedTag == btn_scroll_next ||selectedTag == btn_scroll_prev ) {
 					// 이전, 다음 스크롤 체크 스크롤 
 					var recommed_cafeTypeList = selectedTag.previousElementSibling;
 					var recommend_cafe_Cate_list;
-					//0번 index [7]번 index , 14번 index 21번 index
 					
 					/*
 					 * 이전 다음 버튼을 누르게 되면 현재 보여지는 추천 카페 리스트 들은 초기화 되고  이전,다음 버튼을 눌러 나온 첫번쩆 카페 리스트 출력.
