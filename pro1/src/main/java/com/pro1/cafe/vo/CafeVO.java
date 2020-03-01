@@ -81,6 +81,9 @@ public class CafeVO {
     @Column(name = "useShortCut")
     private int useShortCut = 0;
 
+    @Column(name = "createDate")
+    private long createDate = 0l;
+
     @OneToMany
     @JoinTable(name = "cafe")
     private List<UserCafeVO> usercafeList = new ArrayList<>();
@@ -96,7 +99,7 @@ public class CafeVO {
 	this.url = url;
     }
 
-    public CafeVO(long uid, String name, String icon, String url, String desc,int title_mainSort, long memberCnt) {
+    public CafeVO(long uid, String name, String icon, String url, String desc, int title_mainSort, long memberCnt) {
 	this(uid, name, icon, url);
 	this.title_mainSort = title_mainSort;
 	this.memberCnt = memberCnt;
@@ -253,6 +256,14 @@ public class CafeVO {
 
     public void setUseShortCut(int useShortCut) {
 	this.useShortCut = useShortCut;
+    }
+
+    public long getCreateDate() {
+	return createDate;
+    }
+
+    public void setCreateDate(long createDate) {
+	this.createDate = createDate;
     }
 
 }

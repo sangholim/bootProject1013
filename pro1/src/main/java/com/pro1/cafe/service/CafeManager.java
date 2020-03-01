@@ -23,12 +23,11 @@ public class CafeManager {
     @Autowired
     private CafeDAO cafeDAO;
 
-    public void getCafeMapByUserUid(Model model, long userUid) {
+    public void getCafeMapByUserUid(Model model, long userUid, String sub_type) {
 
 	try {
 
-	    //List<UserCafeVO> list = cafeDAO.getCafeListByUserUid(userUid);
-	    model.addAttribute("cafeList", cafeDAO.getCafeMapByUserUid(userUid));
+	    model.addAttribute("cafeList", cafeDAO.getCafeMapByUserUid(userUid, sub_type));
 	} catch (Exception e) {
 
 	    logger.warn("Error Connection DataBase : {}", e.getMessage(), e);

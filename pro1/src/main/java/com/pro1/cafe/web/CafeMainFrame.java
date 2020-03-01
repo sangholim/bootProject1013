@@ -33,7 +33,7 @@ public class CafeMainFrame {
 	model.addAttribute(Constant.PAGE_SUB_TYPE, sub_type);
 	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 	//cafeManager.getCafeListByUserUid(model, userAuth.getUid());
-	cafeManager.getCafeMapByUserUid(model, userAuth.getUid());
+	cafeManager.getCafeMapByUserUid(model, userAuth.getUid(),sub_type);
 	
 	return Constant.MAIN;
     }

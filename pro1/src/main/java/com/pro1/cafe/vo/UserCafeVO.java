@@ -144,6 +144,29 @@ public class UserCafeVO implements Serializable {
 	this.cafe = new CafeVO(uid, name, icon, url, desc, title_mainSort, memberCnt);
 
     }
+
+    /**
+     * 
+     * @param userUid
+     * @param cafeUid
+     * @param cafeOfficial
+     * @param uid
+     * @param name
+     * @param icon
+     * @param url
+     * @param desc
+     * @param title_mainSort
+     * @param title_subSort
+     * @param memberCnt
+     */
+    public UserCafeVO(long userUid, long cafeUid, int cafeOfficial, long uid, String name, String icon, String url, String desc,
+	    int title_mainSort, int title_subSort ,int region_mainSort, long memberCnt) {
+	this(userUid, cafeUid, cafeOfficial, uid, name, icon, url, desc,title_mainSort, memberCnt); 
+	this.cafe.setTitle_subSort(title_subSort);
+	this.cafe.setRegion_mainSort(region_mainSort);
+    }
+   
+    
     
     
     public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, CafeVO cafe) {

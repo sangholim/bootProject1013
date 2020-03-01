@@ -31,43 +31,31 @@ public class CafeDAO extends CommonDBSession {
      */
     private final String userCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafeLevel, uc.cafeFav, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid";
 
+    // private final String recommandCafeJoin = "select NEW UserCafeVO(0l, 0l,
+    // uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url,
+    // uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.memberCnt) from UserCafeVO uc
+    // join uc.cafe c where uc.userUid != :userUid";
+
     /**
      * 추천하는 카페에 필요한 정보 카페이름,카페아이콘, 멤버수, 랭킹점수 (todo)
      */
-    private final String recommandCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url, uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.memberCnt) from UserCafeVO uc join uc.cafe c where uc.userUid != :userUid";
+    private final String recommandCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url, uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.title_subSort, uc.cafe.region_mainSort, uc.cafe.memberCnt) from \n"
+	    + "UserCafeVO uc join uc.cafe c ";
 
-    public List<UserCafeVO> getCafeListByUserUid(long userUid) throws Exception {
-
-	if (sqlSession != null) {
-	    return sqlSession.selectList("getCafeListByUserUid");
-	}
-
-	DbSessionInfo sessionInfo = processHibernateSession(CafeVO.class, null, DBQueryType.SELECT);
-	try (Session session = sessionInfo.getSession()) {
-
-	    Query<UserCafeVO> query = session.createQuery(userCafeJoin, UserCafeVO.class);
-	    query.setParameter("userUid", userUid);
-	    return query.getResultList();
-
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    return null;
-	}
-
-    }
+    private final String cafeConditionForm1 = "where %s != %s and %s = %s order by createDate";
 
     /**
      * 유저가 로그인후 볼수있는 cafe들을 추출 (추천 카페들 , 내가 가입한 카페들)
+     * 
      * @param userUid
      * @return
      * @throws Exception
      */
-    public CafeForm getCafeMapByUserUid(long userUid) throws Exception {
+    public CafeForm getCafeMapByUserUid(long userUid, String urlType) throws Exception {
 	/*
-	if (sqlSession != null) {
-	    return sqlSession.selectList("getCafeListByUserUid");
-	}
-	*/
+	 * if (sqlSession != null) { return
+	 * sqlSession.selectList("getCafeListByUserUid"); }
+	 */
 	CafeForm cafeForm = new CafeForm();
 	Map<Integer, List<UserCafeVO>> recommend_CafeMap = new HashMap<>();
 
@@ -76,28 +64,23 @@ public class CafeDAO extends CommonDBSession {
 	    Query<UserCafeVO> query = session.createQuery(userCafeJoin, UserCafeVO.class);
 	    query.setParameter("userUid", userUid);
 	    cafeForm.setUserCafeList(query.getResultList());
-	    //userCafeMap.put("userCafeList", query.getResultList());
+	    // userCafeMap.put("userCafeList", query.getResultList());
+	    int maxTypeNum = (urlType.toLowerCase().equals("sub_area")) ? 20 : 25;
+	    String condition = (urlType.toLowerCase().equals("sub_area"))
+		    ? String.format(cafeConditionForm1, "uc.userUid", userUid, "uc.cafe.region_mainSort", ":value")
+		    : String.format(cafeConditionForm1, "uc.userUid", userUid, "uc.cafe.title_mainSort", ":value");
 
-	    //추천 카페 데이터
-	    query = session.createQuery(recommandCafeJoin, UserCafeVO.class);
-	    query.setParameter("userUid", userUid);
-	    List<UserCafeVO> recommandCafeList = query.getResultList();
-
-	    Set<Integer> title_mainSortSet = recommend_CafeMap.keySet();
-
-	    // 카테고리별로 재분료해서 추가한다.
-	    for (UserCafeVO user_cafeVO : recommandCafeList) {
-		int title_mainSort = user_cafeVO.getCafe().getTitle_mainSort();
-		List<UserCafeVO> user_cafeList = null;
-		if (!title_mainSortSet.contains(title_mainSort)) {
-		    user_cafeList = new ArrayList<>();
-		    user_cafeList.add(user_cafeVO);
-		    recommend_CafeMap.put(title_mainSort, user_cafeList);
-		} else {
-		    user_cafeList = recommend_CafeMap.get(title_mainSort);
-		    user_cafeList.add(user_cafeVO);
-		}
+	    // cafe time 1-25까지호출
+	    for (int i = 1; i <= maxTypeNum; i++) {
+		// 추천 카페 데이터
+		query = session.createQuery(recommandCafeJoin + condition, UserCafeVO.class);
+		query.setParameter("value", i);
+		query.setFirstResult(0);
+		query.setMaxResults(80);
+		List<UserCafeVO> recommandCafeList = query.getResultList();
+		recommend_CafeMap.put(i, recommandCafeList);
 	    }
+
 	    cafeForm.setRecommend_CafeMap(recommend_CafeMap);
 
 	    return cafeForm;
@@ -108,8 +91,6 @@ public class CafeDAO extends CommonDBSession {
 	}
 
     }
-
-
 
     public List<CafeVO> getCafeList() throws Exception {
 

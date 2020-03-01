@@ -53,6 +53,7 @@ create table cafe (
  memberCnt bigint(20) unsigned not null default '0',
  `desc` bigint(20) unsigned not null default '0',
  `useShortCut` tinyint(2) unsigned not null default '0',
+ `createDate` bigint(20) unsigned NOT NULL,
  PRIMARY KEY (uid)
 )
 
@@ -63,6 +64,7 @@ ALTER TABLE cafe ADD COLUMN  writingCnt bigint(20) unsigned not null default '0'
 ALTER TABLE cafe ADD COLUMN  memberCnt bigint(20) unsigned not null default '0';
 ALTER TABLE cafe ADD COLUMN `desc` nvarchar(255) default '';
 ALTER TABLE cafe ADD COLUMN `useShortCut` tinyint(2) default 0 not null;
+ALTER TABLE cafe ADD COLUMN  `createDate` bigint(20) unsigned NOT NULL;
 ALTER TABLE cafe MODIFY  COLUMN `region_subSort` varchar(10) default 0 not null;
 ALTER TABLE cafe MODIFY  COLUMN `title_subSort` varchar(10) default 0 not null;
 ALTER TABLE cafe MODIFY  COLUMN `useShortCut` varchar(10) default '0';
