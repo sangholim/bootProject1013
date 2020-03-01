@@ -338,21 +338,24 @@ var cafe = {
 					// 추천 카페 카테고리의 버튼 tag의 어머니 태그중 'scroll_box_swiper' 가 존재시 이벤트 진행
 					var selected_title_mainSort = selectedTag.textContent.trim();
 					var recommend_cafe_Cate_list = selectedTag.parentNode.parentNode.getElementsByTagName("li");
-					
-					if (recommend_cafe_Cate_list.length == 0) {
-						return;
-					}
-					
+
 					// 추천 카페 탭에서 클릭시 해당 주제에 대한 카페리스트호출
 					recommend_cafe_Cate_list[lastSelectCafeTab].classList.remove("on");
 					selectedTag.parentNode.classList.add("on");
+
+
 					for(var i = 0; i < recommend_cafe_Cate_list.length; i++) {
 						if(selectedTag.parentNode == recommend_cafe_Cate_list[i]) {
 							lastSelectCafeTab = i;
 							break;
 						}
 					}
-					
+
+
+					if (recommaendCafeType.length == 0) {
+						return;
+					}
+
 					// 추첩 카페 클릭후 보여주는 페이지 6개만 노출
 					var selected = 0;
 					for (var i = 0; i <recommend_cafe_Cate_list.length; i++) {
