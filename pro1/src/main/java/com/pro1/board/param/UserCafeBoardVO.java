@@ -1,13 +1,9 @@
 package com.pro1.board.param;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.pro1.cafe.vo.UserCafeId;
 
@@ -144,5 +140,11 @@ public class UserCafeBoardVO implements Serializable {
         this.writer = writer;
         this.addfile = addfile;
         this.modifiedDate = modifiedDate;
+    }
+
+    @PrePersist
+    private void onCreate() {
+
+        this.createDate = 12000l;
     }
 }

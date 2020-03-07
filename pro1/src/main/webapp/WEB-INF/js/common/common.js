@@ -51,12 +51,22 @@ common.sync = function(requestParams) {
 			} else if (url.indexOf("findAddr.json") != -1) {
 				//document.location.hash = json.popState;
 				login.createAddrBody(json);
-			} else if (url.indexOf("/cafe/add.json") != -1){
+			} else if (url.indexOf("/cafe/add.json") != -1) {
 				var responseCode = json.code;
 				alert(json.result);
-				if(responseCode == 200) {
+				if (responseCode == 200) {
 					window.location.href = "/cafe/sub_main";
-				} 
+				}
+			} else if (url.indexOf("/board/insert_post.json") != -1){
+
+				debugger;
+				var responseCode = json.code;
+
+				alert(json.result);
+
+				if(responseCode == 200) {
+				 	window.location.href = "/board/yurim";
+				 }
 			}
 		}
 		loadNode.classList.add('blind');

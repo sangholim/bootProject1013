@@ -23,4 +23,9 @@ public class BoardManager {
         return boardDAO.getBoardPostList(cafeUid);
     }
 
+    public UserCafeBoardVO getOneBoardInfo(long boardUid) throws Exception {
+
+        return boardDAO.getOneBoardInfo(boardUid);
+    }
+
 }
