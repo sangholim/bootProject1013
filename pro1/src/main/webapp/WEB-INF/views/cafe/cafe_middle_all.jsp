@@ -480,6 +480,7 @@
 						<a href="#" class="link">전체<!----></a>
 					</li>
 				</ul>
+				
 				<div class="common_select">
 					<strong class="blind">현재 정렬순서. 버튼 선택 시 정렬선택</strong>
 					<button type="button" class="btn_select">급상승 순</button>
