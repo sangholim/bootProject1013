@@ -6,6 +6,8 @@ var board = {
 
     boardWrite : function (login_info) {
 
+        oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+
         var ir1 = document.getElementsByName("ir1");
 
         //form tag 안쓰고 xmlHttpRequest 사용.
@@ -77,6 +79,8 @@ var board = {
             else if(selectedTag == saveBtn) {
                 board.boardWrite(login_info);
                // alert("글쓰기");
+            } else if(selectedTag == menuLink0) {
+                window.location.href = "/board/"+document.getElementsByClassName("cafe_url")[0].innerText;;
             }
         });
 

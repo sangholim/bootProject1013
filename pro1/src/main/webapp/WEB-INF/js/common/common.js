@@ -59,7 +59,7 @@ common.sync = function(requestParams) {
 				}
 			} else if (url.indexOf("/board/insert_post.json") != -1){
 
-				debugger;
+				//debugger;
 				var responseCode = json.code;
 
 				alert(json.result);

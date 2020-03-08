@@ -191,7 +191,7 @@
                 </div>
             </div>--%>
 
-            <textarea name="ir1" id="ir1" rows="20" cols="120">에디터에 기본으로 삽입할 글(수정 모드)이 없다면 이 value 값을 지정하지 않으시면 됩니다.</textarea>
+            <textarea name="ir1" id="ir1" rows="20" cols="120"></textarea>
             <script type="text/javascript" src="/js/package/dist/js/service/HuskyEZCreator.js" charset="utf-8"></script>
             <script type="text/javascript">
                 var oEditors = [];

@@ -23,7 +23,7 @@
                                 <tr valign="top">
                                     <td>
                                         <!-- 타이틀 -->
-                                        <span class="b m-tcol-c">test</span>
+                                        <span class="b m-tcol-c">${post.subject}</span>
                                     </td>
                                     <td nowrap="" class="m-tcol-c filter-30">|</td>
                                     <td nowrap="" class="m-tcol-c"><a
@@ -40,7 +40,7 @@
                                 <tbody>
                                 <tr>
                                     <td></td>
-                                    <td class="m-tcol-c date">2020.02.09. 11:55</td>
+                                    <td class="m-tcol-c date">${post.modifiedDate}</td>
 
                                     <td nowrap="" class="m-tcol-c filter-30">|</td>
                                     <td class="edit _rosRestrict"><a id="addArticleStorage" href="#"
@@ -150,11 +150,7 @@
                     <!-- 게시글 글 내용 -->
                     <div class="tbody m-tcol-c" id="tbody"
                          style="width:744px; padding-left:43px; padding-right:43px; margin-right:0px;">
-
-
-                        test
-
-
+                        ${post.content}
                     </div>
 
                     <!-- 게시글에 해댕하는 태그가 들어가는곳 -->
