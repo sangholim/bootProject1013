@@ -449,7 +449,56 @@
 			        	</div>
 			        </li>
 				</ul>
-			</div>			
+			</div>
+			<div class="theme_category">
+				<div class="common_category">
+					<strong class="blind">현재 선택된 하위 카테고리 버튼 클릭 시 다른 하위 카테고리를
+						선택할 수 있습니다.</strong>
+					<button type="button" class="btn_category">게임 전체</button>
+					<div class="layer" style="display: none;">
+						<ul class="layer_list">
+							<li class="on">
+								<button type="button" class="btn">게임 전체</button>
+								<span class="blind">선택됨</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<em class="count" style="display: none;">총 100개</em>
+			</div>
+		</c:if>
+		<c:if test="${sub_page eq 'sub_theme' || sub_page eq 'sub_area'}">
+			<div class="theme_sort">
+				<ul class="common_option_list">
+					<li class="on">
+						<a href="#" class="link">급상승 Top100<span class="blind">선택됨</span></a>
+					</li>
+					<li class="">
+						<a href="#" class="link">랭킹 Top100<!----></a>
+					</li>
+					<li class="">
+						<a href="#" class="link">전체<!----></a>
+					</li>
+				</ul>
+				<div class="common_select">
+					<strong class="blind">현재 정렬순서. 버튼 선택 시 정렬선택</strong>
+					<button type="button" class="btn_select">급상승 순</button>
+					<div class="layer" style="display: none;">
+						<ul class="layer_list">
+							<li class="on">
+								<button type="button" class="btn">급상승 순</button>
+								<span class="blind">선택됨</span>
+							</li>
+							<li class="">
+								<button type="button" class="btn">멤버 순</button><!---->
+							</li>
+							<li class="">
+								<button type="button" class="btn">게시글 순</button><!---->
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</c:if>
 		<ul class="common_list">
 			<!-- TODO: 추천카페 탭 리스트 만들기 -->
@@ -503,33 +552,6 @@
 				</c:forEach>
 				</div>
 			</c:forEach>
-			<!-- 
-				<li>
-					<a href="#" class="list_link">
-						<div class="list_thumb">
-							<img
-								src="https://cafethumb.pstatic.net/20141224_264/mmmagic_1419411381399Mj5pl_PNG/%C0%FC%BB%E7.png?type=f150_150_mask"
-								width="80" height="80"
-								onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'"
-								alt="">
-						</div>
-						<div class="list_info">
-							<div class="name_area">
-								<strong class="name"> 전산실 사람들</strong>
-								<div class="common_icon_box">
-								</div>
-							</div>
-							<div class="txt_area">
-								<p class="txt">전산실에서 업무를 보는 사람들의 이야기를 담아보려합니다.</p>
-							</div>
-							<div class="info_area">
-								<span class="info">컴퓨터일반</span> <span class="info">멤버
-									28,887명</span>
-							</div>
-						</div>
-					</a>
-				</li>
-			 -->
 		</ul>
 		<div class="common_page"><!----> 
 			<c:forEach begin="1" end="10" var="count">
