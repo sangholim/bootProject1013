@@ -21,11 +21,12 @@ public class BoardDAO extends CommonDBSession {
 
     DbSessionInfo sessionInfo;
     //select NEW UserCafeVO(0l, 0l, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url, uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.memberCnt) from UserCafeVO uc join uc.cafe c where uc.userUid != :userUid";
-//    private final String cafeBoardJoin = "SELECT NEW UserCafeBoardVO(cb.subject, cb.content, cb.writer, cb.addfile, cb.modifiedDate) " +
-//                                         "FROM UserCafeBoardVO cb WHERE cb.userUid = :cafeUid";
 
     private final String cafeBoardJoin = "select NEW UserCafeBoardVO(cb.boardUid,cb.userUid,cb.cafeUid, cb.subject, cb.content, cb.writer, cb.addfile, cb.createDate, cb.modifiedDate) " +
                                              "from UserCafeBoardVO cb where cb.cafeUid = :cafeUid";
+
+    private final String oneBoardView = "select NEW UserCafeBoardVO(cb.boardUid,cb.userUid,cb.cafeUid, cb.subject, cb.content, cb.writer, cb.addfile, cb.createDate, cb.modifiedDate) " +
+                                        "from UserCafeBoardVO cb where cb.boardUid = :boardUid";
 
     public void InsertPost (UserCafeBoardVO vo) throws Exception {
 
@@ -45,6 +46,26 @@ public class BoardDAO extends CommonDBSession {
             Query<UserCafeBoardVO> query = session.createQuery(cafeBoardJoin, UserCafeBoardVO.class);
             query.setParameter("cafeUid", cafeUid);
             return query.getResultList();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public UserCafeBoardVO getOneBoardInfo(long boardUid) throws Exception{
+
+        if (sqlSession != null) {
+            return sqlSession.selectOne("getOneBoardInfo");
+        }
+
+        sessionInfo = processHibernateSession(UserCafeBoardVO.class, null, DBQueryType.SELECT);
+
+        try (Session session = sessionInfo.getSession()) {
+
+            Query<UserCafeBoardVO> query = session.createQuery(oneBoardView, UserCafeBoardVO.class);
+            query.setParameter("boardUid", boardUid);
+            return query.getSingleResult();
 
         } catch (Exception e) {
             e.printStackTrace();

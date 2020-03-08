@@ -129,7 +129,7 @@
 
                                         <c:forEach var="item" items="${postList}" varStatus="status">
                                             <tr>
-                                                <td class="td_article">${item.subject}</td>
+                                                <td class="td_article"><a href="/board/boardCenter/${item.boardUid}" />${item.subject}</td>
                                                 <td class="td_name">${item.writer}</td>
                                                 <td class="td_date">${item.modifiedDate}</td>
                                                 <td class="td_view">0</td>

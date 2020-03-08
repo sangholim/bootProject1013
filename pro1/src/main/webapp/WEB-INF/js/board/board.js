@@ -17,7 +17,7 @@ var board = {
         postInfo['content'] = ir1[0].value;
         postInfo['userUid'] = login_info.childNodes[1].value;
         postInfo['cafeUid'] = 8;
-        postInfo['subject'] = document.getElementById("post_subject").value;
+        postInfo['subject'] = document.getElementById("subject").value;
         postInfo['writer'] = login_info.childNodes[3].value;;
         postInfo['addfile'] = "jell";
         postInfo['createDate'] = 100000;
@@ -51,6 +51,17 @@ var board = {
             //스마트 에디터
             var smart_editor = document.getElementById("smart_editor");
 
+            var menuLink0 = document.getElementById("menuLink0");
+
+            if(selectedTag == menuLink0) {
+
+                //debugger;
+                //alert("tt");
+                event.preventDefault();
+               // event.stopPropagation();
+                smart_editor.style.visibility = "hidden";
+                mainAreaContent.style.display = "block";
+            }
 
             if(selectedTag == cafeWriteButton) {
 
@@ -58,14 +69,14 @@ var board = {
                     smart_editor.style.visibility = "visible";
                     mainAreaContent.style.display = "none";
                 }
-                else {
-                    smart_editor.style.visibility = "hidden";
-                    mainAreaContent.style.display = "block";
-                }
+                // else {
+                //     smart_editor.style.visibility = "hidden";
+                //     mainAreaContent.style.display = "block";
+                // }
             }
             else if(selectedTag == saveBtn) {
                 board.boardWrite(login_info);
-                alert("글쓰기");
+               // alert("글쓰기");
             }
         });
 

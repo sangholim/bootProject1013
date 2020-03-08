@@ -317,7 +317,8 @@
                             <li>
                                 <img src="https://cafe.pstatic.net/cafe4/hidden.gif" width="10" height="11"
                                      class="ico-list"
-                                     alt=""><a href="/ArticleList.nhn?search.clubid=29995789&amp;search.boardtype=L"
+                                     alt=""><a href="#"
+                                                <%--onclick="return false;"--%>
                                                target="cafe_main"
                                                class="gm-tcol-c"
                                                id="menuLink0">전체글보기</a>
