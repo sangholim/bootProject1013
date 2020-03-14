@@ -23,6 +23,8 @@ public class UserCafeBoardDAO extends CommonDBSession {
     private final String findCafeAdminUser = "select NEW UserCafeVO (uc.userUid, uc.cafeUid, uc.cafeLevel) " +
             "from UserCafeVO  uc where uc.cafeUid = :cafeUid AND uc.userRole = 7";
 
+    private final String UserCafeCnt = "select count(uc.userUid) from UserCafeVO uc where uc.cafeUid = :cafeUid";
+
     public long getCountCafeMember(long cafeUid) {
 
 
@@ -49,5 +51,27 @@ public class UserCafeBoardDAO extends CommonDBSession {
         }
 
     }
+
+    public Long getCafeUserCnt(long cafe_uid) throws Exception {
+
+        if (sqlSession != null) {
+            return sqlSession.selectOne("getAdminUser");
+        }
+
+        sessionInfo = processHibernateSession(UserCafeVO.class, null, DBQueryType.SELECT);
+
+        try (Session session = sessionInfo.getSession()) {
+
+            Query<Long> query = session.createQuery(UserCafeCnt, Long.class);
+            query.setParameter("cafeUid", cafe_uid);
+            return query.getSingleResult();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1l;
+        }
+
+    }
+
 
 }

@@ -9,6 +9,16 @@ public class BoardSimpleInfoForm {
 
     private long cafeMemberCnt;
 
+    private long cafeUid;
+
+    public long getCafeUid() {
+        return cafeUid;
+    }
+
+    public void setCafeUid(long cafeUid) {
+        this.cafeUid = cafeUid;
+    }
+
     public String getAdminUserNicName() {
         return adminUserNicName;
     }

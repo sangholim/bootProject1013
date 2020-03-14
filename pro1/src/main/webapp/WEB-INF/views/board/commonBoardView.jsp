@@ -208,7 +208,7 @@
 
                                         <a href="#">
                                             <span class="ico"></span>
-                                            <em>1<span class="ico_lock2">비공개</span></em>
+                                            <em>${boardSimpleInfo.cafeMemberCnt}<span class="ico_lock2">비공개</span></em>
                                         </a>
 
                                         <div class="ly_info_dsc"
@@ -376,7 +376,7 @@
                     <input id="gateOpen" type="hidden" value="1">
                     <input id="searchviewtype" type="hidden" value="title">
                     <iframe name="cafe_main" id="cafe_main" title="카페 메인"
-                            src="/board/boardCenter" width="860"
+                            src="/board/boardCenter/${boardSimpleInfo.cafeUid}" width="860"
                             height="100%"
                             frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowtransparency="true"
                             allowfullscreen="" style="height: 1598px;"></iframe>

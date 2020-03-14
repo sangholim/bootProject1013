@@ -50,16 +50,20 @@ public class BoardManager {
         long cafeUid = cafeVO.getUid();
 
         UserCafeVO userCafeVO = userCafeBoardDAO.getAdminUser(cafeUid);
+        long MemberCnt = userCafeBoardDAO.getCafeUserCnt(cafeUid);
         //long cafeMemberCnt = userCafeBoardDAO.getCountCafeMember(cafeUid);
         CommonUserVO userVO = userDAO.userUidFindUser(userCafeVO.getUserUid());
 
-        BoardSimpleInfoForm boardSimpleInfoForm = new BoardSimpleInfoForm();
+
 
         /*
             관리자 닉네임,카페레벨 담기
          */
+        BoardSimpleInfoForm boardSimpleInfoForm = new BoardSimpleInfoForm();
         boardSimpleInfoForm.setAdminUserNicName(userVO.getUserNickName());
         boardSimpleInfoForm.setCafeLevel(userCafeVO.getCafeLevel());
+        boardSimpleInfoForm.setCafeMemberCnt(MemberCnt);
+        boardSimpleInfoForm.setCafeUid(cafeUid);
 
         return boardSimpleInfoForm;
     }

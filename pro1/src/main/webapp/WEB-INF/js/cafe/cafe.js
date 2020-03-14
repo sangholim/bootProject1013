@@ -203,7 +203,6 @@ var cafe = {
 	setCafeTabByType : function (path) {
 		// 카페홈, 주제별, 지역별에 따라서 카페탭 생성
 		var cafeTabContainer = document.getElementsByClassName("scroll_box_swiper")[0];
-
 		/*
 		 * 카페탭 생성시 처음 활성화 
 		 */
@@ -242,21 +241,52 @@ var cafe = {
 				cafeTabElement.appendChild(cafeTabBtn);		
 				cafeTabContainer.appendChild(cafeTabElement);
 			}
-					
+			cafe.setSubListByType('theme', 0, mainCafeList[0]);
 		} else if (path.indexOf("/sub_area") > -1) {
 			cafeTabBtn.innerHTML = "서울특별시";
-			var mainCafeList = cafe.mainRegionList;
-			for(var i = 1; i < mainCafeList.length; i++) {
+			var mainRegionList = cafe.mainRegionList;
+			for(var i = 1; i < mainRegionList.length; i++) {
 				cafeTabElement = document.createElement("LI");
 				cafeTabBtn = document.createElement("BUTTON");
-				cafeTabBtn.innerHTML = mainCafeList[i];
+				cafeTabBtn.innerHTML = mainRegionList[i];
 				cafeTabBtn.classList.add("btn_tab");
 				cafeTabElement.appendChild(cafeTabBtn);		
 				cafeTabContainer.appendChild(cafeTabElement);
 			}
-			
+			//cafe.setSubListByType('area', 0, mainRegionList[0]);
 		}
 		return {"lastSelectCafeTab" : 0, "selected" : 0}; 
+	},
+	setSubListByType : function (type, mainListPos, firstname) {
+		
+		// 서브 카테고리 리스트 UI 생성
+		var subList = cafe.subTitleList[mainListPos]; 
+		document.getElementsByClassName("btn_category")[0].innerHTML = firstname;
+		
+		var subCafeTab = document.getElementsByClassName("layer_list")[0]; 
+		subCafeTab.innetHTML = "";
+		var cafeTabElement = document.createElement("LI");
+		cafeTabElement.classList.add("on");
+		cafeTabBtn = document.createElement("BUTTON");
+		cafeTabBtn.classList.add("btn");
+		cafeTabBtn.innerHTML = firstname;
+		var cafeTabSpan = document.createElement("SPAN");
+		cafeTabSpan.innerHTML = "선택됨";
+		cafeTabSpan.classList.add("blind");
+		cafeTabBtn.appendChild(cafeTabSpan);
+		cafeTabElement.appendChild(cafeTabBtn);
+		subCafeTab.appendChild(cafeTabElement);
+		
+		for(var i = 0; i < subList.length; i++) {
+			cafeTabElement = document.createElement("LI");
+			cafeTabBtn = document.createElement("BUTTON");
+			cafeTabBtn.innerHTML = subList[i];
+			cafeTabBtn.classList.add("btn");
+			cafeTabElement.appendChild(cafeTabBtn);		
+			subCafeTab.appendChild(cafeTabElement);
+		}
+		
+	
 	},
 	checkTextByte : function (value, strongTag, validTag, alertTag, limit) {
 		var result = false;
@@ -421,6 +451,7 @@ var cafe = {
 		
 		
 	
+		var container = document.getElementById("container");
 		var bodyTag = document.getElementById("content");
 		// 카페 메인 , 카페 주제 , 카페 지역 공통 기능 추가
 		if(path.indexOf("/sub_main") > -1 || path.indexOf("/sub_theme") > -1 || path.indexOf("/sub_area") > -1) {
@@ -623,7 +654,28 @@ var cafe = {
 		}
 		
 			
-		 if (path.indexOf("/sub_main") > -1) {
+		if(path.indexOf("/sub_theme") > -1) {
+			var btn_category = document.getElementsByClassName("btn_category")[0];
+			var isSubListHover = false;
+			/*
+			 * 이벤트 발생순
+			 * container [화면전체] -> btn_category[주제화면 버튼] -> btn_category.nextElementSibling [부 주제 리스트]
+			 */
+			//주제 , 지역에 필요한 이벤트 등록
+			btn_category.addEventListener('mouseover', function(event) {
+				btn_category.classList.add("on");
+				btn_category.nextElementSibling.style.display = "";
+			},true);
+			btn_category.nextElementSibling.addEventListener('mouseover', function(event) {
+				btn_category.classList.add("on");
+				btn_category.nextElementSibling.style.display = "";
+			},true);
+			container.addEventListener('mouseover', function(event) {
+				btn_category.classList.remove("on");
+				btn_category.nextElementSibling.style.display = "none";
+			},true);
+			
+		} else if (path.indexOf("/sub_main") > -1) {
 			// 이벤트 리스너 추가
 
 			//cafe 개별 정보 INFO

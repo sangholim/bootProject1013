@@ -99,11 +99,11 @@ public class BoardMainFrame {
 		return resultMap;
 	}
 
-	@RequestMapping(value = "/boardCenter" , method= RequestMethod.GET)
-	public void boardCenter(Authentication authentication,Model model) throws Exception {
+	@RequestMapping(value = "/boardCenter/{cafeUid}" , method= RequestMethod.GET)
+	public String boardCenter(Authentication authentication,Model model,@PathVariable("cafeUid") long cafeUid) throws Exception {
 
 		CustomAuthentication userAuth = (CustomAuthentication) authentication;
-		List<UserCafeBoardVO> boardPostList = boardManager.getBoardPostList(8);
+		List<UserCafeBoardVO> boardPostList = boardManager.getBoardPostList(cafeUid);
 
 		/*
 		 * long형 date를 원하는 문자열 형으로 변경하기 위해 로직짬.
@@ -121,9 +121,11 @@ public class BoardMainFrame {
 
 		model.addAttribute("postList",boardPostList);
 
+		return "/board/boardCenter";
+
 	}
 
-	@RequestMapping(value = "/boardCenter/{boardUid}" , method= RequestMethod.GET)
+	@RequestMapping(value = "/boardCenter/p/{boardUid}" , method= RequestMethod.GET)
 	public String boardCenter(Authentication authentication,@PathVariable("boardUid") long boardUid,Model model) throws Exception {
 
 		CustomAuthentication userAuth = (CustomAuthentication) authentication;
