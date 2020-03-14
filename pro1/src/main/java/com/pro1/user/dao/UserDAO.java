@@ -10,7 +10,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.pro1.board.param.UserCafeBoardVO;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.pro1.common.DBQueryType;
@@ -24,9 +26,15 @@ import com.pro1.user.vo.UserVO;
 @Repository
 public class UserDAO extends CommonDBSession {
 
+	DbSessionInfo sessionInfo;
+
     private static final Logger logger = Logger.getLogger(LoginMainAsync.class.getName());
 
-    public List<UserVO> selectUserList() throws Exception {
+	private final String userUidFindUser = "select NEW user(u.id,u.userNickName) " +
+			"from user u where u.userUid = :userUid";
+
+
+	public List<UserVO> selectUserList() throws Exception {
 
 	if (sqlSession != null) {
 	    return sqlSession.selectList("selectUserList");
@@ -102,5 +110,26 @@ public class UserDAO extends CommonDBSession {
 
 	processHibernateSession(user.getClass(), user, DBQueryType.UPDATE);
     }
+
+    public CommonUserVO userUidFindUser(long userUid) throws Exception {
+
+		if (sqlSession != null) {
+			return sqlSession.selectOne("getOneBoardInfo");
+		}
+
+		sessionInfo = processHibernateSession(CommonUserVO.class, null, DBQueryType.SELECT);
+
+		try (Session session = sessionInfo.getSession()) {
+
+			Query<CommonUserVO> query = session.createQuery(userUidFindUser, CommonUserVO.class);
+			query.setParameter("userUid", userUid);
+			return query.getSingleResult();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 
 }

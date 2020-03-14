@@ -58,6 +58,17 @@ public class CommonUserVO {
     @JoinTable(name="user")
     List<UserCafeVO> userCafeList = new ArrayList<>();
 
+
+    public CommonUserVO() {
+    }
+
+    public CommonUserVO(String id,String userNickName) {
+        this.id = id;
+        this.userNickName = userNickName;
+    }
+
+
+
     public List<UserCafeVO> getUserCafeList() {
 	return userCafeList;
     }

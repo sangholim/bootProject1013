@@ -36,6 +36,32 @@ public class UserCafeBoardVO implements Serializable {
     private Long createDate;
     private Long modifiedDate;
 
+    @Transient
+    private String createDateStr;
+
+    @Transient
+    private String modifiedDateStr;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getCreateDateStr() {
+        return createDateStr;
+    }
+
+    public void setCreateDateStr(String createDateStr) {
+        this.createDateStr = createDateStr;
+    }
+
+    public String getModifiedDateStr() {
+        return modifiedDateStr;
+    }
+
+    public void setModifiedDateStr(String modifiedDateStr) {
+        this.modifiedDateStr = modifiedDateStr;
+    }
+
     public Long getBoardUid() {
 	return boardUid;
     }

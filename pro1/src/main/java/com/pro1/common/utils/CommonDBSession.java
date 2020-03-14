@@ -68,7 +68,7 @@ public class CommonDBSession {
 	    DbSessionInfo dbSessionInfoVO = new DbSessionInfo();
 	    // CriteriaQuery<X> criteriaQuery = builder.createQuery(pojoClass);
 	    // Root<X> root = criteriaQuery.from(pojoClass);
-	    // criteriaQuery.select(root);
+	    // criteriaQuery.select(root);UserCafeBoardVO
 	    // dbSessionInfoVO.setQuery(criteriaQuery);
 	    dbSessionInfoVO.setSession(session);
 	    dbSessionInfoVO.setCriteriaBuilder(builder);

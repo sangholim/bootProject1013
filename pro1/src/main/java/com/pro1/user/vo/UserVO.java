@@ -119,4 +119,10 @@ public class UserVO extends CommonUserVO {
 	return "id: " + id;
     }
 
+    public UserVO() {
+    }
+
+    public UserVO(String id, String userNickName) {
+        super(id, userNickName);
+    }
 }

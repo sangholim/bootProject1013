@@ -171,7 +171,7 @@
                                         <a href="/yulimhall/member/ued_123/article" target="_blank"
                                            class="id mlink gm-tcol-c">
                                             <div class="ellipsis gm-tcol-c">
-                                                <div class="ellipsis">${cafe_manager}</div>
+                                                <div class="ellipsis">${boardSimpleInfo.adminUserNicName}</div>
                                             </div>
                                         </a>
                                         <div class="thm"><a href="/CafeHistoryView.nhn?clubid=29995789"

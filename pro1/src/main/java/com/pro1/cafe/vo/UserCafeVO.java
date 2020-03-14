@@ -40,6 +40,9 @@ public class UserCafeVO implements Serializable {
 
     @Column(name = "cafeOfficial")
     private int cafeOfficial;
+
+    @Column(name = "userRole")
+    private int userRole;
     
     @Id
     @ManyToOne(optional = false)
@@ -246,4 +249,15 @@ public class UserCafeVO implements Serializable {
         this.cafeOfficial = cafeOfficial;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public int getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(int userRole) {
+        this.userRole = userRole;
+    }
 }

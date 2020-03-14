@@ -1,8 +1,10 @@
 package com.pro1.board.web;
 
+import com.pro1.board.param.BoardSimpleInfoForm;
 import com.pro1.board.param.BoardVO;
 import com.pro1.board.param.UserCafeBoardVO;
 import com.pro1.board.service.BoardManager;
+import com.pro1.cafe.vo.CafeVO;
 import com.pro1.cafe.web.CafeMainAsync;
 import com.pro1.security.CustomAuthentication;
 import org.slf4j.Logger;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.pro1.common.constant.Constant;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,9 +35,18 @@ public class BoardMainFrame {
 	private static final Logger logger = LoggerFactory.getLogger(BoardMainFrame.class);
 
     @RequestMapping(value = "/{cafe_url}")
-    public String getBoardMain(Authentication authetication, @PathVariable String cafe_url, Model model) {
+    public String getBoardMain(Authentication authetication, @PathVariable String cafe_url, Model model) throws Exception {
 
 	CustomAuthentication userAuth = (CustomAuthentication) authetication;
+
+	//메인에 카페정보에 넣을 관리자정보와, 카페 심플정보들.
+	BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeUrlInfo(cafe_url);
+	model.addAttribute("boardSimpleInfo",boardSimpleInfoForm);
+	/*
+		카페 존재 유효성 검사
+	 */
+
+
 	model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
 	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 	model.addAttribute("userUid",userAuth.getUid());
@@ -49,7 +62,6 @@ public class BoardMainFrame {
 	model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
 	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 	model.addAttribute("userUid",userAuth.getUid());
-
 
 	//List<UserCafeBoardVO> boardPostList = boardManager.getBoardPostList(8);
 	//model.addAttribute("postList",boardPostList);
@@ -70,7 +82,6 @@ public class BoardMainFrame {
 		resultMap.put(result, "카페 생성중 문제 발생!");
 
 		CustomAuthentication userAuth = (CustomAuthentication) authentication;
-
 
 		userCafeBoardVO.setCreateDate(System.currentTimeMillis());
 		userCafeBoardVO.setModifiedDate(System.currentTimeMillis());
@@ -93,6 +104,21 @@ public class BoardMainFrame {
 
 		CustomAuthentication userAuth = (CustomAuthentication) authentication;
 		List<UserCafeBoardVO> boardPostList = boardManager.getBoardPostList(8);
+
+		/*
+		 * long형 date를 원하는 문자열 형으로 변경하기 위해 로직짬.
+		 */
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		for (UserCafeBoardVO vo : boardPostList) {
+
+			date.setTime(vo.getModifiedDate());
+			String strDate = format.format(date);
+
+			vo.setCreateDateStr(strDate);
+			vo.setModifiedDateStr(strDate);
+		}
+
 		model.addAttribute("postList",boardPostList);
 
 	}

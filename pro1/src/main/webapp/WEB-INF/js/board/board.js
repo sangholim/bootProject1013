@@ -6,13 +6,10 @@ var board = {
 
     boardWrite : function (login_info) {
 
+        //smart editor에 입력받은 내용을 해당(ir1)텍스트영역에 값집어넣기.
         oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 
         var ir1 = document.getElementsByName("ir1");
-
-        //form tag 안쓰고 xmlHttpRequest 사용.
-        //common.createForm('/cafe/add',json);
-        // response 값을담는곳 node id
 
         var postInfo = {};
 
@@ -22,8 +19,8 @@ var board = {
         postInfo['subject'] = document.getElementById("subject").value;
         postInfo['writer'] = login_info.childNodes[3].value;;
         postInfo['addfile'] = "jell";
-        postInfo['createDate'] = 100000;
-        postInfo['modifiedDate'] = 100000;
+        postInfo['createDate'] = 0;
+        postInfo['modifiedDate'] = 0;
 
         var json = JSON.stringify(postInfo);
         //request 파람만들고

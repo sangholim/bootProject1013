@@ -93,7 +93,21 @@ create table user_cafe (
 ALTER TABLE user_cafe ADD COLUMN `cafeFav` tinyint(1) default 0;
 ALTER TABLE user_cafe ADD COLUMN `cafeOfficial` tinyint(1) default 0;
 
-//0 -> 운영자
+/*
+    userRole 추가
+    0 새싹맴버
+    1  일반멤버
+    2 성실멤버
+    3 열심
+    4 우수
+    5 감사
+    6 카페 운영자
+    7 카페 매니저
+ */
+ALTER TABLE user_cafe ADD COLUMN `userRole` tinyint(3) default 0;
+
+
+
 ## 유저가 카페 가입하거나 생성
 INSERT INTO user_cafe VALUES ('21','1','0');
 

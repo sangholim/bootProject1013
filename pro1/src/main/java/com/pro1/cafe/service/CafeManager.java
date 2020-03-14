@@ -1,5 +1,6 @@
 package com.pro1.cafe.service;
 
+import com.pro1.board.dao.UserCafeBoardDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,4 +61,21 @@ public class CafeManager {
 	    logger.error("Insert Cafe , user_cafe Error > {}", e.getMessage(), e);
 	}
     }
+
+	/**
+	 *
+	 * @author ued123
+	 * @brief 카페 접속시 자신의 카페 이름(카페이름은 unique)을 가지고 자신의 cafe 정보를 조회
+	 * */
+	public CafeVO getCafeInfo(String cafeUrl) {
+
+		try {
+			CafeVO cafeVO = cafeDAO.getCafeUrlinfo(cafeUrl);
+			return cafeVO;
+
+		} catch (Exception e) {
+			logger.error("getCafeInfo error > {}",e.getMessage(),e);
+			return null;
+		}
+	}
 }

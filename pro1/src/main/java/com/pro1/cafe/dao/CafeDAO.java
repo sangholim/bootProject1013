@@ -10,6 +10,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.pro1.board.param.UserCafeBoardVO;
+import com.pro1.user.vo.UserVO;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -42,7 +44,12 @@ public class CafeDAO extends CommonDBSession {
     private final String recommandCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url, uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.title_subSort, uc.cafe.region_mainSort, uc.cafe.memberCnt) from \n"
 	    + "UserCafeVO uc join uc.cafe c ";
 
+	private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
+
     private final String cafeConditionForm1 = "where %s != %s and %s = %s order by createDate";
+
+	//private final String cafeUrlForm1 = "select NEW CafeVO(cv.uid, cv.name, cv.icon, cv.url) from CafeVO cv where cv.url = :url";
+
 
     /**
      * 유저가 로그인후 볼수있는 cafe들을 추출 (추천 카페들 , 내가 가입한 카페들)
@@ -113,6 +120,33 @@ public class CafeDAO extends CommonDBSession {
 	}
 
     }
+
+    /**
+	 * @author ued123
+	 * @brief
+     * 카페 url을 통해서 카페 정보들을 얻기위해
+     */
+	public CafeVO getCafeUrlinfo(String cafe_url) throws Exception {
+
+		if (sqlSession != null) {
+			return sqlSession.selectOne("getCafeUrlinfo");
+		}
+
+		DbSessionInfo sessionInfo = processHibernateSession(CafeVO.class, null, DBQueryType.SELECT);
+
+		try (Session session = sessionInfo.getSession()) {
+
+			Query<CafeVO> query = session.createQuery(cafeUrlForm1, CafeVO.class);
+			query.setParameter("url", cafe_url);
+
+			return query.getSingleResult();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 
     /**
      * CAFE 추가 , UserCafe 테이블 추가한다.
