@@ -432,13 +432,15 @@
 						현재 선택된 하위 카테고리 버튼 클릭 시 다른 하위 카테고리를
 						선택할 수 있습니다.
 					</strong>
-					<button type="button" class="btn_category">생활</button>
+					<button type="button" class="btn_category">게임</button>
 					<div class="layer" style="display: none;">
 						<ul class="layer_list">
+						<!-- 
 							<li class="on">
 								<button type="button" class="btn">생활</button>
 								<span class="blind">선택됨</span>
 							</li>
+						 -->	
 						</ul>
 					</div>
 				</div>

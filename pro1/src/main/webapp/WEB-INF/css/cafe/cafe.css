@@ -2921,5 +2921,28 @@ li .img_name  {
 .common_select .layer_list {
     background: #fff;
 }
+.common_category .layer {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    background: #fff;
+}
 
+.common_category .btn_category.on:after {
+	background-position : -231px -257px;
+}
 
+.common_category .layer_list {
+    padding: 11px 0;
+    border: solid 1px #ddd;
+    font-size: 0;
+    color: #333;
+}
+
+.common_category .layer_list li {
+    display: inline-block;
+    width: 25%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
