@@ -248,6 +248,7 @@
 		<div class="common_box_tab">
 			<strong data-v-bf233b6c="" class="blind">'카페 카테고리'</strong>
 			<ul class="tab_list scroll_box_swiper" style="transform: translateX(0px);">
+				<!-- 
 				<c:choose>
 					<c:when test="${sub_page eq 'sub_main'}">
 						<li data-v-bf233b6c="" class="on">
@@ -259,7 +260,6 @@
 						<li data-v-bf233b6c="" class="">
 							<button data-v-bf233b6c="" type="button" class="btn_tab">
 								생활
-								<!---->
 							</button>
 						</li>
 					</c:when>
@@ -274,148 +274,124 @@
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						반려동물/동물
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						방송/연예
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						음악
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						친목/모임
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						교육
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						영화
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						만화/애니
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						문학/창작
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						컴퓨터/통신
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						가족/육아
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						팬카페
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						패션/미용
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						건강/다이어트
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						동창/동문
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						취미
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						정치/사회
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						경제/금융
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						인문/과학
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						종교/봉사
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						스포츠/레저
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						외국어
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						문화/예술
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						여행
-						<!---->
 					</button>
 				</li>
 				<li data-v-bf233b6c="" class="">
 					<button data-v-bf233b6c="" type="button" class="btn_tab">
 						게임
-						<!---->
 					</button>
 				</li>
-
+ 				-->
 			</ul>
 			<button data-v-bf233b6c="" type="button" class="btn btn_scroll_prev" disabled="">
 				<span data-v-bf233b6c="" class="blind">이전</span>
@@ -452,13 +428,15 @@
 			</div>
 			<div class="theme_category">
 				<div class="common_category">
-					<strong class="blind">현재 선택된 하위 카테고리 버튼 클릭 시 다른 하위 카테고리를
-						선택할 수 있습니다.</strong>
-					<button type="button" class="btn_category">게임 전체</button>
+					<strong class="blind">
+						현재 선택된 하위 카테고리 버튼 클릭 시 다른 하위 카테고리를
+						선택할 수 있습니다.
+					</strong>
+					<button type="button" class="btn_category">생활</button>
 					<div class="layer" style="display: none;">
 						<ul class="layer_list">
 							<li class="on">
-								<button type="button" class="btn">게임 전체</button>
+								<button type="button" class="btn">생활</button>
 								<span class="blind">선택됨</span>
 							</li>
 						</ul>

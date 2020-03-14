@@ -200,6 +200,64 @@ var cafe = {
 	getByte : function () {
 		//TODO
 	},
+	setCafeTabByType : function (path) {
+		// 카페홈, 주제별, 지역별에 따라서 카페탭 생성
+		var cafeTabContainer = document.getElementsByClassName("scroll_box_swiper")[0];
+
+		/*
+		 * 카페탭 생성시 처음 활성화 
+		 */
+		var cafeTabElement = document.createElement("LI");
+		cafeTabElement.classList.add("on");
+		var cafeTabBtn = document.createElement("BUTTON");
+		cafeTabBtn.classList.add("btn_tab");
+		var cafeTabSpan = document.createElement("SPAN");
+		cafeTabSpan.innerHTML = "선택됨";
+		cafeTabSpan.classList.add("blind");
+		cafeTabBtn.appendChild(cafeTabSpan);
+		cafeTabElement.appendChild(cafeTabBtn);
+		cafeTabContainer.appendChild(cafeTabElement);
+		
+		if(path.indexOf("/sub_main") > -1) {
+			
+			cafeTabBtn.innerHTML = "추천카페";
+			var mainCafeList = cafe.mainTitleList;
+			for(var i = 0; i < mainCafeList.length; i++) {
+				cafeTabElement = document.createElement("LI");
+				cafeTabBtn = document.createElement("BUTTON");
+				cafeTabBtn.innerHTML = mainCafeList[i];
+				cafeTabBtn.classList.add("btn_tab");
+				cafeTabElement.appendChild(cafeTabBtn);		
+				cafeTabContainer.appendChild(cafeTabElement);
+			}
+		
+		} else if(path.indexOf("/sub_theme") > -1) {
+			cafeTabBtn.innerHTML = "게임";
+			var mainCafeList = cafe.mainTitleList;
+			for(var i = 1; i < mainCafeList.length; i++) {
+				cafeTabElement = document.createElement("LI");
+				cafeTabBtn = document.createElement("BUTTON");
+				cafeTabBtn.innerHTML = mainCafeList[i];
+				cafeTabBtn.classList.add("btn_tab");
+				cafeTabElement.appendChild(cafeTabBtn);		
+				cafeTabContainer.appendChild(cafeTabElement);
+			}
+					
+		} else if (path.indexOf("/sub_area") > -1) {
+			cafeTabBtn.innerHTML = "서울특별시";
+			var mainCafeList = cafe.mainRegionList;
+			for(var i = 1; i < mainCafeList.length; i++) {
+				cafeTabElement = document.createElement("LI");
+				cafeTabBtn = document.createElement("BUTTON");
+				cafeTabBtn.innerHTML = mainCafeList[i];
+				cafeTabBtn.classList.add("btn_tab");
+				cafeTabElement.appendChild(cafeTabBtn);		
+				cafeTabContainer.appendChild(cafeTabElement);
+			}
+			
+		}
+		return {"lastSelectCafeTab" : 0, "selected" : 0}; 
+	},
 	checkTextByte : function (value, strongTag, validTag, alertTag, limit) {
 		var result = false;
 		//카페 이름
@@ -363,12 +421,11 @@ var cafe = {
 		
 		
 	
-		
+		var bodyTag = document.getElementById("content");
 		// 카페 메인 , 카페 주제 , 카페 지역 공통 기능 추가
 		if(path.indexOf("/sub_main") > -1 || path.indexOf("/sub_theme") > -1 || path.indexOf("/sub_area") > -1) {
 			var registerUi = document.getElementsByClassName("btn_cafe_make")[0];
 			registerUi.href = "/cafe/register";
-		
 			// 마지막으로 누른 슬라이더 idex [0,1,2]
 			var lastGetRecommendSliderIdx = 0;
 			// 카페탭에 대한 모든 카페 데이트를 담은 태그들 
@@ -377,17 +434,25 @@ var cafe = {
 			var lastOpenCafeIdx = 0;
 			// 마지막으로 클릭한 카페 목록 위치
 			var lastSelectCafeTab = 0;
-			
 			// pageUI (페이지 번호)
 			var pageUi = document.getElementsByClassName("common_page")[0];
-			
 			var lastpageNum = 1;
-			
 			
 			// 페이지를 선택된 카페에 있는 데이터 리스트에 따라 나눔
 			var selectedRecommendCafeList = (recommaendCafeType.length == 0) ? null : recommaendCafeType[lastOpenCafeIdx].getElementsByTagName("li");			
+			
+			/*
+			 * UI를 화면 렌더링시 카페tab을 만들고, 그 탭에 따라서 기본 카페리스트를 뿌려준다.
+			 */
+			//카페홈, 주제별 , 지역별에 따라 필요한 UI 구현
+			var selectCafeResult = cafe.setCafeTabByType(path);
 			var cateTabs = document.getElementsByClassName("scroll_box_swiper")[0].getElementsByTagName("li");
-			var bodyTag = document.getElementById("content");
+			var allCafeList = recommaendCafeType[selectCafeResult.selected].getElementsByTagName("li");
+			cafe.showCafeListByPage (pageUi, allCafeList, 8, 10, 1, 1);
+			lastOpenCafeIdx = selectCafeResult.selected;
+			lastpageNum = 1;
+			pageUi.children[0].classList.add("on");
+			
 			bodyTag.addEventListener('click', function(event) {
 
 				// 추천 카페 분류 이전,이후 버튼 
@@ -427,7 +492,6 @@ var cafe = {
 					selectedTag.classList.add("on");
 				} else if (selectedTag == btn_scroll_next ||selectedTag == btn_scroll_prev ) {
 					// 이전, 다음 스크롤 체크 스크롤 
-					
 					var recommed_cafeTypeList = selectedTag.previousElementSibling;
 					var recommend_cafe_Cate_list;
 					//cateTabs
@@ -466,9 +530,9 @@ var cafe = {
 								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
 							}
 	
-							scrollTag[lastSelectCafeTab].classList.remove("on");
+							cateTabs[lastSelectCafeTab].classList.remove("on");
 							lastSelectCafeTab = 0;
-							scrollTag[0].classList.add("on");
+							cateTabs[0].classList.add("on");
 							lastOpenCafeIdx = -1;
 							
 							break;
@@ -479,7 +543,6 @@ var cafe = {
 							if(lastOpenCafeIdx != -1 && recommaendCafeType.length > 0) {
 								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
 							} 
-							
 							cateTabs[lastSelectCafeTab].classList.remove("on");
 							
 							/*
@@ -502,6 +565,11 @@ var cafe = {
 							btn_scroll_prev.disabled = false;
 							btn_scroll_next.disabled = false;
 
+							if(lastOpenCafeIdx != -1 && recommaendCafeType.length > 0) {
+								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
+							} 
+							cateTabs[lastSelectCafeTab].classList.remove("on");
+							
 							/*
 							 * 카페 탭에서 선택후 해당 데이터 리스트 추출 (페이징 포함)
 							 */
@@ -522,6 +590,11 @@ var cafe = {
 						case 3:
 							btn_scroll_next.disabled = true;
 
+							if(lastOpenCafeIdx != -1 && recommaendCafeType.length > 0) {
+								recommaendCafeType[lastOpenCafeIdx].style ="display:none";
+							} 
+							cateTabs[lastSelectCafeTab].classList.remove("on");
+							
 							/*
 							 * 카페 탭에서 선택후 해당 데이터 리스트 추출 (페이징 포함)
 							 */
@@ -549,8 +622,8 @@ var cafe = {
 			
 		}
 		
-		
-		if (path.indexOf("/sub_main") > -1) {
+			
+		 if (path.indexOf("/sub_main") > -1) {
 			// 이벤트 리스너 추가
 
 			//cafe 개별 정보 INFO
@@ -569,7 +642,7 @@ var cafe = {
 			
 			// 4. 전체/즐겨찾는 카페/운영카페 클릭스 해당 카페 리스트 뿌리기
 			var myCafeType = document.getElementsByClassName("common_option_list")[0].getElementsByTagName("li");
-			var bodyTag = document.getElementById("content");
+			//var bodyTag = document.getElementById("content");
 			// 나의 카페 정보를 보여주는 큰 덩어리 
 			var user_mycafe_area = document.getElementsByClassName("user_mycafe_area");
 			var user_mycafe_area_size =user_mycafe_area.length;

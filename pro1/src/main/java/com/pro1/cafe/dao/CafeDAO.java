@@ -44,7 +44,7 @@ public class CafeDAO extends CommonDBSession {
     private final String recommandCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url, uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.title_subSort, uc.cafe.region_mainSort, uc.cafe.memberCnt) from \n"
 	    + "UserCafeVO uc join uc.cafe c ";
 
-	private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
+    private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
 
     private final String cafeConditionForm1 = "where %s != %s and %s = %s order by createDate";
 
