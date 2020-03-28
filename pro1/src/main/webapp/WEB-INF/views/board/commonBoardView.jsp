@@ -394,5 +394,11 @@
         <input type="hidden" name="useruid" value="${userUid}" />
         <input type="hidden" name="nickname" value="${nickName}" />
     </div>
+
+    <div id="cafe_info">
+        <input type="hidden" name="cafeUid" value="${boardSimpleInfo.cafeUid}" />
+        <input type="hidden" name="cafeUrl" value="${cafe_url}"/>
+    </div>
+
 </body>
 </html>

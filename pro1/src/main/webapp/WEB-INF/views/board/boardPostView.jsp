@@ -3,9 +3,9 @@
 <html lang="ko">
 <head>
     <link rel="stylesheet" href="/css/board/board.css" type="text/css">
+    <script type="text/javascript" src="/js/board/boardPostView.js"></script>
+
 <body marginwidth="0" marginheight="0">
-
-
 <div id="basisElement">
     <div id="content-area">
         <div id="main-area">
@@ -54,8 +54,9 @@
 
 
                                     <td nowrap="" class="m-tcol-c filter-30">|</td>
-                                    <td class="delete _rosRestrict"><a href="#"
-                                                                       class="m-tcol-c">삭제</a></td>
+                                    <td class="delete _rosRestrict">
+                                        <a href="#" class="m-tcol-c" id="postRemove">삭제</a>
+                                    </td>
 
                                 </tr>
                                 </tbody>
@@ -1261,26 +1262,25 @@
 
                     전체 공지나 필독공지로 등록하면 멤버들에게 알림이 발송됩니다.
 
-
                 </p>
                 <ul class="list_notice">
                     <li><input type="radio" id="notice01" name="type" class="inp" value="N"
-                               onchange="changeNotice(this.value, '');" checked=""><label for="notice01"
+                               onchange="" checked=""><label for="notice01"
                                                                                           class="lab"><span
                             class="ico_chk"></span>전체 공지</label></li>
                     <li><input type="radio" id="notice02" name="type" class="inp" value="M"
-                               onchange="changeNotice(this.value, '');"><label for="notice02" class="lab"><span
+                               onchange=""><label for="notice02" class="lab"><span
                             class="ico_chk"></span>게시판 공지</label></li>
 
                     <li><input type="radio" id="notice03" name="type" class="inp" value="R"
-                               onchange="changeNotice(this.value, '');"><label for="notice03" class="lab"><span
+                               onchange=""><label for="notice03" class="lab"><span
                             class="ico_chk"></span>필독 공지</label></li>
 
                 </ul>
                 <div class="btns">
-                    <button type="button" class="link" onclick="downNoticeLayer('');return false;">취소</button>
+                    <button type="button" class="link" onclick="">취소</button>
                     <button type="submit" class="link link_confirm" id="confirm_notice"
-                            onclick="insertToNotice(2);return false;">확인
+                            onclick="">확인
                     </button>
                 </div>
             </div>
@@ -1296,6 +1296,13 @@
             <a href="#" class="opt2 _saveToNdrive"><span class="blind">네이버 클라우드</span></a>
         </div>
     </div>
+
+    <div id="board_info">
+        <input type="hidden" name="boardUid" value="${post.boardUid}"/>
+    </div>
+
+    <form name="frm" method="post" type="hidden">
+    </form>
 
 </div>
 </body>

@@ -68,4 +68,8 @@ public class BoardManager {
         return boardSimpleInfoForm;
     }
 
+    public void deletePost(UserCafeBoardVO userCafeBoardVO) throws Exception {
+        boardDAO.deletePost(userCafeBoardVO);
+    }
+
 }

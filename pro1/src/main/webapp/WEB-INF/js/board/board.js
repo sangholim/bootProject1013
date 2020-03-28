@@ -15,12 +15,13 @@ var board = {
 
         postInfo['content'] = ir1[0].value;
         postInfo['userUid'] = login_info.childNodes[1].value;
-        postInfo['cafeUid'] = 8;
+        postInfo['cafeUid'] = document.querySelector("#cafe_info [name=cafeUid]").value;
         postInfo['subject'] = document.getElementById("subject").value;
         postInfo['writer'] = login_info.childNodes[3].value;;
-        postInfo['addfile'] = "jell";
+        postInfo['addfile'] = "";
         postInfo['createDate'] = 0;
         postInfo['modifiedDate'] = 0;
+        postInfo['cafeUrl'] = document.querySelector("#cafe_info [name=cafeUrl]").value;
 
         var json = JSON.stringify(postInfo);
         //request 파람만들고
@@ -36,6 +37,7 @@ var board = {
         var bodyTag = document.getElementById("content-area");
         bodyTag.addEventListener('click', function(event) {
             var cafeWriteButton = document.getElementById("boardwrite");
+
             var selectedTag = event.target;
 
             //카페글쓰기

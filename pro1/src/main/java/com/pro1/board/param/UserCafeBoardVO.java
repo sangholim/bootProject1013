@@ -42,6 +42,17 @@ public class UserCafeBoardVO implements Serializable {
     @Transient
     private String modifiedDateStr;
 
+    @Transient
+    private String cafeUrl;
+
+    public String getCafeUrl() {
+        return cafeUrl;
+    }
+
+    public void setCafeUrl(String cafeUrl) {
+        this.cafeUrl = cafeUrl;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

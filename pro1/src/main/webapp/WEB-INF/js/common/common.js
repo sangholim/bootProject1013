@@ -65,7 +65,7 @@ common.sync = function(requestParams) {
 				alert(json.result);
 
 				if(responseCode == 200) {
-				 	window.location.href = "/board/yurim";
+				 	window.location.href = json.cafeUrl;
 				 }
 			}
 		}
