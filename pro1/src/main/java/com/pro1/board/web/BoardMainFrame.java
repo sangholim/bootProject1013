@@ -5,6 +5,7 @@ import com.pro1.board.param.BoardVO;
 import com.pro1.board.param.UserCafeBoardVO;
 import com.pro1.board.service.BoardManager;
 import com.pro1.cafe.vo.CafeVO;
+import com.pro1.cafe.vo.UserCafeId;
 import com.pro1.cafe.web.CafeMainAsync;
 import com.pro1.security.CustomAuthentication;
 import org.slf4j.Logger;
@@ -37,17 +38,28 @@ public class BoardMainFrame {
     @RequestMapping(value = "/{cafe_url}")
     public String getBoardMain(Authentication authetication, @PathVariable String cafe_url, Model model) throws Exception {
 
-
 	CustomAuthentication userAuth = (CustomAuthentication) authetication;
+
+	Long loginUid = userAuth.getUid();
 
 	//메인에 카페정보에 넣을 관리자정보와, 카페 심플정보들.
 	BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeUrlInfo(cafe_url);
-
 	model.addAttribute("boardSimpleInfo",boardSimpleInfoForm);
 	model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
 	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 	model.addAttribute("userUid",userAuth.getUid());
 	model.addAttribute("cafe_url",cafe_url);
+
+	UserCafeId userCafeId = new UserCafeId();
+	userCafeId.setUserUid(loginUid);
+	userCafeId.setCafeUid(boardSimpleInfoForm.getCafeUid());
+	boolean hasInfo = boardManager.isMemberCafeLoginUser(userCafeId);
+
+	if(hasInfo) {
+		model.addAttribute("cafeMainButton","카페 글쓰기");
+	} else {
+		model.addAttribute("cafeMainButton","카페 가입하기");
+	}
 
 	return Constant.MAIN;
     }

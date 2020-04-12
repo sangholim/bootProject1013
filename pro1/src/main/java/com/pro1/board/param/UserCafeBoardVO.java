@@ -184,4 +184,22 @@ public class UserCafeBoardVO implements Serializable {
 
         this.createDate = 12000l;
     }
+
+    @Override
+    public String toString() {
+        return "UserCafeBoardVO{" +
+                "boardUid=" + boardUid +
+                ", userUid=" + userUid +
+                ", cafeUid=" + cafeUid +
+                ", subject='" + subject + '\'' +
+                ", content='" + content + '\'' +
+                ", writer='" + writer + '\'' +
+                ", addfile='" + addfile + '\'' +
+                ", createDate=" + createDate +
+                ", modifiedDate=" + modifiedDate +
+                ", createDateStr='" + createDateStr + '\'' +
+                ", modifiedDateStr='" + modifiedDateStr + '\'' +
+                ", cafeUrl='" + cafeUrl + '\'' +
+                '}';
+    }
 }

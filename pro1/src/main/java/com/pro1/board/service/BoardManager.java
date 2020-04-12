@@ -3,10 +3,10 @@ package com.pro1.board.service;
 import com.pro1.board.dao.BoardDAO;
 import com.pro1.board.dao.UserCafeBoardDAO;
 import com.pro1.board.param.BoardSimpleInfoForm;
-import com.pro1.board.param.BoardVO;
 import com.pro1.board.param.UserCafeBoardVO;
 import com.pro1.cafe.dao.CafeDAO;
 import com.pro1.cafe.vo.CafeVO;
+import com.pro1.cafe.vo.UserCafeId;
 import com.pro1.cafe.vo.UserCafeVO;
 import com.pro1.user.dao.UserDAO;
 import com.pro1.user.vo.CommonUserVO;
@@ -72,4 +72,11 @@ public class BoardManager {
         boardDAO.deletePost(userCafeBoardVO);
     }
 
+    /*
+     * 해당 VO는 idclass로 복합키를 가지므로 조인할때 키를 다넣어줘야함.
+     */
+    public boolean isMemberCafeLoginUser(UserCafeId userCafeId) throws Exception {
+
+        return userCafeBoardDAO.isCafeMemberLoginUser(userCafeId);
+    }
 }

@@ -74,4 +74,5 @@ public class BoardDAO extends CommonDBSession {
         sessionInfo = processHibernateSession(UserCafeBoardVO.class, userCafeBoardVO, DBQueryType.DELETE);
 
     }
+
 }

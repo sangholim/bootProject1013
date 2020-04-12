@@ -265,7 +265,7 @@
 
                         <!-- 카페 가입 버튼 -->
                         <div class="cafe-write-btn">
-                            <a href="#" class="_rosRestrict" id="boardwrite">카페 글쓰기</a>
+                            <a href="#" class="_rosRestrict" id="boardwrite">${cafeMainButton}</a>
                         </div>
 
                         <!-- 카페 채팅 버튼 -->
@@ -296,8 +296,9 @@
                             <div id="ia-action-data"></div>
                         </div>
 
+                        <!-- 카페 글쓰기 or 카페 가입하기 -->
                         <div class="cafe-write-btn">
-                            <a href="#" class="_rosRestrict">카페 글쓰기</a>
+                            <a href="#" class="_rosRestrict">${cafeMainButton}</a>
                         </div>
 
                         <div class="ia-info-btn">

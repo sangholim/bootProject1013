@@ -260,4 +260,18 @@ public class UserCafeVO implements Serializable {
     public void setUserRole(int userRole) {
         this.userRole = userRole;
     }
+
+    @Override
+    public String toString() {
+        return "UserCafeVO{" +
+                "userUid=" + userUid +
+                ", cafeUid=" + cafeUid +
+                ", cafeLevel='" + cafeLevel + '\'' +
+                ", cafeFav=" + cafeFav +
+                ", cafeOfficial=" + cafeOfficial +
+                ", userRole=" + userRole +
+                ", user=" + user +
+                ", cafe=" + cafe +
+                '}';
+    }
 }

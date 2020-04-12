@@ -74,6 +74,7 @@ public class CafeVO {
     @Column(name = "useShortCut")
     private int useShortCut = 0;
 
+    @Transient
     @Column(name = "createDate")
     private long createDate = 0l;
 
