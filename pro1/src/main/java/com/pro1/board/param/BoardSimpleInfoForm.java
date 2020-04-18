@@ -7,6 +7,10 @@ public class BoardSimpleInfoForm {
 
     private String cafeLevel;
 
+    private String desc = "";
+
+    private String userNickName = "";
+
     private long cafeMemberCnt;
 
     private long cafeUid;
@@ -41,5 +45,21 @@ public class BoardSimpleInfoForm {
 
     public void setCafeMemberCnt(long cafeMemberCnt) {
         this.cafeMemberCnt = cafeMemberCnt;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 }

@@ -263,9 +263,9 @@
 
                         </div>
 
-                        <!-- 카페 가입 버튼 -->
+                        <!-- 카페 가입 버튼 or 카페 글 쓰기 버튼 -->
                         <div class="cafe-write-btn">
-                            <a href="#" class="_rosRestrict" id="boardwrite">${cafeMainButton}</a>
+                            <a href="#" class="_rosRestrict" id="boardMainBtn">${boardMainBtn}</a>
                         </div>
 
                         <!-- 카페 채팅 버튼 -->
@@ -298,7 +298,7 @@
 
                         <!-- 카페 글쓰기 or 카페 가입하기 -->
                         <div class="cafe-write-btn">
-                            <a href="#" class="_rosRestrict">${cafeMainButton}</a>
+                            <a href="#" class="_rosRestrict">${boardMainBtn}</a>
                         </div>
 
                         <div class="ia-info-btn">
@@ -385,6 +385,16 @@
                 <div id="smart_editor" style="visibility: hidden">
                     <jsp:include page="./commonBoardInsert.jsp" flush="true"/>
                 </div>
+
+                <div id="join_editor" style="visibility: hidden">
+<%--                    <jsp:include page="./commonBoardJoin.jsp" flush="true"/>--%>
+                        <iframe name="cafe_main" id="cafe_main" title="카페 메인"
+                                src="/board/commonBoardJoin/${cafe_url}"
+                                width="860" height="100%" frameborder="0"
+                                scrolling="no" marginwidth="0" marginheight="0"
+                                allowtransparency="true" allowfullscreen="" style="height: 1266px;"></iframe>
+                </div>
+
             </div>
         </div>
         <!-- 본문 내용 -->
@@ -394,6 +404,7 @@
     <div id="login_info">
         <input type="hidden" name="useruid" value="${userUid}" />
         <input type="hidden" name="nickname" value="${nickName}" />
+        <input type="hidden" name="isMemberCafeLoginUser" value="${isMemberCafeLoginUser}" />
     </div>
 
     <div id="cafe_info">

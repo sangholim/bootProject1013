@@ -23,7 +23,7 @@ public class CafeVO {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "url")
+    @Column(name = "url", unique = true)
     private String url;
 
     @Column(name = "usePrivate")

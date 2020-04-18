@@ -54,8 +54,6 @@ public class BoardManager {
         //long cafeMemberCnt = userCafeBoardDAO.getCountCafeMember(cafeUid);
         CommonUserVO userVO = userDAO.userUidFindUser(userCafeVO.getUserUid());
 
-
-
         /*
             관리자 닉네임,카페레벨 담기
          */
@@ -64,6 +62,8 @@ public class BoardManager {
         boardSimpleInfoForm.setCafeLevel(userCafeVO.getCafeLevel());
         boardSimpleInfoForm.setCafeMemberCnt(MemberCnt);
         boardSimpleInfoForm.setCafeUid(cafeUid);
+        boardSimpleInfoForm.setDesc(cafeVO.getDesc());
+        boardSimpleInfoForm.setUserNickName(userVO.getUserNickName());
 
         return boardSimpleInfoForm;
     }

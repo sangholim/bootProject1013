@@ -36,12 +36,11 @@ var board = {
 
         var bodyTag = document.getElementById("content-area");
         bodyTag.addEventListener('click', function(event) {
-            var cafeWriteButton = document.getElementById("boardwrite");
 
             var selectedTag = event.target;
 
-            //카페글쓰기
-            var cafeWriteButton = document.getElementById("boardwrite");
+            //카페글쓰기 & 카페 가입하기 버튼
+            var boardMainBtn = document.getElementById("boardMainBtn");
 
             //메인 영역
             var mainAreaContent = document.getElementsByClassName("main_content")[0];
@@ -52,7 +51,12 @@ var board = {
             //스마트 에디터
             var smart_editor = document.getElementById("smart_editor");
 
+            var join_editor = document.querySelector("#join_editor");
+
             var menuLink0 = document.getElementById("menuLink0");
+
+            //로그인한 사용자가 카페가입자인지
+            var isMemberCafeLoginUser = document.querySelector("input[name=isMemberCafeLoginUser]").value;
 
             if(selectedTag == menuLink0) {
 
@@ -64,11 +68,20 @@ var board = {
                 mainAreaContent.style.display = "block";
             }
 
-            if(selectedTag == cafeWriteButton) {
+            if(selectedTag == boardMainBtn) {
 
-                if( smart_editor.style.visibility == "hidden") {
-                    smart_editor.style.visibility = "visible";
-                    mainAreaContent.style.display = "none";
+                if(isMemberCafeLoginUser == 'true') {
+                    if( smart_editor.style.visibility == "hidden") {
+                        smart_editor.style.visibility = "visible";
+                        mainAreaContent.style.display = "none";
+                    }
+                } else {
+                    //alert("카페 가입자가 아닙니다.");
+                    if(join_editor.style.visibility == "hidden") {
+                        join_editor.style.visibility = "visible";
+                        smart_editor.style.display = "none";
+                        mainAreaContent.style.display = "none";
+                    }
                 }
                 // else {
                 //     smart_editor.style.visibility = "hidden";

@@ -4,6 +4,7 @@ import com.pro1.board.param.BoardSimpleInfoForm;
 import com.pro1.board.param.BoardVO;
 import com.pro1.board.param.UserCafeBoardVO;
 import com.pro1.board.service.BoardManager;
+import com.pro1.cafe.service.CafeManager;
 import com.pro1.cafe.vo.CafeVO;
 import com.pro1.cafe.vo.UserCafeId;
 import com.pro1.cafe.web.CafeMainAsync;
@@ -33,6 +34,9 @@ public class BoardMainFrame {
 	@Autowired
 	BoardManager boardManager;
 
+	@Autowired
+	CafeManager cafeManager;
+
 	private static final Logger logger = LoggerFactory.getLogger(BoardMainFrame.class);
 
     @RequestMapping(value = "/{cafe_url}")
@@ -56,9 +60,11 @@ public class BoardMainFrame {
 	boolean hasInfo = boardManager.isMemberCafeLoginUser(userCafeId);
 
 	if(hasInfo) {
-		model.addAttribute("cafeMainButton","카페 글쓰기");
+		model.addAttribute("boardMainBtn","카페 글쓰기");
+		model.addAttribute("isMemberCafeLoginUser",true); //로그인한 사용자가 카페 가입을 한것인지 flag
 	} else {
-		model.addAttribute("cafeMainButton","카페 가입하기");
+		model.addAttribute("boardMainBtn","카페 가입하기");
+		model.addAttribute("isMemberCafeLoginUser",false);
 	}
 
 	return Constant.MAIN;
@@ -153,6 +159,20 @@ public class BoardMainFrame {
 
 		return "/board/boardCenter";
 
+	}
+
+	/*
+    카페 중앙의 카페 게시글 리스트 불러오기
+ */
+	@RequestMapping(value = "/commonBoardJoin/{cafe_url}" , method= RequestMethod.GET)
+	public String boardJoin(Authentication authentication,Model model,@PathVariable String cafe_url) throws Exception {
+
+		CustomAuthentication userAuth = (CustomAuthentication) authentication;
+		BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeUrlInfo(cafe_url);
+
+		model.addAttribute("BoardSimpleInfoForm",boardSimpleInfoForm);
+
+		return "/board/commonBoardJoin";
 	}
 
 	/*

@@ -90,8 +90,6 @@ public class UserCafeBoardDAO extends CommonDBSession {
     public boolean isCafeMemberLoginUser(UserCafeId userCafeId) throws Exception {
 
         //전체를 긁어
-
-
         sessionInfo = processHibernateSession(UserCafeVO.class, null, DBQueryType.SELECT);
 
         try (Session session = sessionInfo.getSession()) {
