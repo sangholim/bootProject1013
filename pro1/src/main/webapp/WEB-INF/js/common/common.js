@@ -92,6 +92,13 @@ window.onhashchange = function() {
 				"/login/findAddr.json", decryptedMessage, "application/json");
 		common.sync(requestParams);
 
+	} else if (popState[0] == "#cafeBoard") {
+		var decryptedMessage = CryptoJS.AES.decrypt(popState[2], "test")
+		.toString(CryptoJS.enc.Utf8);
+		var requestParams = common.requestParams(false, "POST",
+				"/cafe"+popState[1]+"/list.json", decryptedMessage, "application/json");
+		common.sync(requestParams);
+		
 	}
 }
 

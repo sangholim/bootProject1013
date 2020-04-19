@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,6 +88,42 @@ public class CafeMainAsync {
 	}
 	resultMap.put(code, 200);
 	resultMap.put(result, "정상적으로 카페가 생성되었습니다.");
+
+	return resultMap;
+    }
+
+    /**
+     * cafeTab 클릭시 원하는 리스트 불러오기
+     * 
+     * @param authetication
+     * @param cafeType
+     * @param cafeForm
+     * @return
+     */
+    @RequestMapping(value = "/{sub_type}/list.json")
+    public Map<String, Object> getCafeList(Authentication authetication, String cafeType,
+	    @RequestBody CafeForm cafeForm, @PathVariable String sub_type) {
+
+	Map<String, Object> resultMap = new HashMap<>();
+	String code = "code";
+	String result = "result";
+	resultMap.put(code, 500);
+	resultMap.put(result, "카페 생성중 문제 발생!");
+
+	// ui에서 페이지 간격은 8 로 정한다.
+	CustomAuthentication userAuth = (CustomAuthentication) authetication;
+	resultMap.put(Constant.PAGE_TYPE, Constant.CAFE_TYPE);
+	resultMap.put(Constant.PAGE_SUB_TYPE, sub_type);
+	resultMap.put("nickName", userAuth.getAuthUser().getUserNickName());
+
+	try {
+	    cafeManager.getCafeMapByUserUid(cafeForm, userAuth.getUid(), sub_type);
+	    resultMap.put("cafeForm", cafeForm);
+	} catch (Exception e) {
+	    logger.info("Error getting CafeList > {}", e.getMessage(), e.getCause());
+	    // 앞으로는 오류 페이지로 넘길수 있게 처리
+	    return resultMap;
+	}
 
 	return resultMap;
     }

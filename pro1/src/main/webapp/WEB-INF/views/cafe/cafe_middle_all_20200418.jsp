@@ -90,10 +90,10 @@
 		 <!----> <!----> <!----> <!---->
 		 <div class="user_mycafe_list">
 		 	<!--  내가 가입하거나 생성한 카페를5개씩묶어주고 더보기 이벤트 할떄마다 5개씩 더 보여준다. -->
-		 	<c:forEach var="user_cafe" items="${cafeForm.userCafeList}" varStatus="status">
+		 	<c:forEach var="user_cafe" items="${cafeList.userCafeList}" varStatus="status">
 		 		
 		 		<c:if test="${status.index % 5 eq 0 }">
-		 			<div class="user_mycafe_container" style="display:none">
+		 		<div class="user_mycafe_container" style="display:none">
 		 		</c:if>
 				
 				 	<div cafe="data" class="user_mycafe_area">
@@ -161,7 +161,53 @@
 		 		</c:if>
 		 		
 		 	</c:forEach>
-		 	
+		 	<!-- 
+		 	<div cafe="data" class="user_mycafe_area">
+		 		<div class="user_mycafe_box">
+		 			<div class="user_mycafe_thumb">
+		 				<a href="#" class="link">
+		 					<img src="/img/cafe/test_cafe_img1.png" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'" width="55" height="55" alt="">
+		 				</a>
+		 			</div>
+			 		<div class="user_mycafe_info">
+			 			<a href="#" class="name_area">
+			 				<strong class="name">엄준식 공식 카페</strong>
+							<div class="common_icon_box"></div>
+						</a>
+						<div class="info_area">
+							<a href="#" title="즐겨찾기" class="user_mycafe_bookmark">
+								<span class="blind">즐겨찾기 선택 시 등록됨</span>
+							</a>
+							<a href="#" class="user_mycafe_new">새글 114</a>
+						</div>
+			 		</div>
+			 		<button type="button" class="btn_mycafe_user on">
+			 			<span class="blind">최근 게시글 목록 닫기</span>
+			 		</button>
+			 	
+		 		</div>
+		 		<div class="user_mycafe_recent">
+		 			<ul class="recent_list">
+		 				<li article="게시글">
+		 					<div class="recent_info">
+		 						<span class="nickname">엄준</span>
+								<span class="time">32분 전</span>
+		 					</div>
+		 					<div class="recent_title">
+		 						<div class="inner">
+		 							<a href="#" class="tit">
+		 								<em class="blind">글제목</em>
+		 								무무형 방송안키는이유그거임
+		 							</a>	
+		 						</div>
+		 					</div>
+		 				</li>
+		 				<li>해당 카페에 게시글을 생성</li>
+		 			</ul>	
+		 		</div>
+		 	</div>
+		 	 -->
+		 	 
 		 	<!-- 
 		 	<div cafe="이곳은 나의 카페에서 최근에 올라온 글을 보여주는 UI"></div>
 		 	 -->
@@ -488,18 +534,15 @@
 				</div>
 			</c:forEach>
 		</ul>
-		<c:if test="${cafeForm.showPageMaximumCount > 0 }">
-			<div class="common_page"><!----> 
-				<c:forEach begin="${cafeForm.showPageMinimumCount}" end="${cafeForm.showPageMaximumCount}" var="count">
-					<button type="button" class='btn <c:if test="${count eq 1 }"> on</c:if>' style="display: none">
-						${count }
-						<c:if test="${count eq 1 }">
-							<span class="blind">선택됨</span>
-						</c:if>
-					</button>
-				</c:forEach>
-			</div>
-		</c:if>
-		
+		<div class="common_page"><!----> 
+			<c:forEach begin="1" end="10" var="count">
+				<button type="button" class='btn <c:if test="${count eq 1 }"> on</c:if>' style="display: none">
+					${count }
+					<c:if test="${count eq 1 }">
+						<span class="blind">선택됨</span>
+					</c:if>
+				</button>
+			</c:forEach>
+		</div>
 	</div>
 </div>

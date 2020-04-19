@@ -1,8 +1,9 @@
 package com.pro1.cafe.vo;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.pro1.common.vo.SearchForm;
 
 /**
  * UI 에서 bind되는 변수 모음
@@ -10,13 +11,15 @@ import java.util.Map;
  * @author HoYa
  *
  */
-public class CafeForm {
+public class CafeForm extends SearchForm {
 
-    private CafeVO cafeVO;
+    private CafeVO cafeVO = new CafeVO();
 
     private String imageDatas;
 
     private List<UserCafeVO> userCafeList;
+
+    private List<UserCafeVO> showCafeList;
 
     private Map<Integer, List<UserCafeVO>> recommend_CafeMap;
 
@@ -50,6 +53,14 @@ public class CafeForm {
 
     public void setRecommend_CafeMap(Map<Integer, List<UserCafeVO>> recommend_CafeMap) {
 	this.recommend_CafeMap = recommend_CafeMap;
+    }
+
+    public List<UserCafeVO> getShowCafeList() {
+	return showCafeList;
+    }
+
+    public void setShowCafeList(List<UserCafeVO> showCafeList) {
+	this.showCafeList = showCafeList;
     }
 
 }

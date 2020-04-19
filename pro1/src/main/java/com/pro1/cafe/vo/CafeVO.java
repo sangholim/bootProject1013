@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NaturalId;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -22,7 +23,12 @@ public class CafeVO {
 
     @Column(name = "name")
     private String name;
-
+    
+    /*
+     * naturalId 를 사용하면 실제 entiti에서는 id라고 인식을 하지 않고
+     * session.load 로 colm
+     */
+    @NaturalId
     @Column(name = "url", unique = true)
     private String url;
 
@@ -37,13 +43,19 @@ public class CafeVO {
 
     @Column(name = "showMember")
     private int showMember = 0;
-
+    
+    /**
+     * title_mainSort = -1 일떄, 추천 카페
+     */
     @Column(name = "title_mainSort")
     private int title_mainSort = -1;
 
     @Column(name = "title_subSort")
     private int title_subSort = -1;
 
+    /**
+     * region_mainSort = -1 일떄, 추천 카페
+     */
     @Column(name = "region_mainSort")
     private int region_mainSort = -1;
 

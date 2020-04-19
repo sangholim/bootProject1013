@@ -1,12 +1,12 @@
 package com.pro1.cafe.service;
 
-import com.pro1.board.dao.UserCafeBoardDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 import com.pro1.cafe.dao.CafeDAO;
+import com.pro1.cafe.vo.CafeForm;
 import com.pro1.cafe.vo.CafeVO;
 import com.pro1.cafe.vo.UserCafeVO;
 import com.pro1.common.constant.Constant;
@@ -24,16 +24,8 @@ public class CafeManager {
     @Autowired
     private CafeDAO cafeDAO;
 
-    public void getCafeMapByUserUid(Model model, long userUid, String sub_type) {
-
-	try {
-
-	    model.addAttribute("cafeList", cafeDAO.getCafeMapByUserUid(userUid, sub_type));
-	} catch (Exception e) {
-
-	    logger.warn("Error Connection DataBase : {}", e.getMessage(), e);
-	}
-
+    public void getCafeMapByUserUid(CafeForm cafeForm, long userUid, String sub_type) throws Exception{
+	cafeDAO.getCafeMapByUserUid(userUid, sub_type, cafeForm);
     }
 
     public void getCafeList(Model model) {

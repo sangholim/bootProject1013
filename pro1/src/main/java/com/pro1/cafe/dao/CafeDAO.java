@@ -1,17 +1,10 @@
 package com.pro1.cafe.dao;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import com.pro1.board.param.UserCafeBoardVO;
-import com.pro1.user.vo.UserVO;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -33,23 +26,19 @@ public class CafeDAO extends CommonDBSession {
      */
     private final String userCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafeLevel, uc.cafeFav, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid";
 
-    // private final String recommandCafeJoin = "select NEW UserCafeVO(0l, 0l,
-    // uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url,
-    // uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.memberCnt) from UserCafeVO uc
-    // join uc.cafe c where uc.userUid != :userUid";
-
     /**
      * 추천하는 카페에 필요한 정보 카페이름,카페아이콘, 멤버수, 랭킹점수 (todo)
      */
-    private final String recommandCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url, uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.title_subSort, uc.cafe.region_mainSort, uc.cafe.memberCnt) from \n"
+    private final String cafeList = "select NEW UserCafeVO(0l, 0l, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url, uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.title_subSort, uc.cafe.region_mainSort, uc.cafe.memberCnt) from \n"
 	    + "UserCafeVO uc join uc.cafe c ";
 
-    private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url, cv.desc, cv.title_mainSort, cv.memberCnt) from cafe cv where cv.url = :url";
+    private final String cafeListCount = "select count(c) from \n" + "UserCafeVO uc join uc.cafe c ";
 
-    private final String cafeConditionForm1 = "where %s != %s and %s = %s order by createDate";
+    private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
 
-	//private final String cafeUrlForm1 = "select NEW CafeVO(cv.uid, cv.name, cv.icon, cv.url) from CafeVO cv where cv.url = :url";
-
+    // private final String cafeConditionForm1 = "where %s != %s and %s = %s order
+    // by createDate";
+    private final String cafeCondition = "where uc.userUid != %s and %s = %s order by createDate";
 
     /**
      * 유저가 로그인후 볼수있는 cafe들을 추출 (추천 카페들 , 내가 가입한 카페들)
@@ -58,43 +47,64 @@ public class CafeDAO extends CommonDBSession {
      * @return
      * @throws Exception
      */
-    public CafeForm getCafeMapByUserUid(long userUid, String urlType) throws Exception {
+    public void getCafeMapByUserUid(long userUid, String urlType, CafeForm cafeForm) throws Exception {
 	/*
 	 * if (sqlSession != null) { return
 	 * sqlSession.selectList("getCafeListByUserUid"); }
 	 */
-	CafeForm cafeForm = new CafeForm();
-	Map<Integer, List<UserCafeVO>> recommend_CafeMap = new HashMap<>();
 
 	DbSessionInfo sessionInfo = processHibernateSession(CafeVO.class, null, DBQueryType.SELECT);
 	try (Session session = sessionInfo.getSession()) {
-	    Query<UserCafeVO> query = session.createQuery(userCafeJoin, UserCafeVO.class);
+	    CafeVO cafeVO = cafeForm.getCafeVO();
+	    Query query = session.createQuery(userCafeJoin, UserCafeVO.class);
 	    query.setParameter("userUid", userUid);
 	    cafeForm.setUserCafeList(query.getResultList());
-	    // userCafeMap.put("userCafeList", query.getResultList());
-	    int maxTypeNum = (urlType.toLowerCase().equals("sub_area")) ? 20 : 25;
+
 	    String condition = (urlType.toLowerCase().equals("sub_area"))
-		    ? String.format(cafeConditionForm1, "uc.userUid", userUid, "uc.cafe.region_mainSort", ":value")
-		    : String.format(cafeConditionForm1, "uc.userUid", userUid, "uc.cafe.title_mainSort", ":value");
+		    ? String.format(cafeCondition, userUid, "uc.cafe.region_mainSort", cafeVO.getRegion_mainSort())
+		    : String.format(cafeCondition, userUid, "uc.cafe.title_mainSort", cafeVO.getRegion_mainSort());
 
-	    // cafe time 1-25까지호출
-	    for (int i = 1; i <= maxTypeNum; i++) {
-		// 추천 카페 데이터
-		query = session.createQuery(recommandCafeJoin + condition, UserCafeVO.class);
-		query.setParameter("value", i);
-		query.setFirstResult(0);
-		query.setMaxResults(80);
-		List<UserCafeVO> recommandCafeList = query.getResultList();
-		recommend_CafeMap.put(i, recommandCafeList);
+	    /*
+	     * 
+	     * 1. 카페 페이지는 최대 총 10페이지로 구성한다. 2. 카페 페이지에 보여주는 내용은 8개 3. 최신순으로 카페페이지를 뽑아낸다.
+	     * select count(*) from cafe where title_mainSort = #{title_mainSort}
+	     * 
+	     */
+	    query = session.createQuery(cafeListCount + condition);
+	    // 존재하는 카페 리스트 총 갯수 구하기
+	    List resultList = query.getResultList();
+	    long maxPageCount = 0;
+	    if(!resultList.isEmpty()) {
+		maxPageCount = (long) resultList.get(0);
+		maxPageCount = (maxPageCount % cafeForm.getShowPageNumCount() == 0)
+			? maxPageCount / cafeForm.getShowPageNumCount()
+			: maxPageCount / cafeForm.getShowPageNumCount() + 1;
+
 	    }
-
-	    cafeForm.setRecommend_CafeMap(recommend_CafeMap);
-
-	    return cafeForm;
+	   
+	    // 총 카운트가 0보다 작거나 같으면, 카페리스트를 호출하지 않음
+	    if (maxPageCount <= 0) {
+		return;
+	    }
+	    cafeForm.setMaxPageCount(maxPageCount);
+	    
+	    int getShowPageMaximumCount = cafeForm.getShowPageMinimumCount() * cafeForm.getShowPageNumCount();
+	    getShowPageMaximumCount = (getShowPageMaximumCount > (int) maxPageCount) ? (int) maxPageCount
+		    : getShowPageMaximumCount;
+	    // UI에서 보여지는 페이지중 마지막 페이지
+	    cafeForm.setShowPageMaximumCount(getShowPageMaximumCount);
+	    
+	    // 카페리스트 호출
+	    query = session.createQuery(cafeList + condition);
+	    // UI상에서 페이지
+	    // (현재페이지 -1)*(페이지당 보여줄 리스트 개수)
+	    query.setFirstResult((cafeForm.getSelectedPageNum()-1) * cafeForm.getShowDataListCount());
+	    // setMaxResults 검색 시작 데이터로부터 + count 만큼 조회
+	    query.setMaxResults(cafeForm.getShowDataListCount());
+	    cafeForm.setShowCafeList(query.getResultList());
 
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    return null;
 	}
 
     }
@@ -121,11 +131,10 @@ public class CafeDAO extends CommonDBSession {
 
     }
 
-    /**
-	 * @author ued123
-	 * @brief
-     * 카페 url을 통해서 카페 정보들을 얻기위해
-     */
+        /**
+         * @author ued123
+         * @brief 카페 url을 통해서 카페 정보들을 얻기위해
+         */
 	public CafeVO getCafeUrlinfo(String cafe_url) throws Exception {
 
 		if (sqlSession != null) {
@@ -136,10 +145,11 @@ public class CafeDAO extends CommonDBSession {
 
 		try (Session session = sessionInfo.getSession()) {
 
-			Query<CafeVO> query = session.createQuery(cafeUrlForm1, CafeVO.class);
-			query.setParameter("url", cafe_url);
+			//Query<CafeVO> query = session.createQuery(cafeUrlForm1, CafeVO.class);
+			//query.setParameter("url", cafe_url);
+			CafeVO vo = session.byNaturalId(CafeVO.class).using("url",cafe_url).load();
 
-			return query.getSingleResult();
+			return vo;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,6 +157,7 @@ public class CafeDAO extends CommonDBSession {
 		}
 
 	}
+
 
     /**
      * CAFE 추가 , UserCafe 테이블 추가한다.
