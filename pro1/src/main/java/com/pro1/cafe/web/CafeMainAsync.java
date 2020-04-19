@@ -2,7 +2,6 @@ package com.pro1.cafe.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -29,7 +28,6 @@ import com.pro1.common.constant.Constant;
 import com.pro1.common.utils.FileUtils;
 import com.pro1.config.ConfigManagement;
 import com.pro1.config.comp._Config;
-import com.pro1.login.web.LoginMainFrame;
 import com.pro1.security.CustomAuthentication;
 
 @RestController
@@ -107,8 +105,6 @@ public class CafeMainAsync {
 	Map<String, Object> resultMap = new HashMap<>();
 	String code = "code";
 	String result = "result";
-	resultMap.put(code, 500);
-	resultMap.put(result, "카페 생성중 문제 발생!");
 
 	// ui에서 페이지 간격은 8 로 정한다.
 	CustomAuthentication userAuth = (CustomAuthentication) authetication;
@@ -117,11 +113,15 @@ public class CafeMainAsync {
 	resultMap.put("nickName", userAuth.getAuthUser().getUserNickName());
 
 	try {
-	    cafeManager.getCafeMapByUserUid(cafeForm, userAuth.getUid(), sub_type);
+	    cafeManager.getCafeMapByUserUid(cafeForm, -1, sub_type);
 	    resultMap.put("cafeForm", cafeForm);
+	    resultMap.put(code, 200);
+	    resultMap.put(result, "추천카페  불러오는중 문제 발생!");
 	} catch (Exception e) {
+	 // 앞으로는 오류 페이지로 넘길수 있게 처리
 	    logger.info("Error getting CafeList > {}", e.getMessage(), e.getCause());
-	    // 앞으로는 오류 페이지로 넘길수 있게 처리
+	    resultMap.put(code, 500);
+	    resultMap.put(result, "추천카페  불러오는중 문제 발생!");
 	    return resultMap;
 	}
 

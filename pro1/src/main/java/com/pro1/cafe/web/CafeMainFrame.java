@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.pro1.cafe.service.CafeManager;
 import com.pro1.cafe.vo.CafeForm;
 import com.pro1.common.constant.Constant;
-import com.pro1.config.ConfigManagement;
 import com.pro1.security.CustomAuthentication;
 
 @Controller
@@ -21,11 +20,7 @@ import com.pro1.security.CustomAuthentication;
 @Lazy
 public class CafeMainFrame {
 
-
     private static final Logger logger = LoggerFactory.getLogger(CafeMainFrame.class);
-
-    @Autowired
-    private ConfigManagement configManage;
 
     @Autowired
     private CafeManager cafeManager;

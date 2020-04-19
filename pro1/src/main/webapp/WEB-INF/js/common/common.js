@@ -14,7 +14,7 @@ common.sync = function(requestParams) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.open(requestParams.method, requestParams.url);
 	xhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-
+	xhttp.requestData = requestParams;
 	xhttp.onreadystatechange = function() {
 
 		if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -61,12 +61,20 @@ common.sync = function(requestParams) {
 
 				//debugger;
 				var responseCode = json.code;
-
 				alert(json.result);
-
 				if(responseCode == 200) {
 				 	window.location.href = json.cafeUrl;
 				 }
+			} else if (url.indexOf("/sub_main/list.json") > -1
+					|| url.indexOf("/sub_theme/list.json") > -1
+					|| url.indexOf("/sub_area/list.json") > -1) {
+				var requestParamData = JSON.parse(xhttp.requestData.data);
+				var responseCode = json.code;
+				// 카페 탭 선택후 후처리
+				cafe.afterCafeProcess(json.cafeForm.showCafeList, requestParamData);
+				
+			} else if (url.indexOf("/sub_main") > -1) {
+				
 			}
 		}
 		loadNode.classList.add('blind');
@@ -97,6 +105,7 @@ window.onhashchange = function() {
 		.toString(CryptoJS.enc.Utf8);
 		var requestParams = common.requestParams(false, "POST",
 				"/cafe"+popState[1]+"/list.json", decryptedMessage, "application/json");
+		
 		common.sync(requestParams);
 		
 	}

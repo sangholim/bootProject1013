@@ -34,7 +34,7 @@ public class CafeDAO extends CommonDBSession {
 
     private final String cafeListCount = "select count(c) from \n" + "UserCafeVO uc join uc.cafe c ";
 
-    private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
+    // private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
 
     // private final String cafeConditionForm1 = "where %s != %s and %s = %s order
     // by createDate";
@@ -56,13 +56,16 @@ public class CafeDAO extends CommonDBSession {
 	DbSessionInfo sessionInfo = processHibernateSession(CafeVO.class, null, DBQueryType.SELECT);
 	try (Session session = sessionInfo.getSession()) {
 	    CafeVO cafeVO = cafeForm.getCafeVO();
-	    Query query = session.createQuery(userCafeJoin, UserCafeVO.class);
-	    query.setParameter("userUid", userUid);
-	    cafeForm.setUserCafeList(query.getResultList());
+	    Query query = null;
+	    if(userUid != -1) {
+		query = session.createQuery(userCafeJoin, UserCafeVO.class);
+		query.setParameter("userUid", userUid);
+		cafeForm.setUserCafeList(query.getResultList());
+	    }
 
 	    String condition = (urlType.toLowerCase().equals("sub_area"))
 		    ? String.format(cafeCondition, userUid, "uc.cafe.region_mainSort", cafeVO.getRegion_mainSort())
-		    : String.format(cafeCondition, userUid, "uc.cafe.title_mainSort", cafeVO.getRegion_mainSort());
+		    : String.format(cafeCondition, userUid, "uc.cafe.title_mainSort", cafeVO.getTitle_mainSort());
 
 	    /*
 	     * 
@@ -86,7 +89,11 @@ public class CafeDAO extends CommonDBSession {
 	    if (maxPageCount <= 0) {
 		return;
 	    }
-	    cafeForm.setMaxPageCount(maxPageCount);
+	    
+	    // 총 페이지수가 정해져 있지 않으면 설정
+	    if (cafeForm.getMaxPageCount() <= 0) {
+		cafeForm.setMaxPageCount(maxPageCount);
+	    }
 	    
 	    int getShowPageMaximumCount = cafeForm.getShowPageMinimumCount() * cafeForm.getShowPageNumCount();
 	    getShowPageMaximumCount = (getShowPageMaximumCount > (int) maxPageCount) ? (int) maxPageCount
