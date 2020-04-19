@@ -30,23 +30,23 @@ public class CafeMainFrame {
 	
 	CafeForm cafeForm = new CafeForm();
 	
-	
+	/*
 	switch (sub_type) {
-	case "sub_main":
-	    cafeForm.setShowPageNumCount(8);
-	    cafeForm.setShowDataListCount(10);
-	case "sub_theme":
-	    cafeForm.setShowPageNumCount(6);
-	    cafeForm.setShowDataListCount(10);
-	case "sub_area":
-	    cafeForm.setShowPageNumCount(6);
-	    cafeForm.setShowDataListCount(10);
-	default:
-	    //선택된 페이지는 1로  정한다.
-	    cafeForm.setSelectedPageNum(1);
-	    break;
+    	case "sub_main":
+    	    cafeForm.setShowPageNumCount(8);
+    	    cafeForm.setShowDataListCount(10);
+    	case "sub_theme":
+    	    cafeForm.setShowPageNumCount(6);
+    	    cafeForm.setShowDataListCount(10);
+    	case "sub_area":
+    	    cafeForm.setShowPageNumCount(6);
+    	    cafeForm.setShowDataListCount(10);
+    	default:
+    	    //선택된 페이지는 1로  정한다.
+    	    cafeForm.setSelectedPageNum(1);
+    	    break;
 	}
-	
+	*/
 	//ui에서 페이지 간격은 8 로 정한다.
 	
 	CustomAuthentication userAuth = (CustomAuthentication) authetication;

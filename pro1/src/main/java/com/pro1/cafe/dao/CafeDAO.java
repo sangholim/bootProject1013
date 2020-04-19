@@ -62,14 +62,26 @@ public class CafeDAO extends CommonDBSession {
 		query.setParameter("userUid", userUid);
 		cafeForm.setUserCafeList(query.getResultList());
 	    }
-
-	    String condition = (urlType.toLowerCase().equals("sub_area"))
-		    ? String.format(cafeCondition, userUid, "uc.cafe.region_mainSort", cafeVO.getRegion_mainSort())
-		    : String.format(cafeCondition, userUid, "uc.cafe.title_mainSort", cafeVO.getTitle_mainSort());
-
+	    
+	    int cafeType = -1;
+	    String condition = "";
+	    if (urlType.toLowerCase().equals("sub_area")) {
+		cafeType = cafeVO.getRegion_mainSort();
+		condition = String.format(cafeCondition, userUid, "uc.cafe.region_mainSort", cafeType);
+	    } else {
+		cafeType = cafeVO.getTitle_mainSort();
+		condition = String.format(cafeCondition, userUid, "uc.cafe.title_mainSort", cafeType);
+	    }
+	    
+	    // 주분류, 소분류가 없다면 카페 리스트 가져오지 않음
+	    if (cafeType == -1) {
+		return;
+	    }
+	    
 	    /*
-	     * 
-	     * 1. 카페 페이지는 최대 총 10페이지로 구성한다. 2. 카페 페이지에 보여주는 내용은 8개 3. 최신순으로 카페페이지를 뽑아낸다.
+	     * 1. 카페 페이지는 최대 총 10페이지로 구성한다. 
+	     * 2. 카페 페이지에 보여주는 내용은 8개 
+	     * 3. 최신순으로 카페페이지를 뽑아낸다.
 	     * select count(*) from cafe where title_mainSort = #{title_mainSort}
 	     * 
 	     */

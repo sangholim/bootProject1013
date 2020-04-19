@@ -21,8 +21,6 @@ public class CafeForm extends SearchForm {
 
     private List<UserCafeVO> showCafeList;
 
-    private Map<Integer, List<UserCafeVO>> recommend_CafeMap;
-
     public CafeVO getCafeVO() {
 	return cafeVO;
     }
@@ -45,14 +43,6 @@ public class CafeForm extends SearchForm {
 
     public void setUserCafeList(List<UserCafeVO> userCafeList) {
 	this.userCafeList = userCafeList;
-    }
-
-    public Map<Integer, List<UserCafeVO>> getRecommend_CafeMap() {
-	return recommend_CafeMap;
-    }
-
-    public void setRecommend_CafeMap(Map<Integer, List<UserCafeVO>> recommend_CafeMap) {
-	this.recommend_CafeMap = recommend_CafeMap;
     }
 
     public List<UserCafeVO> getShowCafeList() {

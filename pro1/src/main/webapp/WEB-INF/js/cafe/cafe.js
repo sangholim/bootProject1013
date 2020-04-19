@@ -459,11 +459,22 @@ var cafe = {
 		// 선택된 카페 탭 UI 표시
 		cafeTabs[cafe.baseParam.lastSelectCafeTab].classList.add("on");
 	
-		var cafeDataSize = cafedataList.length;
-		// li 태그에 집어넣기
+		
+		// common_list (ul) 내부 cafe data(li) 태그에 집어넣기
 		// 끝난후, 카페리스트 결과 UI를 보여준다.
 		var cafeListWrapper = document.getElementsByClassName("common_list")[0];
-		cafeListWrapper.innerHTML =''; // 기존 UI 카페 데이터 리스트 초기화
+		// 카페 데이터 리스트 초기화
+		cafeListWrapper.innerHTML ='';
+		
+		if (cafedataList == null) {
+			return;
+		}
+		var cafeDataSize = cafedataList.length;
+		
+		// 카페 데이터가 없을떄
+		if (cafeDataSize == 0) {
+			return;
+		}
 		
 		// 결과 리스트 만큼 데이터 생성
 		for (var i = 0; i < cafeDataSize; i++) {
@@ -571,6 +582,9 @@ var cafe = {
 			cafe.baseParam.lastGetRecommendSliderIdx = 0;
 			// 마지막으로 선택한 페이지 번호
 			cafe.baseParam.lastpageNum = 1;
+			// 메인에서 카페버튼누르면 서버에서 페이지 렌더링후 또한번 비동기로 카페탭에 있는 리스트 호출
+			cafe.getCafeList(path,cafe.baseParam.lastSelectCafeTab, cafe.baseParam.lastpageNum);
+			
 			bodyTag.addEventListener('click', function(event) {
 
 				// 추천 카페 분류 이전,이후 버튼 
