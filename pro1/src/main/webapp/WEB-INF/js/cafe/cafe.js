@@ -317,7 +317,6 @@ var cafe = {
 		 * 695
 		 * 
 		 */
-		
 		switch (idx) {
 			case 1:
 				value = 662;
@@ -407,8 +406,7 @@ var cafe = {
 		}
 
 	},
-	getCafeList : function(path, tabNum, selectedPageNum, detailShowDataType) {
-		
+	getCafeList : function(path) {
 		/*
 		 * 카페 UI에서 페이지를 보여줄떄는
 		 * 전체 보여주는거 빼고는 페이지수는 정해져잇음
@@ -422,57 +420,124 @@ var cafe = {
 		var cafeForm = {};
 		var cafeVO = {};
 		if(path.indexOf("/sub_main") > -1 ) {
-			cafeVO.title_mainSort = tabNum;
-			cafeForm.selectedPageNum = selectedPageNum;
+			cafeVO.title_mainSort = cafe.baseParam.lastSelectCafeTab;
+			// UI나타나는 페이지번호 최소값
 			cafeForm.showDataListCount = 10;
 			cafeForm.showPageNumCount = 8;
-			cafeForm.maxPageCount = 8; //최대 페이지 카운트는 8 로 제한된다.
+			/*
+			 * UI에 나타나는최대 페이지 카운트: 8 (기본)
+			 * 하지만 서버상에 데이터에서 최대 페이지 카운트가 8보다 작으먄 변경됨
+			 */
+			// cafeForm.maxPageCount = 8; 
 		} else if (path.indexOf("/sub_theme") > -1) {
-			cafeVO.title_mainSort = tabNum;
+			cafeVO.title_mainSort = cafe.baseParam.lastSelectCafeTab;
+			// UI나타나는 페이지번호 최소값
 			cafeForm.showDataListCount = 20;
 			cafeForm.showPageNumCount = 6;
-			cafeForm.maxPageCount = 6; //최대 페이지 카운트는 8 로 제한된다.
+			/*
+			 * UI에 나타나는최대 페이지 카운트: 6 (기본)
+			 * 하지만 서버상에 데이터에서 최대 페이지 카운트가 6보다 작으먄 변경됨
+			 */
+			// cafeForm.maxPageCount = 6;
 		} else if (path.indexOf("/sub_area") > -1) {
-			cafeVO.region_mainSort = tabNum;
+			cafeVO.region_mainSort = cafe.baseParam.lastSelectCafeTab;
 			cafeForm.showDataListCount = 20;
 			cafeForm.showPageNumCount = 6;
+			/*
+			 * UI에 나타나는최대 페이지 카운트: 6 (기본)
+			 * 하지만 서버상에 데이터에서 최대 페이지 카운트가 6보다 작으먄 변경됨
+			 */
+			// cafeForm.maxPageCount = 6;
 		}
+		cafeForm.showPageMinimumCount = cafe.baseParam.showPageMinimumCount;
+		cafeForm.selectedPageNum = cafe.baseParam.selectedPageNum;
 		cafeVO.baseParam = cafe.baseParam; 
-		cafeForm.setSelectedPageNum = 1;
 		cafeForm.cafeVO = cafeVO;
         
 		var json = JSON.stringify(cafeForm);
     	document.location.hash = "cafeBoard:"+path+":"+CryptoJS.AES.encrypt(json, "test").toString();
 
 	},
-	afterCafeProcess : function (cafedataList, requestParam) {
+	afterCafeProcess : function (cafeForm, requestParam) {
 		
 		/*
-		 * request 요청에 의한 cafeTab 표시
+		 * afterCafeProcess 
+		 * 히스토리에 있는 비동기 요청들의 UI를 구현하기 위해 만든 로직
+		 * (cafeList,cafeTab,cafeSlider)
 		 */
+		// 페이지 wrapper에 페이지 번호를 그려낸다.
+		var pageUI = document.getElementsByClassName("common_page")[0];
+	
+		// request 요청에 의한 cafeTab 표시
 		var cafeTabs = document.getElementsByClassName("scroll_box_swiper")[0].getElementsByTagName("li");
-		//마지막으로  카페 분류 탭 리스트를 선택한 위치 찾기
 		for(var i = 0; i < cafeTabs.length; i++) {
 			cafeTabs[i].classList.remove("on");
 		}
-		cafe.baseParam.lastSelectCafeTab = requestParam.cafeVO.baseParam.lastSelectCafeTab; 
-		// 선택된 카페 탭 UI 표시
-		cafeTabs[cafe.baseParam.lastSelectCafeTab].classList.add("on");
-	
 		
-		// common_list (ul) 내부 cafe data(li) 태그에 집어넣기
+		/*
+		 * 선택된 카페 탭 UI 표시
+		 * 앞으로가기/뒤로가지 하였을때 lastGetRecommendSliderIdx값이 다르면 변경
+		 */
+		requestBaseParam = requestParam.cafeVO.baseParam;
+		// 현재 페이지 sliderIdx값 과 url 변경시 sliderIdx값으로 슬라이더 변경됨을 파악하기 
+		var sliderInfo = cafe.baseParam.lastGetRecommendSliderIdx - requestBaseParam.lastGetRecommendSliderIdx;
+		if (sliderInfo != 0) {
+			/*
+			 * 좌우 화살표 클릭시 탭이 이동후, 데이터를 서버에 전달하여 비동기로 호출한다.
+			 * sliderInfo (-): 오른쪽
+			 * sliderInfo (+): 왼쪽
+			 */
+			var btn_scroll_next = document.getElementsByClassName("btn_scroll_next")[0];
+			var btn_scroll_prev = document.getElementsByClassName("btn_scroll_prev")[0];
+			var scrollTag = cafeTabs[0].parentElement; 
+			var translateInfo = parseInt(scrollTag.style.transform.replace(/[^-^\d.]/g, ''));
+			scrollTag.style.transform = "translateX("+requestBaseParam.translateInfo +"px)";
+			
+			/* 좌우 화살표를 누른후 데이터 추출을 위한 데이터 설정
+			 * idx 0(0) : 좌측 버튼 비활성화 > 추천 카페에 해당하는 카페 리스트  출력  
+			 * 	   1(7) : 좌측,우측 활성화   > 영화에 해당하는 카페리스트 출력
+			 *     2(14) : 좌측,우측 활성화   > 건강/다이어트에 해당하는 카페리스트 출력
+			 *     3(21) : 우측 버튼 비활성화  > 스포츠 레저 에 해당하는 카페리스트 출력
+			 */
+			switch (requestBaseParam.lastGetRecommendSliderIdx) {
+				case 0:
+					btn_scroll_prev.disabled = true;
+					// cafe.baseParam.lastSelectCafeTab = 0;
+					break;
+				case 1:
+				case 2:
+					btn_scroll_prev.disabled = false;
+					btn_scroll_next.disabled = false;
+					break;
+				case 3:
+					btn_scroll_next.disabled = true;
+					break;
+				default:
+					break;
+			}
+			cafeTabs[requestParam.cafeVO.baseParam.lastSelectCafeTab].classList.remove("on");
+		} 
+		
+		cafe.baseParam.translateInfo = requestBaseParam.translateInfo;
+		cafe.baseParam.lastGetRecommendSliderIdx = requestBaseParam.lastGetRecommendSliderIdx;
+		cafe.baseParam.lastSelectCafeTab = requestParam.cafeVO.baseParam.lastSelectCafeTab;
+		cafeTabs[cafe.baseParam.lastSelectCafeTab].classList.add("on");
+		
+		//common_list (ul) 내부 cafe data(li) 태그에 집어넣기
 		// 끝난후, 카페리스트 결과 UI를 보여준다.
 		var cafeListWrapper = document.getElementsByClassName("common_list")[0];
 		// 카페 데이터 리스트 초기화
 		cafeListWrapper.innerHTML ='';
-		
+		var cafedataList = cafeForm.showCafeList;
 		if (cafedataList == null) {
+			pageUI.innerHTML="";
 			return;
 		}
 		var cafeDataSize = cafedataList.length;
 		
 		// 카페 데이터가 없을떄
 		if (cafeDataSize == 0) {
+			pageUI.innerHTML="";
 			return;
 		}
 		
@@ -487,7 +552,6 @@ var cafe = {
 			cafeDataWrapper.getElementsByClassName("name")[0].textContent = cafeResult.name;
 			// 카페 이미지
 			cafeDataWrapper.getElementsByTagName("img")[0].src = "/" + cafeResult.icon;
-			
 			// 카페 대표인지 체크
 			if(cafedataList[i].cafeOfficial == 1) {
 				cafeDataWrapper.getElementsByClassName("common_icon_box")[0].display = '';
@@ -498,17 +562,47 @@ var cafe = {
 			cafeDataWrapper.getElementsByClassName("info")[0].textContent = "멤버 " + cafeResult.memberCnt + "명";
 			cafeListWrapper.appendChild(cafeDataWrapper);
 		}
-		// TODO: 페이징 작업
-		// var pageListWrapper =
-		// document.getElementsByClassName("common_list")[0];
+		
+		/*
+		 * 페이지 번호 구현
+		 */
+		pageUI.innerHTML = "";
+		var min = cafe.baseParam.showPageMinimumCount;
+		cafe.baseParam.selectedPageNum = requestBaseParam.selectedPageNum;
+		
+		// 선택된 페이지 번호
+		// 총 페이지 갯 수에 따라 페이지 번호 UI 보여줌
+		for (var i = min; i < cafeForm.showPageMaximumCount; i++) {
+			var pageNumber = document.createElement("button");
+			pageNumber.classList.add("btn");
+			pageNumber.classList.add("btn_pageNum");
+			pageNumber.textContent = i;
+			// 선택된 페이지에는 강조 표시
+			if (i == cafe.baseParam.selectedPageNum) {
+				pageNumber.classList.add("on");
+				var span = document.createElement("span");
+				span.classList.add("blind");
+				span.textContent = "선택됨";
+				pageNumber.appendChild(span);
+			}
+			pageUI.appendChild(pageNumber);
+		}
+
 	},
 	baseParam : {
 		// 마지막으로 선택한 카페 탭 위치
 		lastSelectCafeTab : 0,
-		// 마지막으로 누른 슬라이더 idex [0,1,2]
+		// 마지막으로 누른 슬라이더 idex [0,1,2,3]
 		lastGetRecommendSliderIdx : 0,
 		// 마지막으로 선택한 페이지 번호
-		lastpageNum : 1
+		lastpageNum : 1,
+		// UI나타나는 페이지번호 최소값
+		// UI에서 보여줄 페이지에서 화살표 및 더보기를 누를경우 이값이 갱신된다.
+		showPageMinimumCount: 1,
+		// 선택된 페이지 번호
+		selectedPageNum: 1,
+		// 마지막으로 바뀐 transfor변경값
+		translateInfo: 0
 	},
 	cafedataForm : 
 		// li 태그는 따로 만들어서 string 집어 넣는 방식으로 작업
@@ -555,8 +649,6 @@ var cafe = {
 				break;
 			}
 		}
-		
-		
 	
 		var container = document.getElementById("container");
 		var bodyTag = document.getElementById("content");
@@ -569,54 +661,101 @@ var cafe = {
 		if(path.indexOf("/sub_main") > -1 || path.indexOf("/sub_theme") > -1 || path.indexOf("/sub_area") > -1) {
 			var registerUi = document.getElementsByClassName("btn_cafe_make")[0];
 			registerUi.href = "/cafe/register";
+			
+			// 페이지 UI 랩퍼
+			var pageUi = document.getElementsByClassName("common_page")[0]; 
 			//추천 카페탭 
 			var cateTabs = document.getElementsByClassName("scroll_box_swiper")[0].getElementsByTagName("li");
 			cafe.setCafeTabByType(path);
 			
-			
-			var pageUi = document.getElementsByClassName("common_page")[0]; 
-			// 마지막으로 선택한 카페 탭 위치
-			cafe.baseParam.lastSelectCafeTab = 0;
+			// cafe.baseParam.lastSelectCafeTab = 0;
 			//var lastOpenCafeIdx = 0;
 			// 마지막으로 누른 슬라이더 idex [0,1,2]
-			cafe.baseParam.lastGetRecommendSliderIdx = 0;
+			// cafe.baseParam.lastGetRecommendSliderIdx = 0;
 			// 마지막으로 선택한 페이지 번호
-			cafe.baseParam.lastpageNum = 1;
+			// cafe.baseParam.lastpageNum = 1;
 			// 메인에서 카페버튼누르면 서버에서 페이지 렌더링후 또한번 비동기로 카페탭에 있는 리스트 호출
-			cafe.getCafeList(path,cafe.baseParam.lastSelectCafeTab, cafe.baseParam.lastpageNum);
-			
+			cafe.getCafeList(path);
 			bodyTag.addEventListener('click', function(event) {
 
 				// 추천 카페 분류 이전,이후 버튼 
 				var selectedTag = event.target;
 				var btn_scroll_next = document.getElementsByClassName("btn_scroll_next")[0];
 				var btn_scroll_prev = document.getElementsByClassName("btn_scroll_prev")[0];
+				// 일반카페탭 클릭시 이벤트
 				if (selectedTag.parentNode.parentNode.classList.contains("scroll_box_swiper")) {
-						
 					// 추천 카페 카테고리의 버튼 tag의 어머니 태그중 'scroll_box_swiper' 가 존재시 이벤트 진행
 					var selected_title_mainSort = selectedTag.textContent.trim();
 					// 추천 카페 탭에서 클릭시 해당 주제에 대한 카페리스트호출
 					cateTabs[cafe.baseParam.lastSelectCafeTab].classList.remove("on");
-					//selectedTag.parentNode.classList.add("on");
 					
-					/*
-					 * 카페 탭에서 선택후 해당 데이터 리스트 추출 (페이징 포함)
-					 */
+					// 카페 탭에서 선택후 해당 데이터 리스트 추출 (페이징 포함)
 					cafe.baseParam.lastSelectCafeTab = cafe.selectCafeListByTab (selectedTag, cateTabs);
-					// 카페탭이 변경되면 서버에 데이터를 요청한다.
-					cafe.getCafeList(path,cafe.baseParam.lastSelectCafeTab, cafe.baseParam.lastpageNum);
-					// 뒤로가기를 앞으로가기를 위해서 서버처리에서 카펩 변경을 시행
+					// 페이지 번호 초기화
+					cafe.baseParam.selectedPageNum = 1;
+					cafe.getCafeList(path);
 					
-					if(pageUi === undefined) {
-						return;
+				} else if (selectedTag.parentNode.classList.contains("common_box_tab")) {
+					// 비동기에서 cafeTabSlider 기능을 사용하지 못하기 때문에 처리가 필요
+					// 좌우 화살표 클릭시 탭이 이동후, 데이터를 서버에 전달하여 비동기로 호출한다.
+					// 카페탭들의 부모 태그
+					// 화살표 태그에 따라 카페탭 UI 변경 기능
+					var scrollTag = cateTabs[0].parentElement; 
+					
+					// 화살표 태그에 따라 카페탭 UI 변경 기능
+					if(selectedTag.className == btn_scroll_next.className) {
+						//translateX(0px); 이런 형태를 숫자로 반환
+						var translateInfo = parseInt(scrollTag.style.transform.replace(/[^-^\d.]/g, ''));
+						cafe.baseParam.lastGetRecommendSliderIdx++;
+						translateInfo -=cafe.recommend_slider(cafe.baseParam.lastGetRecommendSliderIdx);
+					} else if (selectedTag.className == btn_scroll_prev.className ) {
+						var translateInfo = parseInt(scrollTag.style.transform.replace(/[^-^\d.]/g, ''));
+						translateInfo +=cafe.recommend_slider(cafe.baseParam.lastGetRecommendSliderIdx);
+						cafe.baseParam.lastGetRecommendSliderIdx--;
 					}
-					// 이전에 클릭했던 페이지 번호 강조 표시 제거
-					pageUi.children[lastpageNum - 1].classList.remove("on");
-					lastpageNum = 1;
-					//  페이지 1 번호 강조 표시
-					pageUi.children[lastpageNum - 1].classList.add("on");
+					cafe.baseParam.translateInfo = translateInfo;
+					scrollTag.style.transform = "translateX("+translateInfo +"px)";
 					
-				} 
+					// 좌우 화살표를 누른후 데이터 추출을 위한 데이터 설정
+					// idx 0(0) : 좌측 버튼 비활성화 > 추천 카페에 해당하는 카페 리스트  출력
+					// 	   1(7) : 좌측,우측 활성화   > 영화에 해당하는 카페리스트 출력
+					//     2(14) : 좌측,우측 활성화   > 건강/다이어트에 해당하는 카페리스트 출력
+					//     3(21) : 우측 버튼 비활성화  > 스포츠 레저 에 해당하는 카페리스트 출력
+					switch (cafe.baseParam.lastGetRecommendSliderIdx) {
+						case 0:
+							btn_scroll_prev.disabled = true;
+							cateTabs[cafe.baseParam.lastSelectCafeTab].classList.remove("on");
+							cafe.baseParam.lastSelectCafeTab = 0;
+							cateTabs[0].classList.add("on");
+							break;
+						case 1:
+							btn_scroll_prev.disabled = false;
+							btn_scroll_next.disabled = false;
+							cateTabs[cafe.baseParam.lastSelectCafeTab].classList.remove("on");
+							break;
+						case 2:
+							btn_scroll_prev.disabled = false;
+							btn_scroll_next.disabled = false;
+							cateTabs[cafe.baseParam.lastSelectCafeTab].classList.remove("on");
+							break;
+						case 3:
+							btn_scroll_next.disabled = true;
+							cateTabs[cafe.baseParam.lastSelectCafeTab].classList.remove("on");
+							break;
+		
+						default:
+							break;
+					}
+					cafe.baseParam.lastSelectCafeTab = cafe.baseParam.lastGetRecommendSliderIdx * 7;
+					cateTabs[cafe.baseParam.lastSelectCafeTab].classList.add("on");
+					cafe.getCafeList(path);
+				} else if (selectedTag.classList.contains("btn_pageNum")) {
+					// 페이지 버튼 눌렀을때 서버로 부터 데이터 리스트 호출
+					// 1. 서버로 데이터 전송
+					// 2. 전송후, 데이터 처리페이지 처리
+					cafe.baseParam.selectedPageNum = parseInt(selectedTag.textContent);
+					cafe.getCafeList(path);
+				}
 			});
 			
 			

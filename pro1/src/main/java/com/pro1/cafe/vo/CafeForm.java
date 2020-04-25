@@ -1,7 +1,6 @@
 package com.pro1.cafe.vo;
 
 import java.util.List;
-import java.util.Map;
 
 import com.pro1.common.vo.SearchForm;
 

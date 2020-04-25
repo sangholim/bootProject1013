@@ -71,7 +71,7 @@ common.sync = function(requestParams) {
 				var requestParamData = JSON.parse(xhttp.requestData.data);
 				var responseCode = json.code;
 				// 카페 탭 선택후 후처리
-				cafe.afterCafeProcess(json.cafeForm.showCafeList, requestParamData);
+				cafe.afterCafeProcess(json.cafeForm, requestParamData);
 				
 			} else if (url.indexOf("/sub_main") > -1) {
 				

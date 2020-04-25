@@ -95,8 +95,7 @@
 		 		<c:if test="${status.index % 5 eq 0 }">
 		 			<div class="user_mycafe_container" style="display:none">
 		 		</c:if>
-				
-				 	<div cafe="data" class="user_mycafe_area">
+					<div cafe="data" class="user_mycafe_area">
 				 		<div class="user_mycafe_box">
 				 			<div class="user_mycafe_thumb">
 				 				<a href="/board/${user_cafe.cafe.url}" class="link">
@@ -156,15 +155,11 @@
 				 		 -->
 				 	</div>
 				 	<!--  내카페 리스트가 5단위로 끝나거나, 마지막 순서일떄는 태그를닫는다. -->
-				 <c:if test="${status.index % 5 eq 4 || status.last}">
-				 </div>
+				<c:if test="${status.index % 5 eq 4 || status.last}">
+					</div>
 		 		</c:if>
 		 		
 		 	</c:forEach>
-		 	
-		 	<!-- 
-		 	<div cafe="이곳은 나의 카페에서 최근에 올라온 글을 보여주는 UI"></div>
-		 	 -->
 		 </div>
 		 <div class="btn_area">
 			 <div class="btn_area">
@@ -389,12 +384,6 @@
 					<button type="button" class="btn_category">게임</button>
 					<div class="layer" style="display: none;">
 						<ul class="layer_list">
-						<!-- 
-							<li class="on">
-								<button type="button" class="btn">생활</button>
-								<span class="blind">선택됨</span>
-							</li>
-						 -->	
 						</ul>
 					</div>
 				</div>
@@ -488,18 +477,12 @@
 				</div>
 			</c:forEach>
 		</ul>
-		<c:if test="${cafeForm.showPageMaximumCount > 0 }">
-			<div class="common_page"><!----> 
-				<c:forEach begin="${cafeForm.showPageMinimumCount}" end="${cafeForm.showPageMaximumCount}" var="count">
-					<button type="button" class='btn <c:if test="${count eq 1 }"> on</c:if>' style="display: none">
-						${count }
-						<c:if test="${count eq 1 }">
-							<span class="blind">선택됨</span>
-						</c:if>
-					</button>
-				</c:forEach>
-			</div>
-		</c:if>
-		
+		 <!--  페이지 UI -->
+		 <!-- 
+		 <div class="common_page" style="display:none;">
+		 </div>
+		  -->
+		 <div class="common_page">
+		 </div>
 	</div>
 </div>
