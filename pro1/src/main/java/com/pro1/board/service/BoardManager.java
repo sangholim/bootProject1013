@@ -28,48 +28,48 @@ public class BoardManager {
     @Autowired
     UserDAO userDAO;
 
-    // 게시글 추가
+    //게시글 추가
     public void addPosts(UserCafeBoardVO vo) throws Exception {
 
-	boardDAO.InsertPost(vo);
+        boardDAO.InsertPost(vo);
     }
 
     public List<UserCafeBoardVO> getBoardPostList(long cafeUid) throws Exception {
 
-	return boardDAO.getBoardPostList(cafeUid);
+        return boardDAO.getBoardPostList(cafeUid);
     }
 
     public UserCafeBoardVO getOneBoardInfo(long boardUid) throws Exception {
 
-	return boardDAO.getOneBoardInfo(boardUid);
+        return boardDAO.getOneBoardInfo(boardUid);
     }
 
     public BoardSimpleInfoForm getCafeUrlInfo(String cafe_Url) throws Exception {
-	CafeVO cafeVO = cafeDAO.getCafeUrlinfo(cafe_Url);
+        CafeVO cafeVO = cafeDAO.getCafeUrlinfo(cafe_Url);
 
-	long cafeUid = cafeVO.getUid();
+        long cafeUid = cafeVO.getUid();
 
-	UserCafeVO userCafeVO = userCafeBoardDAO.getAdminUser(cafeUid);
-	long MemberCnt = userCafeBoardDAO.getCafeUserCnt(cafeUid);
-	// long cafeMemberCnt = userCafeBoardDAO.getCountCafeMember(cafeUid);
-	CommonUserVO userVO = userDAO.userUidFindUser(userCafeVO.getUserUid());
+        UserCafeVO userCafeVO = userCafeBoardDAO.getAdminUser(cafeUid);
+        long MemberCnt = userCafeBoardDAO.getCafeUserCnt(cafeUid);
+        //long cafeMemberCnt = userCafeBoardDAO.getCountCafeMember(cafeUid);
+        CommonUserVO userVO = userDAO.userUidFindUser(userCafeVO.getUserUid());
 
-	/*
-	 * 관리자 닉네임,카페레벨 담기
-	 */
-	BoardSimpleInfoForm boardSimpleInfoForm = new BoardSimpleInfoForm();
-	boardSimpleInfoForm.setAdminUserNicName(userVO.getUserNickName());
-	boardSimpleInfoForm.setCafeLevel(userCafeVO.getCafeLevel());
-	boardSimpleInfoForm.setCafeMemberCnt(MemberCnt);
-	boardSimpleInfoForm.setCafeUid(cafeUid);
-	boardSimpleInfoForm.setDesc(cafeVO.getDesc());
-	boardSimpleInfoForm.setUserNickName(userVO.getUserNickName());
+        /*
+            관리자 닉네임,카페레벨 담기
+         */
+        BoardSimpleInfoForm boardSimpleInfoForm = new BoardSimpleInfoForm();
+        boardSimpleInfoForm.setAdminUserNicName(userVO.getUserNickName());
+        boardSimpleInfoForm.setCafeLevel(userCafeVO.getCafeLevel());
+        boardSimpleInfoForm.setCafeMemberCnt(MemberCnt);
+        boardSimpleInfoForm.setCafeUid(cafeUid);
+        boardSimpleInfoForm.setDesc(cafeVO.getDesc());
+        boardSimpleInfoForm.setUserNickName(userVO.getUserNickName());
 
-	return boardSimpleInfoForm;
+        return boardSimpleInfoForm;
     }
 
     public void deletePost(UserCafeBoardVO userCafeBoardVO) throws Exception {
-	boardDAO.deletePost(userCafeBoardVO);
+        boardDAO.deletePost(userCafeBoardVO);
     }
 
     /*
@@ -77,6 +77,11 @@ public class BoardManager {
      */
     public boolean isMemberCafeLoginUser(UserCafeId userCafeId) throws Exception {
 
-	return userCafeBoardDAO.isCafeMemberLoginUser(userCafeId);
+        return userCafeBoardDAO.isCafeMemberLoginUser(userCafeId);
+    }
+
+    public void cafeSignUp(UserCafeVO vo) throws Exception {
+        userCafeBoardDAO.cafeSignUp(vo);
     }
 }
+

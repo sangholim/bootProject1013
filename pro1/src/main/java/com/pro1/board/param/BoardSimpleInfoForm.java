@@ -62,4 +62,16 @@ public class BoardSimpleInfoForm {
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"adminUserNicName\"='" + adminUserNicName + '\'' +
+                ", \"cafeLevel\"='" + cafeLevel + '\'' +
+                ", \"desc\"='" + desc + '\'' +
+                ", \"userNickName\"='" + userNickName + '\'' +
+                ", \"cafeMemberCnt\"=" + cafeMemberCnt +
+                ", \"cafeUid\"=" + cafeUid +
+                '}';
+    }
 }

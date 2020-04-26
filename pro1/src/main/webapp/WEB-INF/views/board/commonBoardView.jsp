@@ -171,7 +171,7 @@
                                         <a href="/yulimhall/member/ued_123/article" target="_blank"
                                            class="id mlink gm-tcol-c">
                                             <div class="ellipsis gm-tcol-c">
-                                                <div class="ellipsis">${boardSimpleInfo.adminUserNicName}</div>
+                                                <div class="ellipsis">${boardSimpleInfo.userNickName}</div>
                                             </div>
                                         </a>
                                         <div class="thm"><a href="/CafeHistoryView.nhn?clubid=29995789"
@@ -388,11 +388,13 @@
 
                 <div id="join_editor" style="visibility: hidden">
 <%--                    <jsp:include page="./commonBoardJoin.jsp" flush="true"/>--%>
-                        <iframe name="cafe_main" id="cafe_main" title="카페 메인"
+                       <%-- <iframe name="cafe_main" id="cafe_main" title="카페 메인"
                                 src="/board/commonBoardJoin/${cafe_url}"
                                 width="860" height="100%" frameborder="0"
                                 scrolling="no" marginwidth="0" marginheight="0"
-                                allowtransparency="true" allowfullscreen="" style="height: 1266px;"></iframe>
+                                allowtransparency="true" allowfullscreen="" style="height: 1266px;"></iframe>--%>
+
+                    <jsp:include page="./commonBoardJoin.jsp" flush="true"/>
                 </div>
 
             </div>

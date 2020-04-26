@@ -7,6 +7,7 @@ import com.pro1.board.service.BoardManager;
 import com.pro1.cafe.service.CafeManager;
 import com.pro1.cafe.vo.CafeVO;
 import com.pro1.cafe.vo.UserCafeId;
+import com.pro1.cafe.vo.UserCafeVO;
 import com.pro1.cafe.web.CafeMainAsync;
 import com.pro1.security.CustomAuthentication;
 import org.slf4j.Logger;
@@ -53,6 +54,7 @@ public class BoardMainFrame {
 	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 	model.addAttribute("userUid",userAuth.getUid());
 	model.addAttribute("cafe_url",cafe_url);
+	//model.addAttribute("cafe_uid",boardSimpleInfoForm.getCafeUid());
 
 	UserCafeId userCafeId = new UserCafeId();
 	userCafeId.setUserUid(loginUid);
@@ -111,7 +113,7 @@ public class BoardMainFrame {
 		String cafeUrl = "cafeUrl";
 
 		resultMap.put(code, 500);
-		resultMap.put(result, "카페 생성중 문제 발생!");
+		resultMap.put(result, "게시글 생성중 문제 발생!");
 
 		CustomAuthentication userAuth = (CustomAuthentication) authentication;
 
@@ -171,6 +173,7 @@ public class BoardMainFrame {
 		BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeUrlInfo(cafe_url);
 
 		model.addAttribute("BoardSimpleInfoForm",boardSimpleInfoForm);
+		System.out.println(boardSimpleInfoForm.toString());
 
 		return "/board/commonBoardJoin";
 	}
@@ -186,5 +189,54 @@ public class BoardMainFrame {
 		model.addAttribute("post",post);
 
 		return "/board/boardPostView";
+	}
+
+	/*
+	 	카페 가입하기
+	 */
+	@ResponseBody
+	@RequestMapping(value="/MemberJoin.json",method=RequestMethod.POST)
+	public Map CafeJoinPost(Authentication authetication,@RequestParam(required = false) UserCafeVO userCafeVO) throws Exception {
+
+		CustomAuthentication userAuth = (CustomAuthentication) authetication;
+
+		Map<String, Object> resultMap = new HashMap<>();
+
+		String code = "code";
+		String result = "result";
+		String cafeUrl = "cafeUrl";
+
+		resultMap.put(code, 500);
+		resultMap.put(result, "카페 가입중 문제 발생!");
+
+		if(userCafeVO == null) {
+
+			UserCafeVO vo = new UserCafeVO();
+			vo.setUserUid(userAuth.getUid());
+			vo.setCafeUid(10l);
+			vo.setCafeLevel("admin");
+			vo.setCafeFav(0);
+			vo.setCafeOfficial(0);
+			vo.setUserRole(0);
+			vo.setCafeNicName(userAuth.getName());
+
+			boardManager.cafeSignUp(vo);
+		}
+		/*
+			카페 가입하기 위한 필요한 정보 초기화 로직
+		 */
+//		userCafeVO.setUserUid(userAuth.getUid());
+//		userCafeVO.setCafeFav(0);
+//		userCafeVO.setCafeOfficial(0);
+//		userCafeVO.setUserRole(0);
+//		userCafeVO.setCafeNicName(userAuth.getName());
+
+
+
+		resultMap.put(code, 200);
+		resultMap.put(result, "정상적으로 카페에 가입되었습니다.");
+		//resultMap.put(cafeUrl,userCafeVO.getCafeUrl());
+
+		return resultMap;
 	}
 }

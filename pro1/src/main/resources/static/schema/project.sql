@@ -92,6 +92,7 @@ create table user_cafe (
 
 ALTER TABLE user_cafe ADD COLUMN `cafeFav` tinyint(1) default 0;
 ALTER TABLE user_cafe ADD COLUMN `cafeOfficial` tinyint(1) default 0;
+ALTER TABLE user_cafe ADD COLUMN `cafeNicName` varchar(20) default '';
 
 /*
     userRole 추가
@@ -130,4 +131,5 @@ create table userCafeBoard (
 )
 
 
+ALTER TABLE usercafeboard MODIFY COLUMN `boardUid` bigInt(20) auto_increment;
 

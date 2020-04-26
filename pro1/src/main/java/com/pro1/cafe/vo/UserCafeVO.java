@@ -43,6 +43,9 @@ public class UserCafeVO implements Serializable {
 
     @Column(name = "userRole")
     private int userRole;
+
+    @Column(name ="cafeNicName")
+    private String cafeNicName;
     
     @Id
     @ManyToOne(optional = false)
@@ -259,6 +262,14 @@ public class UserCafeVO implements Serializable {
 
     public void setUserRole(int userRole) {
         this.userRole = userRole;
+    }
+
+    public String getCafeNicName() {
+        return cafeNicName;
+    }
+
+    public void setCafeNicName(String cafeNicName) {
+        this.cafeNicName = cafeNicName;
     }
 
     @Override

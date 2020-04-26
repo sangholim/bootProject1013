@@ -35,11 +35,11 @@ public class CafeDAO extends CommonDBSession {
     private final String cafeListCount = "select count(c) from \n" + "UserCafeVO uc join uc.cafe c ";
 
     private final String cafeMainCondition = "where uc.userUid != %s %s order by createDate";
-    
-    
+
+
     /**
      * 유저가 로그인후 볼수있는 cafe들을 추출 (추천 카페들 , 내가 가입한 카페들)
-     * 
+     *
      * @param userUid
      * @return
      * @throws Exception
@@ -59,7 +59,7 @@ public class CafeDAO extends CommonDBSession {
 		query.setParameter("userUid", userUid);
 		cafeForm.setUserCafeList(query.getResultList());
 	    }
-	    
+
 	    int cafeType = -1;
 	    int cafeSubType = -1;
 	    String condition = "";
@@ -81,20 +81,20 @@ public class CafeDAO extends CommonDBSession {
 		    subCondition += " and uc.cafe.title_subSort = " + cafeSubType;
 		}
 	    }
-	    
+
 	    // 주분류, 소분류가 없다면 카페 리스트 가져오지 않음
 	    if (cafeType == -1) {
 		return;
 	    }
-	    
+
 	    condition = String.format(cafeMainCondition, userUid, subCondition);
-	    
+
 	    /*
-	     * 1. 카페 페이지는 최대 총 10페이지로 구성한다. 
-	     * 2. 카페 페이지에 보여주는 내용은 8개 
+	     * 1. 카페 페이지는 최대 총 10페이지로 구성한다.
+	     * 2. 카페 페이지에 보여주는 내용은 8개
 	     * 3. 최신순으로 카페페이지를 뽑아낸다.
 	     * select count(*) from cafe where title_mainSort = #{title_mainSort}
-	     * 
+	     *
 	     */
 	    query = session.createQuery(cafeListCount + condition);
 	    // 존재하는 카페 리스트 총 갯수 구하기
@@ -107,23 +107,23 @@ public class CafeDAO extends CommonDBSession {
 			: maxPageCount / cafeForm.getShowPageNumCount() + 1;
 
 	    }
-	   
+
 	    // 총 카운트가 0보다 작거나 같으면, 카페리스트를 호출하지 않음
 	    if (maxPageCount <= 0) {
 		return;
 	    }
-	    
+
 	    // 총 페이지수가 정해져 있지 않으면 설정
 	    if (cafeForm.getMaxPageCount() <= 0) {
 		cafeForm.setMaxPageCount(maxPageCount);
 	    }
-	    
+
 	    int getShowPageMaximumCount = cafeForm.getShowPageMinimumCount() * cafeForm.getShowPageNumCount();
 	    getShowPageMaximumCount = (getShowPageMaximumCount > (int) maxPageCount) ? (int) maxPageCount
 		    : getShowPageMaximumCount;
 	    // UI에서 보여지는 페이지중 마지막 페이지
 	    cafeForm.setShowPageMaximumCount(getShowPageMaximumCount);
-	    
+
 	    // 카페리스트 호출
 	    query = session.createQuery(cafeList + condition);
 	    // UI상에서 페이지
@@ -177,10 +177,9 @@ public class CafeDAO extends CommonDBSession {
 
 			//Query<CafeVO> query = session.createQuery(cafeUrlForm1, CafeVO.class);
 			//query.setParameter("url", cafe_url);
-			CafeVO vo = session.byNaturalId(CafeVO.class).using("url",cafe_url).load();
 
-			return vo;
-
+			//return query.getSingleResult();
+		return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -191,7 +190,7 @@ public class CafeDAO extends CommonDBSession {
 
     /**
      * CAFE 추가 , UserCafe 테이블 추가한다.
-     * 
+     *
      * @param cafeVO
      * @param userCafeVO
      * @return

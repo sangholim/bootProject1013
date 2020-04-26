@@ -23,12 +23,7 @@ public class CafeVO {
 
     @Column(name = "name")
     private String name;
-    
-    /*
-     * naturalId 를 사용하면 실제 entiti에서는 id라고 인식을 하지 않고
-     * session.load 로 colm
-     */
-    @NaturalId
+
     @Column(name = "url", unique = true)
     private String url;
 
@@ -43,7 +38,7 @@ public class CafeVO {
 
     @Column(name = "showMember")
     private int showMember = 0;
-    
+
     /**
      * title_mainSort = -1 일떄, 추천 카페
      */
@@ -99,177 +94,178 @@ public class CafeVO {
     }
 
     public CafeVO(long uid, String name, String icon, String url) {
-	this.uid = uid;
-	this.name = name;
-	this.icon = icon;
-	this.url = url;
+        this.uid = uid;
+        this.name = name;
+        this.icon = icon;
+        this.url = url;
     }
 
     public CafeVO(long uid, String name, String icon, String url, String desc, int title_mainSort, long memberCnt) {
-	this(uid, name, icon, url);
-	this.title_mainSort = title_mainSort;
-	this.memberCnt = memberCnt;
-	this.desc = desc;
+        this(uid, name, icon, url);
+        this.title_mainSort = title_mainSort;
+        this.memberCnt = memberCnt;
+        this.desc = desc;
     }
 
     public List<UserCafeVO> getUsercafeList() {
-	return usercafeList;
+        return usercafeList;
     }
 
     public void setUsercafeList(List<UserCafeVO> usercafeList) {
-	this.usercafeList = usercafeList;
+        this.usercafeList = usercafeList;
     }
 
     public long getUid() {
-	return uid;
+        return uid;
     }
 
     public void setUid(long uid) {
-	this.uid = uid;
+        this.uid = uid;
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     public String getUrl() {
-	return url;
+        return url;
     }
 
     public void setUrl(String url) {
-	this.url = url;
+        this.url = url;
     }
 
     public int getUsePrivate() {
-	return usePrivate;
+        return usePrivate;
     }
 
     public void setUsePrivate(int usePrivate) {
-	this.usePrivate = usePrivate;
+        this.usePrivate = usePrivate;
     }
 
     public int getJoinType() {
-	return joinType;
+        return joinType;
     }
 
     public void setJoinType(int joinType) {
-	this.joinType = joinType;
+        this.joinType = joinType;
     }
 
     public int getUseNickname() {
-	return useNickname;
+        return useNickname;
     }
 
     public void setUseNickname(int useNickname) {
-	this.useNickname = useNickname;
+        this.useNickname = useNickname;
     }
 
     public int getShowMember() {
-	return showMember;
+        return showMember;
     }
 
     public void setShowMember(int showMember) {
-	this.showMember = showMember;
+        this.showMember = showMember;
     }
 
     public int getTitle_mainSort() {
-	return title_mainSort;
+        return title_mainSort;
     }
 
     public void setTitle_mainSort(int title_mainSort) {
-	this.title_mainSort = title_mainSort;
+        this.title_mainSort = title_mainSort;
     }
 
     public int getTitle_subSort() {
-	return title_subSort;
+        return title_subSort;
     }
 
     public void setTitle_subSort(int title_subSort) {
-	this.title_subSort = title_subSort;
+        this.title_subSort = title_subSort;
     }
 
     public int getRegion_mainSort() {
-	return region_mainSort;
+        return region_mainSort;
     }
 
     public void setRegion_mainSort(int region_mainSort) {
-	this.region_mainSort = region_mainSort;
+        this.region_mainSort = region_mainSort;
     }
 
     public int getRegion_subSort() {
-	return region_subSort;
+        return region_subSort;
     }
 
     public void setRegion_subSort(int region_subSort) {
-	this.region_subSort = region_subSort;
+        this.region_subSort = region_subSort;
     }
 
     public String getKeywordList() {
-	return keywordList;
+        return keywordList;
     }
 
     public void setKeywordList(String keywordList) {
-	this.keywordList = keywordList;
+        this.keywordList = keywordList;
     }
 
     public String getIcon() {
-	return icon;
+        return icon;
     }
 
     public void setIcon(String icon) {
-	this.icon = icon;
+        this.icon = icon;
     }
 
     public long getVisitCnt() {
-	return visitCnt;
+        return visitCnt;
     }
 
     public void setVisitCnt(long visitCnt) {
-	this.visitCnt = visitCnt;
+        this.visitCnt = visitCnt;
     }
 
     public long getWritingCnt() {
-	return writingCnt;
+        return writingCnt;
     }
 
     public void setWritingCnt(long writingCnt) {
-	this.writingCnt = writingCnt;
+        this.writingCnt = writingCnt;
     }
 
     public long getMemberCnt() {
-	return memberCnt;
+        return memberCnt;
     }
 
     public void setMemberCnt(long memberCnt) {
-	this.memberCnt = memberCnt;
+        this.memberCnt = memberCnt;
     }
 
     public String getDesc() {
-	return desc;
+        return desc;
     }
 
     public void setDesc(String desc) {
-	this.desc = desc;
+        this.desc = desc;
     }
 
     public int getUseShortCut() {
-	return useShortCut;
+        return useShortCut;
     }
 
     public void setUseShortCut(int useShortCut) {
-	this.useShortCut = useShortCut;
+        this.useShortCut = useShortCut;
     }
 
     public long getCreateDate() {
-	return createDate;
+        return createDate;
     }
 
     public void setCreateDate(long createDate) {
-	this.createDate = createDate;
+        this.createDate = createDate;
     }
 
 }
+

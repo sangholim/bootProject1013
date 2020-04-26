@@ -60,22 +60,29 @@ common.sync = function(requestParams) {
 					window.location.href = "/cafe/sub_main";
 				}
 			} else if (url.indexOf("/board/insert_post.json") != -1){
-				//debugger;
+
 				var responseCode = json.code;
 				alert(json.result);
 				if(responseCode == 200) {
-				 	window.location.href = json.cafeUrl;
-				 }
+					window.location.href = json.cafeUrl;
+				}
 			} else if (url.indexOf("/sub_main/list.json") > -1
-					|| url.indexOf("/sub_theme/list.json") > -1
-					|| url.indexOf("/sub_area/list.json") > -1) {
+				|| url.indexOf("/sub_theme/list.json") > -1
+				|| url.indexOf("/sub_area/list.json") > -1) {
 				var requestParamData = JSON.parse(xhttp.requestData.data);
 				var responseCode = json.code;
 				// 카페 탭 선택후 후처리
 				cafe.afterCafeProcess(json.cafeForm, requestParamData);
-				
+
 			} else if (url.indexOf("/sub_main") > -1) {
-				
+
+			} else if (url.indexOf("/board/MemberJoin.json") != -1){
+
+				var responseCode = json.code;
+				alert(json.result);
+				if(responseCode == 200) {
+					window.location.href = "/board/";
+				}
 			}
 		}
 		loadNode.classList.add('blind');
@@ -90,24 +97,25 @@ window.onhashchange = function() {
 	if (location.hash.length < 1) {
 		return;
 	}
+	// #type=[data]
 	// form [0] = type , form[1] json data
 	var popState = location.hash.split(":");
 	// 주소 게시판 비동기 호출시 페이지 처리
 	if (popState[0] == "#addrBoard") {
 		var decryptedMessage = CryptoJS.AES.decrypt(popState[1], "test")
-				.toString(CryptoJS.enc.Utf8);
+			.toString(CryptoJS.enc.Utf8);
 		var requestParams = common.requestParams(false, "POST",
-				"/login/findAddr.json", decryptedMessage, "application/json");
+			"/login/findAddr.json", decryptedMessage, "application/json");
 		common.sync(requestParams);
 
 	} else if (popState[0] == "#cafeBoard") {
 		var decryptedMessage = CryptoJS.AES.decrypt(popState[2], "test")
-		.toString(CryptoJS.enc.Utf8);
+			.toString(CryptoJS.enc.Utf8);
 		var requestParams = common.requestParams(false, "POST",
-				"/cafe"+popState[1]+"/list.json", decryptedMessage, "application/json");
-		
+			"/cafe"+popState[1]+"/list.json", decryptedMessage, "application/json");
+
 		common.sync(requestParams);
-		
+
 	}
 }
 
@@ -135,17 +143,17 @@ common.validEmail = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}";
 common.validPhone = "^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$";
 
 /*
- * 이름 유효성 검사 : 문자만 허용 
+ * 이름 유효성 검사 : 문자만 허용
  */
 common.validName = "[a-zA-Z0-9가-힣]{3,12}$";
 
 /*
- * ID 유효성 검사 : 첫글자는 숫자는 예외 , 5~13 영문 , 숫자만 허용 
+ * ID 유효성 검사 : 첫글자는 숫자는 예외 , 5~13 영문 , 숫자만 허용
  */
 common.validId = "^[a-zA-Z][a-zA-Z0-9]{4,12}$";
 
 /*
- * 비밀번호 조합식 8자 이상, 소문자, 대문자, 특수문자, 숫자 모두 포함 
+ * 비밀번호 조합식 8자 이상, 소문자, 대문자, 특수문자, 숫자 모두 포함
  */
 common.validPW = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
 
@@ -187,10 +195,14 @@ common.createPageNode = function(pageCell, value, classList, id) {
 }
 
 common.calUtf8Bytes = function(ch) {
+	//char > hex to decimail
+	//var dec = 	ch.charCodeAt(0).toString(16);
 	var dec = 	ch.charCodeAt(0);
+
 	//16진수 : '00007F' > 10진수: 127
 	//16진수 : '0007FF' > 10진수: 2047
 	//16진수 : '00FFFF' > 10진수: 65535
+
 	if (dec <= 127) {
 		return 1;
 	} else if (dec <=2047) {
@@ -200,4 +212,6 @@ common.calUtf8Bytes = function(ch) {
 	} else {
 		return 4;
 	}
+
 }
+

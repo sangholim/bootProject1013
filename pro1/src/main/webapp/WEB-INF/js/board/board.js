@@ -29,7 +29,25 @@ var board = {
         //서버에 호출하는 로직
         common.sync(requestParams);
     },
+    signUp : function () {
 
+        var signUpInfo = {};
+
+        var cafeJoinJson = {
+                            'cafeLevel':'',
+                            'cafeUid':0,
+                            'cafeNicName':''
+                        };
+
+        cafeJoinJson['cafeUid'] = document.querySelector("input[name=cafeUid]").value;
+        //cafeJoinJson['cafeNicName'] = document.getElementsByName('nickname').value;
+
+        var json = JSON.stringify(cafeJoinJson);
+
+        var requestParams = common.requestParams(true ,"POST", "/board/MemberJoin.json", json, null);
+        //서버에 호출하는 로직
+        common.sync(requestParams);
+    },
     init : function () {
 
         var login_info = document.getElementById("login_info");
@@ -54,6 +72,8 @@ var board = {
             var join_editor = document.querySelector("#join_editor");
 
             var menuLink0 = document.getElementById("menuLink0");
+
+            var sign_up = document.getElementById("sign_up");
 
             //로그인한 사용자가 카페가입자인지
             var isMemberCafeLoginUser = document.querySelector("input[name=isMemberCafeLoginUser]").value;
@@ -93,6 +113,8 @@ var board = {
                // alert("글쓰기");
             } else if(selectedTag == menuLink0) {
                 window.location.href = "/board/"+document.getElementsByClassName("cafe_url")[0].innerText;;
+            } else if(selectedTag == sign_up) {
+                board.signUp();
             }
         });
 

@@ -82,7 +82,7 @@ public class UserCafeBoardDAO extends CommonDBSession {
     }
 
     /**
-     * @author skydrive860
+     * @author ued123
      * @brief
      * 로그인한 유저가 카페 멤버인지 확인하는 메서드
      * 로그인한 userUid로 user_cafe를 조회함.
@@ -109,6 +109,17 @@ public class UserCafeBoardDAO extends CommonDBSession {
             e.printStackTrace();
             return false;
         }
+
+    }
+
+    /**
+     * @author ued123
+     * @brief
+     * 카페 가입하기
+     */
+    public void cafeSignUp(UserCafeVO vo) throws Exception {
+
+        sessionInfo = processHibernateSession(UserCafeVO.class,vo,DBQueryType.INSERT);
 
     }
 
