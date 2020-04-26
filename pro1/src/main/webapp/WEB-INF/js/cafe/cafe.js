@@ -187,19 +187,20 @@ var cafe = {
 		 * 카페탭 생성시 처음 활성화 
 		 */
 		var cafeTabElement = document.createElement("LI");
-		cafeTabElement.classList.add("on");
 		var cafeTabBtn = document.createElement("BUTTON");
 		cafeTabBtn.classList.add("btn_tab");
 		var cafeTabSpan = document.createElement("SPAN");
-		cafeTabSpan.innerHTML = "선택됨";
-		cafeTabSpan.classList.add("blind");
-		cafeTabBtn.appendChild(cafeTabSpan);
 		cafeTabElement.appendChild(cafeTabBtn);
 		cafeTabContainer.appendChild(cafeTabElement);
-		
+		// 주제,지역 부분에서는 추천 카페탭이 가려져 있어 선택된 탭의 위치는 1 이다
+		cafe.baseParam.lastSelectCafeTab = 1;
 		if(path.indexOf("/sub_main") > -1) {
-			
 			cafeTabBtn.innerHTML = "추천카페";
+			cafeTabElement.classList.add("on");
+			cafeTabSpan.innerHTML = "선택됨";
+			cafeTabSpan.classList.add("blind");
+			cafeTabBtn.appendChild(cafeTabSpan);
+			
 			var mainCafeList = cafe.mainTitleList;
 			for(var i = 0; i < mainCafeList.length; i++) {
 				cafeTabElement = document.createElement("LI");
@@ -209,18 +210,29 @@ var cafe = {
 				cafeTabElement.appendChild(cafeTabBtn);		
 				cafeTabContainer.appendChild(cafeTabElement);
 			}
-		
+			
+			// 화면 로딩시 처음 선택된 탭 정의
+			cafe.baseParam.lastSelectCafeTab = 0;
 		} else if(path.indexOf("/sub_theme") > -1) {
-			cafeTabBtn.innerHTML = "게임";
+			cafeTabBtn.innerHTML = "추천카페";
+			cafeTabElement.style.display="none";
+			//cafeTabBtn.innerHTML = "게임";
 			var mainCafeList = cafe.mainTitleList;
-			for(var i = 1; i < mainCafeList.length; i++) {
+			for(var i = 0; i < mainCafeList.length; i++) {
 				cafeTabElement = document.createElement("LI");
 				cafeTabBtn = document.createElement("BUTTON");
 				cafeTabBtn.innerHTML = mainCafeList[i];
 				cafeTabBtn.classList.add("btn_tab");
+				if (i == 0) {
+					cafeTabElement.classList.add("on");
+					cafeTabSpan.innerHTML = "선택됨";
+					cafeTabSpan.classList.add("blind");
+					cafeTabBtn.appendChild(cafeTabSpan);
+				}
 				cafeTabElement.appendChild(cafeTabBtn);		
 				cafeTabContainer.appendChild(cafeTabElement);
 			}
+			
 			cafe.setSubListByType('theme', 0, mainCafeList[0]);
 		} else if (path.indexOf("/sub_area") > -1) {
 			cafeTabBtn.innerHTML = "서울특별시";
@@ -244,11 +256,12 @@ var cafe = {
 		document.getElementsByClassName("btn_category")[0].innerHTML = firstname;
 		
 		var subCafeTab = document.getElementsByClassName("layer_list")[0]; 
-		subCafeTab.innetHTML = "";
+		subCafeTab.innerHTML = "";
 		var cafeTabElement = document.createElement("LI");
 		cafeTabElement.classList.add("on");
 		cafeTabBtn = document.createElement("BUTTON");
 		cafeTabBtn.classList.add("btn");
+		cafeTabBtn.classList.add("btn_pageSub");
 		cafeTabBtn.innerHTML = firstname;
 		var cafeTabSpan = document.createElement("SPAN");
 		cafeTabSpan.innerHTML = "선택됨";
@@ -262,11 +275,10 @@ var cafe = {
 			cafeTabBtn = document.createElement("BUTTON");
 			cafeTabBtn.innerHTML = subList[i];
 			cafeTabBtn.classList.add("btn");
+			cafeTabBtn.classList.add("btn_pageSub");
 			cafeTabElement.appendChild(cafeTabBtn);		
 			subCafeTab.appendChild(cafeTabElement);
 		}
-		
-	
 	},
 	checkTextByte : function (value, strongTag, validTag, alertTag, limit) {
 		var result = false;
@@ -424,30 +436,17 @@ var cafe = {
 			// UI나타나는 페이지번호 최소값
 			cafeForm.showDataListCount = 10;
 			cafeForm.showPageNumCount = 8;
-			/*
-			 * UI에 나타나는최대 페이지 카운트: 8 (기본)
-			 * 하지만 서버상에 데이터에서 최대 페이지 카운트가 8보다 작으먄 변경됨
-			 */
-			// cafeForm.maxPageCount = 8; 
 		} else if (path.indexOf("/sub_theme") > -1) {
 			cafeVO.title_mainSort = cafe.baseParam.lastSelectCafeTab;
+			// 부주제/지역 카테고리
+			cafeVO.title_subSort = cafe.baseParam.lastSelectCafeSubIdx;
 			// UI나타나는 페이지번호 최소값
 			cafeForm.showDataListCount = 20;
 			cafeForm.showPageNumCount = 6;
-			/*
-			 * UI에 나타나는최대 페이지 카운트: 6 (기본)
-			 * 하지만 서버상에 데이터에서 최대 페이지 카운트가 6보다 작으먄 변경됨
-			 */
-			// cafeForm.maxPageCount = 6;
 		} else if (path.indexOf("/sub_area") > -1) {
 			cafeVO.region_mainSort = cafe.baseParam.lastSelectCafeTab;
 			cafeForm.showDataListCount = 20;
 			cafeForm.showPageNumCount = 6;
-			/*
-			 * UI에 나타나는최대 페이지 카운트: 6 (기본)
-			 * 하지만 서버상에 데이터에서 최대 페이지 카운트가 6보다 작으먄 변경됨
-			 */
-			// cafeForm.maxPageCount = 6;
 		}
 		cafeForm.showPageMinimumCount = cafe.baseParam.showPageMinimumCount;
 		cafeForm.selectedPageNum = cafe.baseParam.selectedPageNum;
@@ -592,6 +591,10 @@ var cafe = {
 	baseParam : {
 		// 마지막으로 선택한 카페 탭 위치
 		lastSelectCafeTab : 0,
+		// 마지막으로 선택한 카페의 부주제 위치
+		lastSelectCafeSub : 0,
+		// 마지막으로 참조한 sub카테고리 값
+		lastSelectCafeSubIdx : -1,
 		// 마지막으로 누른 슬라이더 idex [0,1,2,3]
 		lastGetRecommendSliderIdx : 0,
 		// 마지막으로 선택한 페이지 번호
@@ -668,12 +671,8 @@ var cafe = {
 			var cateTabs = document.getElementsByClassName("scroll_box_swiper")[0].getElementsByTagName("li");
 			cafe.setCafeTabByType(path);
 			
-			// cafe.baseParam.lastSelectCafeTab = 0;
-			//var lastOpenCafeIdx = 0;
 			// 마지막으로 누른 슬라이더 idex [0,1,2]
-			// cafe.baseParam.lastGetRecommendSliderIdx = 0;
 			// 마지막으로 선택한 페이지 번호
-			// cafe.baseParam.lastpageNum = 1;
 			// 메인에서 카페버튼누르면 서버에서 페이지 렌더링후 또한번 비동기로 카페탭에 있는 리스트 호출
 			cafe.getCafeList(path);
 			bodyTag.addEventListener('click', function(event) {
@@ -688,11 +687,14 @@ var cafe = {
 					var selected_title_mainSort = selectedTag.textContent.trim();
 					// 추천 카페 탭에서 클릭시 해당 주제에 대한 카페리스트호출
 					cateTabs[cafe.baseParam.lastSelectCafeTab].classList.remove("on");
-					
 					// 카페 탭에서 선택후 해당 데이터 리스트 추출 (페이징 포함)
 					cafe.baseParam.lastSelectCafeTab = cafe.selectCafeListByTab (selectedTag, cateTabs);
 					// 페이지 번호 초기화
 					cafe.baseParam.selectedPageNum = 1;
+					// 마지막으로 선택한 카페의 부주제 위치
+					cafe.baseParam.lastSelectCafeSub = 0;
+					// 마지막으로 참조한 sub카테고리 값
+					cafe.baseParam.lastSelectCafeSubIdx = -1;
 					cafe.getCafeList(path);
 					
 				} else if (selectedTag.parentNode.classList.contains("common_box_tab")) {
@@ -719,7 +721,7 @@ var cafe = {
 					// 좌우 화살표를 누른후 데이터 추출을 위한 데이터 설정
 					// idx 0(0) : 좌측 버튼 비활성화 > 추천 카페에 해당하는 카페 리스트  출력
 					// 	   1(7) : 좌측,우측 활성화   > 영화에 해당하는 카페리스트 출력
-					//     2(14) : 좌측,우측 활성화   > 건강/다이어트에 해당하는 카페리스트 출력
+					//     2(14): 좌측,우측 활성화   > 건강/다이어트에 해당하는 카페리스트 출력
 					//     3(21) : 우측 버튼 비활성화  > 스포츠 레저 에 해당하는 카페리스트 출력
 					switch (cafe.baseParam.lastGetRecommendSliderIdx) {
 						case 0:
@@ -757,14 +759,29 @@ var cafe = {
 					cafe.getCafeList(path);
 				}
 			});
-			
-			
 		}
-		
 			
 		if(path.indexOf("/sub_theme") > -1) {
 			var btn_category = document.getElementsByClassName("btn_category")[0];
 			var isSubListHover = false;
+			//주제 대분류일댸 기본 데이터값
+			var defaultOptionVal = 100;
+			// 대분류 소분류 values값 추가한다.
+			var optionSize  =  cafe.mainTitleList.length;
+			// 대분류 option 클릭시 그에 따른 소분류 value 값 저장
+			// subOptList [][] 이중 배열로 구성되어있는 상태
+			for (var j = 0; j < optionSize; j++) {
+				var subOptionSize =  cafe.subTitleList[j].length;
+				var subOptionValue = [];
+				for (var k = 0; k < subOptionSize; k++) {
+					subOptionValue.push(defaultOptionVal);
+					defaultOptionVal++;
+				}
+				//소분류 데이터 value 리스트 저장
+				cafe.subSubjectValues.push(subOptionValue);
+			}
+
+			
 			/*
 			 * 이벤트 발생순
 			 * container [화면전체] -> btn_category[주제화면 버튼] -> btn_category.nextElementSibling [부 주제 리스트]
@@ -774,24 +791,67 @@ var cafe = {
 				btn_category.classList.add("on");
 				btn_category.nextElementSibling.style.display = "";
 			},true);
+			
 			btn_category.nextElementSibling.addEventListener('mouseover', function(event) {
 				btn_category.classList.add("on");
 				btn_category.nextElementSibling.style.display = "";
 			},true);
+			
 			container.addEventListener('mouseover', function(event) {
 				btn_category.classList.remove("on");
 				btn_category.nextElementSibling.style.display = "none";
 			},true);
 			
+			container.addEventListener('click', function(event) {
+				// 서브 카페고리 클릭시 리스트 뿌리기
+				var subCategoryList = container.getElementsByClassName("btn_pageSub");
+				var subCategoryLength = subCategoryList.length;
+				var selectedTag = event.target;
+				
+				
+				// 일반카페탭 클릭시 이벤트 subList 초기화 이벤트
+				if (selectedTag.parentNode.parentNode.classList.contains("scroll_box_swiper")) {
+					var mainCafePos = cafe.baseParam.lastSelectCafeTab - 1;
+					// 서브 페이지 초기화
+					cafe.setSubListByType('theme', mainCafePos, cafe.mainTitleList[mainCafePos]);
+				} else if (selectedTag.classList.contains('btn_pageSub')) {
+					// subPage index 찾기
+					subCategoryList[cafe.baseParam.lastSelectCafeSub].parentElement.classList.remove("on");
+					selectedTag.parentElement.classList.add("on");
+					
+					// 메인 카페리스트 위치
+					var row = cafe.baseParam.lastSelectCafeTab - 1;
+					// 서브 카페리스트 위치
+					var col = 0;
+					//선택된 sub카테고리의 이름명으로 검색
+					for (var i = 0; i < subCategoryLength; i++) {
+						if (selectedTag == subCategoryList[i]) {
+							cafe.baseParam.lastSelectCafeSub = i;
+							col = i -1;
+							break;
+						}
+					}
+					// 서브 카테고리에 있는경우, 부주제 검색 수행
+					if (col != -1) {
+						cafe.baseParam.lastSelectCafeSubIdx = cafe.subSubjectValues[row][col];
+					} else {
+						cafe.baseParam.lastSelectCafeSubIdx = -1;
+					}
+					
+					cafe.getCafeList(path);
+				}
+				
+				
+				
+			});
+			
 		} else if (path.indexOf("/sub_main") > -1) {
-			// 이벤트 리스너 추가
 
 			//cafe 개별 정보 INFO
 			// 1. 카페홈/주제별/지역별/랭킹/대표카페/내소식/채팅 기능
 			// 2. Editor pick 기능
 			// 3. 내 카페 새글 피드 기능
 			// 4. 전체/ 즐겨찾는 카페/ 운영카페 클릭스 해당 카페 리스트 뿌리기
-			
 			// 1. 카페홈/주제별/지역별/랭킹/대표카페/내소식/채팅 기능
 			// 내가 가입하거나 만든 카페들의 갯수가 5개 단위로 보여주며, 그 이후로는 숨긴다.
 			var user_cafe_container = document.getElementsByClassName("user_mycafe_container");
@@ -802,7 +862,6 @@ var cafe = {
 			// 내가 가입한 카페 노출
 			user_cafe_container[0].style.display="";
 			var more_show_user_idx = 1;
-			
 			
 			// 4. 전체/즐겨찾는 카페/운영카페 클릭스 해당 카페 리스트 뿌리기
 			var myCafeType = document.getElementsByClassName("common_option_list")[0].getElementsByTagName("li");
@@ -831,8 +890,6 @@ var cafe = {
 						user_cafe_container[i].style.display="none";
 					}
 					btn_mycafe_more.style = "";
-					
-					
 					for (var k = 0; k <myCafeTypeSize; k++) {
 						myCafeType[k].classList.remove("on");
 					}
@@ -898,7 +955,6 @@ var cafe = {
 				}
 			});
 			
-				
 		} else if (path == "/register" || path == "/register/") {
 			// 카페 생성 UI
 			// cafe 생성 > form tag로 추가
@@ -926,11 +982,8 @@ var cafe = {
 					[null, null, 30],
 					[null, null, 5]
 			);
-
-			
 			
 			cafe.setTagAttr(inputAttrs);
-
 			// tag, clsList, name, id, title, type, style, value
 			// 공개 여부, 가입 방식, 별명 사용, 카페 멤버 노출 여부
 			var txt_areas = document.getElementsByClassName("txt_area");
@@ -942,7 +995,6 @@ var cafe = {
 			changeSets.disabled = [[], [false, false], [], [false, false], [false, false]];
 			
 			for(var i = 0; i < 5; i++) {
-				
 				if( i == 2) {
 					continue;
 				}
@@ -1060,7 +1112,6 @@ var cafe = {
 					for (var i = 0 ; i < subOptionSize; i++) {
 						cafe.addOption(subject_region[selecgtedTag+1].options, i+1, subOptionValueList[i], subOptionList[i]);
 					}
-					
 				}
 				
 			});
@@ -1073,7 +1124,6 @@ var cafe = {
 			imgTag.style = "border-radius:40px";
 			// btn_srch > 사진 등록, 삭제 , 선택영역저장, 전체영역 저장...
 			var buttonTag = document.getElementsByClassName("btn_srch");
-			
 			// 등록/취소
 			var buttonTag2 = document.getElementsByClassName("btn");
 			
@@ -1088,7 +1138,6 @@ var cafe = {
 			/*
 			 * 파일 업로드 버튼 uI 
 			 */
-			
 			var upLoadTag = document.getElementsByClassName("int_file")[0];
 			var showImg = document.getElementById("tmp_img");
 			var img_name = document.getElementsByClassName("img_name");
@@ -1098,12 +1147,10 @@ var cafe = {
 			var cropper = cafe.createCropper(showImg);
 			var imgWidth,imgHeight;
 			
-			
 			/*
 			 * 키워드에 태그
 			 */
 			var keywordTag = document.getElementsByName("cafeKeyword")[0];
-			
 			
 			// 바디로 부터 이벤트를 등록하게 하기
 			var bodyTag = document.getElementsByClassName("section_create")[0];
@@ -1236,13 +1283,11 @@ var cafe = {
 					imgWidth = cropper.cropper.firstElementChild.firstElementChild.firstElementChild.width;
 					imgHeight = cropper.cropper.firstElementChild.firstElementChild.firstElementChild.height;
 					
-					
 				} else if (selected == buttonTag2[0]) {
 					
 					//등록 버튼
 					var cafeForm = {};
-				    
-					// 서버에 저정할 파일 이름 부여
+				    // 서버에 저정할 파일 이름 부여
 					result["icon"] = img_name[0].textContent;
 					//만약 이미지 등록이되어있지 않다면 기본 경로
 					if(result["icon"] !== undefined && result["icon"].length > 0 ){
@@ -1258,10 +1303,7 @@ var cafe = {
 						result["icon"] ='https://ssl.pstatic.net/static/phinf/profile/default_v2.jpg';
 					}
 					
-					
 					//유효성 검사가 필요
-					
-					
 					if(document.getElementsByClassName('invalid').length > 0) {
 						alert("카페 생성시 부적절한 조건을 발견하였습니다. 다시한번 확인해주세요.");
 						//console.log(document.getElementsByClassName('invalid').length);

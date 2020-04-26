@@ -34,8 +34,9 @@ public class CafeDAO extends CommonDBSession {
 
     private final String cafeListCount = "select count(c) from \n" + "UserCafeVO uc join uc.cafe c ";
 
-    private final String cafeCondition = "where uc.userUid != %s and %s = %s order by createDate";
-
+    private final String cafeMainCondition = "where uc.userUid != %s %s order by createDate";
+    
+    
     /**
      * 유저가 로그인후 볼수있는 cafe들을 추출 (추천 카페들 , 내가 가입한 카페들)
      * 
@@ -60,19 +61,33 @@ public class CafeDAO extends CommonDBSession {
 	    }
 	    
 	    int cafeType = -1;
+	    int cafeSubType = -1;
 	    String condition = "";
+	    String subCondition = "";
 	    if (urlType.toLowerCase().equals("sub_area")) {
 		cafeType = cafeVO.getRegion_mainSort();
-		condition = String.format(cafeCondition, userUid, "uc.cafe.region_mainSort", cafeType);
+		// 부조건 생성
+		subCondition = " and uc.cafe.region_mainSort = " + cafeType;
+		cafeSubType = cafeVO.getRegion_subSort();
+		if(cafeSubType > -1) {
+		    subCondition += " and uc.cafe.region_subSort = " + cafeSubType;
+		}
 	    } else {
 		cafeType = cafeVO.getTitle_mainSort();
-		condition = String.format(cafeCondition, userUid, "uc.cafe.title_mainSort", cafeType);
+		// 부조건 생성
+		subCondition = " and uc.cafe.title_mainSort = " + cafeType;
+		cafeSubType = cafeVO.getTitle_subSort();
+		if(cafeSubType > -1) {
+		    subCondition += " and uc.cafe.title_subSort = " + cafeSubType;
+		}
 	    }
 	    
 	    // 주분류, 소분류가 없다면 카페 리스트 가져오지 않음
 	    if (cafeType == -1) {
 		return;
 	    }
+	    
+	    condition = String.format(cafeMainCondition, userUid, subCondition);
 	    
 	    /*
 	     * 1. 카페 페이지는 최대 총 10페이지로 구성한다. 
@@ -191,6 +206,7 @@ public class CafeDAO extends CommonDBSession {
 	Session currentSession = null;
 	try {
 	    currentSession = openSession();
+	    cafeVO.setCreateDate(System.currentTimeMillis());
 	    result = processHibernateSession(currentSession, DBQueryType.INSERT, cafeVO);
 
 	    /*

@@ -59,15 +59,15 @@ public class CafeManager {
 	 * @author ued123
 	 * @brief 카페 접속시 자신의 카페 이름(카페이름은 unique)을 가지고 자신의 cafe 정보를 조회
 	 * */
-	public CafeVO getCafeInfo(String cafeUrl) {
+    public CafeVO getCafeInfo(String cafeUrl) {
 
-		try {
-			CafeVO cafeVO = cafeDAO.getCafeUrlinfo(cafeUrl);
-			return cafeVO;
+	try {
+	    CafeVO cafeVO = cafeDAO.getCafeUrlinfo(cafeUrl);
+	    return cafeVO;
 
-		} catch (Exception e) {
-			logger.error("getCafeInfo error > {}",e.getMessage(),e);
-			return null;
-		}
+	} catch (Exception e) {
+	    logger.error("getCafeInfo error > {}", e.getMessage(), e);
+	    return null;
 	}
+    }
 }

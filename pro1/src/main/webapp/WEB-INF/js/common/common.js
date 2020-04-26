@@ -8,7 +8,9 @@ var common = {};
 //common.sync = function(method, url, data, nodeId) {
 common.sync = function(requestParams) {
 	var loadNode = document.getElementById("loadNode");
-	loadNode.classList.remove('blind');
+	if (loadNode != null) {
+		loadNode.classList.remove('blind');
+	}
 	var nodeId = requestParams.nodeId;
 	var url = requestParams.url;
 	var xhttp = new XMLHttpRequest();
@@ -58,7 +60,6 @@ common.sync = function(requestParams) {
 					window.location.href = "/cafe/sub_main";
 				}
 			} else if (url.indexOf("/board/insert_post.json") != -1){
-
 				//debugger;
 				var responseCode = json.code;
 				alert(json.result);
@@ -89,7 +90,6 @@ window.onhashchange = function() {
 	if (location.hash.length < 1) {
 		return;
 	}
-	// #type=[data]
 	// form [0] = type , form[1] json data
 	var popState = location.hash.split(":");
 	// 주소 게시판 비동기 호출시 페이지 처리
@@ -187,14 +187,10 @@ common.createPageNode = function(pageCell, value, classList, id) {
 }
 
 common.calUtf8Bytes = function(ch) {
-	//char > hex to decimail
-	//var dec = 	ch.charCodeAt(0).toString(16);
 	var dec = 	ch.charCodeAt(0);
-	
 	//16진수 : '00007F' > 10진수: 127
 	//16진수 : '0007FF' > 10진수: 2047
 	//16진수 : '00FFFF' > 10진수: 65535
-	
 	if (dec <= 127) {
 		return 1;
 	} else if (dec <=2047) {
@@ -204,5 +200,4 @@ common.calUtf8Bytes = function(ch) {
 	} else {
 		return 4;
 	}
-
 }
