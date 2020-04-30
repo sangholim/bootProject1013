@@ -407,6 +407,7 @@
         <input type="hidden" name="useruid" value="${userUid}" />
         <input type="hidden" name="nickname" value="${nickName}" />
         <input type="hidden" name="isMemberCafeLoginUser" value="${isMemberCafeLoginUser}" />
+        <input type="hidden" name="cafeLevel" value="${boardSimpleInfo.cafeLevel}"/>
     </div>
 
     <div id="cafe_info">

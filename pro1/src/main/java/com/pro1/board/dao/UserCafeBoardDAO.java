@@ -34,6 +34,8 @@ public class UserCafeBoardDAO extends CommonDBSession {
 
     private final String UserCafeCnt = "select count(uc.userUid) from UserCafeVO uc where uc.cafeUid = :cafeUid";
 
+    private final String findCafeJoinUserUid = "SELECT count(uc.userUid) FROM UserCafeVO uc WHERE uc.cafeUid= :cafeUid AND uc.userUid= :userUid";
+
     public long getCountCafeMember(long cafeUid) {
 
         return 0;
@@ -95,12 +97,16 @@ public class UserCafeBoardDAO extends CommonDBSession {
         try (Session session = sessionInfo.getSession()) {
 
             //그중에서 찾는다.
-            UserCafeVO vo = (UserCafeVO)session.load(UserCafeVO.class,userCafeId);
-            if(vo.getCafeLevel() == null) {
-                return false;
-            }
-            else {
+            //UserCafeVO vo = session.find(UserCafeVO.class,userCafeId);
+
+            Query<Long> query = session.createQuery(findCafeJoinUserUid, Long.class);
+            query.setParameter("cafeUid", userCafeId.getCafeUid());
+            query.setParameter("userUid",userCafeId.getUserUid());
+
+            if(query.getSingleResult() > 0) {
                 return true;
+            } else {
+                return false;
             }
 
         } catch (ObjectNotFoundException e) { //row 가없으면 objectnotfoundexption이 발생함.

@@ -33,13 +33,21 @@ var board = {
 
         var signUpInfo = {};
 
-        var cafeJoinJson = {
+        /*var cafeJoinJson = {
                             'cafeLevel':'',
                             'cafeUid':0,
                             'cafeNicName':''
-                        };
+                        };*/
 
-        cafeJoinJson['cafeUid'] = document.querySelector("input[name=cafeUid]").value;
+        var cafeJoinJson = {};
+
+        //cafeJoinJson['userUid'] = 0;
+        cafeJoinJson['cafeUid'] = parseInt(document.querySelector("input[name=cafeUid]").value);
+        cafeJoinJson['cafeLevel'] = document.querySelector("input[name=cafeLevel]").value;
+        cafeJoinJson['cafeFav'] = 0;
+        cafeJoinJson['cafeOfficial'] = 0;
+        cafeJoinJson['userRole'] = 0;
+        cafeJoinJson['cafeNicName'] = document.querySelector("#cafeNickNameInput").value;
         //cafeJoinJson['cafeNicName'] = document.getElementsByName('nickname').value;
 
         var json = JSON.stringify(cafeJoinJson);
@@ -112,7 +120,7 @@ var board = {
                 board.boardWrite(login_info);
                // alert("글쓰기");
             } else if(selectedTag == menuLink0) {
-                window.location.href = "/board/"+document.getElementsByClassName("cafe_url")[0].innerText;;
+                window.location.href = "/board/"+document.getElementsByClassName("cafe_url")[0].innerText;
             } else if(selectedTag == sign_up) {
                 board.signUp();
             }

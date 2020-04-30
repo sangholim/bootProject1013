@@ -36,6 +36,7 @@ public class CafeDAO extends CommonDBSession {
 
     private final String cafeMainCondition = "where uc.userUid != %s %s order by createDate";
 
+	private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
 
     /**
      * 유저가 로그인후 볼수있는 cafe들을 추출 (추천 카페들 , 내가 가입한 카페들)
@@ -175,11 +176,11 @@ public class CafeDAO extends CommonDBSession {
 
 		try (Session session = sessionInfo.getSession()) {
 
-			//Query<CafeVO> query = session.createQuery(cafeUrlForm1, CafeVO.class);
-			//query.setParameter("url", cafe_url);
+			Query<CafeVO> query = session.createQuery(cafeUrlForm1, CafeVO.class);
+			query.setParameter("url", cafe_url);
 
-			//return query.getSingleResult();
-		return null;
+			return query.getSingleResult();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

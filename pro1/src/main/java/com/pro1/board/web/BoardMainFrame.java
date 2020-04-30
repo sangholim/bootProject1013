@@ -96,7 +96,7 @@ public class BoardMainFrame {
 
     	boardManager.deletePost(vo);
 
-    	return "redirect:" + vo.getCafeUrl();
+    	return "redirect:" + "/board/boardCenter/" + vo.getCafeUid();
 	}
 
     /*
@@ -196,7 +196,7 @@ public class BoardMainFrame {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/MemberJoin.json",method=RequestMethod.POST)
-	public Map CafeJoinPost(Authentication authetication,@RequestParam(required = false) UserCafeVO userCafeVO) throws Exception {
+	public Map CafeJoinPost(Authentication authetication,@RequestBody UserCafeVO userCafeVO) throws Exception {
 
 		CustomAuthentication userAuth = (CustomAuthentication) authetication;
 
@@ -209,29 +209,8 @@ public class BoardMainFrame {
 		resultMap.put(code, 500);
 		resultMap.put(result, "카페 가입중 문제 발생!");
 
-		if(userCafeVO == null) {
-
-			UserCafeVO vo = new UserCafeVO();
-			vo.setUserUid(userAuth.getUid());
-			vo.setCafeUid(10l);
-			vo.setCafeLevel("admin");
-			vo.setCafeFav(0);
-			vo.setCafeOfficial(0);
-			vo.setUserRole(0);
-			vo.setCafeNicName(userAuth.getName());
-
-			boardManager.cafeSignUp(vo);
-		}
-		/*
-			카페 가입하기 위한 필요한 정보 초기화 로직
-		 */
-//		userCafeVO.setUserUid(userAuth.getUid());
-//		userCafeVO.setCafeFav(0);
-//		userCafeVO.setCafeOfficial(0);
-//		userCafeVO.setUserRole(0);
-//		userCafeVO.setCafeNicName(userAuth.getName());
-
-
+		userCafeVO.setUserUid(userAuth.getUid());
+		boardManager.cafeSignUp(userCafeVO);
 
 		resultMap.put(code, 200);
 		resultMap.put(result, "정상적으로 카페에 가입되었습니다.");

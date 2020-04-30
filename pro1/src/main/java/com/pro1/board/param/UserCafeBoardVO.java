@@ -9,7 +9,7 @@ import com.pro1.cafe.vo.UserCafeId;
 
 @Entity
 @Table(name = "userCafeBoard")
-@IdClass(UserCafeId.class)
+//@IdClass(UserCafeId.class)
 public class UserCafeBoardVO implements Serializable {
 
     /**
