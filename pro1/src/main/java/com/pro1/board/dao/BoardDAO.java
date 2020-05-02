@@ -1,6 +1,7 @@
 package com.pro1.board.dao;
 
 import com.pro1.board.param.UserCafeBoardVO;
+import com.pro1.cafe.vo.UserCafeId;
 import com.pro1.common.DBQueryType;
 import com.pro1.common.utils.CommonDBSession;
 import com.pro1.common.vo.DbSessionInfo;
@@ -72,6 +73,12 @@ public class BoardDAO extends CommonDBSession {
         }
 
         sessionInfo = processHibernateSession(UserCafeBoardVO.class, userCafeBoardVO, DBQueryType.DELETE);
+ //       Session session = sessionFactory.openSession();
+
+//        UserCafeBoardVO vo = session.find(UserCafeBoardVO.class, userCafeBoardVO.getBoardUid());
+//
+//        session.delete(vo);
+
 
     }
 

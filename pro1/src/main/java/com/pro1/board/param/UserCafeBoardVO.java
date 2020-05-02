@@ -9,7 +9,7 @@ import com.pro1.cafe.vo.UserCafeId;
 
 @Entity
 @Table(name = "userCafeBoard")
-//@IdClass(UserCafeId.class)
+@IdClass(UserCafeBoardId.class)
 public class UserCafeBoardVO implements Serializable {
 
     /**
@@ -18,16 +18,16 @@ public class UserCafeBoardVO implements Serializable {
     private static final long serialVersionUID = 1827843192317052170L;
 
     @Id // primary key
-    @GeneratedValue // auto increment
-    private Long boardUid;
+    @GeneratedValue ( strategy = GenerationType.IDENTITY ) // auto increment
+    private long boardUid;
 
      @Id
      @Column(name = "userUid") // foreignKey
-     private Long userUid;
+     private long userUid;
 
      @Id
      @Column(name = "cafeUid") // foreignKey
-     private Long cafeUid;
+     private long cafeUid;
 
     private String subject;
     private String content;
