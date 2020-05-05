@@ -103,9 +103,9 @@ public class CafeDAO extends CommonDBSession {
 	    long maxPageCount = 0;
 	    if(!resultList.isEmpty()) {
 		maxPageCount = (long) resultList.get(0);
-		maxPageCount = (maxPageCount % cafeForm.getShowPageNumCount() == 0)
-			? maxPageCount / cafeForm.getShowPageNumCount()
-			: maxPageCount / cafeForm.getShowPageNumCount() + 1;
+		maxPageCount = (maxPageCount % cafeForm.getShowDataListCount() == 0)
+			? maxPageCount / cafeForm.getShowDataListCount()
+			: maxPageCount / cafeForm.getShowDataListCount() + 1;
 
 	    }
 
@@ -114,11 +114,12 @@ public class CafeDAO extends CommonDBSession {
 		return;
 	    }
 
-	    // 총 페이지수가 정해져 있지 않으면 설정
+	    // 총 페이지수  = maxPageCount
 	    if (cafeForm.getMaxPageCount() <= 0) {
 		cafeForm.setMaxPageCount(maxPageCount);
 	    }
-
+	    
+	    // UI나타나는 최대 페이지수 [ex: 총 페이지수 : 20, UI에서 보여줄 페이지 묶음:6 일때, 현재 1페이지면 최대 페이지는 6페이지이다.]
 	    int getShowPageMaximumCount = cafeForm.getShowPageMinimumCount() * cafeForm.getShowPageNumCount();
 	    getShowPageMaximumCount = (getShowPageMaximumCount > (int) maxPageCount) ? (int) maxPageCount
 		    : getShowPageMaximumCount;

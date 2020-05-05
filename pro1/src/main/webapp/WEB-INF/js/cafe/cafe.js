@@ -167,18 +167,20 @@ var cafe = {
 
 	},
 	selectCafeListByTab : function(selectedTag, cafeTabs) {
-		var lastSelectCafeTab = 0;
+		// var lastSelectCafeTab = 0;
 		//마지막으로  카페 분류 탭 리스트를 선택한 위치 찾기
 		for(var i = 0; i < cafeTabs.length; i++) {
 			if(selectedTag.parentNode == cafeTabs[i]) {
 				lastSelectCafeTab = i;
+				cafe.baseParam.lastSelectCafeTab = i;
+				cafe.baseParam.btn_category = cafeTabs[i].textContent;
 				break;
 			}
 		}
 		
 		// 선택된 카페 탭 UI 표시
-		cafeTabs[lastSelectCafeTab].classList.add("on");
-		return lastSelectCafeTab;
+		cafeTabs[cafe.baseParam.lastSelectCafeTab].classList.add("on");
+		// return lastSelectCafeTab;
 	},
 	setCafeTabByType : function (path) {
 		// 카페홈, 주제별, 지역별에 따라서 카페탭 생성
@@ -235,19 +237,25 @@ var cafe = {
 			
 			cafe.setSubListByType('theme', 0, mainCafeList[0]);
 		} else if (path.indexOf("/sub_area") > -1) {
-			cafeTabBtn.innerHTML = "서울특별시";
+			//cafeTabBtn.innerHTML = "서울특별시";
+			cafeTabBtn.innerHTML = "추천카페";
+			cafeTabElement.style.display="none";
 			var mainRegionList = cafe.mainRegionList;
-			for(var i = 1; i < mainRegionList.length; i++) {
+			for(var i = 0; i < mainRegionList.length; i++) {
 				cafeTabElement = document.createElement("LI");
 				cafeTabBtn = document.createElement("BUTTON");
 				cafeTabBtn.innerHTML = mainRegionList[i];
 				cafeTabBtn.classList.add("btn_tab");
+				if (i == 0) {
+					cafeTabElement.classList.add("on");
+					cafeTabSpan.innerHTML = "선택됨";
+					cafeTabSpan.classList.add("blind");
+					cafeTabBtn.appendChild(cafeTabSpan);
+				}
 				cafeTabElement.appendChild(cafeTabBtn);		
 				cafeTabContainer.appendChild(cafeTabElement);
 			}
-			//cafe.setSubListByType('area', 0, mainRegionList[0]);
 		}
-		// return {"lastSelectCafeTab" : 0, "selected" : 0}; 
 	},
 	setSubListByType : function (type, mainListPos, firstname) {
 		
@@ -462,11 +470,31 @@ var cafe = {
 		/*
 		 * afterCafeProcess 
 		 * 히스토리에 있는 비동기 요청들의 UI를 구현하기 위해 만든 로직
-		 * (cafeList,cafeTab,cafeSlider)
 		 */
+		requestBaseParam = requestParam.cafeVO.baseParam;
 		// 페이지 wrapper에 페이지 번호를 그려낸다.
 		var pageUI = document.getElementsByClassName("common_page")[0];
 	
+		/*
+		 * 주제별, 지역별 서브카테고리 변경시 UI 변경
+		 * 1. 서브카테고리 리스트 변경
+		 * 2. 서브카테고리중 선택된것 변경
+		 */
+		var btn_category = document.getElementsByClassName("btn_category")[0];
+		if (btn_category != undefined) {
+			cafe.baseParam.btn_category = requestBaseParam.btn_category;
+			//sub category
+			if (cafe.baseParam.lastSelectCafeTab != requestParam.cafeVO.baseParam.lastSelectCafeTab) {
+				cafe.setSubListByType('theme', requestParam.cafeVO.baseParam.lastSelectCafeTab-1, cafe.mainTitleList[requestParam.cafeVO.baseParam.lastSelectCafeTab-1]);
+			}
+			btn_category.textContent = requestBaseParam.btn_category;
+			var subCategoryList = document.getElementsByClassName("btn_pageSub");
+			subCategoryList[cafe.baseParam.lastSelectCafeSub].parentElement.classList.remove("on");
+			subCategoryList[requestBaseParam.lastSelectCafeSub].parentElement.classList.add("on");
+			cafe.baseParam.lastSelectCafeSub = requestBaseParam.lastSelectCafeSub;
+			
+		} 
+		
 		// request 요청에 의한 cafeTab 표시
 		var cafeTabs = document.getElementsByClassName("scroll_box_swiper")[0].getElementsByTagName("li");
 		for(var i = 0; i < cafeTabs.length; i++) {
@@ -477,7 +505,6 @@ var cafe = {
 		 * 선택된 카페 탭 UI 표시
 		 * 앞으로가기/뒤로가지 하였을때 lastGetRecommendSliderIdx값이 다르면 변경
 		 */
-		requestBaseParam = requestParam.cafeVO.baseParam;
 		// 현재 페이지 sliderIdx값 과 url 변경시 sliderIdx값으로 슬라이더 변경됨을 파악하기 
 		var sliderInfo = cafe.baseParam.lastGetRecommendSliderIdx - requestBaseParam.lastGetRecommendSliderIdx;
 		if (sliderInfo != 0) {
@@ -571,7 +598,7 @@ var cafe = {
 		
 		// 선택된 페이지 번호
 		// 총 페이지 갯 수에 따라 페이지 번호 UI 보여줌
-		for (var i = min; i < cafeForm.showPageMaximumCount; i++) {
+		for (var i = min; i <= cafeForm.showPageMaximumCount; i++) {
 			var pageNumber = document.createElement("button");
 			pageNumber.classList.add("btn");
 			pageNumber.classList.add("btn_pageNum");
@@ -605,7 +632,9 @@ var cafe = {
 		// 선택된 페이지 번호
 		selectedPageNum: 1,
 		// 마지막으로 바뀐 transfor변경값
-		translateInfo: 0
+		translateInfo: 0,
+		//요청받은 카테고리 주제탭,지역탭에서 쓰임
+		btn_category: '게임' 
 	},
 	cafedataForm : 
 		// li 태그는 따로 만들어서 string 집어 넣는 방식으로 작업
@@ -688,7 +717,8 @@ var cafe = {
 					// 추천 카페 탭에서 클릭시 해당 주제에 대한 카페리스트호출
 					cateTabs[cafe.baseParam.lastSelectCafeTab].classList.remove("on");
 					// 카페 탭에서 선택후 해당 데이터 리스트 추출 (페이징 포함)
-					cafe.baseParam.lastSelectCafeTab = cafe.selectCafeListByTab (selectedTag, cateTabs);
+					cafe.selectCafeListByTab (selectedTag, cateTabs);
+					//cafe.baseParam.lastSelectCafeTab = cafe.selectCafeListByTab (selectedTag, cateTabs);
 					// 페이지 번호 초기화
 					cafe.baseParam.selectedPageNum = 1;
 					// 마지막으로 선택한 카페의 부주제 위치
@@ -765,7 +795,7 @@ var cafe = {
 			var btn_category = document.getElementsByClassName("btn_category")[0];
 			var isSubListHover = false;
 			//주제 대분류일댸 기본 데이터값
-			var defaultOptionVal = 100;
+			var defaultOptionVal = 101;
 			// 대분류 소분류 values값 추가한다.
 			var optionSize  =  cafe.mainTitleList.length;
 			// 대분류 option 클릭시 그에 따른 소분류 value 값 저장
@@ -826,6 +856,7 @@ var cafe = {
 					//선택된 sub카테고리의 이름명으로 검색
 					for (var i = 0; i < subCategoryLength; i++) {
 						if (selectedTag == subCategoryList[i]) {
+							cafe.baseParam.btn_category = subCategoryList[i].textContent
 							cafe.baseParam.lastSelectCafeSub = i;
 							col = i -1;
 							break;
@@ -1043,7 +1074,7 @@ var cafe = {
 				
 				//주제 대분류일댸 기본 데이터값
 				var optionList = cafe.mainTitleList;
-				var defaultOptionVal = 100;
+				var defaultOptionVal = 101;
 				var subOptList = cafe.subTitleList;
 				var subOpValtList = cafe.subSubjectValues;
 				//지역 대분류일떄 기본 데이터값
@@ -1421,7 +1452,6 @@ var cafe = {
 					cafe.checkTextByte (selected.value, byteTag[1].firstChild, dataTags[1], alertTag[1], 20);
 				} else if (selected == keywordTag) { //cafe keyword
 					cafe.checkTextByte (selected.value, byteTag[2].lastElementChild, keywordTag, alertTag[2], 20);
-					
 				} else if (selected == dataTags[11]) {
 					cafe.checkTextByte (selected.value, byteTag[3].lastElementChild, dataTags[11], alertTag[3], 100);
 				}
