@@ -18,7 +18,7 @@ public class UserCafeBoardVO implements Serializable {
     private static final long serialVersionUID = 1827843192317052170L;
 
     @Id // primary key
-    @GeneratedValue ( strategy = GenerationType.IDENTITY ) // auto increment
+    @GeneratedValue //( strategy = GenerationType.IDENTITY ) // auto increment
     private long boardUid;
 
      @Id

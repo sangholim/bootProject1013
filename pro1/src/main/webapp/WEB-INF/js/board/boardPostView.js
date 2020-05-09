@@ -14,6 +14,8 @@ var boardPostView = {
 
             var removeBtn = document.getElementById("postRemove");
 
+            var modifyFormLink = document.querySelector("#modifyFormLink");
+
             inbox.addEventListener('click',function (event) {
 
                 var selectedTag = event.target;
@@ -23,6 +25,16 @@ var boardPostView = {
                     if(result) {
                         boardPostView.postDelete();
                     }
+                } else if (selectedTag == modifyFormLink) {
+
+                  //  alert("test");
+                    var boardUid = document.querySelector("input[name=boardUid]").value;
+                    var subject = document.querySelector("#post_subject").textContent;
+                    var content = document.querySelector("#tbody").textContent;
+                    window.location.href="/board/d/update_post?boardUid="
+                        +boardUid+"&subject="+subject+"&content="+content;
+
+
                 }
             });
         });
@@ -35,6 +47,9 @@ var boardPostView = {
         frm.action = "/board/d/delete_post?boardUid="+boardUid;
         frm.method = "post";
         frm.submit();
+    },
+    postUpdate : function() {
+
     }
 
 

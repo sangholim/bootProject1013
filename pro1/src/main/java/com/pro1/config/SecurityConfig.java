@@ -63,10 +63,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 사용자는 폼기반 로그인으로 인증 할 수 있습니다. 
 	 * 사용자는 HTTP기반 인증으로 인증할수 있습니다.
 	 *
-	 */
+	 * @author ued123
+	 * @see 일부 iframe을 사용하는 요청에서 연결이 거부되어 해당 iframe에서 요청 부분 예외함./board/boardCenter
+	 * 게시글 불러오는 iframe 요청 컨트롤러에서 연결거부 발생.
+	 * */
 	http.csrf().disable().authorizeRequests()
 		.antMatchers("/", "/index/**", "/img/**", "/login", "/login/addUser",
-			"/login/register", "/login/*.json")
+			"/login/register", "/login/*.json","/board/boardCenter")
 		.permitAll().and().authorizeRequests()
 		.antMatchers('/' + Constant.CAFE_TYPE + '/' + Constant.DIR_ROW, "/login/update/","/board/**")
 		.hasAnyAuthority(Constant.AUTH_PREFIX + Constant.USER_ROLE, Constant.AUTH_PREFIX + Constant.ADMIN_ROLE)

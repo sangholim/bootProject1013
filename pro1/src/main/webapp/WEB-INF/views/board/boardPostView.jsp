@@ -23,7 +23,7 @@
                                 <tr valign="top">
                                     <td>
                                         <!-- 타이틀 -->
-                                        <span class="b m-tcol-c">${post.subject}</span>
+                                        <span id="post_subject" class="b m-tcol-c">${post.subject}</span>
                                     </td>
                                     <td nowrap="" class="m-tcol-c filter-30">|</td>
                                     <td nowrap="" class="m-tcol-c"><a
@@ -1301,7 +1301,11 @@
         <input type="hidden" name="boardUid" value="${post.boardUid}"/>
     </div>
 
-    <form name="frm" method="post" type="hidden">
+
+
+    <form name="frm" method="post" action="/board/d/update_post" type="hidden">
+<%--        <input type="hidden" name="boardUid" value="${post.boardUid}"/>--%>
+<%--        <input type="hidden"--%>
     </form>
 
 </div>

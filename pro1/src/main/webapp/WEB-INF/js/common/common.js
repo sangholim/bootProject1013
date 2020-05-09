@@ -84,6 +84,15 @@ common.sync = function(requestParams) {
 					//window.location.href = "/board/";
 					location.reload();
 				}
+			} else if (url.indexOf("/d/update_post.json") != -1){
+
+				var responseCode = json.code;
+				alert(json.result);
+				debugger;
+				if(responseCode == 200) {
+					//window.location.href = "/board/";
+					window.location.href = "/board/boardCenter/p/"+json.boardUid;
+				}
 			}
 		}
 		loadNode.classList.add('blind');

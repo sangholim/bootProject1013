@@ -1,5 +1,6 @@
 package com.pro1.board.web;
 
+import com.pro1.board.dao.UserCafeBoardDAO;
 import com.pro1.board.param.BoardSimpleInfoForm;
 import com.pro1.board.param.BoardVO;
 import com.pro1.board.param.UserCafeBoardVO;
@@ -97,6 +98,48 @@ public class BoardMainFrame {
     	boardManager.deletePost(vo);
 
     	return "redirect:" + "/board/boardCenter/" + vo.getCafeUid();
+	}
+
+	@RequestMapping(value="/d/update_post", method = RequestMethod.GET)
+	public String updateGET(Authentication authentication, UserCafeBoardVO vo,Model model) throws Exception {
+
+		UserCafeBoardVO post = boardManager.getOneBoardInfo(vo.getBoardUid());
+		model.addAttribute("post",post);
+
+		model.addAttribute("postInfo",vo);
+		return "/board/commonBoardUpdate";
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/d/update_post.json", method = RequestMethod.POST)
+	public Map<String,Object> updatePost(Authentication authentication, @RequestBody UserCafeBoardVO vo,Model model) throws Exception {
+
+		Map<String, Object> resultMap = new HashMap<>();
+
+		String code = "code";
+		String result = "result";
+		String boardUid = "boardUid";
+
+		resultMap.put(code, 500);
+		resultMap.put(result, "게시글 수정중 문제 발생!");
+
+		CustomAuthentication userAuth = (CustomAuthentication) authentication;
+
+		vo.setCreateDate(System.currentTimeMillis());
+		vo.setModifiedDate(System.currentTimeMillis());
+
+		try {
+			boardManager.modifyPost(vo);
+		} catch (Exception e) {
+			logger.error("ERROR d/update_post.json : {}", e.getMessage());
+			return resultMap;
+		}
+
+		resultMap.put(code, 200);
+		resultMap.put(result, "정상적으로 게시글이 수정되었습니다.");
+		resultMap.put(boardUid,vo.getBoardUid());
+
+		return resultMap;
 	}
 
     /*

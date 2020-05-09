@@ -1,5 +1,6 @@
 package com.pro1.board.dao;
 
+import com.pro1.board.param.UserCafeBoardId;
 import com.pro1.board.param.UserCafeBoardVO;
 import com.pro1.cafe.vo.UserCafeId;
 import com.pro1.common.DBQueryType;
@@ -82,4 +83,32 @@ public class BoardDAO extends CommonDBSession {
 
     }
 
+    public void updatePost(UserCafeBoardVO userCafeBoardVO) throws Exception {
+
+        if (sqlSession != null) {
+            sqlSession.update("updatePost");
+        }
+
+        sessionInfo = processHibernateSession(UserCafeBoardVO.class, null, DBQueryType.SELECT);
+
+        try (Session session = sessionInfo.getSession()) {
+            Query<UserCafeBoardVO> query = session.createQuery(oneBoardView, UserCafeBoardVO.class);
+            query.setParameter("boardUid", userCafeBoardVO.getBoardUid());
+            UserCafeBoardVO vo = query.getSingleResult();
+
+            vo.setSubject(userCafeBoardVO.getSubject());
+            vo.setContent(userCafeBoardVO.getContent());
+
+            sessionInfo = processHibernateSession(UserCafeBoardVO.class, vo, DBQueryType.UPDATE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //       Session session = sessionFactory.openSession();
+
+//        UserCafeBoardVO vo = session.find(UserCafeBoardVO.class, userCafeBoardVO.getBoardUid());
+//
+//        session.delete(vo);
+
+
+    }
 }

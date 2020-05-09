@@ -83,6 +83,8 @@ var board = {
 
             var sign_up = document.getElementById("sign_up");
 
+
+
             //로그인한 사용자가 카페가입자인지
             var isMemberCafeLoginUser = document.querySelector("input[name=isMemberCafeLoginUser]").value;
 
@@ -95,6 +97,10 @@ var board = {
                 smart_editor.style.visibility = "hidden";
                 mainAreaContent.style.display = "block";
             }
+
+            // if(selectedTag == modifyFormLink) {
+            //     alert("수정버튼");
+            // }
 
             if(selectedTag == boardMainBtn) {
 

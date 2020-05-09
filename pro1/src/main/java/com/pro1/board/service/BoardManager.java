@@ -34,6 +34,12 @@ public class BoardManager {
         boardDAO.InsertPost(vo);
     }
 
+    //게시글 수정
+    public void modifyPost(UserCafeBoardVO vo) throws Exception {
+
+        boardDAO.updatePost(vo);
+    }
+
     public List<UserCafeBoardVO> getBoardPostList(long cafeUid) throws Exception {
 
         return boardDAO.getBoardPostList(cafeUid);
