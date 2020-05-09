@@ -1539,7 +1539,7 @@ button {
 }
 
 .home_theme_frame {
-    margin-top: 34px;
+    margin-top: 14px;
 }
 
 /** cafe footer**/
@@ -2566,6 +2566,7 @@ li .img_name  {
 .common_list {
     margin: 0 -8px;
     padding-bottom: 23px;
+    padding-top: 24px;
     font-size: 0;
     word-wrap: break-word;
 }
@@ -2655,7 +2656,7 @@ li .img_name  {
 }
 
 .common_list .list_info .info:before {
-    content: '';
+    /* content: ''; */
     display: inline-block;
     width: 2px;
     height: 2px;
@@ -2946,3 +2947,4 @@ li .img_name  {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
+

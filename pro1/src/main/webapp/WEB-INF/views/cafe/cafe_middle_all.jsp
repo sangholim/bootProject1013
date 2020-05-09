@@ -99,7 +99,7 @@
 				 		<div class="user_mycafe_box">
 				 			<div class="user_mycafe_thumb">
 				 				<a href="/board/${user_cafe.cafe.url}" class="link">
-				 					<img src="/${user_cafe.cafe.icon }" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'" width="55" height="55" alt="">
+				 					<img src="/${user_cafe.cafe.icon }" onerror="this.src='https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg'" width="55" height="55" style="border-radius:25px;" alt="">
 				 				</a>
 				 			</div>
 					 		<div class="user_mycafe_info">
@@ -232,8 +232,10 @@
 			        </li>
 				</ul>
 			</div>
+		</c:if>
+		<c:if test="${sub_page eq 'sub_theme' || sub_page eq 'sub_area'}">
 			<div class="theme_category">
-				<div class="common_category">
+				<div class="common_category" style="display: none;">
 					<strong class="blind">
 						현재 선택된 하위 카테고리 버튼 클릭 시 다른 하위 카테고리를
 						선택할 수 있습니다.
@@ -245,9 +247,7 @@
 					</div>
 				</div>
 				<em class="count" style="display: none;">총 100개</em>
-			</div>
-		</c:if>
-		<c:if test="${sub_page eq 'sub_theme' || sub_page eq 'sub_area'}">
+			</div>			
 			<div class="theme_sort">
 				<ul class="common_option_list">
 					<li class="on">

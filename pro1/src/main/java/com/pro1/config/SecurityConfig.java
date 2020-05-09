@@ -59,12 +59,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// security 기본 인증화면 사용 안함
 
 	/**
-	 * 사용자 인증이 된 요청에 대해서만 요청을 허용한다. 사용자는 폼기반 로그인으로 인증 할 수 있습니다. 사용자는 HTTP기반 인증으로 인증할
-	 * 수 있습니
-     *
+	 * 사용자 인증이 된 요청에 대해서만 요청을 허용한다. 
+	 * 사용자는 폼기반 로그인으로 인증 할 수 있습니다. 
+	 * 사용자는 HTTP기반 인증으로 인증할수 있습니다.
+	 *
 	 */
 	http.csrf().disable().authorizeRequests()
-		.antMatchers("/", "/index/**", "/img/" + Constant.DIR_ROW, "/login", "/login/addUser",
+		.antMatchers("/", "/index/**", "/img/**", "/login", "/login/addUser",
 			"/login/register", "/login/*.json")
 		.permitAll().and().authorizeRequests()
 		.antMatchers('/' + Constant.CAFE_TYPE + '/' + Constant.DIR_ROW, "/login/update/","/board/**")
@@ -73,9 +74,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.passwordParameter("pw").successHandler(authSuccessHandler).failureUrl("/error").permitAll();
 
 	/**
-        @author ued123
-        @brief 보안취약점으로 동일도메인에서 iframe을 못쓰도록 deny 되어있어
-               동일 도메인에서 iframe을 사용할 수 있도록 X-Frame-Options 권한을 추가한다.
+	 * @author ued123
+	 * @brief 보안취약점으로 동일도메인에서 iframe을 못쓰도록 deny 되어있어 동일 도메인에서 iframe을 사용할 수 있도록
+	 *        X-Frame-Options 권한을 추가한다.
 	 */
 	http.headers().frameOptions().sameOrigin();
     }

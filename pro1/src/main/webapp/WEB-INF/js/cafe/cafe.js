@@ -177,10 +177,9 @@ var cafe = {
 				break;
 			}
 		}
-		
 		// 선택된 카페 탭 UI 표시
 		cafeTabs[cafe.baseParam.lastSelectCafeTab].classList.add("on");
-		// return lastSelectCafeTab;
+		
 	},
 	setCafeTabByType : function (path) {
 		// 카페홈, 주제별, 지역별에 따라서 카페탭 생성
@@ -235,9 +234,9 @@ var cafe = {
 				cafeTabContainer.appendChild(cafeTabElement);
 			}
 			
-			cafe.setSubListByType('theme', 0, mainCafeList[0]);
+			// cafe.setSubListByType('theme', 0, mainCafeList[0]);
+			cafe.setSubListByType(0, mainCafeList[0]);
 		} else if (path.indexOf("/sub_area") > -1) {
-			//cafeTabBtn.innerHTML = "서울특별시";
 			cafeTabBtn.innerHTML = "추천카페";
 			cafeTabElement.style.display="none";
 			var mainRegionList = cafe.mainRegionList;
@@ -257,7 +256,7 @@ var cafe = {
 			}
 		}
 	},
-	setSubListByType : function (type, mainListPos, firstname) {
+	setSubListByType : function (mainListPos, firstname) {
 		
 		// 서브 카테고리 리스트 UI 생성
 		var subList = cafe.subTitleList[mainListPos]; 
@@ -265,12 +264,15 @@ var cafe = {
 		
 		var subCafeTab = document.getElementsByClassName("layer_list")[0]; 
 		subCafeTab.innerHTML = "";
+		
+		// 서브 카페 버튼 리스트 만들기
 		var cafeTabElement = document.createElement("LI");
 		cafeTabElement.classList.add("on");
 		cafeTabBtn = document.createElement("BUTTON");
-		cafeTabBtn.classList.add("btn");
-		cafeTabBtn.classList.add("btn_pageSub");
+		cafeTabBtn.classList.add("btn","btn_pageSub");
 		cafeTabBtn.innerHTML = firstname;
+		
+		// UI 선택됨만들기
 		var cafeTabSpan = document.createElement("SPAN");
 		cafeTabSpan.innerHTML = "선택됨";
 		cafeTabSpan.classList.add("blind");
@@ -282,12 +284,12 @@ var cafe = {
 			cafeTabElement = document.createElement("LI");
 			cafeTabBtn = document.createElement("BUTTON");
 			cafeTabBtn.innerHTML = subList[i];
-			cafeTabBtn.classList.add("btn");
-			cafeTabBtn.classList.add("btn_pageSub");
+			cafeTabBtn.classList.add("btn","btn_pageSub");
 			cafeTabElement.appendChild(cafeTabBtn);		
 			subCafeTab.appendChild(cafeTabElement);
 		}
 	},
+	
 	checkTextByte : function (value, strongTag, validTag, alertTag, limit) {
 		var result = false;
 		//카페 이름
@@ -321,37 +323,6 @@ var cafe = {
 		opt.value = value;
 		opt.label = label;
 		optList[idx] = opt;
-	},
-	recommend_slider : function (idx) {
-		// slider 이전/다음으로 이동시킬떄 ui에서 움직일 위치값
-		var value= 0;
-
-		/*
-		 * 공식찾기
-		 * 
-		 * index 0 - 1 
-		 * 662
-		 * index 1 - 2
-		 * 667
-		 * index 2 - 3
-		 * 695
-		 * 
-		 */
-		switch (idx) {
-			case 1:
-				value = 662;
-				break;
-			case 2:
-				value = 667;
-				break;
-			case 3:
-				value = 695;
-				break;
-			default:
-				break;
-		}
-		
-		return value;
 	},
 	addKeyword : function (keyword,idx) {
 		var p = document.createElement('p');
@@ -480,12 +451,13 @@ var cafe = {
 		 * 1. 서브카테고리 리스트 변경
 		 * 2. 서브카테고리중 선택된것 변경
 		 */
-		var btn_category = document.getElementsByClassName("btn_category")[0];
+		var btn_category = document.getElementsByClassName("btn_category")[1];
+
 		if (btn_category != undefined) {
 			cafe.baseParam.btn_category = requestBaseParam.btn_category;
 			//sub category
 			if (cafe.baseParam.lastSelectCafeTab != requestParam.cafeVO.baseParam.lastSelectCafeTab) {
-				cafe.setSubListByType('theme', requestParam.cafeVO.baseParam.lastSelectCafeTab-1, cafe.mainTitleList[requestParam.cafeVO.baseParam.lastSelectCafeTab-1]);
+				cafe.setSubListByType(requestParam.cafeVO.baseParam.lastSelectCafeTab-1, cafe.mainTitleList[requestParam.cafeVO.baseParam.lastSelectCafeTab-1]);
 			}
 			btn_category.textContent = requestBaseParam.btn_category;
 			var subCategoryList = document.getElementsByClassName("btn_pageSub");
@@ -528,7 +500,6 @@ var cafe = {
 			switch (requestBaseParam.lastGetRecommendSliderIdx) {
 				case 0:
 					btn_scroll_prev.disabled = true;
-					// cafe.baseParam.lastSelectCafeTab = 0;
 					break;
 				case 1:
 				case 2:
@@ -600,8 +571,7 @@ var cafe = {
 		// 총 페이지 갯 수에 따라 페이지 번호 UI 보여줌
 		for (var i = min; i <= cafeForm.showPageMaximumCount; i++) {
 			var pageNumber = document.createElement("button");
-			pageNumber.classList.add("btn");
-			pageNumber.classList.add("btn_pageNum");
+			pageNumber.classList.add("btn","btn_pageNum");
 			pageNumber.textContent = i;
 			// 선택된 페이지에는 강조 표시
 			if (i == cafe.baseParam.selectedPageNum) {
@@ -624,6 +594,8 @@ var cafe = {
 		lastSelectCafeSubIdx : -1,
 		// 마지막으로 누른 슬라이더 idex [0,1,2,3]
 		lastGetRecommendSliderIdx : 0,
+		// 요청된 경로의 하위 경로
+		subPath: "",
 		// 마지막으로 선택한 페이지 번호
 		lastpageNum : 1,
 		// UI나타나는 페이지번호 최소값
@@ -640,7 +612,7 @@ var cafe = {
 		// li 태그는 따로 만들어서 string 집어 넣는 방식으로 작업
 		"<a href='/board/#{카페URL}' class='list_link'>"+
 			"<div class='list_thumb'>" +
-				"<img src='/#{아이콘 경로}' width='80' height='80' onerror='this.src=https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg' alt=''>"+
+				"<img src='/#{아이콘 경로}' width='80' height='80' style='border-radius: 35px' onerror='this.src=https://ssl.pstatic.net/static/cafe/thumb/cafe_thumb_noimg_116.svg' alt=''>"+
 			"</div>" +
 			"<div class='list_info'>" +
 				"<div class='name_area'>" +
@@ -660,6 +632,11 @@ var cafe = {
 				"</div>" +
 			"</div>" +
 		"</a>",
+	sliderWidthByType : {
+		sub_main : [0, 670, 667, 695],
+		sub_theme : [0, 660, 710, 665],
+		sub_area : [0, 730, 660, 670]
+	},
 	init : function() {
 
 		var path = window.location.pathname.substring(window.location.pathname
@@ -693,7 +670,7 @@ var cafe = {
 		if(path.indexOf("/sub_main") > -1 || path.indexOf("/sub_theme") > -1 || path.indexOf("/sub_area") > -1) {
 			var registerUi = document.getElementsByClassName("btn_cafe_make")[0];
 			registerUi.href = "/cafe/register";
-			
+			cafe.subPath = path.substr(1);
 			// 페이지 UI 랩퍼
 			var pageUi = document.getElementsByClassName("common_page")[0]; 
 			//추천 카페탭 
@@ -733,16 +710,15 @@ var cafe = {
 					// 카페탭들의 부모 태그
 					// 화살표 태그에 따라 카페탭 UI 변경 기능
 					var scrollTag = cateTabs[0].parentElement; 
-					
 					// 화살표 태그에 따라 카페탭 UI 변경 기능
 					if(selectedTag.className == btn_scroll_next.className) {
 						//translateX(0px); 이런 형태를 숫자로 반환
 						var translateInfo = parseInt(scrollTag.style.transform.replace(/[^-^\d.]/g, ''));
 						cafe.baseParam.lastGetRecommendSliderIdx++;
-						translateInfo -=cafe.recommend_slider(cafe.baseParam.lastGetRecommendSliderIdx);
+						translateInfo -=cafe.sliderWidthByType[cafe.subPath][cafe.baseParam.lastGetRecommendSliderIdx];
 					} else if (selectedTag.className == btn_scroll_prev.className ) {
 						var translateInfo = parseInt(scrollTag.style.transform.replace(/[^-^\d.]/g, ''));
-						translateInfo +=cafe.recommend_slider(cafe.baseParam.lastGetRecommendSliderIdx);
+						translateInfo +=cafe.sliderWidthByType[cafe.subPath][cafe.baseParam.lastGetRecommendSliderIdx];
 						cafe.baseParam.lastGetRecommendSliderIdx--;
 					}
 					cafe.baseParam.translateInfo = translateInfo;
@@ -779,6 +755,14 @@ var cafe = {
 							break;
 					}
 					cafe.baseParam.lastSelectCafeTab = cafe.baseParam.lastGetRecommendSliderIdx * 7;
+					// 카페 주제, 카페 지역인 경우는  선택한 카테탭 idx증가시켜준다.
+					if (cafe.subPath != "sub_main")  {
+						cafe.baseParam.lastSelectCafeTab++;
+					}
+					
+					if (cateTabs[cafe.baseParam.lastSelectCafeTab] === undefined) {
+						cafe.baseParam.lastSelectCafeTab--;
+					}
 					cateTabs[cafe.baseParam.lastSelectCafeTab].classList.add("on");
 					cafe.getCafeList(path);
 				} else if (selectedTag.classList.contains("btn_pageNum")) {
@@ -792,6 +776,8 @@ var cafe = {
 		}
 			
 		if(path.indexOf("/sub_theme") > -1) {
+			// 사전 예약카페 노출
+			document.getElementsByClassName("common_category")[0].style.display="";
 			var btn_category = document.getElementsByClassName("btn_category")[0];
 			var isSubListHover = false;
 			//주제 대분류일댸 기본 데이터값
@@ -843,7 +829,7 @@ var cafe = {
 				if (selectedTag.parentNode.parentNode.classList.contains("scroll_box_swiper")) {
 					var mainCafePos = cafe.baseParam.lastSelectCafeTab - 1;
 					// 서브 페이지 초기화
-					cafe.setSubListByType('theme', mainCafePos, cafe.mainTitleList[mainCafePos]);
+					cafe.setSubListByType(mainCafePos, cafe.mainTitleList[mainCafePos]);
 				} else if (selectedTag.classList.contains('btn_pageSub')) {
 					// subPage index 찾기
 					subCategoryList[cafe.baseParam.lastSelectCafeSub].parentElement.classList.remove("on");
