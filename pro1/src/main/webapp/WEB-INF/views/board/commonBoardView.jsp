@@ -376,8 +376,21 @@
                 <div class="main_content">
                     <input id="gateOpen" type="hidden" value="1">
                     <input id="searchviewtype" type="hidden" value="title">
+                    <!--
+                    ex:
+                    <a href="#" title="즐겨찾기" class="user_mycafe_bookmark<c:if test = '${user_cafe.cafeFav eq 1}'> on</c:if>"> 
+                     -->
                     <iframe name="cafe_main" id="cafe_main" title="카페 메인"
-                            src="/board/boardCenter/${boardSimpleInfo.cafeUid}" width="860"
+                            src=
+                            <c:choose>
+                            	<c:when test = '${not empty boardUid}'>
+                            	"/board/boardCenter/p/${boardUid}"
+                            	</c:when>
+                            	<c:otherwise>
+                            	"/board/boardCenter/${boardSimpleInfo.cafeUid}"	
+                            	</c:otherwise>
+                            </c:choose>
+                             width="860"
                             height="100%"
                             frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowtransparency="true"
                             allowfullscreen="" style="height: 1598px;"></iframe>

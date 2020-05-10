@@ -1282,6 +1282,18 @@ button {
     height: 36px;
 }
 
+.user_mycafe_box .btn_mycafe_user.on:after {
+    background-position: -160px -164px;
+}
+
+.user_mycafe_box .btn_mycafe_user:hover:after {
+    background-position: -116px -164px;
+}
+
+.user_mycafe_box .btn_mycafe_user.on:hover:after {
+    background-position: -4px -213px;
+}
+
 .user_mycafe_thumb {
     float: left;
     width: 55px;

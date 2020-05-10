@@ -890,15 +890,6 @@ var cafe = {
 			var user_mycafe_area_size =user_mycafe_area.length;
 			var btn_mycafe_more = document.getElementsByClassName("btn_mycafe_more")[0];
 			
-			// 카페 홈 탭에서 마우스 올릴떄 이벤트
-			bodyTag.addEventListener('mouseover', function(event) {
-				var selectedTag = event.target;
-				// 1. 내카페 제목에 갖다되면 밑줄 
-				// 2. 내카페 제목 밖이면 화살표 이벤트 반응
-				
-				
-			});
-			
 			// 5. 추천 카페 뿌리기.
 			bodyTag.addEventListener('click', function(event) {
 
@@ -910,6 +901,7 @@ var cafe = {
 				 * 즐겨 찾기: 즐겨찾기만 공개  [카페 더보기 불가능]
 				 * 운영진 : 운영진만 공개 [카페 더보기 불가능]
 				 * 카페의 큰 덩어리: user_mycafe_area
+				 * 내카페에서 화살표 눌렀을때, 게시글 노출 기능
 				 */
 				if(myCafeType[0].firstElementChild == selectedTag) {
 					// 전체보기 탭인경우 카퍼 더보기 기능 초기화
@@ -980,6 +972,18 @@ var cafe = {
 						selectedTag.style.display = "none";
 						return;
 					} 
+				} else if (selectedTag.classList.contains("btn_mycafe_user")) {
+					// 내 카페 게시글 감춤
+					if (selectedTag.classList.contains("on")) {
+						selectedTag.classList.remove("on");
+						// user_mycafe_recent ui를 감춤
+						selectedTag.parentElement.nextElementSibling.style.display="none";
+						return
+					}
+					
+					// 내 카페 게시글 감춤
+					selectedTag.classList.add("on");
+					selectedTag.parentElement.nextElementSibling.style.display="";
 				}
 			});
 			

@@ -71,6 +71,8 @@ public class CafeDAO extends CommonDBSession {
 			// 유저가 가입한 카페가 존재하는지 질의
 			query = session.createQuery(userCafeBoardQuery, UserCafeBoardVO.class);
 			query.setParameter("cafeUid", userCafe.getCafeUid());
+			query.setFirstResult(0);
+			query.setMaxResults(3);
 			userCafe.setUserCafeBoardList(query.getResultList());
 		    }
 		}

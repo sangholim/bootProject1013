@@ -73,15 +73,16 @@ public class BoardMainFrame {
 	return Constant.MAIN;
     }
 
-    @RequestMapping(value = "/{cafe_url}/{board}")
-    public String getBoardView(Authentication authetication, @PathVariable String cafe_url, @PathVariable String board,
+    @RequestMapping(value = "/{cafe_url}/{boardUid}")
+    public String getBoardView(Authentication authetication, @PathVariable String cafe_url, @PathVariable String boardUid,
 	    Model model) throws Exception {
 
 	CustomAuthentication userAuth = (CustomAuthentication) authetication;
 	model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
 	model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 	model.addAttribute("userUid",userAuth.getUid());
-
+	model.addAttribute("boardUid",boardUid);
+	
 	//List<UserCafeBoardVO> boardPostList = boardManager.getBoardPostList(8);
 	//model.addAttribute("postList",boardPostList);
 

@@ -143,7 +143,7 @@
 				 					</div>
 				 					<div class="recent_title">
 				 						<div class="inner">
-				 							<a href="#" class="tit">
+				 							<a href="/board/${user_cafe.cafe.url}/${user_cafe_board.boardUid}" class="tit">
 				 								<em class="blind">글제목</em>
 				 								${user_cafe_board.subject}
 				 							</a>	
