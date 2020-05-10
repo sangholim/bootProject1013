@@ -1,11 +1,8 @@
 package com.pro1.board.param;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.*;
-
-import com.pro1.cafe.vo.UserCafeId;
 
 @Entity
 @Table(name = "userCafeBoard")
@@ -44,7 +41,7 @@ public class UserCafeBoardVO implements Serializable {
 
     @Transient
     private String cafeUrl;
-
+    
     public String getCafeUrl() {
         return cafeUrl;
     }
@@ -179,6 +176,11 @@ public class UserCafeBoardVO implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
+    public UserCafeBoardVO(Long boardUid, String subject, String writer, Long createDate) {
+        // public UserCafeBoardVO(Long boardUid, Long userUid, Long cafeUid, String subject, String content, String writer, String addfile, Long createDate, Long modifiedDate) {
+	this (boardUid, 0l, 0l, subject, null, writer, null, createDate, 0l);
+    }
+    
     @PrePersist
     private void onCreate() {
 

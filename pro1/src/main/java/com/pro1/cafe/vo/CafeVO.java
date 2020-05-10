@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.NaturalId;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

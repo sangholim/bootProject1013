@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pro1.board.param.UserCafeBoardVO;
 import com.pro1.cafe.vo.CafeForm;
 import com.pro1.cafe.vo.CafeVO;
 import com.pro1.cafe.vo.UserCafeVO;
@@ -24,7 +25,9 @@ public class CafeDAO extends CommonDBSession {
     /**
      * User가 가입한 카페에 필요한 정보 카페레벨,즐겨찾기, 카페이름,카페아이콘
      */
-    private final String userCafeJoin = "select NEW UserCafeVO(0l, 0l, uc.cafeLevel, uc.cafeFav, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid";
+    private final String userCafeJoin = "select NEW UserCafeVO(0l, uc.cafeUid, uc.userRole, uc.cafeFav, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid";
+
+    private final String userCafeBoardQuery = "select NEW UserCafeBoardVO(ucb.boardUid, ucb.subject, ucb.writer, ucb.createDate) from UserCafeBoardVO ucb where ucb.cafeUid = :cafeUid  Order By createDate";
 
     /**
      * 추천하는 카페에 필요한 정보 카페이름,카페아이콘, 멤버수, 랭킹점수 (todo)
@@ -36,7 +39,7 @@ public class CafeDAO extends CommonDBSession {
 
     private final String cafeMainCondition = "where uc.userUid != %s %s order by createDate";
 
-	private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
+    private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
 
     /**
      * 유저가 로그인후 볼수있는 cafe들을 추출 (추천 카페들 , 내가 가입한 카페들)
@@ -56,9 +59,22 @@ public class CafeDAO extends CommonDBSession {
 	    CafeVO cafeVO = cafeForm.getCafeVO();
 	    Query query = null;
 	    if(userUid != -1) {
+		// 유저가 가입한 카페리스트 출력
 		query = session.createQuery(userCafeJoin, UserCafeVO.class);
 		query.setParameter("userUid", userUid);
 		cafeForm.setUserCafeList(query.getResultList());
+		List<UserCafeVO> userCafeList = cafeForm.getUserCafeList();
+		
+		// 유저가 가입한 카페중 글출력
+		if (userCafeList !=null && !userCafeList.isEmpty()) {
+		    for (UserCafeVO userCafe : userCafeList) {
+			// 유저가 가입한 카페가 존재하는지 질의
+			query = session.createQuery(userCafeBoardQuery, UserCafeBoardVO.class);
+			query.setParameter("cafeUid", userCafe.getCafeUid());
+			userCafe.setUserCafeBoardList(query.getResultList());
+		    }
+		}
+
 	    }
 
 	    int cafeType = -1;

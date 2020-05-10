@@ -869,7 +869,7 @@ var cafe = {
 			// 2. Editor pick 기능
 			// 3. 내 카페 새글 피드 기능
 			// 4. 전체/ 즐겨찾는 카페/ 운영카페 클릭스 해당 카페 리스트 뿌리기
-			// 1. 카페홈/주제별/지역별/랭킹/대표카페/내소식/채팅 기능
+			// 5. 카페홈/주제별/지역별/랭킹/대표카페/내소식/채팅 기능
 			// 내가 가입하거나 만든 카페들의 갯수가 5개 단위로 보여주며, 그 이후로는 숨긴다.
 			var user_cafe_container = document.getElementsByClassName("user_mycafe_container");
 			var user_cafe_container_length = user_cafe_container.length;
@@ -885,8 +885,19 @@ var cafe = {
 			//var bodyTag = document.getElementById("content");
 			// 나의 카페 정보를 보여주는 큰 덩어리 
 			var user_mycafe_area = document.getElementsByClassName("user_mycafe_area");
+			// 나의 카페 버튼을 알려주는 정보
+			var btn_mycafe_user = document.getElementsByClassName("btn_mycafe_user");
 			var user_mycafe_area_size =user_mycafe_area.length;
 			var btn_mycafe_more = document.getElementsByClassName("btn_mycafe_more")[0];
+			
+			// 카페 홈 탭에서 마우스 올릴떄 이벤트
+			bodyTag.addEventListener('mouseover', function(event) {
+				var selectedTag = event.target;
+				// 1. 내카페 제목에 갖다되면 밑줄 
+				// 2. 내카페 제목 밖이면 화살표 이벤트 반응
+				
+				
+			});
 			
 			// 5. 추천 카페 뿌리기.
 			bodyTag.addEventListener('click', function(event) {

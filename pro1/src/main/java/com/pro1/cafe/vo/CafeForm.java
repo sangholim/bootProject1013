@@ -16,8 +16,13 @@ public class CafeForm extends SearchForm {
 
     private String imageDatas;
 
+    // 유저가 가입한 카페 리스트
     private List<UserCafeVO> userCafeList;
 
+    // 유저가 가입한 카페 게시글리스트
+    private List<UserCafeVO> userCafeBoardList;
+
+    // 유저가 가입하지 않은 카페 리스트
     private List<UserCafeVO> showCafeList;
 
     public CafeVO getCafeVO() {
@@ -50,6 +55,14 @@ public class CafeForm extends SearchForm {
 
     public void setShowCafeList(List<UserCafeVO> showCafeList) {
 	this.showCafeList = showCafeList;
+    }
+
+    public List<UserCafeVO> getUserCafeBoardList() {
+	return userCafeBoardList;
+    }
+
+    public void setUserCafeBoardList(List<UserCafeVO> userCafeBoardList) {
+	this.userCafeBoardList = userCafeBoardList;
     }
 
 }

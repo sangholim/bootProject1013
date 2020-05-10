@@ -1,13 +1,5 @@
 package com.pro1.board.param;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.hibernate.annotations.DynamicUpdate;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 //@Entity(name = "usercafeboard")
 //@Table(name = "usercafeboard")
 //@DynamicUpdate

@@ -1312,6 +1312,10 @@ button {
     max-width: 100%;
 }
 
+.user_mycafe_info .name_area:hover {
+    text-decoration: underline;
+    font-weight: bold;
+}
 .user_mycafe_info .name {
     font-size: 16px;
 }

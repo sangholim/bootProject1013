@@ -91,7 +91,6 @@
 		 <div class="user_mycafe_list">
 		 	<!--  내가 가입하거나 생성한 카페를5개씩묶어주고 더보기 이벤트 할떄마다 5개씩 더 보여준다. -->
 		 	<c:forEach var="user_cafe" items="${cafeForm.userCafeList}" varStatus="status">
-		 		
 		 		<c:if test="${status.index % 5 eq 0 }">
 		 			<div class="user_mycafe_container" style="display:none">
 		 		</c:if>
@@ -106,7 +105,7 @@
 					 			<a href="/board/${user_cafe.cafe.url}" class="name_area">
 					 				<strong class="name">${user_cafe.cafe.name }</strong>
 									<div class="common_icon_box">
-									<c:if test="${user_cafe.cafeLevel eq 'admin' }">
+									<c:if test="${user_cafe.userRole eq 7 }">
 										<em class="icon_manager">
 											<span class="blind">운영</span>
 											<!-- 카페 경로를 숨김 -->
@@ -117,13 +116,14 @@
 											<span class="blind">대표카페</span>
 										</em>
 									</c:if>
-									<!----> <!----> <!----> <!----> <!----> <!----></div>
+									<!----> <!----> <!----> <!----> <!----> <!---->
+									</div>
 								</a>
 								<div class="info_area">
 									<a href="#" title="즐겨찾기" class="user_mycafe_bookmark<c:if test = '${user_cafe.cafeFav eq 1}'> on</c:if>">
 										<span class="blind">즐겨찾기 선택 시 등록됨</span>
 									</a>
-									<a href="#" class="user_mycafe_new">새글 114(TODO: board table 완성대면 join으로 들고오기)</a>
+									<a href="#" class="user_mycafe_new">새글 TODO: 카운팅해야함</a>
 								</div>
 					 		</div>
 					 		<button type="button" class="btn_mycafe_user on">
@@ -131,28 +131,28 @@
 					 		</button>
 					 	
 				 		</div>
-				 		<!-- 
-				 		TODO board ui 완성대면 Join 으로 들고오기
-				 		<div class="user_mycafe_recent">
-				 			<ul class="recent_list">
-				 				<li article="게시글">
+						<!-- 내가 가입한 카페 최신글 보기 -->
+						<div class="user_mycafe_recent">
+					 		<ul class="recent_list">
+							<!-- 가입한 카페의 게시글 공개 userCafeBoardList-->
+							<c:forEach var="user_cafe_board" items="${user_cafe.userCafeBoardList}">
+								<li article="게시글">
 				 					<div class="recent_info">
-				 						<span class="nickname">엄준</span>
-										<span class="time">32분 전</span>
+				 						<span class="nickname">${user_cafe_board.writer}</span>
+										<span class="time">${user_cafe_board.createDate}</span>
 				 					</div>
 				 					<div class="recent_title">
 				 						<div class="inner">
 				 							<a href="#" class="tit">
 				 								<em class="blind">글제목</em>
-				 								무무형 방송안키는이유그거임
+				 								${user_cafe_board.subject}
 				 							</a>	
 				 						</div>
 				 					</div>
 				 				</li>
-				 				<li>해당 카페에 게시글을 생성</li>
-				 			</ul>	
+					 		</c:forEach>
+							</ul>	
 				 		</div>
-				 		 -->
 				 	</div>
 				 	<!--  내카페 리스트가 5단위로 끝나거나, 마지막 순서일떄는 태그를닫는다. -->
 				<c:if test="${status.index % 5 eq 4 || status.last}">

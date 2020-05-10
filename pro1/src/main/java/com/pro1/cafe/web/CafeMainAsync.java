@@ -113,7 +113,7 @@ public class CafeMainAsync {
 	resultMap.put("nickName", userAuth.getAuthUser().getUserNickName());
 
 	try {
-	    cafeManager.getCafeMapByUserUid(cafeForm, -1, sub_type);
+	    cafeManager.getCafeMapByUserUid(cafeForm, userAuth.getUid(), sub_type);
 	    resultMap.put("cafeForm", cafeForm);
 	    resultMap.put(code, 200);
 	    resultMap.put(result, "추천카페  불러오는중 문제 발생!");
