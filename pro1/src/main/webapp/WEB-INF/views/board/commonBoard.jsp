@@ -8,6 +8,7 @@
 		<c:when test="${boardType eq 'view'}">
 			<jsp:include page="commonBoardView.jsp"/>
 		</c:when>
+		<!-- 
 		<c:when test="${boardType eq 'insert'}">
 			<jsp:include page="commonBoardInsert.jsp"/>
 		</c:when>
@@ -17,5 +18,6 @@
 		<c:when test="${boardType eq 'delete'}">
 			<jsp:include page="commonBoardDelete.jsp"/>
 		</c:when>
+		 -->
 	</c:choose>
 </div>

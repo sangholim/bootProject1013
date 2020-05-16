@@ -83,28 +83,17 @@ var board = {
 
             var sign_up = document.getElementById("sign_up");
 
-
-
             //로그인한 사용자가 카페가입자인지
             var isMemberCafeLoginUser = document.querySelector("input[name=isMemberCafeLoginUser]").value;
 
             if(selectedTag == menuLink0) {
-
-                //debugger;
-                //alert("tt");
-                event.preventDefault();
-               // event.stopPropagation();
-                smart_editor.style.visibility = "hidden";
+            	event.preventDefault();
+            	smart_editor.style.visibility = "hidden";
                 mainAreaContent.style.display = "block";
             }
 
-            // if(selectedTag == modifyFormLink) {
-            //     alert("수정버튼");
-            // }
-
             if(selectedTag == boardMainBtn) {
-
-                if(isMemberCafeLoginUser == 'true') {
+            	if(isMemberCafeLoginUser == 'true') {
                     if( smart_editor.style.visibility == "hidden") {
                         smart_editor.style.visibility = "visible";
                         mainAreaContent.style.display = "none";
@@ -117,10 +106,7 @@ var board = {
                         mainAreaContent.style.display = "none";
                     }
                 }
-                // else {
-                //     smart_editor.style.visibility = "hidden";
-                //     mainAreaContent.style.display = "block";
-                // }
+ 
             }
             else if(selectedTag == saveBtn) {
                 board.boardWrite(login_info);

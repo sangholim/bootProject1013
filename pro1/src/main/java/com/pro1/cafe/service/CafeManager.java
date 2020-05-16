@@ -54,11 +54,11 @@ public class CafeManager {
 	}
     }
 
-	/**
-	 *
-	 * @author ued123
-	 * @brief 카페 접속시 자신의 카페 이름(카페이름은 unique)을 가지고 자신의 cafe 정보를 조회
-	 * */
+    /**
+     *
+     * @author ued123
+     * @brief 카페 접속시 자신의 카페 이름(카페이름은 unique)을 가지고 자신의 cafe 정보를 조회
+     */
     public CafeVO getCafeInfo(String cafeUrl) {
 
 	try {
@@ -70,4 +70,5 @@ public class CafeManager {
 	    return null;
 	}
     }
+
 }

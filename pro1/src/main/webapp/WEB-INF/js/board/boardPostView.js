@@ -15,7 +15,11 @@ var boardPostView = {
             var removeBtn = document.getElementById("postRemove");
 
             var modifyFormLink = document.querySelector("#modifyFormLink");
-
+            // url정보 취득
+            // 개인 게시글  존재하는 url 정보 추가
+            var boardViewLink = document.getElementsById("linkUrl");
+            boardViewLink.textContent = window.location.origin+boardViewLink.textContent; 
+  
             inbox.addEventListener('click',function (event) {
 
                 var selectedTag = event.target;

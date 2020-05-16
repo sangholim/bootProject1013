@@ -53,13 +53,11 @@ public class UserCafeVO implements Serializable {
     @Id
     @ManyToOne(optional = false)
     @JoinColumn(name = "userUid", insertable = false, updatable = false)
-    // @JoinColumn(name = "userUid")
     private UserVO user;
 
     @Id
     @ManyToOne(optional = false)
     @JoinColumn(name = "cafeUid", insertable = false, updatable = false)
-    // @JoinColumn(name = "cafeUid")
     private CafeVO cafe;
 
     //내가 가입한 카페에 대한 게시글은 복수이기 떄문에 oneTomany로 호출

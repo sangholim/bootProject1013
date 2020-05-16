@@ -1,8 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html lang="ko">
 <head>
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html;charset=KSC5601">
@@ -14,12 +12,14 @@
     <meta name="myCafeIntro" content="true">
     <meta http-equiv="Content-Type" content="text/html;charset=euc-kr">
     <link rel="stylesheet" href="/css/board/board.css" type="text/css">
-    <style type="text/css">div.autosourcing-stub {
+    <style type="text/css">
+    	div.autosourcing-stub {
         position: absolute;
         opacity: 0
-    }</style>
+    	}
+    </style>
 </head>
-<body class="" marginwidth="0" marginheight="0">
+
 <div id="cafe-body-skin">
     <div id="cafe-body" style="width:860px">
         <div id="content-area">
@@ -316,5 +316,4 @@
     <iframe frameborder="0" scrolling="no" style="width:400px;" title="빈프레임"></iframe>
 </div>
 
-</body>
 </html>

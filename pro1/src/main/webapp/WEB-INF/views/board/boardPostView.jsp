@@ -1,35 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <head>
     <link rel="stylesheet" href="/css/board/board.css" type="text/css">
-    <script type="text/javascript" src="/js/board/boardPostView.js"></script>
+</head>
 
-<body marginwidth="0" marginheight="0">
 <div id="basisElement">
     <div id="content-area">
         <div id="main-area">
-
             <div class="list-blog border-sub" id="post_2">
-
                 <div class="inbox">
-
                     <!-- 타이틀,게시글 등록일,보관,수정 박스 -->
                     <div class="tit-box">
-
                         <div class="fl">
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                                 <tbody>
                                 <tr valign="top">
                                     <td>
                                         <!-- 타이틀 -->
-                                        <span id="post_subject" class="b m-tcol-c">${post.subject}</span>
+                                        <span id="post_subject" class="b m-tcol-c">${post.userCafeBoardVO.subject}</span>
                                     </td>
                                     <td nowrap="" class="m-tcol-c filter-30">|</td>
-                                    <td nowrap="" class="m-tcol-c"><a
-                                            href=""
-                                            onclick=""
-                                            class="m-tcol-c">자유게시판</a>
+                                    <td nowrap="" class="m-tcol-c">
+                                    	<a href="" onclick="" class="m-tcol-c">자유게시판</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -40,24 +34,22 @@
                                 <tbody>
                                 <tr>
                                     <td></td>
-                                    <td class="m-tcol-c date">${post.modifiedDate}</td>
+                                    <td class="m-tcol-c date">${post.userCafeBoardVO.modifiedDate}</td>
 
                                     <td nowrap="" class="m-tcol-c filter-30">|</td>
-                                    <td class="edit _rosRestrict"><a id="addArticleStorage" href="#"
-                                                                     onclick="clickcr(this,'art.keep','','',event);"
-                                                                     class="m-tcol-c">보관</a></td>
-
+                                    <td class="edit _rosRestrict">
+                                    	<a id="addArticleStorage" href="#" onclick="clickcr(this,'art.keep','','',event);" class="m-tcol-c">보관</a>
+                                    </td>
 
                                     <td nowrap="" class="m-tcol-c filter-30">|</td>
-                                    <td class="edit _rosRestrict"><a id="modifyFormLink" href="#"
-                                                                     class="m-tcol-c">수정</a></td>
-
+                                    <td class="edit _rosRestrict">
+                                    	<a id="modifyFormLink" href="#" class="m-tcol-c">수정</a>
+                                     </td>
 
                                     <td nowrap="" class="m-tcol-c filter-30">|</td>
                                     <td class="delete _rosRestrict">
                                         <a href="#" class="m-tcol-c" id="postRemove">삭제</a>
                                     </td>
-
                                 </tr>
                                 </tbody>
                             </table>
@@ -96,14 +88,15 @@
                                         <table role="presentation" cellspacing="0">
                                             <tbody>
                                             <tr>
-                                                <td class="pc2w"><a
-                                                        href="/CafeMemberNetworkView.nhn?m=view&amp;clubid=29995789&amp;memberid=ued_123"><img
-                                                        src="https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png"
-                                                        width="24" height="24"
-                                                        onerror="this.onerror='';this.src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png';"></a>
+                                                <td class="pc2w">
+                                                	<a href="/CafeMemberNetworkView.nhn?m=view&amp;clubid=29995789&amp;memberid=ued_123">
+                                                		<img src="https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png" width="24" height="24" onerror="this.onerror='';this.src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png';">
+                                                	</a>
                                                 </td>
-                                                <td class="p-nick"><a href="#" class="m-tcol-c b"
-                                                                      onclick="ui(event, 'ued_123',3,'이승헌','29995789','ma', 'true', 'false', 'yulimhall', 'true', '1'); return false;">이승헌(ued_****)</a>
+                                                <td class="p-nick">
+                                                	<a href="#" class="m-tcol-c b" onclick="ui(event, 'ued_123',3,'이승헌','29995789','ma', 'true', 'false', 'yulimhall', 'true', '1'); return false;">
+														${post.userCafeBoardVO.writer}
+													</a>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -122,19 +115,27 @@
                                 <tbody>
                                 <tr>
                                     <td valign="top" class="url" align="right">
-                                        <span class="filter-50"><a id="linkUrl"
-                                                                   href="https://cafe.naver.com/yulimhall/2"
-                                                                   target="_top" class="m-tcol-c url-txt">https://cafe.naver.com/yulimhall/2</a></span>
-                                        <span><a href="#" onclick="return false;" class="_copyUrl url-btn"
-                                                 data-clipboard-action="copy" data-clipboard-target="#linkUrl"><img
-                                                src="https://cafe.pstatic.net/cafe4/btn-copy-add.gif" width="41"
-                                                height="15" alt="주소복사" class="copy"></a></span>
+                                        <span class="filter-50">
+                                        	<a id="linkUrl" href="${post.cafeBoardUrl}" target="_top" class="m-tcol-c url-txt">
+                                        		<!-- 
+                                        		https://cafe.naver.com/yulimhall/2
+                                        		 -->
+                                        		 ${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${post.cafeBoardUrl}
+												
+                                        	</a>
+                                        </span>
+                                        <span>
+                                        	<a href="#" onclick="return false;" class="_copyUrl url-btn" data-clipboard-action="copy" data-clipboard-target="#linkUrl">
+                                        		<img src="https://cafe.pstatic.net/cafe4/btn-copy-add.gif" width="41" height="15" alt="주소복사" class="copy">
+                                        	</a>
+                                        </span>
 
                                         <i class="ic_and"></i>
-                                        <span class=""><a href="#" id="naverStatArticleAnalysis"
-                                                          class="url-btn _stopDefault"><img
-                                                src="https://ssl.pstatic.net/static/cafe/btn_statistic.png" width="62"
-                                                height="15" alt="게시글분석" class="copy"></a></span>
+                                        <span class="">
+                                        	<a href="#" id="naverStatArticleAnalysis" class="url-btn _stopDefault">
+                                        		<img src="https://ssl.pstatic.net/static/cafe/btn_statistic.png" width="62" height="15" alt="게시글분석" class="copy">
+                                        	</a>
+                                        </span>
 
                                     </td>
                                 </tr>
@@ -151,7 +152,7 @@
                     <!-- 게시글 글 내용 -->
                     <div class="tbody m-tcol-c" id="tbody"
                          style="width:744px; padding-left:43px; padding-right:43px; margin-right:0px;">
-                        ${post.content}
+                        ${post.userCafeBoardVO.content}
                     </div>
 
                     <!-- 게시글에 해댕하는 태그가 들어가는곳 -->
@@ -406,17 +407,11 @@
                             <tr>
                                 <td class="i2">
                                     <div class="comm_write_wrap border-sub skin-bgcolor">
-                                        <textarea id="comment_text" cols="50" rows="2" class="textarea m-tcol-c"
-                                                  maxlength="6000"
-                                                  style="overflow: hidden; line-height: 14px; height: 39px;"
-                                                  title="댓글입력"></textarea>
-
-                                        <div class="u_cbox_upload_image" style="display:none">
-                                        </div>
+                                        <textarea id="comment_text" cols="50" rows="2" class="textarea m-tcol-c" maxlength="6000" style="overflow: hidden; line-height: 14px; height: 39px;" title="댓글입력"></textarea>
+                                        <div class="u_cbox_upload_image" style="display:none"></div>
                                     </div>
                                 </td>
                                 <td class="i3">
-
                                     <div class="u_cbox_btn_upload _submitBtn">
                                         <a href="#" class="u_cbox_txt_upload _submitCmt">등록</a>
                                     </div>
@@ -429,20 +424,21 @@
                                             <div class="_stickerBtn u_cbox_btn_upload_sticker">
                                                 <span class="u_cbox_ico_upload_sticker"></span>
                                                 <span class="m-tcol-c u_cbox_txt_upload_sticker">스티커</span>
-                                                <a href="#" class="u_cbox_link_wrap"
-                                                   onclick="clickcr(this,'cmt.sticker', '', '', event)">스티커 레이어 팝업</a>
+                                                <a href="#" class="u_cbox_link_wrap" onclick="clickcr(this,'cmt.sticker', '', '', event)">스티커 레이어 팝업</a>
                                             </div>
 
                                             <div class="line_stc_sec">
                                                 <div class="se2_line_layer">
                                                     <div class="se2_in_layer">
                                                         <div class="se2_line_sticker">
-                                                            <button type="button" title="이전" class="se2_prev"
-                                                                    disabled=""><span>이전</span></button>
+                                                            <button type="button" title="이전" class="se2_prev" disabled="">
+                                                                    <span>이전</span>
+                                                             </button>
                                                             <ul class="se2_line_sticker_set">
                                                             </ul>
                                                             <button type="button" title="다음" class="se2_next">
-                                                                <span>다음</span></button>
+                                                                <span>다음</span>
+                                                            </button>
                                                         </div>
                                                     </div>
 
@@ -452,9 +448,10 @@
                                         </li>
                                         <li>
                                             <div class="u_cbox_btn_upload_photo">
-                                                <div class="_imageBtn u_cbox_btn_file"><label for="attachImageBtn2"
-                                                                                              onclick="clickcr(this,'cmt.image', '', '', event);">업로드</label><input
-                                                        type="file" id="attachImageBtn2" accept="Image/*"></div>
+                                                <div class="_imageBtn u_cbox_btn_file">
+                                                	<label for="attachImageBtn2" onclick="clickcr(this,'cmt.image', '', '', event);">업로드</label>
+                                                	<input type="file" id="attachImageBtn2" accept="Image/*">
+                                                </div>
                                                 <span class="u_cbox_ico_upload_photo"></span>
                                                 <span class="m-tcol-c u_cbox_txt_upload_photo">사진</span>
                                             </div>
@@ -467,8 +464,9 @@
 
                         <div class="m-tcol-c reply_error" style="display:none;">
                             <strong>죄송합니다. 댓글 시스템 오류로 댓글을 읽거나 쓸 수 없습니다.</strong>
-                            문제가 지속될 경우 <a href="http://help.naver.com/" target="_blank" class="m-tcol-c">고객센터</a>에 알려주시면
-                            친절하게 안내해 드리겠습니다.
+							문제가 지속될 경우 
+							<a href="http://help.naver.com/" target="_blank" class="m-tcol-c">고객센터</a>에 알려주시면
+                           	 친절하게 안내해 드리겠습니다.
                         </div>
                     </div>
 
@@ -493,11 +491,11 @@
 
 <%--                    <div style="display:none;" class="btn2"></div>--%>
 
-                    <div class="btn2"><span></span>
+                    <div class="btn2">
+                    	<span></span>
                         <p>
                             <a href="#" class="m-tcol-c">
-                                <img src="https://cafe.pstatic.net/cafe4/ico-btn-net_.gif"
-                                                             width="6" height="5" alt="">다음글
+                                <img src="https://cafe.pstatic.net/cafe4/ico-btn-net_.gif" width="6" height="5" alt="">다음글
                             </a>
                         </p>
                     </div>
@@ -505,7 +503,8 @@
                 </div>
 
                 <div class="fr">
-                    <div class="btn2"><span></span>
+                    <div class="btn2">
+                    	<span></span>
                         <p><a href="#" class="m-tcol-c">목록</a></p>
                     </div>
                 </div>
@@ -564,8 +563,6 @@
                     <tr>
                         <td colspan="4" class="board-line"></td>
                     </tr>
-
-
                     <tr align="center">
                         <td class="prev_btn"><a href="#" onclick="goNext();clickcr(this,'art.next','','',event);"
                                                 class="m-tcol-c"><img
@@ -1298,7 +1295,7 @@
     </div>
 
     <div id="board_info">
-        <input type="hidden" name="boardUid" value="${post.boardUid}"/>
+        <input type="hidden" name="boardUid" value="${post.userCafeBoardVO.boardUid}"/>
     </div>
 
 
@@ -1307,7 +1304,5 @@
 <%--        <input type="hidden" name="boardUid" value="${post.boardUid}"/>--%>
 <%--        <input type="hidden"--%>
     </form>
-
 </div>
-</body>
-</html>
+  

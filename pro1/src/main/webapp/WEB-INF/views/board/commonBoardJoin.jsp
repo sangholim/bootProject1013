@@ -1,11 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<html lang="ko"><head>
-	<title>카페</title>
-	<meta name="mainTitle" content="카페 가입하기">
-</head>
-<body>
+
 <form name="frm" id="applyFrm" method="post" onsubmit="return false" action="/CafeApplyResult.nhn">
 	<div id="sub-tit">
 		<div class="title_area">
@@ -70,7 +65,4 @@
 	<input type="hidden" id="cafe_uid" value="${BoardSimpleInfoForm.cafeUid}"/>
 </div>
 
-<script type="text/javascript" src="/js/board/boardJoin.js"></script>
 
-</body>
-</html>

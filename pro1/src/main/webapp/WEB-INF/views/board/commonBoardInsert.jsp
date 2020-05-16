@@ -1,69 +1,41 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
-<%--<input type="text" id="post_subject" placeholder="제목" height="100px"/>--%>
-
-<link rel="stylesheet" href="/css/board/board.css" type="text/css">
-
-<%--
-<label class="item" for="subject">제목</label>
-<input type="text" name="subject" placeholder="게시글 제목을 입력하세요" id="subject" class="box_input">
-
-<!--  게시판 구성 페이지 [admin / user(회원) / 자게] -->
-    <textarea name="ir1" id="ir1" rows="10" cols="100">에디터에 기본으로 삽입할 글(수정 모드)이 없다면 이 value 값을 지정하지 않으시면 됩니다.</textarea>
-    <script type="text/javascript" src="/js/package/dist/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-    <script type="text/javascript">
-        var oEditors = [];
-        nhn.husky.EZCreator.createInIFrame({
-            oAppRef: oEditors,
-            elPlaceHolder: "ir1",
-            sSkinURI: "/js/package/dist/SmartEditor2Skin.html",
-            fCreator: "createSEditor2"
-        });
-    </script>
-
-<input type="button" id="insertbtn" value="글쓰기" />--%>
 
 <div id="nboard" style="width: 860px; text-align: left;">
     <div id="editer_border">
         <div id="naver_common_editor">
-
             <!-- smart editor 타이틀 -->
             <h3 class="bi">
                 <img src="https://cafe.pstatic.net/cafe4/write_bi.gif" width="104" height="14" border="0" alt="SMART EDITOR" style="margin-right: 3px;"><a href="#" onclick="popEditorHelp();return false;"><img src="https://cafe.pstatic.net/cafe4/btn_help.gif" width="14" height="14" alt="스마트에디터 도움말" class="help"></a>
             </h3>
-
             <!-- 게시판 -->
             <ul class="subject">
                 <li>
                     <label class="item" for="boardCategory">게시판</label>
                     <!-- 게시판 선택 -->
                     <div>
-
-
                         <select name="menuid" class="step01" style="width: 156px;" id="boardCategory">
                             <option value="-1">게시판선택</option>
                             <option wf="" wfid="" value="1" selected="">자유게시판</option>
                         </select>
-
                         <!-- 말머리 선택 -->
                         <select name="headid" id="headid" style="width: 115px;" title="게시판말머리">
                             <option value="">말머리선택</option>
                         </select>
-                        <span id="go_headid" class="go_headid"><a target="_top" href="https://cafe.naver.com/ManageMenu.nhn?clubid=29995789&amp;menuid=1">말머리추가</a></span>
+                        <span id="go_headid" class="go_headid">
+                        	<a target="_top" href="https://cafe.naver.com/ManageMenu.nhn?clubid=29995789&amp;menuid=1">말머리추가</a>
+                        </span>
 
 
                         <span id="noticeAreaMain" class="notice_area">
-									<input type="checkbox" id="typeClubNotice" name="typeClubNotice" class="box_check2">
-									<label for="typeClubNotice" class="notice-1">공지로 등록</label>
-							 	</span>
-
+							<input type="checkbox" id="typeClubNotice" name="typeClubNotice" class="box_check2">
+							<label for="typeClubNotice" class="notice-1">공지로 등록</label>
+					 	</span>
                         <select style="width:115px; display: none;" title="공지 유형" id="typeNoticeOption">
                             <option id="noticeN" value="N">전체 공지</option>
                             <option id="noticeM" value="M">게시판 공지</option>
-                            <option id="noticeR" value="R">필독 공지</option></select>
-
+                            <option id="noticeR" value="R">필독 공지</option>
+                         </select>
                     </div>
                 </li>
 
@@ -76,7 +48,9 @@
                             <strong id="tempsaving_count">(0)</strong>
                         </span>
                         <div class="tooltip temporary_save" id="tempSave_tooltip" style="display: none;">
-                            <div class="inner"><p class="txt">임시 저장은 최대 300개까지 가능합니다.<br>오래된 게시글을 삭제해 주세요.</p></div>
+                            <div class="inner">
+                            	<p class="txt">임시 저장은 최대 300개까지 가능합니다.<br>오래된 게시글을 삭제해 주세요.</p>
+                            </div>
                             <a class="clse _click(TempSaveTooltip|Close) _stopDefault" href="#">닫기</a>
                             <div class="tail"></div>
                         </div>
@@ -205,20 +179,23 @@
 
             <ul class="post">
 
-                <li id="file_list" style="display: none;"><label class="item">첨부파일</label>
+                <li id="file_list" style="display: none;">
+                	<label class="item">첨부파일</label>
                     <div class="file_list">
                         <ul id="fileTxtArea" class="file_txt" style="display: none;">
                             <xmp id="fileTxtArea_template" style="display:none">
-                                <li class="#classname#"><a href="#">#filename#</a> <span>#filesize# <img src="https://blogimgs.pstatic.net/nblog/mylog/post/btn_file_delete.gif" width="12"
-                                                                                                         height="11" alt="file delete" onclick="attachArea.delFile(#fileid#,'fileTxtArea');">
-									</span></li>
+                                <li class="#classname#">
+                                	<a href="#">#filename#</a>
+									<span>#filesize#
+											<img src="https://blogimgs.pstatic.net/nblog/mylog/post/btn_file_delete.gif" width="12" height="11" alt="file delete" onclick="attachArea.delFile(#fileid#,'fileTxtArea');">
+									</span>
+								</li>
                             </xmp>
                         </ul>
 
                         <ul id="fileThumbArea" class="file_thumb" style="display: none;">
                             <xmp id="fileThumbArea_template" style="display:none">
-
-                                <li class="" name="thumbLi" onmouseover="attachArea.showDelete(this)" onmouseout="attachArea.hideDelete(this)">
+								<li class="" name="thumbLi" onmouseover="attachArea.showDelete(this)" onmouseout="attachArea.hideDelete(this)">
                                     <span class="ic_rep"><span class="blind">대표</span></span>
                                     <div class="thumb_wrap" onClick="attachArea.selectRepresentImage(#fileid#);try{clickcr(this,'wrt.thumbnail','','',event);}catch(e){};return false;">
                                         <img id="attachThumb#fileid#" src="#thumbnail#" width="54" height="54" alt="첨부이미지">
@@ -230,7 +207,11 @@
                     </div>
                     <div id="filesizeGuide" class="amount_info" style="display: none;"><em>최대 50MB</em>까지 파일을 올리실 수 있습니다.</div>
                     <div class="amount" style="display: none;">
-                        <span><strong id="filesizeCurrent">0</strong>KB</span> <span class="section">/</span> <span class="total"><span id="filesizeTotal">51200</span>KB</span>
+                        <span>
+                        	<strong id="filesizeCurrent">0</strong>KB
+                        </span>
+						<span class="section">/</span>
+						<span class="total"><span id="filesizeTotal">51200</span>KB</span>
                         <div class="graph">
                             <span id="filesizeGuage" style="width: 0%; height: 7px;"></span>
                         </div>
@@ -264,14 +245,18 @@
 
                 <li class="open_edit"><label class="item">공개설정</label>
                     <div>
-                        <input type="radio" name="openyn" value="Y" id="all_open" style="margin-left: 0; *margin-left: -4px" title="전체공개"> <label for="all_open" class="item_align">전체공개</label>
-                        <input type="radio" name="openyn" value="N" id="member_open" checked="" title="멤버공개"> <label for="member_open" class="item_align">멤버공개</label>
+                        <input type="radio" name="openyn" value="Y" id="all_open" style="margin-left: 0; *margin-left: -4px" title="전체공개">
+						<label for="all_open" class="item_align">전체공개</label>
+                        <input type="radio" name="openyn" value="N" id="member_open" checked="" title="멤버공개">
+						<label for="member_open" class="item_align">멤버공개</label>
                     </div>
                     <div class="search_allow">
                         <input type="checkbox" name="searchopen" value="1" class="box_check" id="search_conform" checked="">
                         <label for="search_conform" checked="">검색ㆍ네이버 서비스공개 허용</label>
                         <a href="#" id="searchHelpIcon" role="button">
-                            <span class="notice"><img src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="도움말"> 검색 및 네이버 서비스를 통해 멤버가 아닌 사람도 글을 볼 수 있습니다.</span>
+                            <span class="notice">
+                            	<img src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="도움말"> 검색 및 네이버 서비스를 통해 멤버가 아닌 사람도 글을 볼 수 있습니다.
+                            </span>
                         </a>
                     </div>
                 </li>
@@ -279,28 +264,25 @@
 
 
 
-                <li class="edit_date"><label class="item">기능설정</label>
+                <li class="edit_date">
+                	<label class="item">기능설정</label>
                     <div style="margin-bottom: 4px; padding-top: 4px">
-                        댓글
+						 댓글
                         <span class="allow" id="replyynspan" tabindex="0" name="replyynlayer">허용</span>
                         <span class="bar">ㅣ</span>
-                        블로그/카페 공유
+						 블로그/카페 공유
                         <span class="allow" id="scrapynspan" tabindex="0">허용</span>
-
                         <span class="bar">ㅣ</span>
-                        외부 공유
+						외부 공유
                         <span class="allow" id="metoospan" tabindex="0">사용</span>
-
-                        <span class="bar">ㅣ</span>
-                        마우스 오른쪽버튼
+						<span class="bar">ㅣ</span>
+                       	 마우스 오른쪽버튼
                         <span class="allow" id="rclickspan" tabindex="0">허용</span>
-
-                        <span class="bar">ㅣ</span>
-                        동영상 공유
+						<span class="bar">ㅣ</span>
+                  		동영상 공유
                         <span class="prohibit" id="videoLinkSpan" tabindex="0" style="cursor: default;">비허용</span>
-
-                        <div style="padding: 7px 0 0 0">
-                            자동출처
+						<div style="padding: 7px 0 0 0">
+							자동출처
                             <span class="prohibit" id="autosourcingspan" tabindex="0">사용 안함</span>
                             <span class="bar">ㅣ</span>
                             CCL
@@ -312,122 +294,132 @@
                     </div>
                     <div class="set" id="functiondiv" style="display: none">
                         <ul id="functionDivUl">
-
-                            <li id="enabledComment">
+							<li id="enabledComment">
                                 <span class="set_item">댓글설정</span>
                                 <span class="wd01">
-											<input type="radio" name="replyyn" value="Y" id="reply_0" checked="">
-											<label for="reply_0">허용</label>
-										</span>
+									<input type="radio" name="replyyn" value="Y" id="reply_0" checked="">
+									<label for="reply_0">허용</label>
+								</span>
                                 <span class="wd02">
-											<input type="radio" name="replyyn" value="N" id="reply_1">
-											<label for="reply_1">비허용</label>
-										</span>
+									<input type="radio" name="replyyn" value="N" id="reply_1">
+									<label for="reply_1">비허용</label>
+								</span>
                             </li>
                             <li id="disabledComment" style="display:none">
                                 <span class="set_item">댓글설정 </span>
                                 <span class="wd01">
-											<input type="radio" name="replyyn" value="Y" id="reply_2">
-											<label for="reply_2">허용</label>
-										</span>
+									<input type="radio" name="replyyn" value="Y" id="reply_2">
+									<label for="reply_2">허용</label>
+								</span>
                                 <span>
-											<input type="radio" name="replyyn" value="N" id="reply_3" disabled="">
-											<label for="reply_3">비허용<span class="gray">매니저가 댓글설정을 허용하지 않았습니다.</span></label>
-										</span>
+									<input type="radio" name="replyyn" value="N" id="reply_3" disabled="">
+									<label for="reply_3">비허용<span class="gray">매니저가 댓글설정을 허용하지 않았습니다.</span></label>
+								</span>
                             </li>
                             <li>
-										<span class="set_item">블로그/카페 공유
-											<span id="linkscrapInfoMsgForsaleBoard" style="display: none;">(링크스크랩)</span>
-
-											<a href="#"><img id="scrapHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="블로그/카페 공유 도움말" class="help02"></a>
-										</span>
+								<span class="set_item">블로그/카페 공유
+									<span id="linkscrapInfoMsgForsaleBoard" style="display: none;">(링크스크랩)</span>
+									<a href="#">
+										<img id="scrapHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="블로그/카페 공유 도움말" class="help02">
+									</a>
+								</span>
                                 <span class="wd01">
-											<input type="radio" name="scrapyn" value="Y" id="scrap_0" checked="">
-											<label for="scrap_0">허용</label>
-										</span>
+									<input type="radio" name="scrapyn" value="Y" id="scrap_0" checked="">
+									<label for="scrap_0">허용</label>
+								</span>
                                 <span>
-											<input type="radio" name="scrapyn" value="N" id="scrap_1">
-											<label for="scrap_1">비허용<span class="gray">기존의 스크랩 기능과 동일한 기능입니다.</span></label>
-										</span>
-                            </li>
-
-                            <li>
-										<span class="set_item">
-											외부 공유
-											<a href="#"><img id="metooExternalHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="외부 공유 도움말" class="help02"></a>
-										</span>
-                                <span class="wd01">
-											<input type="radio" name="metoo" value="true" id="metoo_0" checked="">
-											<label for="metoo_0">허용</label>
-										</span>
-                                <span>
-											<input type="radio" name="metoo" value="false" id="metoo_1">
-											<label for="metoo_1">비허용<span class="gray">메일과 외부SNS로 글을 보낼 수 있습니다.</span></label>
-										</span>
+									<input type="radio" name="scrapyn" value="N" id="scrap_1">
+									<label for="scrap_1">비허용<span class="gray">기존의 스크랩 기능과 동일한 기능입니다.</span></label>
+								</span>
                             </li>
 
                             <li>
-										<span class="set_item">
-											마우스 오른쪽클릭
-											<a href="#"><img id="rClickHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="마우스 오른쪽클릭 도움말" class="help02"></a>
-										</span>
+								<span class="set_item">
+									외부 공유
+									<a href="#">
+										<img id="metooExternalHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="외부 공유 도움말" class="help02">
+									</a>
+								</span>
                                 <span class="wd01">
-											<input type="radio" name="rclick" value="0">
-											<label for="rclick_0">허용</label>
-										</span>
+									<input type="radio" name="metoo" value="true" id="metoo_0" checked="">
+									<label for="metoo_0">허용</label>
+								</span>
                                 <span>
-											<input type="radio" name="rclick" value="1" id="rclick_1">
-											<label for="rclick_1">비허용<span class="gray">무단복사 방지를 위해서는 비허용 체크 권장</span></label>
-										</span>
+									<input type="radio" name="metoo" value="false" id="metoo_1">
+									<label for="metoo_1">비허용<span class="gray">메일과 외부SNS로 글을 보낼 수 있습니다.</span></label>
+								</span>
+                            </li>
+
+                            <li>
+								<span class="set_item">
+									마우스 오른쪽클릭
+									<a href="#">
+										<img id="rClickHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="마우스 오른쪽클릭 도움말" class="help02">
+									</a>
+								</span>
+                                <span class="wd01">
+									<input type="radio" name="rclick" value="0">
+									<label for="rclick_0">허용</label>
+								</span>
+                                <span>
+									<input type="radio" name="rclick" value="1" id="rclick_1">
+									<label for="rclick_1">비허용<span class="gray">무단복사 방지를 위해서는 비허용 체크 권장</span></label>
+								</span>
                             </li>
 
 
                             <li>
-												<span class="set_item">
-													동영상 공유
-													<a href="#"><img id="videoLinkHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="동영상 공유 도움말" class="help02"></a>
-												</span>
+								<span class="set_item">
+									동영상 공유
+									<a href="#">
+										<img id="videoLinkHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="동영상 공유 도움말" class="help02">
+									</a>
+								</span>
                                 <span class="wd01">
-													<input type="radio" name="videoLink" value="true">
-													<label for="videoLink_0">허용</label>
-												</span>
+									<input type="radio" name="videoLink" value="true">
+									<label for="videoLink_0">허용</label>
+								</span>
                                 <span>
-													<input type="radio" name="videoLink" value="false" id="videoLink_1">
-													<label for="videoLink_1">비허용</label>
-												</span>
+									<input type="radio" name="videoLink" value="false" id="videoLink_1">
+									<label for="videoLink_1">비허용</label>
+								</span>
                             </li>
 
 
 
                             <li>
-										<span class="set_item">
-											자동출처 사용설정
-											<a href="#"><img id="autoSourcingHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="자동출처 사용설정 도움말" class="help02"></a>
-										</span>
+								<span class="set_item">
+									자동출처 사용설정
+									<a href="#">
+										<img id="autoSourcingHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="자동출처 사용설정 도움말" class="help02">
+									</a>
+								</span>
                                 <span class="wd01">
-											<input type="radio" name="autosourcing" value="0" id="autosourcing_0">
-											<label for="autosourcing_0">사용</label>
-										</span>
+									<input type="radio" name="autosourcing" value="0" id="autosourcing_0">
+									<label for="autosourcing_0">사용</label>
+								</span>
                                 <span>
-											<input type="radio" name="autosourcing" value="1" checked="">
-											<label for="autosourcing_1">사용 안함</label>
-										</span>
+									<input type="radio" name="autosourcing" value="1" checked="">
+									<label for="autosourcing_1">사용 안함</label>
+								</span>
                             </li>
                             <li>
-										<span class="set_item">
-											CCL 사용설정
-											<a href="#"><img id="cclHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="CCL 사용설정 도움말" class="help02"></a>
-										</span>
+								<span class="set_item">
+									CCL 사용설정
+									<a href="#">
+										<img id="cclHelpIcon" src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="CCL 사용설정 도움말" class="help02">
+									</a>
+								</span>
                                 <span class="wd01">
-											<input type="radio" name="ccl" value="7"  id="ccl_0">
-											<label for="ccl_0">사용</label>
-										</span>
+									<input type="radio" name="ccl" value="7"  id="ccl_0">
+									<label for="ccl_0">사용</label>
+								</span>
                                 <span>
-											<input type="radio" name="ccl" value="0"  id="ccl_1">
-											<label for="ccl_1">사용 안함</label>
-										</span>
+									<input type="radio" name="ccl" value="0"  id="ccl_1">
+									<label for="ccl_1">사용 안함</label>
+								</span>
                                 <ul class="ccl_edit" id="ccl_edit" style="display: none;">
-                                    <li class="first">저작자 표시 <span class="allow">필수</span></li>
+                            	    <li class="first">저작자 표시 <span class="allow">필수</span></li>
                                     <li>영리적 이용 <span id="cclncspan" class="prohibit" tabindex="0">허락하지 않음</span></li>
                                     <input type="hidden" id="cclnc" value="2">
                                     <li>컨텐츠 변경 <span class="prohibit" tabindex="0">허락하지 않음</span></li>
@@ -440,8 +432,14 @@
 
                 <li id="li_cafe_send_post_go_kin" style="display: none;"><label class="item" for="go_kin">글 공유</label>
                     <div class="post_send">
-                        <input type="checkbox" value="" name="" id="go_kin" class="go_kin"> 이 글을 지식iN으로 보냅니다. <span class="kin_rule"><a target="_blank" href="http://kin.naver.com/etc/rules.php">지식iN 운영원칙<img src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="지식iN 운영원칙 도움말" class="help02 _kinIntroLayerHoverArea">
-								</a> (지식iN 을 통해 네이버 검색에도 노출됩니다.)</span>
+                        <input type="checkbox" value="" name="" id="go_kin" class="go_kin">
+						이 글을 지식iN으로 보냅니다. 
+						<span class="kin_rule">
+							<a target="_blank" href="http://kin.naver.com/etc/rules.php">
+								지식iN 운영원칙<img src="https://cafe.pstatic.net/cafe4/w_btn_help.gif" width="14" height="14" alt="지식iN 운영원칙 도움말" class="help02 _kinIntroLayerHoverArea">
+							</a> 
+							(지식iN 을 통해 네이버 검색에도 노출됩니다.)
+						</span>
                     </div>
                 </li>
 
@@ -449,8 +447,6 @@
 
 
             <div id="edit_skin" style="display: none">
-
-
                 <div class="fontname_items">
                     <div class="fontfamily_items">
                         <div class="shadow01">
@@ -516,76 +512,78 @@
                                             <div class="rbox02_bg">
                                                 <div class="rbox02_conts">
                                                     <table role="presentation" id="fc_color_tbl" cellspacing="1" cellpadding="0">
-                                                        <tbody><tr>
-                                                            <td bgcolor="#FF0000"></td>
-                                                            <td bgcolor="#FF6C00"></td>
-                                                            <td bgcolor="#FFAA00"></td>
-                                                            <td bgcolor="#FFEF00"></td>
-                                                            <td bgcolor="#A6CF00"></td>
-                                                            <td bgcolor="#009E25"></td>
-                                                            <td bgcolor="#00B0A2"></td>
-                                                            <td bgcolor="#0075C8"></td>
-                                                            <td bgcolor="#3A32C3"></td>
-                                                            <td bgcolor="#7820B9"></td>
-                                                            <td bgcolor="#EF007C"></td>
-                                                            <td bgcolor="#000000"></td>
-                                                            <td bgcolor="#252525"></td>
-                                                            <td bgcolor="#464646"></td>
-                                                            <td bgcolor="#636363"></td>
-                                                            <td bgcolor="#7D7D7D"></td>
-                                                            <td bgcolor="#9A9A9A"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td bgcolor="#FFE8E8"></td>
-                                                            <td bgcolor="#F7E2D2"></td>
-                                                            <td bgcolor="#F5EDDC"></td>
-                                                            <td bgcolor="#F5F4E0"></td>
-                                                            <td bgcolor="#EDF2C2"></td>
-                                                            <td bgcolor="#DEF7E5"></td>
-                                                            <td bgcolor="#D9EEEC"></td>
-                                                            <td bgcolor="#C9E0F0"></td>
-                                                            <td bgcolor="#D6D4EB"></td>
-                                                            <td bgcolor="#E7DBED"></td>
-                                                            <td bgcolor="#F1E2EA"></td>
-                                                            <td bgcolor="#ACACAC"></td>
-                                                            <td bgcolor="#C2C2C2"></td>
-                                                            <td bgcolor="#CCCCCC"></td>
-                                                            <td bgcolor="#E1E1E1"></td>
-                                                            <td bgcolor="#EBEBEB"></td>
-                                                            <td bgcolor="#FFFFFF"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td bgcolor="#E97D81"></td>
-                                                            <td bgcolor="#E19B73"></td>
-                                                            <td bgcolor="#D1B274"></td>
-                                                            <td bgcolor="#CFCCA2"></td>
-                                                            <td bgcolor="#CFCCA2"></td>
-                                                            <td bgcolor="#61B977"></td>
-                                                            <td bgcolor="#53AEA8"></td>
-                                                            <td bgcolor="#518FBB"></td>
-                                                            <td bgcolor="#6A65BB"></td>
-                                                            <td bgcolor="#9A54CE"></td>
-                                                            <td bgcolor="#E573AE"></td>
-                                                            <td bgcolor="#5A504B"></td>
-                                                            <td bgcolor="#767B86"></td>
-                                                            <td rowspan="2" colspan="4"><img id="fc_bt_cp_more" src="https://cafe.pstatic.net/editor/btn_fontcolor_more.gif" alt="색상 더보기" width="47" height="23"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td bgcolor="#951015"></td>
-                                                            <td bgcolor="#6E391A"></td>
-                                                            <td bgcolor="#785C25"></td>
-                                                            <td bgcolor="#5F5B25"></td>
-                                                            <td bgcolor="#4C511F"></td>
-                                                            <td bgcolor="#1C4827"></td>
-                                                            <td bgcolor="#0D514C"></td>
-                                                            <td bgcolor="#1B496A"></td>
-                                                            <td bgcolor="#2B285F"></td>
-                                                            <td bgcolor="#45245B"></td>
-                                                            <td bgcolor="#721947"></td>
-                                                            <td bgcolor="#352E2C"></td>
-                                                            <td bgcolor="#3C3F45"></td>
-                                                        </tr>
-                                                        </tbody></table>
+                                                        <tbody>
+                                                        	<tr>
+	                                                            <td bgcolor="#FF0000"></td>
+	                                                            <td bgcolor="#FF6C00"></td>
+	                                                            <td bgcolor="#FFAA00"></td>
+	                                                            <td bgcolor="#FFEF00"></td>
+	                                                            <td bgcolor="#A6CF00"></td>
+	                                                            <td bgcolor="#009E25"></td>
+	                                                            <td bgcolor="#00B0A2"></td>
+	                                                            <td bgcolor="#0075C8"></td>
+	                                                            <td bgcolor="#3A32C3"></td>
+	                                                            <td bgcolor="#7820B9"></td>
+	                                                            <td bgcolor="#EF007C"></td>
+	                                                            <td bgcolor="#000000"></td>
+	                                                            <td bgcolor="#252525"></td>
+	                                                            <td bgcolor="#464646"></td>
+	                                                            <td bgcolor="#636363"></td>
+	                                                            <td bgcolor="#7D7D7D"></td>
+	                                                            <td bgcolor="#9A9A9A"></td>
+                                                        	</tr>
+                                                        	<tr>
+	                                                            <td bgcolor="#FFE8E8"></td>
+	                                                            <td bgcolor="#F7E2D2"></td>
+	                                                            <td bgcolor="#F5EDDC"></td>
+	                                                            <td bgcolor="#F5F4E0"></td>
+	                                                            <td bgcolor="#EDF2C2"></td>
+	                                                            <td bgcolor="#DEF7E5"></td>
+	                                                            <td bgcolor="#D9EEEC"></td>
+	                                                            <td bgcolor="#C9E0F0"></td>
+	                                                            <td bgcolor="#D6D4EB"></td>
+	                                                            <td bgcolor="#E7DBED"></td>
+	                                                            <td bgcolor="#F1E2EA"></td>
+	                                                            <td bgcolor="#ACACAC"></td>
+	                                                            <td bgcolor="#C2C2C2"></td>
+	                                                            <td bgcolor="#CCCCCC"></td>
+	                                                            <td bgcolor="#E1E1E1"></td>
+	                                                            <td bgcolor="#EBEBEB"></td>
+	                                                            <td bgcolor="#FFFFFF"></td>
+	                                                        </tr>
+	                                                        <tr>
+	                                                            <td bgcolor="#E97D81"></td>
+	                                                            <td bgcolor="#E19B73"></td>
+	                                                            <td bgcolor="#D1B274"></td>
+	                                                            <td bgcolor="#CFCCA2"></td>
+	                                                            <td bgcolor="#CFCCA2"></td>
+	                                                            <td bgcolor="#61B977"></td>
+	                                                            <td bgcolor="#53AEA8"></td>
+	                                                            <td bgcolor="#518FBB"></td>
+	                                                            <td bgcolor="#6A65BB"></td>
+	                                                            <td bgcolor="#9A54CE"></td>
+	                                                            <td bgcolor="#E573AE"></td>
+	                                                            <td bgcolor="#5A504B"></td>
+	                                                            <td bgcolor="#767B86"></td>
+	                                                            <td rowspan="2" colspan="4"><img id="fc_bt_cp_more" src="https://cafe.pstatic.net/editor/btn_fontcolor_more.gif" alt="색상 더보기" width="47" height="23"></td>
+	                                                        </tr>
+	                                                        <tr>
+	                                                            <td bgcolor="#951015"></td>
+	                                                            <td bgcolor="#6E391A"></td>
+	                                                            <td bgcolor="#785C25"></td>
+	                                                            <td bgcolor="#5F5B25"></td>
+	                                                            <td bgcolor="#4C511F"></td>
+	                                                            <td bgcolor="#1C4827"></td>
+	                                                            <td bgcolor="#0D514C"></td>
+	                                                            <td bgcolor="#1B496A"></td>
+	                                                            <td bgcolor="#2B285F"></td>
+	                                                            <td bgcolor="#45245B"></td>
+	                                                            <td bgcolor="#721947"></td>
+	                                                            <td bgcolor="#352E2C"></td>
+	                                                            <td bgcolor="#3C3F45"></td>
+	                                                        </tr>
+                                                        </tbody>
+                                                       </table>
                                                 </div>
                                             </div>
                                             <div class="rbox02_b">

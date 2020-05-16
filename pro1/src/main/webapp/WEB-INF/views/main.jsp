@@ -42,7 +42,9 @@
 			<c:when test="${page eq 'boardType'}">
 				<link class="personal_css" rel="stylesheet" href="/css/board/board.css?${applicationScope.cachetype}" type="text/css">
 				<jsp:include page="board/commonBoardView.jsp"/>
+				<!-- 
 				<script class="personal_js" type="text/javascript" src="/js/board/board.js?${applicationScope.cachetype}" ></script>
+				 -->
 			</c:when>
 			<c:when test="${fn:startsWith(page,'cafe')}">
 				<link class="personal_css" rel="stylesheet" href="/css/cafe/cafe.css?${applicationScope.cachetype}" type="text/css">

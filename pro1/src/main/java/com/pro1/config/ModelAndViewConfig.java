@@ -52,7 +52,7 @@ public class ModelAndViewConfig implements WebMvcConfigurer {
     private final ServletContext servletContext;
 
     public ModelAndViewConfig(ServletContext servletContext) {
-	this.servletContext = servletContext;
+      this.servletContext = servletContext;
     }
 
     @Override
