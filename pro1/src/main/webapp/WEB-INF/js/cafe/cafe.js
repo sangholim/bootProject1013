@@ -870,6 +870,30 @@ var cafe = {
 			// 3. 내 카페 새글 피드 기능
 			// 4. 전체/ 즐겨찾는 카페/ 운영카페 클릭스 해당 카페 리스트 뿌리기
 			// 5. 카페홈/주제별/지역별/랭킹/대표카페/내소식/채팅 기능
+			// 6. time class에 있는 timestamp 정보를 date로 parse ㅊ리
+			
+			// 6. time class에 있는 timestamp 정보를 date로 parse ㅊ리
+			var times = document.getElementsByClassName("time");
+			var timesLeng = times.length;
+			for (var i = 0; i <timesLeng; i++) {
+				var time =  times[i];
+				// instance save
+				
+				// var timeDate = new Date(Number(time.textContent.trim()));
+				var format = new Date(Number(time.textContent.trim()));
+				var year = format.getFullYear();
+			    var month = (month < 10)? '0' + (format.getMonth() + 1) : format.getMonth() + 1;
+			    var date = (date < 10)? '0' + format.getDate() : format.getDate();
+			    var hour = (hour < 10)? '0' + format.getHours() : format.getHours();
+			    var min = (min < 10)? '0' + format.getMinutes() : format.getMinutes();
+			    var sec = (sec < 10)? '0' + format.getSeconds() : format.getSeconds();
+				time.textContent = year + '/' + month + '/' + date + ' ' + hour +':'+min+':'+sec;
+				
+				//time.textContent = timeDate.format("yy-MM-dd HH:mm:ss");
+			}
+			
+			
+			
 			// 내가 가입하거나 만든 카페들의 갯수가 5개 단위로 보여주며, 그 이후로는 숨긴다.
 			var user_cafe_container = document.getElementsByClassName("user_mycafe_container");
 			var user_cafe_container_length = user_cafe_container.length;

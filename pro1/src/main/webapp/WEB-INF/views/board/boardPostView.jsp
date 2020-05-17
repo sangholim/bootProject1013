@@ -34,7 +34,9 @@
                                 <tbody>
                                 <tr>
                                     <td></td>
-                                    <td class="m-tcol-c date">${post.userCafeBoardVO.modifiedDate}</td>
+                                    <td class="m-tcol-c date">
+                                    	${post.userCafeBoardVO.createDateStr}
+                                    </td>
 
                                     <td nowrap="" class="m-tcol-c filter-30">|</td>
                                     <td class="edit _rosRestrict">
@@ -117,12 +119,8 @@
                                     <td valign="top" class="url" align="right">
                                         <span class="filter-50">
                                         	<a id="linkUrl" href="${post.cafeBoardUrl}" target="_top" class="m-tcol-c url-txt">
-                                        		<!-- 
-                                        		https://cafe.naver.com/yulimhall/2
-                                        		 -->
                                         		 ${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${post.cafeBoardUrl}
-												
-                                        	</a>
+											</a>
                                         </span>
                                         <span>
                                         	<a href="#" onclick="return false;" class="_copyUrl url-btn" data-clipboard-action="copy" data-clipboard-target="#linkUrl">

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
-
 <!-- sub_main 일떄 -->
 <c:if test="${sub_page eq 'sub_main'}">
 <!--  전체 카페 통틀어서 추천 게시글 -->
@@ -139,11 +138,13 @@
 								<li article="게시글">
 				 					<div class="recent_info">
 				 						<span class="nickname">${user_cafe_board.writer}</span>
-										<span class="time">${user_cafe_board.createDate}</span>
+										<span class="time">
+											${user_cafe_board.createDate }
+										</span>
 				 					</div>
 				 					<div class="recent_title">
 				 						<div class="inner">
-				 							<a href="/board/${user_cafe.cafe.url}/${user_cafe_board.boardUid}" class="tit">
+				 							<a href="/board/${user_cafe.cafe.url}/${user_cafe.cafeUid}_${user_cafe_board.boardUid}" class="tit">
 				 								<em class="blind">글제목</em>
 				 								${user_cafe_board.subject}
 				 							</a>	

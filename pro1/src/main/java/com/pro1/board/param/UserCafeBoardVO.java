@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "userCafeBoard")
-@IdClass(UserCafeBoardId.class)
 public class UserCafeBoardVO implements Serializable {
 
     /**
@@ -15,16 +16,16 @@ public class UserCafeBoardVO implements Serializable {
     private static final long serialVersionUID = 1827843192317052170L;
 
     @Id // primary key
-    @GeneratedValue //( strategy = GenerationType.IDENTITY ) // auto increment
+    @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
+    @GenericGenerator(name = "native",strategy = "native")
+    @Column(name = "boardUid")
     private long boardUid;
 
-     @Id
-     @Column(name = "userUid") // foreignKey
-     private long userUid;
+    @Column(name = "userUid") // foreignKey
+    private long userUid;
 
-     @Id
-     @Column(name = "cafeUid") // foreignKey
-     private long cafeUid;
+    @Column(name = "cafeUid") // foreignKey
+    private long cafeUid;
 
     private String subject;
     private String content;
@@ -41,33 +42,34 @@ public class UserCafeBoardVO implements Serializable {
 
     @Transient
     private String cafeUrl;
+
     
     public String getCafeUrl() {
-        return cafeUrl;
+	return cafeUrl;
     }
 
     public void setCafeUrl(String cafeUrl) {
-        this.cafeUrl = cafeUrl;
+	this.cafeUrl = cafeUrl;
     }
 
     public static long getSerialVersionUID() {
-        return serialVersionUID;
+	return serialVersionUID;
     }
 
     public String getCreateDateStr() {
-        return createDateStr;
+	return createDateStr;
     }
 
     public void setCreateDateStr(String createDateStr) {
-        this.createDateStr = createDateStr;
+	this.createDateStr = createDateStr;
     }
 
     public String getModifiedDateStr() {
-        return modifiedDateStr;
+	return modifiedDateStr;
     }
 
     public void setModifiedDateStr(String modifiedDateStr) {
-        this.modifiedDateStr = modifiedDateStr;
+	this.modifiedDateStr = modifiedDateStr;
     }
 
     public Long getBoardUid() {
@@ -154,54 +156,60 @@ public class UserCafeBoardVO implements Serializable {
 	return super.hashCode();
     }
 
-    public UserCafeBoardVO() {}
+    public UserCafeBoardVO() {
+    }
 
-    public UserCafeBoardVO(Long boardUid, Long userUid, Long cafeUid, String subject, String content, String writer, String addfile, Long createDate, Long modifiedDate) {
-        this.boardUid = boardUid;
-        this.userUid = userUid;
-        this.cafeUid = cafeUid;
-        this.subject = subject;
-        this.content = content;
-        this.writer = writer;
-        this.addfile = addfile;
-        this.createDate = createDate;
-        this.modifiedDate = modifiedDate;
+    public UserCafeBoardVO(Long boardUid, Long userUid, Long cafeUid, String subject, String content, String writer,
+	    String addfile, Long createDate, Long modifiedDate) {
+	this.boardUid = boardUid;
+	this.userUid = userUid;
+	this.cafeUid = cafeUid;
+	this.subject = subject;
+	this.content = content;
+	this.writer = writer;
+	this.addfile = addfile;
+	this.createDate = createDate;
+	this.modifiedDate = modifiedDate;
     }
 
     public UserCafeBoardVO(String subject, String content, String writer, String addfile, Long modifiedDate) {
-        this.subject = subject;
-        this.content = content;
-        this.writer = writer;
-        this.addfile = addfile;
-        this.modifiedDate = modifiedDate;
+	this.subject = subject;
+	this.content = content;
+	this.writer = writer;
+	this.addfile = addfile;
+	this.modifiedDate = modifiedDate;
     }
 
     public UserCafeBoardVO(Long boardUid, String subject, String writer, Long createDate) {
-        // public UserCafeBoardVO(Long boardUid, Long userUid, Long cafeUid, String subject, String content, String writer, String addfile, Long createDate, Long modifiedDate) {
-	this (boardUid, 0l, 0l, subject, null, writer, null, createDate, 0l);
+	// public UserCafeBoardVO(Long boardUid, Long userUid, Long cafeUid, String
+	// subject, String content, String writer, String addfile, Long createDate, Long
+	// modifiedDate) {
+	this(boardUid, 0l, 0l, subject, null, writer, null, createDate, 0l);
     }
-    
-    @PrePersist
-    private void onCreate() {
+    /*
+     * @PrePersist private void onCreate() {
+     * 
+     * this.createDate = 12000l; }
+     */
 
-        this.createDate = 12000l;
+    public void setBoardUid(long boardUid) {
+	this.boardUid = boardUid;
+    }
+
+    public void setUserUid(long userUid) {
+	this.userUid = userUid;
+    }
+
+    public void setCafeUid(long cafeUid) {
+	this.cafeUid = cafeUid;
     }
 
     @Override
     public String toString() {
-        return "UserCafeBoardVO{" +
-                "boardUid=" + boardUid +
-                ", userUid=" + userUid +
-                ", cafeUid=" + cafeUid +
-                ", subject='" + subject + '\'' +
-                ", content='" + content + '\'' +
-                ", writer='" + writer + '\'' +
-                ", addfile='" + addfile + '\'' +
-                ", createDate=" + createDate +
-                ", modifiedDate=" + modifiedDate +
-                ", createDateStr='" + createDateStr + '\'' +
-                ", modifiedDateStr='" + modifiedDateStr + '\'' +
-                ", cafeUrl='" + cafeUrl + '\'' +
-                '}';
+	return "UserCafeBoardVO{" + "boardUid=" + boardUid + ", userUid=" + userUid + ", cafeUid=" + cafeUid
+		+ ", subject='" + subject + '\'' + ", content='" + content + '\'' + ", writer='" + writer + '\''
+		+ ", addfile='" + addfile + '\'' + ", createDate=" + createDate + ", modifiedDate=" + modifiedDate
+		+ ", createDateStr='" + createDateStr + '\'' + ", modifiedDateStr='" + modifiedDateStr + '\''
+		+ ", cafeUrl='" + cafeUrl + '\'' + '}';
     }
 }

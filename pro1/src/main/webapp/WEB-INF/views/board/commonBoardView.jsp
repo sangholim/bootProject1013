@@ -273,7 +273,7 @@
 
                         <!-- 카페 가입 버튼 or 카페 글 쓰기 버튼 -->
                         <div class="cafe-write-btn">
-                            <a href="#" class="_rosRestrict" id="boardMainBtn">${boardMainBtn}</a>
+                            <a href="#" class="_rosRestrict" id="boardMainBtn">카페 가입하기</a>
                         </div>
 
                         <!-- 카페 채팅 버튼 -->
@@ -308,7 +308,7 @@
 
                         <!-- 카페 글쓰기 or 카페 가입하기 -->
                         <div class="cafe-write-btn">
-                            <a href="#" class="_rosRestrict">${boardMainBtn}</a>
+                            <a href="#" class="_rosRestrict">카페 가입하기</a>
                         </div>
 
                         <div class="ia-info-btn">
@@ -397,22 +397,20 @@
                 <div id="join_editor" style="visibility: hidden">
                     <jsp:include page="./commonBoardJoin.jsp" flush="true"/>
                 </div>
-				<script class="personal_js" type="text/javascript" src="/js/board/board.js?${applicationScope.cachetype}" ></script>
 			</div>
         </div>
         <!-- 본문 내용 -->
     </div>
-
-    <div id="login_info">
+	
+	<div id="login_info">
         <input type="hidden" name="useruid" value="${userUid}" />
         <input type="hidden" name="nickname" value="${nickName}" />
         <input type="hidden" name="isMemberCafeLoginUser" value="${isMemberCafeLoginUser}" />
         <input type="hidden" name="cafeLevel" value="${boardSimpleInfo.cafeLevel}"/>
     </div>
-
-    <div id="cafe_info">
+	<div id="cafe_info">
         <input type="hidden" name="cafeUid" value="${boardSimpleInfo.cafeUid}" />
         <input type="hidden" name="cafeUrl" value="${cafe_url}"/>
     </div>
- -->
+ 	<script class="personal_js" type="text/javascript" src="/js/board/board.js?${applicationScope.cachetype}" ></script>
 </div>

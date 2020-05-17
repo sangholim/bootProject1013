@@ -5,12 +5,13 @@ import com.pro1.board.param.UserCafeBoardVO;
 import com.pro1.cafe.vo.CafeVO;
 import com.pro1.common.DBQueryType;
 import com.pro1.common.utils.CommonDBSession;
+import com.pro1.common.utils.CommonUtils;
 import com.pro1.common.vo.DbSessionInfo;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import java.util.Date;
 import java.util.List;
 
 public class BoardDAO extends CommonDBSession {
@@ -74,6 +75,8 @@ public class BoardDAO extends CommonDBSession {
 		logger.debug("NOT FOUND ONE BOARD INFO IN 'usercafeboard TBL' > boardUid: {}", boardUid);
 		return null;
 	    }
+	    long createDate = userCafeBoardVo.getCreateDate();
+	    userCafeBoardVo.setCreateDateStr(CommonUtils.simpleDateFormat.format(new Date(createDate)));
 	    boardForm.setUserCafeBoardVO(userCafeBoardVo);
 	    // 2. 해당 게시글이 있는 카페 정도 호출
 	    CafeVO cafevo = session.createQuery(getCafeInfo, CafeVO.class)
@@ -85,8 +88,10 @@ public class BoardDAO extends CommonDBSession {
 	    }
 
 	    // hostName/board/cafe_url/boardUid 형태 생성
-	    boardForm.setCafeBoardUrl("/board/" + cafevo.getUrl() + '/' + boardUid);
-	    
+	    // hostName/board/cafe_url/cafeUid_boardUid form 생성
+	    boardForm
+		    .setCafeBoardUrl("/board/" + cafevo.getUrl() + '/' + userCafeBoardVo.getCafeUid() + '_' + boardUid);
+
 	    return boardForm;
 
 	} catch (Exception e) {

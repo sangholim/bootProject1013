@@ -79,12 +79,17 @@ public class BoardManager {
 	boardDAO.deletePost(userCafeBoardVO);
     }
 
-    /*
-     * 해당 VO는 idclass로 복합키를 가지므로 조인할때 키를 다넣어줘야함.
+    
+    /**
+     * 카페 유저 가입체크 비지니스 로직 
+     * @param userCafeId
+     * @param model
+     * @return
+     * @throws Exception
      */
-    public boolean isMemberCafeLoginUser(UserCafeId userCafeId) throws Exception {
-
-	return userCafeBoardDAO.isCafeMemberLoginUser(userCafeId);
+    public void isMemberCafeLoginUser(Object userUid, Object cafeUid, Model model) throws Exception {
+	
+	model.addAttribute("isMemberCafeLoginUser", userCafeBoardDAO.isCafeMemberLoginUser(userUid,cafeUid));
     }
 
     public void cafeSignUp(UserCafeVO vo) throws Exception {

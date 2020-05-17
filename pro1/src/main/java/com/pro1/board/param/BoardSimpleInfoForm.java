@@ -13,6 +13,7 @@ public class BoardSimpleInfoForm {
     private long cafeMemberCnt;
 
     private long cafeUid;
+    
     // 카페 게시판에 필요한 url 정보
     private String cafeBoardUrl;
 

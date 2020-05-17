@@ -58,15 +58,26 @@ var board = {
     },
     init : function () {
 
+        
+    	
+    	//카페글쓰기 & 카페 가입하기 버튼
+        var boardMainBtn = document.getElementById("boardMainBtn");
+    	// 로그인한 유저 정보
         var login_info = document.getElementById("login_info");
+        
+    	// 유저 정보에 따라서 카페 가입/글쓰기 버튼 UI 설정
+    	var isMemeber = document.getElementsByName("isMemberCafeLoginUser")[0].value;
+    	
+    	// 카페 가입되었다면 버튼 UI 변경
+    	if (isMemeber == "true") {
+    		boardMainBtn.textContent = "카페 글쓰기";
+    	}
+    	
 
         var bodyTag = document.getElementById("content-area");
         bodyTag.addEventListener('click', function(event) {
 
             var selectedTag = event.target;
-
-            //카페글쓰기 & 카페 가입하기 버튼
-            var boardMainBtn = document.getElementById("boardMainBtn");
 
             //메인 영역
             var mainAreaContent = document.getElementsByClassName("main_content")[0];
