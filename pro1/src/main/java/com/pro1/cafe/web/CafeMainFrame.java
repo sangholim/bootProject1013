@@ -25,6 +25,13 @@ public class CafeMainFrame {
     @Autowired
     private CafeManager cafeManager;
 
+
+    @RequestMapping(value = {"/", ""})
+    public String getCafeRoot(Authentication authetication, String cafeType, Model model) {
+	
+	return "redirect:/cafe/sub_main/";
+    }
+
     @RequestMapping(value = "/{sub_type}")
     public String getCafeView(Authentication authetication, String cafeType, Model model, @PathVariable String sub_type) {
 	

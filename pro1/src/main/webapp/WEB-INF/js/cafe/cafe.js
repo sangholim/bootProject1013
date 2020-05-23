@@ -872,24 +872,11 @@ var cafe = {
 			// 5. 카페홈/주제별/지역별/랭킹/대표카페/내소식/채팅 기능
 			// 6. time class에 있는 timestamp 정보를 date로 parse ㅊ리
 			
-			// 6. time class에 있는 timestamp 정보를 date로 parse ㅊ리
+			var currentTime = new Date().getTime();
 			var times = document.getElementsByClassName("time");
 			var timesLeng = times.length;
 			for (var i = 0; i <timesLeng; i++) {
-				var time =  times[i];
-				// instance save
-				
-				// var timeDate = new Date(Number(time.textContent.trim()));
-				var format = new Date(Number(time.textContent.trim()));
-				var year = format.getFullYear();
-			    var month = (month < 10)? '0' + (format.getMonth() + 1) : format.getMonth() + 1;
-			    var date = (date < 10)? '0' + format.getDate() : format.getDate();
-			    var hour = (hour < 10)? '0' + format.getHours() : format.getHours();
-			    var min = (min < 10)? '0' + format.getMinutes() : format.getMinutes();
-			    var sec = (sec < 10)? '0' + format.getSeconds() : format.getSeconds();
-				time.textContent = year + '/' + month + '/' + date + ' ' + hour +':'+min+':'+sec;
-				
-				//time.textContent = timeDate.format("yy-MM-dd HH:mm:ss");
+				times[i].textContent = common.latestExpr (currentTime,Number(times[i].textContent.trim()));
 			}
 			
 			

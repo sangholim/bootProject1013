@@ -225,3 +225,39 @@ common.calUtf8Bytes = function(ch) {
 
 }
 
+common.latestExpr = function (currentTime,beforeTime) {
+	var timeInterval = currentTime - beforeTime;
+	
+	// time Interval 간격 규칙
+	// 1000 -> 1초
+	// 60*1000 -> 1분
+	// 60*60*1000 -> 1시
+	// 24*60*60*1000 -> 하루
+	
+	if (timeInterval < 1000) {
+		// 1초 미만일때
+		return "금방";
+	} else if (timeInterval < 60*1000) {
+		// 1분미만일떄
+		return parseInt(timeInterval/1000) + "초 전";
+	} else if (timeInterval < 60*60*1000) {
+		// 1시미만일떄
+		return parseInt(timeInterval/(60*1000)) + "분 전";
+	} else if (timeInterval < 24*60*60*1000) {
+		// 하루 미만일때
+		return parseInt(timeInterval/(60*60*1000)) + "시간 전";
+	} else {
+		//하루가 넘을때
+		var format = new Date(beforeTime);
+		var year = format.getFullYear();
+	    var month = (month < 10)? '0' + (format.getMonth() + 1) : format.getMonth() + 1;
+	    var date = (date < 10)? '0' + format.getDate() : format.getDate();
+	    var hour = (hour < 10)? '0' + format.getHours() : format.getHours();
+	    var min = (min < 10)? '0' + format.getMinutes() : format.getMinutes();
+	    var sec = (sec < 10)? '0' + format.getSeconds() : format.getSeconds();
+		
+		return year + '/' + month + '/' + date + ' ';
+	}
+	
+	
+}
