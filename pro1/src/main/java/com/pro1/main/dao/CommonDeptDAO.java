@@ -21,7 +21,7 @@ public class CommonDeptDAO extends CommonDBSession {
             return sqlSession.selectList("selectDeptList");
         }
 
-        DbSessionInfo sessionInfo = processHibernateSession(DeptVO.class, null, DBQueryType.SELECT);
+        DbSessionInfo sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
         // hibernate query 질의시 추가 로직
         try (Session session = sessionInfo.getSession()) {
             CriteriaQuery<DeptVO> criteria = sessionInfo.getQuery();

@@ -3,8 +3,11 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 <%--<input type="text" id="post_subject" placeholder="제목" height="100px"/>--%>
-
+<%--
 <link rel="stylesheet" href="/css/board/board.css" type="text/css">
+ --%>
+<link class="personal_css" rel="stylesheet" href="/css/board/board.css?${applicationScope.cachetype}" type="text/css">
+
 
 <%--
 <label class="item" for="subject">제목</label>

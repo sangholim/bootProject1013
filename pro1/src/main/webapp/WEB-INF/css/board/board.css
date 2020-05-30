@@ -25851,10 +25851,10 @@ html>body .reply-line .board-box-line-dashed {height:1px; }
     margin-top: 12px;
 }
 
-/*list-blog*/
+/*list-blog width 771->859*/
 .list-blog {
     clear: both;
-    width: 771px;
+    width: 859px;
     margin: 0;
     border-style: solid;
     border-width: 1px;
@@ -26000,9 +26000,12 @@ html>body .reply-line .board-box-line-dashed {height:1px; }
     height: 5px;
 }
 
+/**
+	width:743 -> 820
+**/
 .list-blog .etc-box {
     clear: both;
-    width: 743px;
+    width: 820px;
     overflow: hidden;
     margin-top: 3px;
     text-align: right;
@@ -57525,9 +57528,10 @@ a.skip:active, a.skip:focus {
 }
 
 /*list-blog*/
+
 .list-blog {
     clear: both;
-    width: 771px;
+    width: 857px;
     margin: 0;
     border-style: solid;
     border-width: 1px;
@@ -57544,9 +57548,12 @@ a.skip:active, a.skip:focus {
     vertical-align: middle;
 }
 
+/**
+ width 743 -> 850
+**/
 .list-blog .tit-box {
     clear: both;
-    width: 743px;
+    width: 820px;
     overflow: hidden;
 }
 
@@ -57671,14 +57678,6 @@ a.skip:active, a.skip:focus {
 
 *:first-child + html .list-blog .board-box-line-dashed {
     height: 5px;
-}
-
-.list-blog .etc-box {
-    clear: both;
-    width: 743px;
-    overflow: hidden;
-    margin-top: 3px;
-    text-align: right;
 }
 
 .list-blog .etc-box .fl {

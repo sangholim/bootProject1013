@@ -34,6 +34,18 @@ public class BoardMainFrame {
 
     private static final Logger logger = LoggerFactory.getLogger(BoardMainFrame.class);
 
+    /**
+     * 정의 되지 않은 경로는 redirect 처리 (/) 
+     * @param authetication
+     * @param cafe_url
+     * @param model
+     */
+    @RequestMapping(value = {"/",""})
+    public String undefinedPath (Model model) {
+	
+	return "redirect:/";
+    }
+    
     @RequestMapping(value = "/{cafe_url}")
     public String getBoardMain(Authentication authetication, @PathVariable String cafe_url, Model model)
 	    throws Exception {
@@ -43,18 +55,16 @@ public class BoardMainFrame {
 	    CustomAuthentication userAuth = (CustomAuthentication) authetication;
 
 	    // 메인에 카페정보에 넣을 관리자정보와, 카페 심플정보들.
-	    BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeUrlInfo(cafe_url);
+	    BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid());
 	    // 카페 url를 통하여 카페정보를 찾지 못할경우는 카페 메인 페이지 로 이동
 	    if (boardSimpleInfoForm == null) {
 		throw new Exception("NOT FOUND CAFE INFO BY CAFE_URL: " + cafe_url);
 	    }
-
 	    model.addAttribute("boardSimpleInfo", boardSimpleInfoForm);
 	    model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
 	    model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 	    model.addAttribute("userUid", userAuth.getUid());
 	    model.addAttribute("cafe_url", cafe_url);
-	    boardManager.isMemberCafeLoginUser(userAuth.getUid(), boardSimpleInfoForm.getCafeUid(), model);
 	    isSuccess = true;
 	} catch (Exception e) {
 	    logger.warn("ERROR GETTING CAFE BOARD MAIN > MSG: {}", e.getMessage(), e);
@@ -78,12 +88,12 @@ public class BoardMainFrame {
 	    }
 
 	    CustomAuthentication userAuth = (CustomAuthentication) authetication;
-	    boardManager.isMemberCafeLoginUser(userAuth.getUid(), uidList[0], model);
 	    model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
+	    model.addAttribute("boardSimpleInfo", boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid()));
 	    model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 	    model.addAttribute("userUid", userAuth.getUid());
 	    model.addAttribute("boardUid", uidList[1]);
-	    
+
 	    isSuccess = true;
 	} catch (Exception e) {
 	    logger.warn("ERROR GETTING CAFE ONE BOARD VIEW > MSG: {}", e.getMessage(), e);
@@ -144,9 +154,9 @@ public class BoardMainFrame {
 	return resultMap;
     }
 
-    
     /**
      * 카페에 게시글 쓰기
+     * 
      * @param authentication
      * @param userCafeBoardVO
      * @return
@@ -196,26 +206,28 @@ public class BoardMainFrame {
     public String boardCenter(Authentication authentication, Model model, @PathVariable("cafeUid") long cafeUid)
 	    throws Exception {
 
-	// CustomAuthentication userAuth = (CustomAuthentication) authentication;
-	List<UserCafeBoardVO> boardPostList = boardManager.getBoardPostList(cafeUid);
+	boolean isSuccess = false;
 
-	/*
-	 * long형 date를 원하는 문자열 형으로 변경하기 위해 로직짬.
-	 */
-	Date date = new Date();
-	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-	for (UserCafeBoardVO vo : boardPostList) {
+	try {
+	    List<UserCafeBoardVO> boardPostList = boardManager.getBoardPostList(cafeUid);
+	    // long형 date를 원하는 문자열 형으로 변경하기 위해 로직짬.
+	    Date date = new Date();
+	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	    for (UserCafeBoardVO vo : boardPostList) {
+		date.setTime(vo.getModifiedDate());
+		String strDate = format.format(date);
+		vo.setCreateDateStr(strDate);
+		vo.setModifiedDateStr(strDate);
+	    }
 
-	    date.setTime(vo.getModifiedDate());
-	    String strDate = format.format(date);
-
-	    vo.setCreateDateStr(strDate);
-	    vo.setModifiedDateStr(strDate);
+	    model.addAttribute("postList", boardPostList);
+	    isSuccess = true;
+	} catch (Exception e) {
+	    logger.warn("ERROR SHOWING CAFE BOARD VIEW > MSG: {}", e.getMessage(), e);
+	    isSuccess = false;
 	}
 
-	model.addAttribute("postList", boardPostList);
-
-	return "/board/boardCenter";
+	return (isSuccess) ? "/board/boardCenter" : "redirect:/cafe/sub_main/";
 
     }
 
@@ -231,14 +243,19 @@ public class BoardMainFrame {
     @RequestMapping(value = "/commonBoardJoin/{cafe_url}", method = RequestMethod.GET)
     public String boardJoin(Authentication authentication, Model model, @PathVariable String cafe_url)
 	    throws Exception {
+	boolean isSuccess = false;
 
-	// CustomAuthentication userAuth = (CustomAuthentication) authentication;
-	BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeUrlInfo(cafe_url);
+	try {
+	    CustomAuthentication userAuth = (CustomAuthentication) authentication;
+	    BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid());
+	    model.addAttribute("boardSimpleInfoForm", boardSimpleInfoForm);
 
-	model.addAttribute("BoardSimpleInfoForm", boardSimpleInfoForm);
-	System.out.println(boardSimpleInfoForm.toString());
+	} catch (Exception e) {
+	    logger.warn("ERROR JOINIG BOARD > MSG: {}", e.getMessage(), e);
+	    isSuccess = false;
+	}
 
-	return "/board/commonBoardJoin";
+	return (isSuccess) ? "/board/commonBoardJoin" : "redirect:/board/sub_main/";
     }
 
     /**
@@ -254,7 +271,7 @@ public class BoardMainFrame {
     public String boardCenter(Authentication authentication, @PathVariable("boardUid") long boardUid, Model model,
 	    HttpServletRequest request) throws Exception {
 	boardManager.getOneBoardInfo(boardUid, model);
-
+	
 	return "/board/boardPostView";
     }
 

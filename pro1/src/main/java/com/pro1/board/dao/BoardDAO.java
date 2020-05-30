@@ -19,18 +19,20 @@ public class BoardDAO extends CommonDBSession {
     private DbSessionInfo sessionInfo;
 
     private final String cafeBoardJoin = "select NEW UserCafeBoardVO(cb.boardUid,cb.userUid,cb.cafeUid, cb.subject, cb.content, cb.writer, cb.addfile, cb.createDate, cb.modifiedDate) "
-	    + "from UserCafeBoardVO cb where cb.cafeUid = :cafeUid";
+	    + "from UserCafeBoardVO cb where cb.cafeUid = :cafeUid order by cb.createDate desc";
 
     private final String getCafeInfo = "select c from cafe c where c.uid = :cafeUid";
 
     private final String oneBoardView = "select NEW UserCafeBoardVO(cb.boardUid,cb.userUid,cb.cafeUid, cb.subject, cb.content, cb.writer, cb.addfile, cb.createDate, cb.modifiedDate) "
 	    + "from UserCafeBoardVO cb where cb.boardUid = :boardUid";
 
+    private final String getCafeBoardCnt = "select count(cb.boardUid) from UserCafeBoardVO cb where cb.cafeUid = :cafeUid";
+
     private static final Logger logger = LoggerFactory.getLogger(BoardDAO.class);
 
     public void InsertPost(UserCafeBoardVO vo) throws Exception {
 
-	sessionInfo = processHibernateSession(UserCafeBoardVO.class, vo, DBQueryType.INSERT);
+	sessionInfo = processHibernateSession(vo, DBQueryType.INSERT);
     }
 
     public List<UserCafeBoardVO> getBoardPostList(long cafeUid) throws Exception {
@@ -39,7 +41,7 @@ public class BoardDAO extends CommonDBSession {
 	    return sqlSession.selectList("getBoardPostList");
 	}
 
-	sessionInfo = processHibernateSession(UserCafeBoardVO.class, null, DBQueryType.SELECT);
+	sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
 
 	try (Session session = sessionInfo.getSession()) {
 
@@ -59,13 +61,10 @@ public class BoardDAO extends CommonDBSession {
 	    return sqlSession.selectOne("getOneBoardInfo");
 	}
 
-	sessionInfo = processHibernateSession(UserCafeBoardVO.class, null, DBQueryType.SELECT);
+	sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
 
 	try (Session session = sessionInfo.getSession()) {
 	    BoardSimpleInfoForm boardForm = new BoardSimpleInfoForm();
-	    // session.createQuery(oneBoardView,
-	    // UserCafeBoardVO.class).setParameter("boardUid",
-	    // boardUid).getSingleResult();
 
 	    // 1. 해당 게시글정보 호출
 	    UserCafeBoardVO userCafeBoardVo = session.createQuery(oneBoardView, UserCafeBoardVO.class)
@@ -106,7 +105,7 @@ public class BoardDAO extends CommonDBSession {
 	    sqlSession.delete("deletePost");
 	}
 
-	sessionInfo = processHibernateSession(UserCafeBoardVO.class, userCafeBoardVO, DBQueryType.DELETE);
+	sessionInfo = processHibernateSession(userCafeBoardVO, DBQueryType.DELETE);
 
     }
 
@@ -116,7 +115,7 @@ public class BoardDAO extends CommonDBSession {
 	    sqlSession.update("updatePost");
 	}
 
-	sessionInfo = processHibernateSession(UserCafeBoardVO.class, null, DBQueryType.SELECT);
+	sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
 
 	try (Session session = sessionInfo.getSession()) {
 	    Query<UserCafeBoardVO> query = session.createQuery(oneBoardView, UserCafeBoardVO.class);
@@ -126,10 +125,19 @@ public class BoardDAO extends CommonDBSession {
 	    vo.setSubject(userCafeBoardVO.getSubject());
 	    vo.setContent(userCafeBoardVO.getContent());
 
-	    sessionInfo = processHibernateSession(UserCafeBoardVO.class, vo, DBQueryType.UPDATE);
+	    sessionInfo = processHibernateSession(vo, DBQueryType.UPDATE);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 
     }
+
+    public long getCafeBoardCnt(Session session, long cafeUid) throws Exception {
+
+	Query<Long> query = session.createQuery(getCafeBoardCnt, Long.class);
+	query.setParameter("cafeUid", cafeUid);
+	return query.getSingleResult();
+
+    }
+
 }

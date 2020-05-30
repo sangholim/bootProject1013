@@ -7,19 +7,23 @@ public class BoardSimpleInfoForm {
     private String cafeLevel;
 
     private String desc = "";
-    
+
     private String userNickName = "";
 
     private long cafeMemberCnt;
 
     private long cafeUid;
-    
+
     // 카페 게시판에 필요한 url 정보
     private String cafeBoardUrl;
 
     // 유저카페게시판 데이터 담는곳
     private UserCafeBoardVO userCafeBoardVO;
-    
+    // 카페의 게시판글 수
+    private long cafeBoardCnt;
+    // 카페 가입된 유저인지 체크
+    private boolean isCafeUser;
+
     public long getCafeUid() {
 	return cafeUid;
     }
@@ -77,17 +81,27 @@ public class BoardSimpleInfoForm {
     }
 
     public UserCafeBoardVO getUserCafeBoardVO() {
-        return userCafeBoardVO;
+	return userCafeBoardVO;
     }
 
     public void setUserCafeBoardVO(UserCafeBoardVO userCafeBoardVO) {
-        this.userCafeBoardVO = userCafeBoardVO;
+	this.userCafeBoardVO = userCafeBoardVO;
     }
 
-    @Override
-    public String toString() {
-	return "{" + "\"adminUserNicName\"='" + adminUserNicName + '\'' + ", \"cafeLevel\"='" + cafeLevel + '\''
-		+ ", \"desc\"='" + desc + '\'' + ", \"userNickName\"='" + userNickName + '\'' + ", \"cafeMemberCnt\"="
-		+ cafeMemberCnt + ", \"cafeUid\"=" + cafeUid + '}';
+    public long getCafeBoardCnt() {
+	return cafeBoardCnt;
     }
+
+    public void setCafeBoardCnt(long cafeBoardCnt) {
+	this.cafeBoardCnt = cafeBoardCnt;
+    }
+
+    public boolean isCafeUser() {
+	return isCafeUser;
+    }
+
+    public void setCafeUser(boolean isCafeUser) {
+	this.isCafeUser = isCafeUser;
+    }
+
 }

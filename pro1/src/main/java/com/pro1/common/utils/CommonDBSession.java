@@ -59,7 +59,7 @@ public class CommonDBSession {
 	return result;
     }
 
-    protected <X> DbSessionInfo processHibernateSession(Class<X> pojoClass, Object vo, int queryType) throws Exception {
+    protected <X> DbSessionInfo processHibernateSession(Object vo, int queryType) throws Exception {
 
 	Session session = sessionFactory.openSession();
 	CriteriaBuilder builder = session.getCriteriaBuilder();

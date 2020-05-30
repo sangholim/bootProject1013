@@ -17,11 +17,12 @@ public class UserCafeBoardDAO extends CommonDBSession {
 
     private static final Logger logger = LoggerFactory.getLogger(UserCafeBoardDAO.class);
 
-    //private final String cafeUrlForm1 = "select NEW CafeVO(0l, cv.name, cv.icon, cv.url) " +
-    //         "from CafeVO cv where cv.url = :url";
+    // private final String cafeUrlForm1 = "select NEW CafeVO(0l, cv.name, cv.icon,
+    // cv.url) " +
+    // "from CafeVO cv where cv.url = :url";
 
-    private final String findCafeAdminUser = "select NEW UserCafeVO (uc.userUid, uc.cafeUid, uc.cafeLevel) " +
-            "from UserCafeVO  uc where uc.cafeUid = :cafeUid AND uc.userRole = 7";
+    private final String findCafeAdminUser = "select NEW UserCafeVO (uc.userUid, uc.cafeUid, uc.cafeLevel) "
+	    + "from UserCafeVO  uc where uc.cafeUid = :cafeUid AND uc.userRole = 7";
 
     private final String UserCafeCnt = "select count(uc.userUid) from UserCafeVO uc where uc.cafeUid = :cafeUid";
 
@@ -29,75 +30,118 @@ public class UserCafeBoardDAO extends CommonDBSession {
 
     public long getCountCafeMember(long cafeUid) {
 
-        return 0;
+	return 0;
+    }
+
+    public UserCafeVO getAdminUserMig(Session session, long cafe_uid) throws Exception {
+
+	if (sqlSession != null) {
+	    return sqlSession.selectOne("getAdminUser");
+	}
+
+	Query<UserCafeVO> query = session.createQuery(findCafeAdminUser, UserCafeVO.class);
+	query.setParameter("cafeUid", cafe_uid);
+	return query.getSingleResult();
+
     }
 
     public UserCafeVO getAdminUser(long cafe_uid) throws Exception {
 
-        if (sqlSession != null) {
-            return sqlSession.selectOne("getAdminUser");
-        }
+	if (sqlSession != null) {
+	    return sqlSession.selectOne("getAdminUser");
+	}
 
-        sessionInfo = processHibernateSession(UserCafeVO.class, null, DBQueryType.SELECT);
+	sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
 
-        try (Session session = sessionInfo.getSession()) {
+	try (Session session = sessionInfo.getSession()) {
 
-            Query<UserCafeVO> query = session.createQuery(findCafeAdminUser, UserCafeVO.class);
-            query.setParameter("cafeUid", cafe_uid);
-            return query.getSingleResult();
+	    Query<UserCafeVO> query = session.createQuery(findCafeAdminUser, UserCafeVO.class);
+	    query.setParameter("cafeUid", cafe_uid);
+	    return query.getSingleResult();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return null;
+	}
 
     }
 
     public Long getCafeUserCnt(long cafe_uid) throws Exception {
 
-        if (sqlSession != null) {
-            return sqlSession.selectOne("getAdminUser");
-        }
+	if (sqlSession != null) {
+	    return sqlSession.selectOne("getAdminUser");
+	}
 
-        sessionInfo = processHibernateSession(UserCafeVO.class, null, DBQueryType.SELECT);
+	sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
 
-        try (Session session = sessionInfo.getSession()) {
+	try (Session session = sessionInfo.getSession()) {
 
-            Query<Long> query = session.createQuery(UserCafeCnt, Long.class);
-            query.setParameter("cafeUid", cafe_uid);
-            return query.getSingleResult();
+	    Query<Long> query = session.createQuery(UserCafeCnt, Long.class);
+	    query.setParameter("cafeUid", cafe_uid);
+	    return query.getSingleResult();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1l;
-        }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return -1l;
+	}
+
+    }
+
+    public Long getCafeUserCntMig(Session session, long cafe_uid) throws Exception {
+
+	if (sqlSession != null) {
+	    return sqlSession.selectOne("getAdminUser");
+	}
+
+	Query<Long> query = session.createQuery(UserCafeCnt, Long.class);
+	query.setParameter("cafeUid", cafe_uid);
+	return query.getSingleResult();
 
     }
 
     /**
      * @author ued123
-     * @brief
-     * 로그인한 유저가 카페 멤버인지 확인하는 메서드
-     * 로그인한 userUid로 user_cafe를 조회함.
+     * @brief 로그인한 유저가 카페 멤버인지 확인하는 메서드 로그인한 userUid로 user_cafe를 조회함.
      */
-    public boolean isCafeMemberLoginUser(Object userUid, Object cafeUid) throws Exception {
+    /*
+     * public boolean isCafeMemberLoginUser(Object userUid, Object cafeUid) throws
+     * Exception {
+     * 
+     * // 전체를 긁어 sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
+     * boolean result = false; try (Session session = sessionInfo.getSession()) {
+     * 
+     * // Query<Long> query = session.createQuery(findCafeJoinUserUid, Long.class);
+     * Query<Long> query = session.createQuery(findCafeJoinUserUid, Long.class);
+     * query.setParameter("cafeUid", Long.parseLong(cafeUid.toString()));
+     * query.setParameter("userUid", Long.parseLong(userUid.toString()));
+     * 
+     * if (query.getSingleResult() > 0) { return !result; }
+     * 
+     * } catch (Exception e) {
+     * logger.warn("ERROR QUERYING USERCAFEBOARD TBL > Cause: {}", e.getMessage(),
+     * e); }
+     * 
+     * return result; }
+     */
+    /**
+     * 카페 회원인지 체크 로직
+     * @param session
+     * @param userUid
+     * @param cafeUid
+     * @return
+     * @throws Exception
+     */
+    public boolean isCafeUser(Session session, Object userUid, Object cafeUid) throws Exception {
 
-	// 전체를 긁어
-	sessionInfo = processHibernateSession(UserCafeVO.class, null, DBQueryType.SELECT);
 	boolean result = false;
-	try (Session session = sessionInfo.getSession()) {
 
-	    // Query<Long> query = session.createQuery(findCafeJoinUserUid, Long.class);
-	    Query<Long> query = session.createQuery(findCafeJoinUserUid, Long.class);
-	    query.setParameter("cafeUid", Long.parseLong(cafeUid.toString()));
-	    query.setParameter("userUid", Long.parseLong(userUid.toString()));
-	    
-	    if (query.getSingleResult() > 0) {
-		return !result;
-	    }
+	// Query<Long> query = session.createQuery(findCafeJoinUserUid, Long.class);
+	Query<Long> query = session.createQuery(findCafeJoinUserUid, Long.class);
+	query.setParameter("cafeUid", Long.parseLong(cafeUid.toString()));
+	query.setParameter("userUid", Long.parseLong(userUid.toString()));
 
-	} catch (Exception e) {
-	    logger.warn("ERROR QUERYING USERCAFEBOARD TBL > Cause: {}", e.getMessage(), e);
+	if (query.getSingleResult() > 0) {
+	    return !result;
 	}
 
 	return result;
@@ -105,17 +149,12 @@ public class UserCafeBoardDAO extends CommonDBSession {
 
     /**
      * @author ued123
-     * @brief
-     * 카페 가입하기
+     * @brief 카페 가입하기
      */
     public void cafeSignUp(UserCafeVO vo) throws Exception {
 
-        sessionInfo = processHibernateSession(UserCafeVO.class,vo,DBQueryType.INSERT);
+	sessionInfo = processHibernateSession(vo, DBQueryType.INSERT);
 
     }
 
-
 }
-
-
-

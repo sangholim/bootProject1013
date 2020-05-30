@@ -11,8 +11,11 @@
     <meta name="decorator" content="mycafe_main_for_wide">
     <meta name="myCafeIntro" content="true">
     <meta http-equiv="Content-Type" content="text/html;charset=euc-kr">
+    <%--
     <link rel="stylesheet" href="/css/board/board.css" type="text/css">
-    <style type="text/css">
+     --%>
+     <link class="personal_css" rel="stylesheet" href="/css/board/board.css?${applicationScope.cachetype}" type="text/css">
+	<style type="text/css">
     	div.autosourcing-stub {
         position: absolute;
         opacity: 0
@@ -129,7 +132,7 @@
 
                                         <c:forEach var="item" items="${postList}" varStatus="status">
                                             <tr>
-                                                <td class="td_article"><a href="/board/boardCenter/p/${item.boardUid}" />${item.subject}</td>
+                                                <td class="td_article"><a class="board_subject" href="/board/boardCenter/p/${item.boardUid}" />${item.subject}</td>
                                                 <td class="td_name">${item.writer}</td>
                                                 <td class="td_date">${item.createDateStr}</td>
                                                 <td class="td_view">0</td>

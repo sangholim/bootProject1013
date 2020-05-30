@@ -11,7 +11,11 @@
     <meta http-equiv="X-UA-Compatible" content="requiresActiveX=true">
     <title>카페이름 : 네이버 카페</title>
 
-    <link rel="stylesheet" href="/css/board/board.css" type="text/css">
+	<%--
+	<link rel="stylesheet" href="/css/board/board.css" type="text/css">
+     --%>
+    <link class="personal_css" rel="stylesheet" href="/css/board/board.css?${applicationScope.cachetype}" type="text/css">
+    
 </head>
 
 <div id="cafe-body-skin">
@@ -100,7 +104,7 @@
         <!-- 카페 간판 -->
         <div id="front-img">
             <div id="front-cafe">
-                <a href="/MyCafeIntro.nhn?clubid=29995789">
+                <a href="/board/${cafe_url}">
 					<span class="cafe_default">
 						<span class="inner_default">
 							<strong class="cafe_name">${cafe_name}</strong>
@@ -329,7 +333,7 @@
                             <li>
                                 <img src="https://cafe.pstatic.net/cafe4/hidden.gif" width="10" height="11" class="ico-list" alt="">
                                      <a href="#" target="cafe_main" class="gm-tcol-c" id="menuLink0">전체글보기</a>
-                                <span class="gm-tcol-c total">1</span>
+                                <span class="gm-tcol-c total">${boardSimpleInfo.cafeBoardCnt}</span>
                             </li>
                         </ul>
                         <div class="cafe-menu-space"></div>
@@ -390,27 +394,35 @@
                         width="860" height="100%" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowtransparency="true" allowfullscreen="" style="height: 1598px;">
 					</iframe>
 					<script type="text/javascript" src="/js/board/boardPostView.js?${applicationScope.cachetype}"></script>
-				</div>					
-                <div id="smart_editor" style="visibility: hidden">
+				</div>
+                
+                <div id="smart_editor" style="visibility: hidden; height:1px;">
                     <jsp:include page="./commonBoardInsert.jsp" flush="true"/>
                 </div>
-                <div id="join_editor" style="visibility: hidden">
+                
+                <div id="join_editor" style="visibility: hidden; height:1px;">
                     <jsp:include page="./commonBoardJoin.jsp" flush="true"/>
                 </div>
-			</div>
+            </div>
         </div>
-        <!-- 본문 내용 -->
+        <!--  footer -->
+    	<footer class="footer">
+            <h2 class="cafe_name">영통자이 입주예정자 카페</h2>
+            <a href="#" class="cafe_link">https://cafe.naver.com/youngtongxi</a>
+            <h2><a href="#" class="naver_cafe"><span class="blind">NAVER 카페</span></a></h2>
+        </footer>
+    
     </div>
 	
 	<div id="login_info">
         <input type="hidden" name="useruid" value="${userUid}" />
         <input type="hidden" name="nickname" value="${nickName}" />
-        <input type="hidden" name="isMemberCafeLoginUser" value="${isMemberCafeLoginUser}" />
+        <input type="hidden" name="isCafeUser" value="${boardSimpleInfo.cafeUser}" />
         <input type="hidden" name="cafeLevel" value="${boardSimpleInfo.cafeLevel}"/>
     </div>
 	<div id="cafe_info">
         <input type="hidden" name="cafeUid" value="${boardSimpleInfo.cafeUid}" />
         <input type="hidden" name="cafeUrl" value="${cafe_url}"/>
     </div>
- 	<script class="personal_js" type="text/javascript" src="/js/board/board.js?${applicationScope.cachetype}" ></script>
+    <script class="personal_js" type="text/javascript" src="/js/board/board.js?${applicationScope.cachetype}" ></script>
 </div>

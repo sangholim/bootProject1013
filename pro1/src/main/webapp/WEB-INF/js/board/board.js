@@ -66,14 +66,16 @@ var board = {
         var login_info = document.getElementById("login_info");
         
     	// 유저 정보에 따라서 카페 가입/글쓰기 버튼 UI 설정
-    	var isMemeber = document.getElementsByName("isMemberCafeLoginUser")[0].value;
+    	var isMemeber = document.getElementsByName("isCafeUser")[0].value;
     	
     	// 카페 가입되었다면 버튼 UI 변경
     	if (isMemeber == "true") {
     		boardMainBtn.textContent = "카페 글쓰기";
     	}
     	
-
+        //스마트 에디터
+        var smart_editor = document.getElementById("smart_editor");
+        
         var bodyTag = document.getElementById("content-area");
         bodyTag.addEventListener('click', function(event) {
 
@@ -85,35 +87,33 @@ var board = {
             //글 저장
             var saveBtn = document.getElementById("insertbtn");
 
-            //스마트 에디터
-            var smart_editor = document.getElementById("smart_editor");
-
-            var join_editor = document.querySelector("#join_editor");
-
             var menuLink0 = document.getElementById("menuLink0");
 
             var sign_up = document.getElementById("sign_up");
 
             //로그인한 사용자가 카페가입자인지
-            var isMemberCafeLoginUser = document.querySelector("input[name=isMemberCafeLoginUser]").value;
-
+            var isCafeUser = document.querySelector("input[name='isCafeUser']").value;
+        
             if(selectedTag == menuLink0) {
             	event.preventDefault();
             	smart_editor.style.visibility = "hidden";
-                mainAreaContent.style.display = "block";
+            	mainAreaContent.style.display = "block";
             }
 
             if(selectedTag == boardMainBtn) {
-            	if(isMemberCafeLoginUser == 'true') {
+            	if(isCafeUser == 'true') {
                     if( smart_editor.style.visibility == "hidden") {
                         smart_editor.style.visibility = "visible";
+                        smart_editor.style.height="";
                         mainAreaContent.style.display = "none";
                     }
                 } else {
                     //alert("카페 가입자가 아닙니다.");
                     if(join_editor.style.visibility == "hidden") {
                         join_editor.style.visibility = "visible";
-                        smart_editor.style.display = "none";
+						smart_editor.style.visibility = "hidden";
+                        smart_editor.style.height="1px";
+                        // smart_editor.style.display = "none";
                         mainAreaContent.style.display = "none";
                     }
                 }
@@ -127,11 +127,12 @@ var board = {
             } else if(selectedTag == sign_up) {
                 board.signUp();
             }
+        
         });
 
     },
 };
 
 (function() {
-    board.init();
+     board.init();
 })();
