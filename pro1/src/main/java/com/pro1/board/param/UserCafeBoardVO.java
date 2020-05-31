@@ -16,8 +16,8 @@ public class UserCafeBoardVO implements Serializable {
     private static final long serialVersionUID = 1827843192317052170L;
 
     @Id // primary key
-    @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
-    @GenericGenerator(name = "native",strategy = "native")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "boardUid")
     private long boardUid;
 
@@ -28,11 +28,18 @@ public class UserCafeBoardVO implements Serializable {
     private long cafeUid;
 
     private String subject;
+
     private String content;
+
     private String writer;
+
     private String addfile;
-    private Long createDate;
-    private Long modifiedDate;
+
+    private long createDate;
+
+    private long modifiedDate;
+
+    private long viewCnt;
 
     @Transient
     private String createDateStr;
@@ -43,7 +50,6 @@ public class UserCafeBoardVO implements Serializable {
     @Transient
     private String cafeUrl;
 
-    
     public String getCafeUrl() {
 	return cafeUrl;
     }
@@ -159,8 +165,8 @@ public class UserCafeBoardVO implements Serializable {
     public UserCafeBoardVO() {
     }
 
-    public UserCafeBoardVO(Long boardUid, Long userUid, Long cafeUid, String subject, String content, String writer,
-	    String addfile, Long createDate, Long modifiedDate) {
+    public UserCafeBoardVO(long boardUid, long userUid, long cafeUid, String subject, String content, String writer,
+	    String addfile, long createDate, long modifiedDate, long viewCnt) {
 	this.boardUid = boardUid;
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
@@ -170,27 +176,21 @@ public class UserCafeBoardVO implements Serializable {
 	this.addfile = addfile;
 	this.createDate = createDate;
 	this.modifiedDate = modifiedDate;
+	this.viewCnt = viewCnt;
     }
 
-    public UserCafeBoardVO(String subject, String content, String writer, String addfile, Long modifiedDate) {
+    public UserCafeBoardVO(String subject, String content, String writer, String addfile, long modifiedDate, long viewCnt) {
 	this.subject = subject;
 	this.content = content;
 	this.writer = writer;
 	this.addfile = addfile;
 	this.modifiedDate = modifiedDate;
+	this.viewCnt = viewCnt;
     }
 
-    public UserCafeBoardVO(Long boardUid, String subject, String writer, Long createDate) {
-	// public UserCafeBoardVO(Long boardUid, Long userUid, Long cafeUid, String
-	// subject, String content, String writer, String addfile, Long createDate, Long
-	// modifiedDate) {
-	this(boardUid, 0l, 0l, subject, null, writer, null, createDate, 0l);
+    public UserCafeBoardVO(Long boardUid, String subject, String writer, long createDate) {
+	this(boardUid, 0l, 0l, subject, null, writer, null, createDate, 0l, 0l);
     }
-    /*
-     * @PrePersist private void onCreate() {
-     * 
-     * this.createDate = 12000l; }
-     */
 
     public void setBoardUid(long boardUid) {
 	this.boardUid = boardUid;
@@ -202,6 +202,14 @@ public class UserCafeBoardVO implements Serializable {
 
     public void setCafeUid(long cafeUid) {
 	this.cafeUid = cafeUid;
+    }
+
+    public long getViewCnt() {
+	return viewCnt;
+    }
+
+    public void setViewCnt(long viewCnt) {
+	this.viewCnt = viewCnt;
     }
 
     @Override

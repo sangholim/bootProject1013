@@ -45,17 +45,18 @@
 											${post.userCafeBoardVO.createDateStr}</td>
 
 										<td nowrap="" class="m-tcol-c filter-30">|</td>
-										<td class="edit _rosRestrict"><a id="addArticleStorage"
-											href="#" onclick="clickcr(this,'art.keep','','',event);"
-											class="m-tcol-c">보관</a></td>
+										<td class="edit _rosRestrict">
+											<a id="addArticleStorage" href="#" onclick="clickcr(this,'art.keep','','',event);" class="m-tcol-c">보관</a>
+										</td>
+										<td nowrap="" class="m-tcol-c filter-30">|</td>
+										<td class="edit _rosRestrict">
+											<a id="modifyFormLink" href="/board/d/update_post?boardUid=${post.userCafeBoardVO.boardUid}" class="m-tcol-c">수정</a>
+										</td>
 
 										<td nowrap="" class="m-tcol-c filter-30">|</td>
-										<td class="edit _rosRestrict"><a id="modifyFormLink"
-											href="#" class="m-tcol-c">수정</a></td>
-
-										<td nowrap="" class="m-tcol-c filter-30">|</td>
-										<td class="delete _rosRestrict"><a href="#"
-											class="m-tcol-c" id="postRemove">삭제</a></td>
+										<td class="delete _rosRestrict">
+											<a href="/board/d/delete_post?boardUid=${post.userCafeBoardVO.boardUid}&cafeUid=${post.userCafeBoardVO.cafeUid}" class="m-tcol-c" id="postRemove">삭제</a>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -417,13 +418,13 @@
 											<textarea id="comment_text" cols="50" rows="2"
 												class="textarea m-tcol-c" maxlength="6000"
 												style="overflow: hidden; line-height: 14px; height: 39px;"
-												title="댓글입력"></textarea>
+												title="댓글입력">(TODO)</textarea>
 											<div class="u_cbox_upload_image" style="display: none"></div>
 										</div>
 									</td>
 									<td class="i3">
 										<div class="u_cbox_btn_upload _submitBtn">
-											<a href="#" class="u_cbox_txt_upload _submitCmt">등록</a>
+											<a href="#" class="u_cbox_txt_upload _submitCmt">등록(TODO)</a>
 										</div>
 									</td>
 								</tr>
@@ -445,12 +446,12 @@
 															<div class="se2_line_sticker">
 																<button type="button" title="이전" class="se2_prev"
 																	disabled="">
-																	<span>이전</span>
+																	<span>이전(TODO)</span>
 																</button>
 																<ul class="se2_line_sticker_set">
 																</ul>
 																<button type="button" title="다음" class="se2_next">
-																	<span>다음</span>
+																	<span>다음(TODO)</span>
 																</button>
 															</div>
 														</div>
@@ -507,9 +508,8 @@
 					<div class="btn2">
 						<span></span>
 						<p>
-							<a href="#" class="m-tcol-c"> <img
-								src="https://cafe.pstatic.net/cafe4/ico-btn-net_.gif" width="6"
-								height="5" alt="">다음글
+							<a href="#" class="m-tcol-c">
+								<img src="https://cafe.pstatic.net/cafe4/ico-btn-net_.gif" width="6" height="5" alt="">다음글(TODO)
 							</a>
 						</p>
 					</div>
@@ -520,7 +520,7 @@
 					<div class="btn2">
 						<span></span>
 						<p>
-							<a href="#" class="m-tcol-c">목록</a>
+							<a href="#" class="m-tcol-c">목록(TODO)</a>
 						</p>
 					</div>
 				</div>
@@ -580,30 +580,34 @@
 							<td colspan="4" class="board-line"></td>
 						</tr>
 						<tr align="center">
-							<td class="prev_btn"><a href="#"
-								onclick="goNext();clickcr(this,'art.next','','',event);"
-								class="m-tcol-c"><img
-									src="https://cafe.pstatic.net/cafe4/ico-btn-net2_.gif" alt="">다음글</a></td>
-							<td align="left" class="board-list"><span class="aaa">
-									<a href="#"
-									onclick="goNext();clickcr(this,'art.next','','',event);"
-									class="m-tcol-c">유림회관 카페를 시작합니다.</a>
-							</span></td>
+							<td class="prev_btn">
+								<a href="#" onclick="goNext();clickcr(this,'art.next','','',event);" class="m-tcol-c">
+									<img src="https://cafe.pstatic.net/cafe4/ico-btn-net2_.gif" alt="">다음글(TODO)
+								</a>
+							</td>
+							<td align="left" class="board-list">
+								<span class="aaa">
+									<a href="#" onclick="goNext();clickcr(this,'art.next','','',event);" class="m-tcol-c">
+										유림회관 카페를 시작합니다.(TODO)
+									</a>
+								</span>
+							</td>
 							<td align="left">
 								<div class="pers_nick_area">
 									<table role="presentation" cellspacing="0">
 										<tbody>
 											<tr>
-												<td class="p-nick"><a href="#" class="m-tcol-c"
-													onclick="ui(event, 'ued_123',3,'이승헌','29995789','ma', 'true', 'false', 'yulimhall', 'true', '1'); return false;">이승헌</a><span
-													class="mem-level"></span></td>
+												<td class="p-nick">
+													<a href="#" class="m-tcol-c" onclick="ui(event, 'ued_123',3,'이승헌','29995789','ma', 'true', 'false', 'yulimhall', 'true', '1'); return false;">이승헌(TODO)</a>
+													<span class="mem-level"></span>
+												</td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 
 							</td>
-							<td class="view-count m-tcol-c">2020.02.01.</td>
+							<td class="view-count m-tcol-c">2020.02.01.(TODO)</td>
 						</tr>
 						<tr>
 							<td colspan="4" class="board-line"></td>
@@ -1402,8 +1406,6 @@
 
 	<form name="frm" method="post" action="/board/d/update_post"
 		type="hidden">
-		<%--        <input type="hidden" name="boardUid" value="${post.boardUid}"/>--%>
-		<%--        <input type="hidden"--%>
 	</form>
 </div>
 

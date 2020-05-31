@@ -12,6 +12,7 @@ var boardPostView = {
 
             var inbox = document.getElementById("content-area");
             var removeBtn = document.getElementById("postRemove");
+            var modifyBtnList = document.getElementsByClassName("scroll_box_swiper");
             var modifyFormLink = document.querySelector("#modifyFormLink");
   
             inbox.addEventListener('click',function (event) {
@@ -24,15 +25,13 @@ var boardPostView = {
                         boardPostView.postDelete();
                     }
                 } else if (selectedTag == modifyFormLink) {
-
-                  //  alert("test");
+                	/*
                     var boardUid = document.querySelector("input[name=boardUid]").value;
                     var subject = document.querySelector("#post_subject").textContent;
                     var content = document.querySelector("#tbody").textContent;
                     window.location.href="/board/d/update_post?boardUid="
                         +boardUid+"&subject="+subject+"&content="+content;
-
-
+					*/
                 }
             });
         });

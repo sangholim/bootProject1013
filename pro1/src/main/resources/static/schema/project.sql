@@ -125,6 +125,7 @@ create table userCafeBoard (
 	addfile varchar(255) NOT NULL,
 	createDate bigint(20) unsigned NOT NULL,
 	modifiedDate bigint(20) unsigned NOT NULL,
+	viewCnt bigint(20) unsigned NOT NULL  default 0,
 	PRIMARY KEY (boardUid),
 	FOREIGN KEY (userUid) REFERENCES user_cafe (userUid),
 	FOREIGN KEY (cafeUid) REFERENCES user_cafe (cafeUid)
@@ -132,4 +133,5 @@ create table userCafeBoard (
 
 
 ALTER TABLE usercafeboard MODIFY COLUMN `boardUid` bigInt(20) auto_increment;
+ALTER TABLE usercafeboard ADD COLUMN `viewCnt` bigint(20) unsigned default 0;
 

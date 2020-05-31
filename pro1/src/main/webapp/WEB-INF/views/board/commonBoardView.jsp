@@ -10,12 +10,6 @@
     <meta http-equiv="Content-Type" content="text/html;charset=KSC5601">
     <meta http-equiv="X-UA-Compatible" content="requiresActiveX=true">
     <title>카페이름 : 네이버 카페</title>
-
-	<%--
-	<link rel="stylesheet" href="/css/board/board.css" type="text/css">
-     --%>
-    <link class="personal_css" rel="stylesheet" href="/css/board/board.css?${applicationScope.cachetype}" type="text/css">
-    
 </head>
 
 <div id="cafe-body-skin">

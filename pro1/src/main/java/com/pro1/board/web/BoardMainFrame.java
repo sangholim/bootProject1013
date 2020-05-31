@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 import com.pro1.common.constant.Constant;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/board")
@@ -35,17 +34,18 @@ public class BoardMainFrame {
     private static final Logger logger = LoggerFactory.getLogger(BoardMainFrame.class);
 
     /**
-     * 정의 되지 않은 경로는 redirect 처리 (/) 
+     * 정의 되지 않은 경로는 redirect 처리 (/)
+     * 
      * @param authetication
      * @param cafe_url
      * @param model
      */
-    @RequestMapping(value = {"/",""})
-    public String undefinedPath (Model model) {
-	
+    @RequestMapping(value = { "/", "" })
+    public String undefinedPath(Model model) {
+
 	return "redirect:/";
     }
-    
+
     @RequestMapping(value = "/{cafe_url}")
     public String getBoardMain(Authentication authetication, @PathVariable String cafe_url, Model model)
 	    throws Exception {
@@ -102,22 +102,40 @@ public class BoardMainFrame {
 	return (isSuccess) ? Constant.MAIN : "redirect:/cafe/sub_main/";
     }
 
-    @RequestMapping(value = "/d/delete_post", method = RequestMethod.POST)
-    public String deletePost(Authentication authentication, @RequestParam(value = "boardUid") long boardUid)
+    @RequestMapping(value = "/d/delete_post", method = { RequestMethod.POST, RequestMethod.GET })
+    public void deletePost(HttpServletResponse response, Authentication authentication,
+	    @RequestParam(value = "boardUid") long boardUid, @RequestParam(value = "cafeUid") long cafeUid)
 	    throws Exception {
+	PrintWriter responeWriter = null;
 
-	// TODO: 소스 로직 변경
-	// UserCafeBoardVO vo = boardManager.getOneBoardInfo(boardUid);
-	// boardManager.deletePost(vo);
-	// test
-	return "redirect:" + "/board/boardCenter/" + 1;
+	try {
+	    responeWriter = response.getWriter();
+	    response.setContentType("text/html; charset=UTF-8");
+	    String url = boardManager.deletePost(boardUid, cafeUid);
+
+	    if (url == null || url.isEmpty()) {
+		throw new Exception("Not Found CafeUrl");
+	    }
+	    responeWriter.println(
+		    "<script>alert('정상적으로 삭제 되었습니다.'); window.top.location.href='/board/" + url + "';</script>");
+	} catch (Exception e) {
+	    logger.warn("ERROR Delete Cafe Post, Go to Redirect by window location > MSG: {}", e.getMessage(), e);
+	    responeWriter.println(
+		    "<script>alert('삭제중 예상치 못한 문제가 발생하였습니다.'); window.top.location.href='/cafe/sub_main/';</script>");
+	} finally {
+	    if (responeWriter != null) {
+		responeWriter.close();
+	    }
+	}
+
     }
 
     @RequestMapping(value = "/d/update_post", method = RequestMethod.GET)
-    public String updateGET(Authentication authentication, UserCafeBoardVO vo, Model model) throws Exception {
+    public String updateGET(Authentication authentication, UserCafeBoardVO userCafeBoard, Model model)
+	    throws Exception {
 
-	boardManager.getOneBoardInfo(vo.getBoardUid(), model);
-	model.addAttribute("postInfo", vo);
+	model.addAttribute("post", boardManager.getSelectedBoard(userCafeBoard.getBoardUid()));
+	// model.addAttribute("postInfo", userCafeBoard);
 	return "/board/commonBoardUpdate";
     }
 
@@ -134,10 +152,6 @@ public class BoardMainFrame {
 
 	resultMap.put(code, 500);
 	resultMap.put(result, "게시글 수정중 문제 발생!");
-
-	// CustomAuthentication userAuth = (CustomAuthentication) authentication;
-
-	vo.setCreateDate(System.currentTimeMillis());
 	vo.setModifiedDate(System.currentTimeMillis());
 
 	try {
@@ -168,27 +182,21 @@ public class BoardMainFrame {
 	    throws Exception {
 
 	Map<String, Object> resultMap = new HashMap<>();
-
 	String code = "code";
 	String result = "result";
 	String cafeUrl = "cafeUrl";
 
-	resultMap.put(code, 500);
-	resultMap.put(result, "게시글 생성중 문제 발생!");
-
-	userCafeBoardVO.setCreateDate(System.currentTimeMillis());
-	userCafeBoardVO.setModifiedDate(System.currentTimeMillis());
-
 	try {
+	    userCafeBoardVO.setCreateDate(System.currentTimeMillis());
 	    boardManager.addPosts(userCafeBoardVO);
+	    resultMap.put(code, 200);
+	    resultMap.put(result, "정상적으로 게시글이 생성되었습니다.");
+	    resultMap.put(cafeUrl, userCafeBoardVO.getCafeUrl());
 	} catch (Exception e) {
+	    resultMap.put(code, 500);
+	    resultMap.put(result, "게시글 생성중 문제 발생!");
 	    logger.error("ERROR insert_post.json : {}", e.getMessage());
-	    return resultMap;
 	}
-
-	resultMap.put(code, 200);
-	resultMap.put(result, "정상적으로 게시글이 생성되었습니다.");
-	resultMap.put(cafeUrl, userCafeBoardVO.getCafeUrl());
 
 	return resultMap;
     }
@@ -209,18 +217,7 @@ public class BoardMainFrame {
 	boolean isSuccess = false;
 
 	try {
-	    List<UserCafeBoardVO> boardPostList = boardManager.getBoardPostList(cafeUid);
-	    // long형 date를 원하는 문자열 형으로 변경하기 위해 로직짬.
-	    Date date = new Date();
-	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-	    for (UserCafeBoardVO vo : boardPostList) {
-		date.setTime(vo.getModifiedDate());
-		String strDate = format.format(date);
-		vo.setCreateDateStr(strDate);
-		vo.setModifiedDateStr(strDate);
-	    }
-
-	    model.addAttribute("postList", boardPostList);
+	    model.addAttribute("postList", boardManager.getBoardPostList(cafeUid));
 	    isSuccess = true;
 	} catch (Exception e) {
 	    logger.warn("ERROR SHOWING CAFE BOARD VIEW > MSG: {}", e.getMessage(), e);
@@ -247,8 +244,7 @@ public class BoardMainFrame {
 
 	try {
 	    CustomAuthentication userAuth = (CustomAuthentication) authentication;
-	    BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid());
-	    model.addAttribute("boardSimpleInfoForm", boardSimpleInfoForm);
+	    model.addAttribute("boardSimpleInfoForm", boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid()));
 
 	} catch (Exception e) {
 	    logger.warn("ERROR JOINIG BOARD > MSG: {}", e.getMessage(), e);
@@ -270,8 +266,9 @@ public class BoardMainFrame {
     @RequestMapping(value = "/boardCenter/p/{boardUid}", method = RequestMethod.GET)
     public String boardCenter(Authentication authentication, @PathVariable("boardUid") long boardUid, Model model,
 	    HttpServletRequest request) throws Exception {
-	boardManager.getOneBoardInfo(boardUid, model);
-	
+
+	model.addAttribute("post", boardManager.getSelectedBoard(boardUid));
+
 	return "/board/boardPostView";
     }
 

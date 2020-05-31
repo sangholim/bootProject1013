@@ -110,7 +110,7 @@
                                                 <a href="/ArticleList.nhn?search.clubid=29995789&amp;search.boardtype=L"
                                                    class="m-tcol-t" title="전체글보기">전체글보기</a></h3>
                                             <span><a onclick="clickcr(this, 'cfh.more','','',event);targetChangeForMacSafari('/ArticleList.nhn?search.clubid=29995789&amp;search.boardtype=L');return false;"
-                                                    href="/ArticleList.nhn?search.clubid=29995789&amp;search.boardtype=L">더보기</a></span>
+                                                    href="/ArticleList.nhn?search.clubid=29995789&amp;search.boardtype=L">더보기(TODO)</a></span>
                                         </div>
                                     </div>
                                     <table class="board-box">
@@ -135,85 +135,79 @@
                                                 <td class="td_article"><a class="board_subject" href="/board/boardCenter/p/${item.boardUid}" />${item.subject}</td>
                                                 <td class="td_name">${item.writer}</td>
                                                 <td class="td_date">${item.createDateStr}</td>
-                                                <td class="td_view">0</td>
+                                                <td class="td_view">${item.viewCnt}</td>
                                             </tr>
                                         </c:forEach>
 
 
-
-                                        <tr>
-                                            <td colspan="4" align="center"></td>
+										<%--
+										TODO: 먼지 모르겠지만 구현해야함
+										<tr>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center"></td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center"></td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center"></td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center"></td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center"></td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center"></td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center"></td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center"></td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center"></td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center">
-                                            </td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center">
-
-                                            </td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center">
-
-                                            </td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center">
-
-                                            </td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center">
-
-                                            </td>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" align="center">
+                                            <td colspan="4" align="center">(TODO)</td>
+                                        </tr>
 
-                                            </td>
+                                        <tr>
+                                            <td colspan="4" align="center">(TODO)</td>
                                         </tr>
 
                                         <tr>
@@ -257,14 +251,7 @@
 
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td colspan="4" align="center">
-
-                                            </td>
-                                        </tr>
-
-
+                                        --%>
                                         </tbody>
                                     </table>
                                 </div>

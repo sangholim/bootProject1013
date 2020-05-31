@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.pro1.common.constant.Constant;
 import com.pro1.security.CustomAuthenticationProvider;
-import com.pro1.security.JWTUtils;
 import com.pro1.user.dao.UserDAO;
 import com.pro1.user.vo.AuthUserVO;
 import com.pro1.user.vo.CommonUserVO;
@@ -34,9 +33,6 @@ public class UserService {
 
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
-
-    @Autowired
-    private JWTUtils jwtUtils;
 
     public List<UserVO> selectUserList() {
 

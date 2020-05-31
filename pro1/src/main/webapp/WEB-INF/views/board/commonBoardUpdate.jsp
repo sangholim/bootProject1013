@@ -74,7 +74,7 @@
                 <li class="post_subject">
                     <label class="item" for="subject">제목</label>
                     <div>
-                        <input type="text" name="subject" value="${postInfo.subject}" id="subject" class="box_input">
+                        <input type="text" name="subject" value="${post.userCafeBoardVO.subject}" id="subject" class="box_input">
                         <span id="tempsaving_text" class="save" style="display: none;">임시 저장된 글
                             <strong id="tempsaving_count">(0)</strong>
                         </span>
@@ -194,7 +194,7 @@
                   </div>
               </div>--%>
 
-            <textarea name="ir1" id="ir1" rows="20" cols="120">${postInfo.content}</textarea>
+            <textarea name="ir1" id="ir1" rows="20" cols="120">${post.userCafeBoardVO.content}</textarea>
             <script type="text/javascript" src="/js/package/dist/js/service/HuskyEZCreator.js" charset="utf-8"></script>
             <script type="text/javascript">
                 var oEditors = [];
@@ -1486,11 +1486,11 @@
 </div>
 
 <div id="cafe_info">
-    <input type="hidden" name="cafeUid" value="${boardSimpleInfo.cafeUid}" />
-    <input type="hidden" name="cafeUrl" value="${cafe_url}"/>
+    <input type="hidden" name="cafeUid" value="${post.userCafeBoardVO.cafeUid}" />
+    <input type="hidden" name="cafeUrl" value="${post.cafeBoardUrl}"/>
 </div>
 
-<input type="hidden" name="boardUid" value="${postInfo.boardUid}"/>
+<input type="hidden" name="boardUid" value="${post.userCafeBoardVO.boardUid}"/>
 
 <link rel="stylesheet" href="/css/common/common.css" type="text/css">
 <script type="text/javascript" src="/js/common/common.js" ></script>

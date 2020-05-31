@@ -14,7 +14,6 @@ import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.annotation.Order;
 
 import com.pro1.board.dao.UserCafeBoardDAO;
-import com.pro1.board.service.UserCafeBoardService;
 import com.pro1.cafe.dao.CafeDAO;
 import com.pro1.cafe.service.CafeManager;
 import com.pro1.common.vo.CommonDataSource;
@@ -74,8 +73,6 @@ public class DataBaseConfig {
 
 	applicationContext.registerBean("com.pro1.board.dao.UserCafeBoardDAO", UserCafeBoardDAO.class,
 		() -> new UserCafeBoardDAO());
-	applicationContext.registerBean("com.pro1.board.service.UserCafeBoardService", UserCafeBoardService.class,
-		() -> new UserCafeBoardService());
 
 	applicationContext.registerBean("com.pro1.board.dao.BoardDAO", BoardDAO.class,
 		() -> new BoardDAO());
