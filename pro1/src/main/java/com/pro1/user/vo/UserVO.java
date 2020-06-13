@@ -14,23 +14,23 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class UserVO extends CommonUserVO {
 
     private String addrPlace;
-    
+
     private String mailNum;
-    
+
     private String phoneNumber;
-    
+
     private String country;
-    
+
     private String city;
-    
+
     private String photoPath;
-    
+
     private long createDate;
-    
+
     private long modifyDate;
-    
+
     private String gender;
-    
+
     private String birthday;
 
     public String getGender() {
@@ -122,7 +122,12 @@ public class UserVO extends CommonUserVO {
     public UserVO() {
     }
 
-    public UserVO(String id, String userNickName) {
-        super(id, userNickName);
+    public UserVO(String userNickName) {
+	super(userNickName);
     }
+
+    public UserVO(String id, String userNickName) {
+	super(id, userNickName);
+    }
+
 }

@@ -47,9 +47,9 @@ public class UserCafeVO implements Serializable {
     @Column(name = "userRole")
     private int userRole;
 
-    @Column(name ="cafeNicName")
+    @Column(name = "cafeNicName")
     private String cafeNicName;
-    
+
     @Id
     @ManyToOne(optional = false)
     @JoinColumn(name = "userUid", insertable = false, updatable = false)
@@ -60,24 +60,25 @@ public class UserCafeVO implements Serializable {
     @JoinColumn(name = "cafeUid", insertable = false, updatable = false)
     private CafeVO cafe;
 
-    //내가 가입한 카페에 대한 게시글은 복수이기 떄문에 oneTomany로 호출
-    //하지만 쿼리를 짜는건 생각해봄
+    // 내가 가입한 카페에 대한 게시글은 복수이기 떄문에 oneTomany로 호출
+    // 하지만 쿼리를 짜는건 생각해봄
     @Transient
     private Collection<UserCafeBoardVO> userCafeBoardList;
-    
+
     public UserCafeVO() {
 	// TODO Auto-generated constructor stub
     }
-    public UserCafeVO(long userUid, long cafeUid, String cafeLevel) {
 
-	this(userUid, cafeUid, cafeLevel, 0, null, null);
-    }
-   
     public UserCafeVO(long userUid, long cafeUid, int userRole) {
 
-	this(userUid, cafeUid, userRole, 0, null, null);
+	this(userUid, cafeUid, userRole, 0, null, null, null);
     }
-    
+
+    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int userRole, String cafeNicName, String uesrNickname) {
+	this(userUid, cafeUid, userRole, 0, null, new UserVO(uesrNickname), cafeNicName);
+	this.cafeLevel = cafeLevel;
+    }
+
     /**
      * 내카페 호출시 필요한 params
      * 
@@ -97,8 +98,7 @@ public class UserCafeVO implements Serializable {
 	this.cafeFav = cafeFav;
 	this.cafe = new CafeVO(uid, name, icon, url);
     }
-    
-    
+
     public UserCafeVO(long userUid, long cafeUid, int userRole, int cafeFav, long uid, String name, String icon,
 	    String url) {
 	this.userUid = userUid;
@@ -107,11 +107,10 @@ public class UserCafeVO implements Serializable {
 	this.cafeFav = cafeFav;
 	this.cafe = new CafeVO(uid, name, icon, url);
     }
-    
-    
-    
+
     /**
      * 유저가 가입한 카페 호출시 필요한 params
+     * 
      * @param userUid
      * @param cafeUid
      * @param cafeLevel
@@ -122,8 +121,8 @@ public class UserCafeVO implements Serializable {
      * @param icon
      * @param url
      */
-    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, int cafeOfficial, long uid, String name, String icon,
-	    String url) {
+    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, int cafeOfficial, long uid,
+	    String name, String icon, String url) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
 	this.cafeLevel = cafeLevel;
@@ -132,8 +131,8 @@ public class UserCafeVO implements Serializable {
 	this.cafe = new CafeVO(uid, name, icon, url);
     }
 
-    public UserCafeVO(long userUid, long cafeUid, int userRole, int cafeFav, int cafeOfficial, long uid, String name, String icon,
-	    String url) {
+    public UserCafeVO(long userUid, long cafeUid, int userRole, int cafeFav, int cafeOfficial, long uid, String name,
+	    String icon, String url) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
 	this.userRole = userRole;
@@ -163,6 +162,7 @@ public class UserCafeVO implements Serializable {
 
     /**
      * 추천카페 질의시 필요한 params
+     * 
      * @param userUid
      * @param cafeUid
      * @param cafeOfficial
@@ -174,8 +174,8 @@ public class UserCafeVO implements Serializable {
      * @param title_mainSort
      * @param memberCnt
      */
-    public UserCafeVO(long userUid, long cafeUid, int cafeOfficial, long uid, String name, String icon, String url, String desc,
-	    int title_mainSort, long memberCnt) {
+    public UserCafeVO(long userUid, long cafeUid, int cafeOfficial, long uid, String name, String icon, String url,
+	    String desc, int title_mainSort, long memberCnt) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
 	this.cafeOfficial = cafeOfficial;
@@ -197,16 +197,13 @@ public class UserCafeVO implements Serializable {
      * @param title_subSort
      * @param memberCnt
      */
-    public UserCafeVO(long userUid, long cafeUid, int cafeOfficial, long uid, String name, String icon, String url, String desc,
-	    int title_mainSort, int title_subSort ,int region_mainSort, long memberCnt) {
-	this(userUid, cafeUid, cafeOfficial, uid, name, icon, url, desc,title_mainSort, memberCnt); 
+    public UserCafeVO(long userUid, long cafeUid, int cafeOfficial, long uid, String name, String icon, String url,
+	    String desc, int title_mainSort, int title_subSort, int region_mainSort, long memberCnt) {
+	this(userUid, cafeUid, cafeOfficial, uid, name, icon, url, desc, title_mainSort, memberCnt);
 	this.cafe.setTitle_subSort(title_subSort);
 	this.cafe.setRegion_mainSort(region_mainSort);
     }
-   
-    
-    
-    
+
     public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, CafeVO cafe) {
 	this(userUid, cafeUid, cafeLevel, 0, cafe, null);
     }
@@ -219,18 +216,21 @@ public class UserCafeVO implements Serializable {
 	this.cafe = cafe;
 	this.user = user;
     }
-    
-    public UserCafeVO(long userUid, long cafeUid, int userRole, int cafeFav, CafeVO cafe, UserVO user) {
+
+    public UserCafeVO(long userUid, long cafeUid, int userRole, int cafeFav, CafeVO cafe, UserVO user,
+	    String cafeNicName) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
 	this.userRole = userRole;
 	this.cafeFav = cafeFav;
 	this.cafe = cafe;
 	this.user = user;
+	this.cafeNicName = cafeNicName;
     }
 
     public UserCafeVO(long userUid, String cafeLevel) {
-	this(userUid, -1l, cafeLevel);
+	this.userUid = userUid;
+	this.cafeLevel = cafeLevel;
     }
 
     public long getUserUid() {
@@ -286,51 +286,45 @@ public class UserCafeVO implements Serializable {
     }
 
     public int getCafeOfficial() {
-        return cafeOfficial;
+	return cafeOfficial;
     }
 
     public void setCafeOfficial(int cafeOfficial) {
-        this.cafeOfficial = cafeOfficial;
+	this.cafeOfficial = cafeOfficial;
     }
 
     public static long getSerialVersionUID() {
-        return serialVersionUID;
+	return serialVersionUID;
     }
 
     public int getUserRole() {
-        return userRole;
+	return userRole;
     }
 
     public void setUserRole(int userRole) {
-        this.userRole = userRole;
+	this.userRole = userRole;
     }
 
     public String getCafeNicName() {
-        return cafeNicName;
+	return cafeNicName;
     }
 
     public void setCafeNicName(String cafeNicName) {
-        this.cafeNicName = cafeNicName;
+	this.cafeNicName = cafeNicName;
     }
-    
+
     public Collection<UserCafeBoardVO> getUserCafeBoardList() {
-        return userCafeBoardList;
+	return userCafeBoardList;
     }
+
     public void setUserCafeBoardList(Collection<UserCafeBoardVO> userCafeBoardList) {
-        this.userCafeBoardList = userCafeBoardList;
+	this.userCafeBoardList = userCafeBoardList;
     }
-    
+
     @Override
     public String toString() {
-        return "UserCafeVO{" +
-                "userUid=" + userUid +
-                ", cafeUid=" + cafeUid +
-                ", cafeLevel='" + cafeLevel + '\'' +
-                ", cafeFav=" + cafeFav +
-                ", cafeOfficial=" + cafeOfficial +
-                ", userRole=" + userRole +
-                ", user=" + user +
-                ", cafe=" + cafe +
-                '}';
+	return "UserCafeVO{" + "userUid=" + userUid + ", cafeUid=" + cafeUid + ", cafeLevel='" + cafeLevel + '\''
+		+ ", cafeFav=" + cafeFav + ", cafeOfficial=" + cafeOfficial + ", userRole=" + userRole + ", user="
+		+ user + ", cafe=" + cafe + '}';
     }
 }

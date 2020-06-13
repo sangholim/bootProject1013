@@ -55,7 +55,8 @@ public class BoardMainFrame {
 	    CustomAuthentication userAuth = (CustomAuthentication) authetication;
 
 	    // 메인에 카페정보에 넣을 관리자정보와, 카페 심플정보들.
-	    BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid());
+	    BoardSimpleInfoForm boardSimpleInfoForm = boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid(),
+		    userAuth.getAuthUser().getUserNickName());
 	    // 카페 url를 통하여 카페정보를 찾지 못할경우는 카페 메인 페이지 로 이동
 	    if (boardSimpleInfoForm == null) {
 		throw new Exception("NOT FOUND CAFE INFO BY CAFE_URL: " + cafe_url);
@@ -89,7 +90,8 @@ public class BoardMainFrame {
 
 	    CustomAuthentication userAuth = (CustomAuthentication) authetication;
 	    model.addAttribute(Constant.PAGE_TYPE, Constant.BOARD_TYPE);
-	    model.addAttribute("boardSimpleInfo", boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid()));
+	    model.addAttribute("boardSimpleInfo", boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid(),
+		    userAuth.getAuthUser().getUserNickName()));
 	    model.addAttribute("nickName", userAuth.getAuthUser().getUserNickName());
 	    model.addAttribute("userUid", userAuth.getUid());
 	    model.addAttribute("boardUid", uidList[1]);
@@ -244,7 +246,8 @@ public class BoardMainFrame {
 
 	try {
 	    CustomAuthentication userAuth = (CustomAuthentication) authentication;
-	    model.addAttribute("boardSimpleInfoForm", boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid()));
+	    model.addAttribute("boardSimpleInfoForm", boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid(),
+		    userAuth.getAuthUser().getUserNickName()));
 
 	} catch (Exception e) {
 	    logger.warn("ERROR JOINIG BOARD > MSG: {}", e.getMessage(), e);
@@ -290,7 +293,6 @@ public class BoardMainFrame {
 
 	String code = "code";
 	String result = "result";
-	String cafeUrl = "cafeUrl";
 
 	resultMap.put(code, 500);
 	resultMap.put(result, "카페 가입중 문제 발생!");

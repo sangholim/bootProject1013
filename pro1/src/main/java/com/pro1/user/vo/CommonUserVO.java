@@ -62,6 +62,10 @@ public class CommonUserVO {
     public CommonUserVO() {
     }
 
+    public CommonUserVO(String userNickName) {
+        this (null, userNickName);
+    }
+
     public CommonUserVO(String id,String userNickName) {
         this.id = id;
         this.userNickName = userNickName;

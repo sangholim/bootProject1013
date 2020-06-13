@@ -85,6 +85,7 @@ create table user_cafe (
  cafeLevel varchar(20) NOT NULL,
  cafeFav tinyInt(1) default 0,
  cafeOfficial tinyInt(1) default 0,
+ cafeNicName varchar(20) default '',
  FOREIGN KEY (userUid) REFERENCES user (userUid),
  FOREIGN KEY (cafeUid) REFERENCES cafe (uid)
 )

@@ -1,0 +1,178 @@
+@charset "UTF-8";
+.mycafe_tab {
+    display: table;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 16px;
+}
+
+.mycafe_tab a.on {
+    position: relative;
+    border-color: #03c75a;
+    background-color: #03c75a;
+    color: #fff;
+}
+
+.mycafe_tab a:first-child {
+    border-left: solid 1px #e1e1e1;
+}
+
+.mycafe_tab a {
+    display: table-cell;
+    width: 20%;
+    height: 46px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid 1px #e1e1e1;
+    border-left: 0;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    text-decoration: none;
+    line-height: 46px;
+}
+
+.mycafe_tab a.on:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 1px;
+    height: 48px;
+    background-color: #03c75a;
+}
+
+.mycafe_top {
+    position: relative;
+    height: 30px;
+    margin-bottom: 8px;
+}
+
+.mycafe_top .common_select {
+    display: inline-block;
+    position: relative;
+    top: auto;
+    vertical-align: top;
+}
+
+.mycafe_top .common_select .btn_select {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 140px;
+}
+
+.mycafe_manage .mycafe_group {
+    border-top: 1px solid #666;
+}
+
+.mycafe_group .group {
+    clear: both;
+    height: 32px;
+    padding: 0 0 0 16px;
+    background-color: #f1f1f1;
+    font-size: 13px;
+}
+
+.mycafe_group .group .group_name {
+    display: inline-block;
+    line-height: 33px;
+    vertical-align: top;
+}
+
+.mycafe_group .group .num {
+    padding-left: 4px;
+    color: #ff4947;
+}
+
+.mycafe_list {
+    width: 100%;
+    border-collapse: collapse;
+    color: #222;
+}
+
+.mycafe_list tr:first-of-type td {
+    border-top: 0;
+}
+
+.mycafe_list td.bookmark {
+    padding: 15px 0 0 16px;
+    vertical-align: top;
+}
+
+.mycafe_list tbody td {
+    position: relative;
+    padding: 11px 0;
+    border-top: 1px solid #f2f2f2;
+    font-size: 13px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.mycafe_list .bookmark_cafe {
+    background-position: -296px -52px;
+    width: 16px;
+    height: 16px;
+}
+
+.mycafe_list td.bookmark + td.cafe_info {
+    padding-left: 0;
+}
+
+.mycafe_list td.cafe_info {
+    padding-right: 10px;
+    padding-left: 8px;
+}
+
+.mycafe_list .cafe_name {
+    font-size: 16px;
+}
+
+.mycafe_list td.mail_set {
+    color: #999;
+    text-align: center;
+}
+
+.mycafe_list .btn_mail.on {
+    border: 0;
+    background-color: #03c75a;
+    color: #fff;
+}
+
+.mycafe_list .btn_mail {
+    width: 40px;
+    height: 24px;
+    margin-left: 5px;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    border: solid 1px #e5e5e5;
+    font-size: 12px;
+    line-height: 22px;
+    color: #222;
+    font-family: arial, sans-serif;
+}
+
+.mycafe_list .btns {
+    text-align: center;
+}
+
+.mycafe_list .btn_set {
+    min-width: 40px;
+    height: 24px;
+    padding: 0 6px;
+    border-radius: 4px;
+    border: solid 1px #e5e5e5;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+a {
+    color: #5e5e5e;
+    text-decoration: none;
+}
+
+.mycafe_list .user {
+    padding-top: 6px;
+    color: #999;
+}

@@ -4,16 +4,22 @@
     
 <!--  카페 메인화면 요소 구성 / 카페 관리 요소 구성 -->
 <div id="container">
-	 <c:choose>
-	 	<c:when test="${fn:contains(page,'register')}">
-	 		<link rel="stylesheet" href="/css/utils/cropper/cropper.css?${applicationScope.cachetype}" type="text/css">
-	 		<jsp:include page="cafe_register.jsp"></jsp:include>
-	 		<script class="personal_js" type="text/javascript" src="/js/utils/cropper/cropper.js?${applicationScope.cachetype}" ></script>
-		</c:when>
-	 	<c:otherwise>
-	 		<jsp:include page="cafe_middle_main.jsp"></jsp:include>
-	 	</c:otherwise>
-	 </c:choose>
+	 <div id="content" class="content">
+		 <c:choose>
+		 	<c:when test="${fn:contains(page,'register')}">
+		 		<link rel="stylesheet" href="/css/utils/cropper/cropper.css?${applicationScope.cachetype}" type="text/css">
+		 		<jsp:include page="cafe_register.jsp"></jsp:include>
+		 		<script class="personal_js" type="text/javascript" src="/js/utils/cropper/cropper.js?${applicationScope.cachetype}" ></script>
+			</c:when>
+			<c:when test="${fn:contains(page,'main')}">
+		 		<jsp:include page="cafe_middle_main.jsp"></jsp:include>
+		 	</c:when>
+		 	<c:when test="${fn:contains(page,'manage')}">
+				<link class="personal_css" rel="stylesheet" href="/css/cafe/cafe_manage.css?${applicationScope.cachetype}" type="text/css">
+		 		<jsp:include page="cafe_middle_manage.jsp"></jsp:include>
+		 	</c:when>
+	 	</c:choose>
+ 	</div>
  	<!--  side menu -->
 	<div class="aside">
 		<c:if test="${sub_page eq 'sub_main'}">

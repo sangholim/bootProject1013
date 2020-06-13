@@ -51,7 +51,13 @@ public class Constant {
     public static final String TOKEN_PREFIX = "jwt ";
     
     public static final String USER_PROFILE = "profile_";
-    
+
+    public static final String MAIN_TYPE = "main";
+
+    public static final String MANAGE_TYPE = "manage";
+
+    public static final String REGISTER_TYPE = "register";
+
     /**
      * 권한 관리 맵
      */

@@ -5,7 +5,7 @@
 <c:if test="${sub_page eq 'sub_main'}">
 <!--  전체 카페 통틀어서 추천 게시글 -->
 <div class="home_editors">
-	<div class="common_title">
+	<div class="common_title">	 	
 		<h2 class="title">
 			Editor’s Pick
 		</h2>
@@ -84,7 +84,7 @@
 					<a href="javascript:void(0);" class="link">운영카페<!----></a>
 				</li>
 			</ul>
-			<a href="/cafe-home/mycafe/join" class="btn_mycafe_edit">내 카페 관리</a>
+			<a href="/cafe/manage" class="btn_mycafe_edit">내 카페 관리</a>
 		</div>
 		 <!----> <!----> <!----> <!---->
 		 <div class="user_mycafe_list">

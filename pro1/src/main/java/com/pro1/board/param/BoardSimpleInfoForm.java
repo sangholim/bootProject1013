@@ -10,6 +10,9 @@ public class BoardSimpleInfoForm {
 
     private String userNickName = "";
 
+    // 카페에 가입시 사용하는 닉네임, 만약 없다면 유저 닉네임으로 사용한다.
+    private String cafeNicName = "";
+
     private long cafeMemberCnt;
 
     private long cafeUid;
@@ -102,6 +105,14 @@ public class BoardSimpleInfoForm {
 
     public void setCafeUser(boolean isCafeUser) {
 	this.isCafeUser = isCafeUser;
+    }
+
+    public String getCafeNicName() {
+	return cafeNicName;
+    }
+
+    public void setCafeNicName(String cafeNicName) {
+	this.cafeNicName = cafeNicName;
     }
 
 }

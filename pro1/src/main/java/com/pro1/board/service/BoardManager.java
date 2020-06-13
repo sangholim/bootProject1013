@@ -12,7 +12,6 @@ import com.pro1.common.utils.CommonDBSession;
 import com.pro1.common.utils.CommonUtils;
 import com.pro1.common.vo.DbSessionInfo;
 import com.pro1.user.dao.UserDAO;
-import com.pro1.user.vo.CommonUserVO;
 
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -35,9 +34,6 @@ public class BoardManager extends CommonDBSession {
 
     @Autowired
     private UserCafeBoardDAO userCafeBoardDAO;
-
-    @Autowired
-    private UserDAO userDAO;
 
     /**
      * 게시글 추가
@@ -147,7 +143,7 @@ public class BoardManager extends CommonDBSession {
 
     }
 
-    public BoardSimpleInfoForm getCafeBasicInfo(String cafe_url, long userUid) throws Exception {
+    public BoardSimpleInfoForm getCafeBasicInfo(String cafe_url, long userUid, String userNickName) throws Exception {
 
 	DbSessionInfo sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
 	BoardSimpleInfoForm boardSimpleInfoForm = null;
@@ -156,25 +152,28 @@ public class BoardManager extends CommonDBSession {
 	    // 카페 정보 추출
 	    CafeVO cafeVO = cafeDAO.getCafeUrlinfoMig(session, cafe_url);
 	    long cafeUid = cafeVO.getUid();
-
-	    // 카페의 관리자 정보 추출
-	    UserCafeVO userCafeVO = userCafeBoardDAO.getAdminUserMig(session, cafeUid);
+	    // 카페의 관리자 정보 추출, 카페 관리자는 userRole 7 이고 유일하다.
+	    UserCafeVO userCafeAdmin = userCafeBoardDAO.getCafeUserMig(session, cafeUid, -1, 7);
 	    // 카페 멤버수 추출
 	    long MemberCnt = userCafeBoardDAO.getCafeUserCntMig(session, cafeUid);
 	    // 카페의 유저인지 체크
-	    CommonUserVO userVO = userDAO.userUidFindUserMig(session, userCafeVO.getUserUid());
+	    UserCafeVO userCafeMember = userCafeBoardDAO.getCafeUserMig(session, cafeUid, userUid, -1);
+		   
 	    // 카페의 글 총 갯수 추출
 	    long cafeBoardCnt = boardDAO.getCafeBoardCnt(session, cafeUid);
 	    // 카페 유저 인지 체크
 	    boolean isCafeUser = userCafeBoardDAO.isCafeUser(session, userUid, cafeUid);
 	    // 관리자 닉네임,카페레벨 담기
 	    boardSimpleInfoForm = new BoardSimpleInfoForm();
-	    boardSimpleInfoForm.setAdminUserNicName(userVO.getUserNickName());
-	    boardSimpleInfoForm.setCafeLevel(userCafeVO.getCafeLevel());
+	    // 운영자가 카페 전용 닉네임이 없으면, 네이버 회원 가입시에 썻던 닉네임으로 이용한다.
+	    boardSimpleInfoForm.setAdminUserNicName(
+		    (userCafeAdmin.getCafeNicName().isEmpty()) ? userCafeAdmin.getUser().getUserNickName() : userCafeAdmin.getCafeNicName());
+	    boardSimpleInfoForm.setCafeLevel(userCafeAdmin.getCafeLevel());
 	    boardSimpleInfoForm.setCafeMemberCnt(MemberCnt);
 	    boardSimpleInfoForm.setCafeUid(cafeUid);
 	    boardSimpleInfoForm.setDesc(cafeVO.getDesc());
-	    boardSimpleInfoForm.setUserNickName(userVO.getUserNickName());
+	    // 카페 닉네임이 없으면, 회원가입시 생성한 닉네임을 이용한다.
+	    boardSimpleInfoForm.setUserNickName((userCafeMember.getCafeNicName().isEmpty())? userNickName : userCafeMember.getCafeNicName());
 	    boardSimpleInfoForm.setCafeBoardCnt(cafeBoardCnt);
 	    boardSimpleInfoForm.setCafeUser(isCafeUser);
 	} catch (Exception e) {
