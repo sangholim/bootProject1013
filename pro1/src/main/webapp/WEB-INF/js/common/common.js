@@ -123,9 +123,7 @@ window.onhashchange = function() {
 			.toString(CryptoJS.enc.Utf8);
 		var requestParams = common.requestParams(false, "POST",
 			"/cafe"+popState[1]+"/list.json", decryptedMessage, "application/json");
-
 		common.sync(requestParams);
-
 	}
 }
 

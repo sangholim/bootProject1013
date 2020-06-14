@@ -248,10 +248,9 @@ public class BoardMainFrame {
 	    CustomAuthentication userAuth = (CustomAuthentication) authentication;
 	    model.addAttribute("boardSimpleInfoForm", boardManager.getCafeBasicInfo(cafe_url, userAuth.getUid(),
 		    userAuth.getAuthUser().getUserNickName()));
-
+	    isSuccess = true;
 	} catch (Exception e) {
 	    logger.warn("ERROR JOINIG BOARD > MSG: {}", e.getMessage(), e);
-	    isSuccess = false;
 	}
 
 	return (isSuccess) ? "/board/commonBoardJoin" : "redirect:/board/sub_main/";

@@ -967,11 +967,28 @@ var cafe = {
 				} else if (selectedTag.classList.contains("user_mycafe_bookmark")) { 
 					//이미 즐겨찾기 상태일떄는 즐켜찾기 해제가 되고
 					// 즐켜찾기 아닌 상태일떄는 즐찾기됨
+					var cafeFav = -1;
 					if(!selectedTag.classList.contains("on")) {
 						selectedTag.classList.add("on");
+						cafeFav = 1;
 					} else {
 						selectedTag.classList.remove("on");
+						cafeFav = 0;
 					}
+					
+					
+					//서버로 전달
+					var urlName= selectedTag.parentNode.previousElementSibling.href;
+					// cafe url만 들고옴
+					urlName= urlName.substr(urlName.indexOf("board")+6);
+					var cafeForm = {};
+					cafeForm.cafeFav = cafeFav;
+					cafeForm.cafeVO = {
+							url : urlName
+					};
+					var json = JSON.stringify(cafeForm);
+					var requestParams = common.requestParams(true ,"POST", "/cafe/update.json", json, null);
+					common.sync(requestParams);
 					
 				} else if(selectedTag.classList.contains("btn_mycafe_more")) {
 					//카페 더보기를 눌렀을떄 추가 카페를 보여준다 (5개씪)
@@ -995,6 +1012,10 @@ var cafe = {
 					// 내 카페 게시글 감춤
 					selectedTag.classList.add("on");
 					selectedTag.parentElement.nextElementSibling.style.display="";
+					// 서버로 전달
+					// 로그인한 userUid, cafeUid를 통하여 , cafeFav 갱신
+					
+					
 				}
 			});
 			

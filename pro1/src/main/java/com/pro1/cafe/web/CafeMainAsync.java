@@ -60,6 +60,7 @@ public class CafeMainAsync {
 	resultMap.put(code, 500);
 	resultMap.put(result, "카페 생성중 문제 발생!");
 	CafeVO cafeVO = cafeForm.getCafeVO();
+	
 	_Config config = configManage.getConfigData();
 	try {
 	    String base64Image = cafeForm.getImageDatas().split(",")[1];
@@ -118,14 +119,52 @@ public class CafeMainAsync {
 	    resultMap.put(code, 200);
 	    resultMap.put(result, "추천카페  불러오는중 문제 발생!");
 	} catch (Exception e) {
-	 // 앞으로는 오류 페이지로 넘길수 있게 처리
+	    // 앞으로는 오류 페이지로 넘길수 있게 처리
 	    logger.info("Error getting CafeList > {}", e.getMessage(), e.getCause());
 	    resultMap.put(code, 500);
 	    resultMap.put(result, "추천카페  불러오는중 문제 발생!");
-	    return resultMap;
 	}
 
 	return resultMap;
     }
 
+    
+
+    /**
+     * 선택된 카페 업데이트
+     * 
+     * @param authetication
+     * @param cafeType
+     * @param cafeForm
+     * @return
+     */
+    @RequestMapping(value = "/update.json")
+    public Map<String, Object> updateCafe(Authentication authetication, String cafeType,
+	    @RequestBody CafeForm cafeForm) {
+
+	Map<String, Object> resultMap = new HashMap<>();
+	String code = "code";
+	String result = "result";
+	resultMap.put(code, 500);
+	resultMap.put(result, "추천카페  불러오는중 문제 발생!");
+
+	try {
+	    // ui에서 페이지 간격은 8 로 정한다.
+	    CustomAuthentication userAuth = (CustomAuthentication) authetication;
+	    resultMap.put(Constant.PAGE_TYPE, Constant.CAFE_TYPE);
+	    resultMap.put("nickName", userAuth.getAuthUser().getUserNickName());
+	   
+	    if (cafeManager.updateCafe(userAuth.getAuthUser().getUserUid(), cafeForm) == -1) {
+		throw new Exception ("Fail to Update UserCafeVO");
+	    }
+	    resultMap.put(code, 200);
+	    resultMap.put(result, "추천카페  불러오는중 문제 발생!");
+	} catch (Exception e) {
+	    // 앞으로는 오류 페이지로 넘길수 있게 처리
+	    logger.info("Error getting CafeList > {}", e.getMessage(), e.getCause());
+	}
+
+	return resultMap;
+    }
+    
 }

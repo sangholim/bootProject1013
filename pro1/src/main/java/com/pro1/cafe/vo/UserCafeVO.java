@@ -39,7 +39,7 @@ public class UserCafeVO implements Serializable {
     private String cafeLevel;
 
     @Column(name = "cafeFav")
-    private int cafeFav;
+    private int cafeFav = -1;
 
     @Column(name = "cafeOfficial")
     private int cafeOfficial;
@@ -230,6 +230,8 @@ public class UserCafeVO implements Serializable {
 
     public UserCafeVO(long userUid, String cafeLevel) {
 	this.userUid = userUid;
+	this.cafeFav = 0;
+	this.userRole = 7;
 	this.cafeLevel = cafeLevel;
     }
 

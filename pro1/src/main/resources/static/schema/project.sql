@@ -97,6 +97,8 @@ ALTER TABLE user_cafe ADD COLUMN `cafeNicName` varchar(20) default '';
 
 /*
     userRole 추가
+    -2 탈퇴
+    -1 가입중
     0 새싹맴버
     1  일반멤버
     2 성실멤버
@@ -105,6 +107,7 @@ ALTER TABLE user_cafe ADD COLUMN `cafeNicName` varchar(20) default '';
     5 감사
     6 카페 운영자
     7 카페 매니저
+
  */
 ALTER TABLE user_cafe ADD COLUMN `userRole` tinyint(3) default 0;
 

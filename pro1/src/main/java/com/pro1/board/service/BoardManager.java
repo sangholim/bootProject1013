@@ -11,7 +11,6 @@ import com.pro1.common.DBQueryType;
 import com.pro1.common.utils.CommonDBSession;
 import com.pro1.common.utils.CommonUtils;
 import com.pro1.common.vo.DbSessionInfo;
-import com.pro1.user.dao.UserDAO;
 
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -123,7 +122,7 @@ public class BoardManager extends CommonDBSession {
 	    boardSimpleInfoForm.setUserCafeBoardVO(selectedBoardInfo);
 
 	    // 카페의 url 호출
-	    CafeVO cafeInfo = cafeDAO.getCafeQuery(session, selectedBoardInfo.getCafeUid());
+	    CafeVO cafeInfo = cafeDAO.getCafeQuery(session, selectedBoardInfo.getCafeUid(), null);
 	    if (cafeInfo == null) {
 		logger.debug("NOT FOUND CAFE INFO IN 'CAFE TBL' > cafeUid: {}", selectedBoardInfo.getCafeUid());
 		return null;
@@ -215,7 +214,7 @@ public class BoardManager extends CommonDBSession {
 	// 카페 uid를 통해 url 정보를 얻는다.
 	DbSessionInfo sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
 	try (Session session = sessionInfo.getSession()) {
-	    CafeVO cafeResult = cafeDAO.getCafeQuery(session, cafeUid);
+	    CafeVO cafeResult = cafeDAO.getCafeQuery(session, cafeUid, null);
 	    result = cafeResult.getUrl();
 	} catch (Exception e) {
 	    logger.warn("ERROR WHILE Excuete Database Query > {}", e.getMessage(), e);

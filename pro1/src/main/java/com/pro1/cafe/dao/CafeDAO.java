@@ -27,6 +27,21 @@ public class CafeDAO extends CommonDBSession {
      */
     private final String userCafeJoin = "select NEW UserCafeVO(0l, uc.cafeUid, uc.userRole, uc.cafeFav, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid";
 
+    //private final String userRole_condition = " and uc.userRole=:userRole";
+    
+    //private final String cafeFav_condition = " and uc.cafeFav=:cafeFav";
+    private final String userRole_condition = " and uc.userRole=";
+    
+    private final String cafeFav_condition = " and uc.cafeFav=";
+    
+    private final String cafeUrl_condition = "  c.url='";
+    
+    private final String cafeUid_condition = "  c.uid=";
+
+    private final String userCafe_userUid_condition = "  uc.userUid=";
+
+    private final String userCafe_cafeUid_condition = "  uc.cafeUid=";
+    
     private final String userCafeBoardQuery = "select NEW UserCafeBoardVO(ucb.boardUid, ucb.subject, ucb.writer, ucb.createDate) from UserCafeBoardVO ucb where ucb.cafeUid = :cafeUid  Order By createDate desc";
 
     /**
@@ -41,8 +56,16 @@ public class CafeDAO extends CommonDBSession {
 
     private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
     
-    private final String getCafeQuery = "select c from cafe c where c.uid = :cafeUid";
+    //private final String getCafeQuery = "select c from cafe c where c.uid = :cafeUid";
 
+    private final String getCafeQuery = "select c from cafe c where ";
+    
+    private final String getUserCafeQuery = "select uc from UserCafeVO uc where ";
+    /*
+    "UPDATE Country SET population = population * 11 / 10 " +
+    "WHERE population < :p"
+    */
+    private final String updateUserCafeQuery = "update UserCafeVO set ";
     
     /**
      * 유저가 로그인후 볼수있는 cafe들을 추출 (추천 카페들 , 내가 가입한 카페들)
@@ -266,8 +289,95 @@ public class CafeDAO extends CommonDBSession {
 	return result;
     }
 
-    public CafeVO getCafeQuery(Session session, long cafeUid) throws Exception {
+    public CafeVO getCafeQuery(Session session, long cafeUid, String url) throws Exception {
 
-	return session.createQuery(getCafeQuery, CafeVO.class).setParameter("cafeUid", cafeUid).getSingleResult();
+	StringBuilder stringBuilder = new StringBuilder(getCafeQuery);
+	if(url != null) {
+	    stringBuilder.append(cafeUrl_condition).append(url).append("'");   
+	}
+	
+	if (cafeUid != -1) {
+	    if (url != null) {
+		stringBuilder.append(" and ");
+	    }
+	    stringBuilder.append(cafeUid_condition).append(cafeUid);
+	}
+	
+	return session.createQuery(stringBuilder.toString(), CafeVO.class).getSingleResult();
     }
+    
+    public UserCafeVO getUserCafeQuery(Session session, long cafeUid, long userUid) throws Exception {
+
+	StringBuilder stringBuilder = new StringBuilder(getUserCafeQuery);
+	if(userUid != -1) {
+	    stringBuilder.append(userCafe_userUid_condition).append(userUid);   
+	}
+	
+	if (cafeUid != -1) {
+	    if (userUid != -1) {
+		stringBuilder.append(" and ");
+	    }
+	    stringBuilder.append(userCafe_cafeUid_condition).append(cafeUid);
+	}
+	
+	return session.createQuery(stringBuilder.toString(), UserCafeVO.class).getSingleResult();
+    }
+    
+    public int updateUserCafeQuery(Session session, long cafeUid, long userUid, int cafeFav) throws Exception {
+	// update userCafe set 
+	StringBuilder stringBuilder = new StringBuilder(updateUserCafeQuery);
+	
+	// need to update
+	if (cafeFav != -1) {
+	    stringBuilder.append(" cafeFav=" + cafeFav);
+	}
+
+	if (userUid != -1 || cafeUid != -1) {
+	    stringBuilder.append(" where ");
+	}
+	
+	if(userUid != -1) {
+	    stringBuilder.append(" userUid=").append(userUid);   
+	}
+	
+	if (cafeUid != -1) {
+	    if (userUid != -1) {
+		stringBuilder.append(" and ");
+	    }
+	    stringBuilder.append(" cafeUid=").append(cafeUid);
+	}
+	
+	return session.createQuery(stringBuilder.toString()).executeUpdate();
+    }
+    
+    
+    
+    
+    /**
+     * 로그인후 내 카페관리 탭에 의해서 질의 ..
+     *
+     * @param userUid
+     * @param cafeFav 
+     * @param userRole 
+     * @return
+     * @throws Exception
+     */
+    public void getMyCafeConditions(Session session, CafeForm cafeForm, long userUid, int userRole,
+	    int cafeFav) {
+
+	// 유저가 가입한 카페리스트 출력
+	StringBuilder queryBuilder = new StringBuilder(userCafeJoin);
+	if (userRole != -100) {
+	    queryBuilder.append(userRole_condition).append(userRole);
+	}
+	
+	if (cafeFav == 1) {
+	    queryBuilder.append(cafeFav_condition).append(cafeFav);
+	}
+
+	Query<UserCafeVO> query = session.createQuery(queryBuilder.toString(), UserCafeVO.class).setParameter("userUid", userUid);
+
+	cafeForm.setUserCafeList(query.getResultList());
+    }
+
 }

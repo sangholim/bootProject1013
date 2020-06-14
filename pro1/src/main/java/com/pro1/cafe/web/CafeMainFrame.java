@@ -109,30 +109,28 @@ public class CafeMainFrame {
      */
     @RequestMapping(value = "/manage/{tab}")
     public String manageMyCafeTab(Authentication authetication, @PathVariable String tab, Model model) {
-	// 탭의 조건 마다 카페 리스트를 불러온다.
-	// TODO: user_cafe에서 카페 상태라는 컬럼을 추가필요
-	switch (tab) {
-	case "mycafe":
 
-	    break;
-	case "favorite":
-
-	    break;
-	case "applying":
-
-	    break;
-	case "managing":
-
-	    break;
-	case "secede":
-
-	    break;
-
-	default:
-	    break;
-	}
+	/*
+	 * 1. 내카페 - 내가 가입한 카페 모드 들고옴 (userUid로 긁어옴) 
+	 * 2. 즐겨찾기 - 즐겨 찾는 카페 들고옴 (user_cafe > cafe_fav) 
+	 * 3. 신청중 - 가입대기중인 카페 들고옴 (userRole=-1) 
+	 * 4. 관리중 - 관리자 권한인 카페를 들고옴 (userRole=7) 
+	 * 5. 탈퇴 - 탈퇴한 카페를 들고옴 (userRole=-2)
+	 */
 	model.addAttribute(Constant.PAGE_TYPE, Constant.CAFE_TYPE + '_' + Constant.MANAGE_TYPE);
 	model.addAttribute("nickName", ((CustomAuthentication) authetication).getAuthUser().getUserNickName());
+
+	try {
+	    CustomAuthentication customAuthentication = (CustomAuthentication) authetication;
+	    CafeForm cafeForm = new CafeForm();
+	    cafeManager.getCafeListMyCafe(cafeForm, customAuthentication.getUid(), tab);
+	    // 클릭한 카페탭에 따라 카페리스트 호출
+	    model.addAttribute("cafeForm", cafeForm);
+
+	} catch (Exception e) {
+	    // TODO: handle exception
+	    logger.warn("ERROR Getting CafeList > MSG: {}", e.getMessage(), e);
+	}
 
 	return Constant.MAIN;
     }

@@ -1,5 +1,9 @@
 package com.pro1.cafe.service;
 
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +13,13 @@ import com.pro1.cafe.dao.CafeDAO;
 import com.pro1.cafe.vo.CafeForm;
 import com.pro1.cafe.vo.CafeVO;
 import com.pro1.cafe.vo.UserCafeVO;
+import com.pro1.common.DBQueryType;
 import com.pro1.common.constant.Constant;
+import com.pro1.common.utils.CommonDBSession;
+import com.pro1.common.vo.DbSessionInfo;
 import com.pro1.security.CustomAuthentication;
 
-public class CafeManager {
+public class CafeManager extends CommonDBSession {
     // 제목 분류 max index 값들
     private int[] maxTitleSort = { 10, 8, 6, 11, 11, 16, 12, 11, 22, 12, 9, 9, 8, 8, 7, 10, 12, 10, 14, 12, 8, 10, 5,
 	    10, 4 };
@@ -24,7 +31,7 @@ public class CafeManager {
     @Autowired
     private CafeDAO cafeDAO;
 
-    public void getCafeMapByUserUid(CafeForm cafeForm, long userUid, String sub_type) throws Exception{
+    public void getCafeMapByUserUid(CafeForm cafeForm, long userUid, String sub_type) throws Exception {
 	cafeDAO.getCafeMapByUserUid(userUid, sub_type, cafeForm);
     }
 
@@ -33,7 +40,6 @@ public class CafeManager {
 	try {
 	    model.addAttribute("cafeList", cafeDAO.getCafeList());
 	} catch (Exception e) {
-
 	    logger.warn("Error Connection DataBase : {}", e.getMessage(), e);
 	}
 
@@ -71,4 +77,64 @@ public class CafeManager {
 	}
     }
 
+    public void getCafeListMyCafe(CafeForm cafeForm, long userUid, String tab) throws Exception {
+
+	DbSessionInfo sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
+	// -100 is undefined
+	int userRole = -100;
+	int cafeFav = -1;
+	try (Session session = sessionInfo.getSession()) {
+	    switch (tab) {
+	    case "mycafe":
+		break;
+	    case "favorite":
+		cafeFav = 1;
+		break;
+	    case "applying":
+		userRole = -1;
+		break;
+	    case "managing":
+		userRole = 7;
+		break;
+	    case "secede":
+		userRole = -2;
+		break;
+
+	    default:
+		break;
+	    }
+
+	   cafeDAO.getMyCafeConditions(session, cafeForm, userUid, userRole, cafeFav);
+	} catch (Exception e) {
+	    logger.error("getCafeInfo error > {}", e.getMessage(), e);
+	}
+
+    }
+    public int updateCafe (long userUid, CafeForm cafeForm) throws Exception{
+	
+	
+	// cafe 테이블에서 cafeUrl 테이블 긁어서 값을 가져온다.
+	/*
+	 * 1. cafe 테이블에서 cafeUrl을 통하여 cafeUid 정보를 긁어온다
+	 * 2. cafeUid , userUid 로 해당 userCafeVO 객체 call
+	 * 3. update 구문 시행
+	 */
+	
+	DbSessionInfo dbSessionInfo = processHibernateSession(null, DBQueryType.SELECT);
+	int updateResult = -1;
+	try (Session session = dbSessionInfo.getSession()) {
+	    	// url를 통하여 cafeVO 가져오기
+	    	CafeVO cafeVO = cafeDAO.getCafeQuery(session, -1, cafeForm.getCafeVO().getUrl());
+	    	// userUid, cafeUid 를 통하여 userCafe 정보 들고오기
+	    	Transaction tr = session.beginTransaction();
+	    	// 원하는 값으로 업데이트
+	    	updateResult =cafeDAO.updateUserCafeQuery(session, cafeVO.getUid(), userUid, cafeForm.getCafeFav());
+	    	tr.commit();
+	} catch (Exception e) {
+	    logger.warn("Error Update UserCafe Data : {}", e.getMessage(), e);
+	}
+	
+	
+	return updateResult;
+    }
 }
