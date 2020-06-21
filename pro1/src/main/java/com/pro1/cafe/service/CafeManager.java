@@ -1,7 +1,5 @@
 package com.pro1.cafe.service;
 
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
@@ -11,6 +9,7 @@ import org.springframework.ui.Model;
 
 import com.pro1.cafe.dao.CafeDAO;
 import com.pro1.cafe.vo.CafeForm;
+import com.pro1.cafe.vo.CafeManageForm;
 import com.pro1.cafe.vo.CafeVO;
 import com.pro1.cafe.vo.UserCafeVO;
 import com.pro1.common.DBQueryType;
@@ -77,7 +76,46 @@ public class CafeManager extends CommonDBSession {
 	}
     }
 
-    public void getCafeListMyCafe(CafeForm cafeForm, long userUid, String tab) throws Exception {
+    public void getMyCafeListCnt(CafeManageForm cafeManageForm, long userUid, String tab) throws Exception {
+
+	DbSessionInfo sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
+	// -100 is undefined
+	try (Session session = sessionInfo.getSession()) {
+
+	    cafeManageForm.setMyCafeListCnt(
+		    session.createQuery("select count(uc)  from UserCafeVO uc where userUid=:userUid", Long.class)
+			    .setParameter("userUid", userUid).getSingleResult());
+	    cafeManageForm.setMyCafeFavListCnt(
+		    session.createQuery("select count(uc)  from UserCafeVO uc where userUid=:userUid and cafeFav=1",
+			    Long.class).setParameter("userUid", userUid).getSingleResult());
+	    cafeManageForm.setMyCafeManageListCount(
+		    session.createQuery("select count(uc)  from UserCafeVO uc where userUid=:userUid and userRole=7",
+			    Long.class).setParameter("userUid", userUid).getSingleResult());
+	    switch (tab) {
+	    case "mycafe":
+		cafeManageForm.setSelectMyCafeListCnt(cafeManageForm.getMyCafeListCnt());
+		break;
+	    case "favorite":
+		cafeManageForm.setSelectMyCafeListCnt(cafeManageForm.getMyCafeFavListCnt());
+		break;
+	    case "applying":
+		break;
+	    case "managing":
+		cafeManageForm.setSelectMyCafeListCnt(cafeManageForm.getMyCafeManageListCount());
+		break;
+	    case "secede":
+		break;
+	    default:
+		break;
+	    }
+
+	} catch (Exception e) {
+	    logger.error("getCafeInfo error > {}", e.getMessage(), e);
+	}
+
+    }
+
+    public void getCafeListMyCafe(CafeManageForm cafeManageForm, long userUid, String tab) throws Exception {
 
 	DbSessionInfo sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
 	// -100 is undefined
@@ -104,37 +142,35 @@ public class CafeManager extends CommonDBSession {
 		break;
 	    }
 
-	   cafeDAO.getMyCafeConditions(session, cafeForm, userUid, userRole, cafeFav);
+	    cafeDAO.getMyCafeConditions(session, cafeManageForm, userUid, userRole, cafeFav);
 	} catch (Exception e) {
 	    logger.error("getCafeInfo error > {}", e.getMessage(), e);
 	}
 
     }
-    public int updateCafe (long userUid, CafeForm cafeForm) throws Exception{
-	
-	
+
+    public int updateCafe(long userUid, CafeForm cafeForm) throws Exception {
+
 	// cafe 테이블에서 cafeUrl 테이블 긁어서 값을 가져온다.
 	/*
-	 * 1. cafe 테이블에서 cafeUrl을 통하여 cafeUid 정보를 긁어온다
-	 * 2. cafeUid , userUid 로 해당 userCafeVO 객체 call
-	 * 3. update 구문 시행
+	 * 1. cafe 테이블에서 cafeUrl을 통하여 cafeUid 정보를 긁어온다 2. cafeUid , userUid 로 해당
+	 * userCafeVO 객체 call 3. update 구문 시행
 	 */
-	
+
 	DbSessionInfo dbSessionInfo = processHibernateSession(null, DBQueryType.SELECT);
 	int updateResult = -1;
 	try (Session session = dbSessionInfo.getSession()) {
-	    	// url를 통하여 cafeVO 가져오기
-	    	CafeVO cafeVO = cafeDAO.getCafeQuery(session, -1, cafeForm.getCafeVO().getUrl());
-	    	// userUid, cafeUid 를 통하여 userCafe 정보 들고오기
-	    	Transaction tr = session.beginTransaction();
-	    	// 원하는 값으로 업데이트
-	    	updateResult =cafeDAO.updateUserCafeQuery(session, cafeVO.getUid(), userUid, cafeForm.getCafeFav());
-	    	tr.commit();
+	    // url를 통하여 cafeVO 가져오기
+	    CafeVO cafeVO = cafeDAO.getCafeQuery(session, -1, cafeForm.getCafeVO().getUrl());
+	    // userUid, cafeUid 를 통하여 userCafe 정보 들고오기
+	    Transaction tr = session.beginTransaction();
+	    // 원하는 값으로 업데이트
+	    updateResult = cafeDAO.updateUserCafeQuery(session, cafeVO.getUid(), userUid, cafeForm.getCafeFav());
+	    tr.commit();
 	} catch (Exception e) {
 	    logger.warn("Error Update UserCafe Data : {}", e.getMessage(), e);
 	}
-	
-	
+
 	return updateResult;
     }
 }

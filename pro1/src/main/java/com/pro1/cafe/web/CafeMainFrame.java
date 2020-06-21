@@ -1,5 +1,7 @@
 package com.pro1.cafe.web;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pro1.cafe.service.CafeManager;
 import com.pro1.cafe.vo.CafeForm;
+import com.pro1.cafe.vo.CafeManageForm;
 import com.pro1.common.constant.Constant;
 import com.pro1.security.CustomAuthentication;
 
@@ -81,13 +84,13 @@ public class CafeMainFrame {
      * @return
      */
     @RequestMapping(value = "/manage")
-    public String manage(Authentication authetication, String cafeType, Model model) {
+    public void manage(HttpServletResponse response, Authentication authetication, String cafeType, Model model)
+	    throws Exception {
 
-	// cafeManager.getCafeList(model);
 	model.addAttribute(Constant.PAGE_TYPE, Constant.CAFE_TYPE + '_' + Constant.MANAGE_TYPE);
 	model.addAttribute("nickName", ((CustomAuthentication) authetication).getAuthUser().getUserNickName());
+	response.sendRedirect("/cafe/manage/mycafe");
 
-	return Constant.MAIN;
     }
 
     /**
@@ -111,27 +114,24 @@ public class CafeMainFrame {
     public String manageMyCafeTab(Authentication authetication, @PathVariable String tab, Model model) {
 
 	/*
-	 * 1. 내카페 - 내가 가입한 카페 모드 들고옴 (userUid로 긁어옴) 
-	 * 2. 즐겨찾기 - 즐겨 찾는 카페 들고옴 (user_cafe > cafe_fav) 
-	 * 3. 신청중 - 가입대기중인 카페 들고옴 (userRole=-1) 
-	 * 4. 관리중 - 관리자 권한인 카페를 들고옴 (userRole=7) 
-	 * 5. 탈퇴 - 탈퇴한 카페를 들고옴 (userRole=-2)
+	 * 1. 내카페 - 내가 가입한 카페 모드 들고옴 (userUid로 긁어옴) 2. 즐겨찾기 - 즐겨 찾는 카페 들고옴 (user_cafe >
+	 * cafe_fav) 3. 신청중 - 가입대기중인 카페 들고옴 (userRole=-1) 4. 관리중 - 관리자 권한인 카페를 들고옴
+	 * (userRole=7) 5. 탈퇴 - 탈퇴한 카페를 들고옴 (userRole=-2)
 	 */
 	model.addAttribute(Constant.PAGE_TYPE, Constant.CAFE_TYPE + '_' + Constant.MANAGE_TYPE);
 	model.addAttribute("nickName", ((CustomAuthentication) authetication).getAuthUser().getUserNickName());
-
 	try {
 	    CustomAuthentication customAuthentication = (CustomAuthentication) authetication;
-	    CafeForm cafeForm = new CafeForm();
-	    cafeManager.getCafeListMyCafe(cafeForm, customAuthentication.getUid(), tab);
+	    CafeManageForm cafeManageForm = new CafeManageForm();
+		    
+	    cafeManager.getMyCafeListCnt(cafeManageForm, customAuthentication.getUid(), tab);
 	    // 클릭한 카페탭에 따라 카페리스트 호출
-	    model.addAttribute("cafeForm", cafeForm);
+	    model.addAttribute("cafeManageForm", cafeManageForm);
 
 	} catch (Exception e) {
 	    // TODO: handle exception
 	    logger.warn("ERROR Getting CafeList > MSG: {}", e.getMessage(), e);
 	}
-
 	return Constant.MAIN;
     }
 

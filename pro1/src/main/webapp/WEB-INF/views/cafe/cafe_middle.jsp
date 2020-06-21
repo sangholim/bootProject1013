@@ -17,7 +17,8 @@
 		 	<c:when test="${fn:contains(page,'manage')}">
 				<link class="personal_css" rel="stylesheet" href="/css/cafe/cafe_manage.css?${applicationScope.cachetype}" type="text/css">
 		 		<jsp:include page="cafe_middle_manage.jsp"></jsp:include>
-		 	</c:when>
+		 		<script class="personal_js" type="text/javascript" src="/js/cafe/cafe_manage.js?${applicationScope.cachetype}" ></script>
+			</c:when>
 	 	</c:choose>
  	</div>
  	<!--  side menu -->

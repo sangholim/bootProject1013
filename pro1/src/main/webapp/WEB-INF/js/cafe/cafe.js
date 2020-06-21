@@ -644,7 +644,13 @@ var cafe = {
 
 		// cafe 상위 메뉴 UI에서 카페홈/ 주제별/ 지역별/ 랭킹/  공통 기능
 		// ui a 태그의 href 부분과 상위 변수 'path'가 포함되면 색깔 변하게 처리
+		// 카페관리 페이지에서는 수행하지 않음.
+		if (path.indexOf("manage") > 0) {
+			return;
+		}
+		
 		var cafe_top_list = document.getElementsByClassName("lnb_link");
+		
 		
 		for(var i = 0; i < cafe_top_list.length; i++) {
 			var href = cafe_top_list[i].href;

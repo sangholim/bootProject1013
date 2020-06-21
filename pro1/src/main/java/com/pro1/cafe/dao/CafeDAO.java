@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.pro1.board.param.UserCafeBoardVO;
 import com.pro1.cafe.vo.CafeForm;
+import com.pro1.cafe.vo.CafeManageForm;
 import com.pro1.cafe.vo.CafeVO;
 import com.pro1.cafe.vo.UserCafeVO;
 import com.pro1.common.DBQueryType;
@@ -25,11 +26,8 @@ public class CafeDAO extends CommonDBSession {
     /**
      * User가 가입한 카페에 필요한 정보 카페레벨,즐겨찾기, 카페이름,카페아이콘
      */
-    private final String userCafeJoin = "select NEW UserCafeVO(0l, uc.cafeUid, uc.userRole, uc.cafeFav, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid";
+    private final String userCafeJoin = "select NEW UserCafeVO(0l, uc.cafeUid, uc.userRole, uc.cafeFav, uc.cafeNicName, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid";
 
-    //private final String userRole_condition = " and uc.userRole=:userRole";
-    
-    //private final String cafeFav_condition = " and uc.cafeFav=:cafeFav";
     private final String userRole_condition = " and uc.userRole=";
     
     private final String cafeFav_condition = " and uc.cafeFav=";
@@ -55,16 +53,11 @@ public class CafeDAO extends CommonDBSession {
     private final String cafeMainCondition = "where uc.userUid != %s %s order by createDate";
 
     private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
-    
-    //private final String getCafeQuery = "select c from cafe c where c.uid = :cafeUid";
 
     private final String getCafeQuery = "select c from cafe c where ";
     
     private final String getUserCafeQuery = "select uc from UserCafeVO uc where ";
-    /*
-    "UPDATE Country SET population = population * 11 / 10 " +
-    "WHERE population < :p"
-    */
+    
     private final String updateUserCafeQuery = "update UserCafeVO set ";
     
     /**
@@ -275,6 +268,7 @@ public class CafeDAO extends CommonDBSession {
 	     */
 	    if (result) {
 		userCafeVO.setCafeUid(cafeVO.getUid());
+		userCafeVO.setUserRole(6);
 		result = processHibernateSession(currentSession, DBQueryType.INSERT, userCafeVO);
 	    }
 
@@ -362,7 +356,7 @@ public class CafeDAO extends CommonDBSession {
      * @return
      * @throws Exception
      */
-    public void getMyCafeConditions(Session session, CafeForm cafeForm, long userUid, int userRole,
+    public void getMyCafeConditions(Session session, CafeManageForm cafeManageForm, long userUid, int userRole,
 	    int cafeFav) {
 
 	// 유저가 가입한 카페리스트 출력
@@ -376,8 +370,47 @@ public class CafeDAO extends CommonDBSession {
 	}
 
 	Query<UserCafeVO> query = session.createQuery(queryBuilder.toString(), UserCafeVO.class).setParameter("userUid", userUid);
+	
+	// query.setFirstResult(0);
+	// query.setMaxResults(15);
+	// cafeForm.setUserCafeList(query.getResultList());
+	    // 존재하는 카페 리스트 총 갯수 구하기
+	    List resultList = query.getResultList();
+	    long maxPageCount = 0;
+	    
+	    if (!resultList.isEmpty()) {
+		maxPageCount = (long) resultList.size();
+		maxPageCount = (maxPageCount % cafeManageForm.getShowDataListCount() == 0)
+			? maxPageCount / cafeManageForm.getShowDataListCount()
+			: maxPageCount / cafeManageForm.getShowDataListCount() + 1;
 
-	cafeForm.setUserCafeList(query.getResultList());
+	    }
+
+	    // 총 카운트가 0보다 작거나 같으면, 카페리스트를 호출하지 않음
+	    if (maxPageCount <= 0) {
+		return;
+	    }
+
+	    // 총 페이지수 = maxPageCount
+	    if (cafeManageForm.getMaxPageCount() <= 0) {
+		cafeManageForm.setMaxPageCount(maxPageCount);
+	    }
+
+	    // UI나타나는 최대 페이지수 [ex: 총 페이지수 : 20, UI에서 보여줄 페이지 묶음:6 일때, 현재 1페이지면 최대 페이지는
+	    // 6페이지이다.]
+	    int getShowPageMaximumCount = cafeManageForm.getShowPageMinimumCount() * cafeManageForm.getShowPageNumCount();
+	    getShowPageMaximumCount = (getShowPageMaximumCount > (int) maxPageCount) ? (int) maxPageCount
+		    : getShowPageMaximumCount;
+	    // UI에서 보여지는 페이지중 마지막 페이지
+	    cafeManageForm.setShowPageMaximumCount(getShowPageMaximumCount);
+
+	    // 카페리스트 호출
+	    // UI상에서 페이지
+	    // (현재페이지 -1)*(페이지당 보여줄 리스트 개수)
+	    query.setFirstResult((cafeManageForm.getSelectedPageNum() - 1) * cafeManageForm.getShowDataListCount());
+	    // setMaxResults 검색 시작 데이터로부터 + count 만큼 조회
+	    query.setMaxResults(cafeManageForm.getShowDataListCount());
+	    cafeManageForm.setUserCafeList(query.getResultList());
     }
 
 }

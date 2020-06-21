@@ -74,27 +74,30 @@ common.sync = function(requestParams) {
 				// 카페 탭 선택후 후처리
 				cafe.afterCafeProcess(json.cafeForm, requestParamData);
 
-			} else if (url.indexOf("/sub_main") > -1) {
-
 			} else if (url.indexOf("/board/MemberJoin.json") != -1){
 
 				var responseCode = json.code;
 				alert(json.result);
 				if(responseCode == 200) {
-					//window.location.href = "/board/";
 					location.reload();
 				}
 			} else if (url.indexOf("/d/update_post.json") != -1){
 
 				var responseCode = json.code;
 				alert(json.result);
-				debugger;
 				if(responseCode == 200) {
 					//window.location.href = "/board/";
 					window.location.href = "/board/boardCenter/p/"+json.boardUid;
 				}
+			} else if (url.indexOf("/manage/list.json") != -1){
+				cafeManage.getCafeManageList(json.cafeManageForm);
 			}
 		}
+		
+		if (loadNode === undefined || loadNode ==null) {
+			return;
+		}
+		
 		loadNode.classList.add('blind');
 		//xhttp.abort();
 	}

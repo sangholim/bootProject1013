@@ -18,6 +18,12 @@ public class CafeForm extends SearchForm {
 
     private int cafeFav = -1;
 
+    private long myCafeListCnt = 0;
+
+    private long myCafeFavListCnt = 0;
+
+    private long myCafeManageListCount = 0;
+
     // 유저가 가입한 카페 리스트
     private List<UserCafeVO> userCafeList;
 
@@ -73,6 +79,30 @@ public class CafeForm extends SearchForm {
 
     public void setCafeFav(int cafeFav) {
 	this.cafeFav = cafeFav;
+    }
+
+    public long getMyCafeListCnt() {
+	return myCafeListCnt;
+    }
+
+    public void setMyCafeListCnt(long myCafeListCnt) {
+	this.myCafeListCnt = myCafeListCnt;
+    }
+
+    public long getMyCafeFavListCnt() {
+	return myCafeFavListCnt;
+    }
+
+    public void setMyCafeFavListCnt(long myCafeFavListCnt) {
+	this.myCafeFavListCnt = myCafeFavListCnt;
+    }
+
+    public long getMyCafeManageListCount() {
+	return myCafeManageListCount;
+    }
+
+    public void setMyCafeManageListCount(long myCafeManageListCount) {
+	this.myCafeManageListCount = myCafeManageListCount;
     }
 
 }

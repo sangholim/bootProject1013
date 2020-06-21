@@ -121,7 +121,7 @@ public class UserCafeVO implements Serializable {
      * @param icon
      * @param url
      */
-    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, int cafeOfficial, long uid,
+    public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, String cafeNicName, int cafeOfficial, long uid,
 	    String name, String icon, String url) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
@@ -131,12 +131,13 @@ public class UserCafeVO implements Serializable {
 	this.cafe = new CafeVO(uid, name, icon, url);
     }
 
-    public UserCafeVO(long userUid, long cafeUid, int userRole, int cafeFav, int cafeOfficial, long uid, String name,
+    public UserCafeVO(long userUid, long cafeUid, int userRole, int cafeFav, String cafeNicName, int cafeOfficial, long uid, String name,
 	    String icon, String url) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
 	this.userRole = userRole;
 	this.cafeFav = cafeFav;
+	this.cafeNicName = cafeNicName;
 	this.cafeOfficial = cafeOfficial;
 	this.cafe = new CafeVO(uid, name, icon, url);
     }
@@ -202,6 +203,7 @@ public class UserCafeVO implements Serializable {
 	this(userUid, cafeUid, cafeOfficial, uid, name, icon, url, desc, title_mainSort, memberCnt);
 	this.cafe.setTitle_subSort(title_subSort);
 	this.cafe.setRegion_mainSort(region_mainSort);
+	
     }
 
     public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, CafeVO cafe) {
