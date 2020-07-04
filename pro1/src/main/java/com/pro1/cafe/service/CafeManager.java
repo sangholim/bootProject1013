@@ -149,20 +149,42 @@ public class CafeManager extends CommonDBSession {
 
     }
 
-    public int updateCafe(long userUid, CafeForm cafeForm) throws Exception {
+    public int modCafeFav(long userUid, CafeManageForm cafeManageForm) throws Exception {
 
-	// cafe 테이블에서 cafeUrl 테이블 긁어서 값을 가져온다.
 	/*
 	 * 1. cafe 테이블에서 cafeUrl을 통하여 cafeUid 정보를 긁어온다 2. cafeUid , userUid 로 해당
 	 * userCafeVO 객체 call 3. update 구문 시행
 	 */
+	DbSessionInfo dbSessionInfo = processHibernateSession(null, DBQueryType.SELECT);
+	int updateResult = -1;
+	try (Session session = dbSessionInfo.getSession()) {
+	    // url를 통하여 cafeVO 가져오기
+	    CafeVO cafeVO = cafeDAO.getCafeUrlinfoMig(session, cafeManageForm.getUrl());
+	    Transaction tr = session.beginTransaction();
+	    // 카페 즐겨찾기 변경
+	    updateResult = cafeDAO.updateUserCafeQuery(session, cafeVO.getUid(), userUid, cafeManageForm.getCafeFav());
+	    tr.commit();
+	    
+	    
+	} catch (Exception e) {
+	    logger.warn("Error Update UserCafe Data : {}", e.getMessage(), e);
+	}
 
+	return updateResult;
+    }
+
+    
+    public int updateCafe(long userUid, CafeForm cafeForm) throws Exception {
+
+	/*
+	 * 1. cafe 테이블에서 cafeUrl을 통하여 cafeUid 정보를 긁어온다 2. cafeUid , userUid 로 해당
+	 * userCafeVO 객체 call 3. update 구문 시행
+	 */
 	DbSessionInfo dbSessionInfo = processHibernateSession(null, DBQueryType.SELECT);
 	int updateResult = -1;
 	try (Session session = dbSessionInfo.getSession()) {
 	    // url를 통하여 cafeVO 가져오기
 	    CafeVO cafeVO = cafeDAO.getCafeQuery(session, -1, cafeForm.getCafeVO().getUrl());
-	    // userUid, cafeUid 를 통하여 userCafe 정보 들고오기
 	    Transaction tr = session.beginTransaction();
 	    // 원하는 값으로 업데이트
 	    updateResult = cafeDAO.updateUserCafeQuery(session, cafeVO.getUid(), userUid, cafeForm.getCafeFav());
@@ -173,4 +195,5 @@ public class CafeManager extends CommonDBSession {
 
 	return updateResult;
     }
+    
 }

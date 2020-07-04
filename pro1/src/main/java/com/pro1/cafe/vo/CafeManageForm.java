@@ -16,6 +16,10 @@ public class CafeManageForm extends SearchForm {
 
     private String cateGory = "mycafe";
 
+    private String url = "";
+
+    private int cafeFav = 0;
+
     // 유저가 가입한 카페 리스트
     private List<UserCafeVO> userCafeList;
 
@@ -65,6 +69,22 @@ public class CafeManageForm extends SearchForm {
 
     public void setSelectMyCafeListCnt(long selectMyCafeListCnt) {
 	this.selectMyCafeListCnt = selectMyCafeListCnt;
+    }
+
+    public String getUrl() {
+	return url;
+    }
+
+    public void setUrl(String url) {
+	this.url = url;
+    }
+
+    public int getCafeFav() {
+	return cafeFav;
+    }
+
+    public void setCafeFav(int cafeFav) {
+	this.cafeFav = cafeFav;
     }
 
 }

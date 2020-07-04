@@ -187,7 +187,7 @@ public class CafeMainAsync {
 	String code = "code";
 	String result = "result";
 	resultMap.put(code, 500);
-	resultMap.put(result, "추천카페  불러오는중 문제 발생!");
+	resultMap.put(result, "카페리스트 호출중 문제가 발생하였습니다.");
 
 	try {
 
@@ -204,4 +204,43 @@ public class CafeMainAsync {
 	return resultMap;
     }
 
+    /**
+     * 카페 관리에서 페이지 호출
+     * 
+     * @param authetication
+     * @param cafeType
+     * @param cafeForm
+     * @return
+     */
+    @RequestMapping(value = "/manage/modCafeFav.json")
+    public Map<String, Object> modCafeFav(Authentication authetication,
+	    @RequestBody CafeManageForm cafeManageForm) {
+	/*
+	 * 1. 내카페 - 내가 가입한 카페 모드 들고옴 (userUid로 긁어옴) 2. 즐겨찾기 - 즐겨 찾는 카페 들고옴 (user_cafe >
+	 * cafe_fav) 3. 신청중 - 가입대기중인 카페 들고옴 (userRole=-1) 4. 관리중 - 관리자 권한인 카페를 들고옴
+	 * (userRole=7) 5. 탈퇴 - 탈퇴한 카페를 들고옴 (userRole=-2)
+	 */
+
+	Map<String, Object> resultMap = new HashMap<>();
+	String code = "code";
+	String result = "result";
+	resultMap.put(code, 500);
+	resultMap.put(result, "즐겨 찾기 추가중 문제 발생");
+
+	try {
+
+	    CustomAuthentication customAuthentication = (CustomAuthentication) authetication;
+	    cafeManager.modCafeFav(customAuthentication.getUid(), cafeManageForm);
+	    // 클릭한 카페탭에 따라 카페리스트 호출
+	    resultMap.put(code, 200);
+	    resultMap.put("cafeManageForm", cafeManageForm);
+
+	} catch (Exception e) {
+	    // TODO: handle exception
+	    logger.warn("ERROR Getting CafeList > MSG: {}", e.getMessage(), e);
+	}
+	return resultMap;
+    }
+
+    // addCafeFav
 }

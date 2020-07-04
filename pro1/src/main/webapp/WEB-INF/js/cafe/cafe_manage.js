@@ -17,7 +17,10 @@ var cafeManage = {
 		// 선택된 페이지 번호
 		selectedPageNum: 1,
 		// 보여줄 페이지 갯수
-		showPageNumCount: 8
+		showPageNumCount: 8,
+		// 관리탭 타입
+		cateGory: 'mycafe',
+		cafeFav : 0
 	},
 	getCafeManageList : function (cafeList) {
 		
@@ -162,6 +165,7 @@ var cafeManage = {
 		for (var i=0; i < tabUrlTag.length; i++) {
 			
 			if (tabUrlTag[i].href.indexOf(path) > 0) {
+				cafeManage.baseParam.cateGory = tabUrlTag[i].className;
 				// router-link-exact-active on
 				tabUrlTag[i].classList.add ("router-link-exact-active","on");
 				break;
@@ -191,15 +195,47 @@ var cafeManage = {
 								selectedTag.parentElement
 										.getElementsByClassName("layer")[0].style.display = "";
 
-							} else if (selectedTag.classList
-									.contains("btn_pageNum")) {
+							} else if (selectedTag.classList.contains("btn_pageNum")) {
 								// 페이지 버튼에 따라 카페리스트 호출[async]
 								cafeManage.baseParam.selectedPageNum = parseInt(selectedTag.textContent);
 								var json = JSON.stringify(cafeManage.baseParam);
 								var requestParams = common.requestParams(true ,"POST", "/cafe/manage/list.json", json, null);
 								common.sync(requestParams);
 								
-							} 
+							} else if (selectedTag.classList.contains("bookmark_cafe")) {
+								// bookmark 버튼눌럿을때 이벤트 리스너
+								
+								var bookmark = !(selectedTag.getAttribute("aria-pressed") === 'true');
+								var modCafeFav = 0;
+								selectedTag.setAttribute("aria-pressed", bookmark);
+								
+								if (bookmark) {
+									cafeManage.baseParam.cafeFav = 1;
+									modCafeFav = 1;
+								} else {
+									cafeManage.baseParam.cafeFav = 0;
+									modCafeFav = -1;
+								}
+								
+								var cafeUrl = selectedTag.parentElement.parentElement.getElementsByClassName("cafe_info")[0].getElementsByTagName("a")[0].href;
+								cafeUrl = cafeUrl.substr(cafeUrl.lastIndexOf("/")+1);
+								
+								
+								cafeManage.baseParam.url = cafeUrl;
+								cafeManage.baseParam.selectedPageNum = parseInt(selectedTag.textContent);
+								var json = JSON.stringify(cafeManage.baseParam);
+								var requestParams = common.requestParams(true ,"POST", "/cafe/manage/modCafeFav.json", json, null);
+								common.sync(requestParams);
+								// 즐겨찾기 탭에 있는 카운트 갱신
+								var cafeFavCntTag = tabUrlTag[1].getElementsByTagName("em")[0];
+								var cnt = parseInt(cafeFavCntTag.innerHTML);
+								if (cnt == 0 && modCafeFav < 0) {
+									return;
+								}
+								cafeFavCntTag.innerHTML = parseInt(cafeFavCntTag.innerHTML) + modCafeFav;
+								
+								
+							}
 							
 							
 							if (!selectedTag.classList.contains("btn_select")
