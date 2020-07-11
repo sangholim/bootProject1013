@@ -3,7 +3,7 @@ Spring Boot Toy Project
 
 언어: Java, JavaScript(Not use Jquery), JSP
 
-기술: Spring Boot, Spring Security, JPA(Hibernate)
+기술: Spring Boot, Spring Security, JPA(Hibernate)  
 DataBase: mysql
 
 목적: 네이버 홈페이지를 보고 구현
