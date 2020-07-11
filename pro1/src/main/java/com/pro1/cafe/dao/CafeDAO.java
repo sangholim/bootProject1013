@@ -26,7 +26,7 @@ public class CafeDAO extends CommonDBSession {
     /**
      * User가 가입한 카페에 필요한 정보 카페레벨,즐겨찾기, 카페이름,카페아이콘
      */
-    private final String userCafeJoin = "select NEW UserCafeVO(0l, uc.cafeUid, uc.userRole, uc.cafeFav, uc.cafeNicName, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid";
+    private final String userCafeJoin = "select NEW UserCafeVO(0l, uc.cafeUid, uc.userRole, uc.cafeFav, uc.cafeNicName, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url, uc.cafeLeaveDate) from UserCafeVO uc join uc.cafe c where uc.userUid = :userUid";
 
     private final String userRole_condition = " and uc.userRole=";
     
@@ -344,8 +344,23 @@ public class CafeDAO extends CommonDBSession {
 	return session.createQuery(stringBuilder.toString()).executeUpdate();
     }
     
-    
-    
+    public int updateUserCafeUserRole(Session session, long cafeUid, long userUid, int userRole) throws Exception {
+	// update userCafe set 
+	StringBuilder stringBuilder = new StringBuilder(updateUserCafeQuery);
+	
+	// need to update
+	// 카페 탈퇴시에 탈퇴시간도 추가한다.
+	if (userRole == -2) {
+	    stringBuilder.append(" cafeLeaveDate=" + System.currentTimeMillis()).append(",");
+	}
+	stringBuilder.append(" userRole=" + userRole);
+	stringBuilder.append(" where ");
+	stringBuilder.append(" userUid=").append(userUid);   
+	stringBuilder.append(" and ");
+	stringBuilder.append(" cafeUid=").append(cafeUid);
+	
+	return session.createQuery(stringBuilder.toString()).executeUpdate();
+    }
     
     /**
      * 로그인후 내 카페관리 탭에 의해서 질의 ..
@@ -361,9 +376,12 @@ public class CafeDAO extends CommonDBSession {
 
 	// 유저가 가입한 카페리스트 출력
 	StringBuilder queryBuilder = new StringBuilder(userCafeJoin);
+	String default_userRole_condition = " and uc.userRole!=-2";
 	if (userRole != -100) {
-	    queryBuilder.append(userRole_condition).append(userRole);
+	    default_userRole_condition = userRole_condition + userRole;
 	}
+	
+	queryBuilder.append(default_userRole_condition);
 	
 	if (cafeFav == 1) {
 	    queryBuilder.append(cafeFav_condition).append(cafeFav);
@@ -371,9 +389,6 @@ public class CafeDAO extends CommonDBSession {
 
 	Query<UserCafeVO> query = session.createQuery(queryBuilder.toString(), UserCafeVO.class).setParameter("userUid", userUid);
 	
-	// query.setFirstResult(0);
-	// query.setMaxResults(15);
-	// cafeForm.setUserCafeList(query.getResultList());
 	    // 존재하는 카페 리스트 총 갯수 구하기
 	    List resultList = query.getResultList();
 	    long maxPageCount = 0;

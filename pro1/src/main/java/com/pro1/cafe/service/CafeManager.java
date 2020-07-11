@@ -83,27 +83,32 @@ public class CafeManager extends CommonDBSession {
 	try (Session session = sessionInfo.getSession()) {
 
 	    cafeManageForm.setMyCafeListCnt(
-		    session.createQuery("select count(uc)  from UserCafeVO uc where userUid=:userUid", Long.class)
+		    session.createQuery("select count(uc)  from UserCafeVO uc where userUid=:userUid and uc.userRole!= -2", Long.class)
 			    .setParameter("userUid", userUid).getSingleResult());
 	    cafeManageForm.setMyCafeFavListCnt(
-		    session.createQuery("select count(uc)  from UserCafeVO uc where userUid=:userUid and cafeFav=1",
+		    session.createQuery("select count(uc)  from UserCafeVO uc where userUid=:userUid and cafeFav=1 and uc.userRole!= -2",
 			    Long.class).setParameter("userUid", userUid).getSingleResult());
 	    cafeManageForm.setMyCafeManageListCount(
 		    session.createQuery("select count(uc)  from UserCafeVO uc where userUid=:userUid and userRole=7",
 			    Long.class).setParameter("userUid", userUid).getSingleResult());
+	    cafeManageForm.setMyCafeLeaveListCount( session.createQuery("select count(uc)  from UserCafeVO uc where userUid=:userUid and userRole=-2",
+		    Long.class).setParameter("userUid", userUid).getSingleResult());
 	    switch (tab) {
 	    case "mycafe":
 		cafeManageForm.setSelectMyCafeListCnt(cafeManageForm.getMyCafeListCnt());
+		cafeManageForm.setShowCafeManageView(1);
 		break;
 	    case "favorite":
 		cafeManageForm.setSelectMyCafeListCnt(cafeManageForm.getMyCafeFavListCnt());
 		break;
 	    case "applying":
+		cafeManageForm.setShowCafeManageView(1);
 		break;
 	    case "managing":
 		cafeManageForm.setSelectMyCafeListCnt(cafeManageForm.getMyCafeManageListCount());
 		break;
 	    case "secede":
+		cafeManageForm.setSelectMyCafeListCnt(cafeManageForm.getMyCafeLeaveListCount());
 		break;
 	    default:
 		break;
@@ -137,11 +142,10 @@ public class CafeManager extends CommonDBSession {
 	    case "secede":
 		userRole = -2;
 		break;
-
 	    default:
 		break;
 	    }
-
+	    
 	    cafeDAO.getMyCafeConditions(session, cafeManageForm, userUid, userRole, cafeFav);
 	} catch (Exception e) {
 	    logger.error("getCafeInfo error > {}", e.getMessage(), e);
@@ -166,6 +170,29 @@ public class CafeManager extends CommonDBSession {
 	    tr.commit();
 	    
 	    
+	} catch (Exception e) {
+	    logger.warn("Error Update UserCafe Data : {}", e.getMessage(), e);
+	}
+
+	return updateResult;
+    }
+
+
+    public int modCafeUserRole(long userUid, CafeManageForm cafeManageForm) throws Exception {
+
+	/*
+	 * 1. cafe 테이블에서 cafeUrl을 통하여 cafeUid 정보를 긁어온다 2. cafeUid , userUid 로 해당
+	 * userCafeVO 객체 call 3. update 구문 시행
+	 */
+	DbSessionInfo dbSessionInfo = processHibernateSession(null, DBQueryType.SELECT);
+	int updateResult = -1;
+	try (Session session = dbSessionInfo.getSession()) {
+	    // url를 통하여 cafeVO 가져오기
+	    CafeVO cafeVO = cafeDAO.getCafeUrlinfoMig(session, cafeManageForm.getUrl());
+	    Transaction tr = session.beginTransaction();
+	    // 카페 즐겨찾기 변경
+	    updateResult = cafeDAO.updateUserCafeUserRole(session, cafeVO.getUid(), userUid, cafeManageForm.getUserRole());
+	    tr.commit();
 	} catch (Exception e) {
 	    logger.warn("Error Update UserCafe Data : {}", e.getMessage(), e);
 	}

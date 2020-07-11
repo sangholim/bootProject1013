@@ -86,6 +86,7 @@ create table user_cafe (
  cafeFav tinyInt(1) default 0,
  cafeOfficial tinyInt(1) default 0,
  cafeNicName varchar(20) default '',
+ cafeLeaveDate bigint(20) default 0,
  FOREIGN KEY (userUid) REFERENCES user (userUid),
  FOREIGN KEY (cafeUid) REFERENCES cafe (uid)
 )
@@ -94,6 +95,7 @@ create table user_cafe (
 ALTER TABLE user_cafe ADD COLUMN `cafeFav` tinyint(1) default 0;
 ALTER TABLE user_cafe ADD COLUMN `cafeOfficial` tinyint(1) default 0;
 ALTER TABLE user_cafe ADD COLUMN `cafeNicName` varchar(20) default '';
+ALTER TABLE user_cafe ADD COLUMN `cafeLeaveDate` bigint(20) default 0;
 
 /*
     userRole 추가

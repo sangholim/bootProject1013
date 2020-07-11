@@ -91,6 +91,8 @@ common.sync = function(requestParams) {
 				}
 			} else if (url.indexOf("/manage/list.json") != -1){
 				cafeManage.getCafeManageList(json.cafeManageForm);
+			} else if (url.indexOf("/manage/modCafeUserRole.json") != -1){
+				window.location.href="./";
 			}
 		}
 		

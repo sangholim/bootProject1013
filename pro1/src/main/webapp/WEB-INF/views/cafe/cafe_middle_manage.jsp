@@ -18,55 +18,60 @@
 		운영 카페 <em>${cafeManageForm.myCafeManageListCount}</em>
 	</a>
 	<a href="/cafe/manage/secede" class="secede"> 
-		탈퇴 카페 <em>TODO</em>
+		탈퇴 카페 <em>${cafeManageForm.myCafeLeaveListCount}</em>
 	</a>
 </div>
 
 <div>
 	<div class="mycafe_manage">
 		<!-- SELECT BOXES -->
+		<!--  -->
 		<div class="mycafe_top">
-			<div class="common_select">
-				<strong class="blind">현재 정렬순서. 버튼 선택 시 정렬선택</strong>
-				<button type="button" class="btn_select">그룹순(TODO)</button>
-				<div class="layer" style="display: none;">
-					<ul class="layer_list" >
-						<li class="on">
-							<button type="button" class="btn _sortBtn">그룹순</button> <span
-							class="blind">선택됨</span>
-						</li>
-						<li class="">
-							<button type="button" class="btn _sortBtn">가나다순</button> <!---->
-						</li>
-						<li class="">
-							<button type="button" class="btn _sortBtn">최근 가입순</button> <!---->
-						</li>
-					</ul>
+			<c:if test="${cafeManageForm.showCafeManageView eq 1 }">
+				<div class="common_select">
+					<strong class="blind">현재 정렬순서. 버튼 선택 시 정렬선택</strong>
+					<button type="button" class="btn_select">그룹순(TODO)</button>
+					<div class="layer" style="display: none;">
+						<ul class="layer_list" >
+							<li class="on">
+								<button type="button" class="btn _sortBtn">그룹순</button> <span
+								class="blind">선택됨</span>
+							</li>
+							<li class="">
+								<button type="button" class="btn _sortBtn">가나다순</button> <!---->
+							</li>
+							<li class="">
+								<button type="button" class="btn _sortBtn">최근 가입순</button> <!---->
+							</li>
+						</ul>
+					</div>
 				</div>
-			</div>
-			<div class="common_select">
-				<strong class="blind">현재 정렬순서. 버튼 선택 시 정렬선택</strong>
-				<button type="button" class="btn_select">그룹 모두보기(TODO)</button>
-				<div class="layer" style="display: none;">
-					<ul class="layer_list">
-						<li class="">
-							<button type="button" class="btn _groupBtn">그룹 모두보기</button> <!---->
-						</li>
-						<li class="">
-							<button type="button" class="btn _groupBtn">기본그룹</button> <!---->
-						</li>
-					</ul>
+				<div class="common_select">
+					<strong class="blind">현재 정렬순서. 버튼 선택 시 정렬선택</strong>
+					<button type="button" class="btn_select">그룹 모두보기(TODO)</button>
+					<div class="layer" style="display: none;">
+						<ul class="layer_list">
+							<li class="">
+								<button type="button" class="btn _groupBtn">그룹 모두보기</button> <!---->
+							</li>
+							<li class="">
+								<button type="button" class="btn _groupBtn">기본그룹</button> <!---->
+							</li>
+						</ul>
+					</div>
 				</div>
-			</div>
-			<!---->
-			<!---->
+				<!---->
+				<!---->
+			</c:if>
 		</div>
 
 		<!-- 내 카페에 대한 메인 UI -->
 		<div class="mycafe_group">
-			<div colspan="3" class="group">
-				<span class="group_name">기본그룹<em class="num">${cafeManageForm.selectMyCafeListCnt }</em></span>
-			</div>
+			<c:if test="${cafeManageForm.showCafeManageView eq 1 }">
+				<div colspan="3" class="group">
+					<span class="group_name">기본그룹<em class="num">${cafeManageForm.selectMyCafeListCnt }</em></span>
+				</div>
+			</c:if>
 			<table class="mycafe_list">
 				<caption>
 					<span class="blind">내 카페 관리</span>

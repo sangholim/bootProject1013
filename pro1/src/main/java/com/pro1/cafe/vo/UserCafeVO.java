@@ -50,6 +50,9 @@ public class UserCafeVO implements Serializable {
     @Column(name = "cafeNicName")
     private String cafeNicName;
 
+    @Column(name = "cafeLeaveDate")
+    private long cafeLeaveDate;
+
     @Id
     @ManyToOne(optional = false)
     @JoinColumn(name = "userUid", insertable = false, updatable = false)
@@ -122,23 +125,25 @@ public class UserCafeVO implements Serializable {
      * @param url
      */
     public UserCafeVO(long userUid, long cafeUid, String cafeLevel, int cafeFav, String cafeNicName, int cafeOfficial, long uid,
-	    String name, String icon, String url) {
+	    String name, String icon, String url, long cafeLeaveDate) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
 	this.cafeLevel = cafeLevel;
 	this.cafeFav = cafeFav;
 	this.cafeOfficial = cafeOfficial;
+	this.cafeLeaveDate = cafeLeaveDate;
 	this.cafe = new CafeVO(uid, name, icon, url);
     }
 
     public UserCafeVO(long userUid, long cafeUid, int userRole, int cafeFav, String cafeNicName, int cafeOfficial, long uid, String name,
-	    String icon, String url) {
+	    String icon, String url, long cafeLeaveDate) {
 	this.userUid = userUid;
 	this.cafeUid = cafeUid;
 	this.userRole = userRole;
 	this.cafeFav = cafeFav;
 	this.cafeNicName = cafeNicName;
 	this.cafeOfficial = cafeOfficial;
+	this.cafeLeaveDate = cafeLeaveDate;
 	this.cafe = new CafeVO(uid, name, icon, url);
     }
 
@@ -323,6 +328,14 @@ public class UserCafeVO implements Serializable {
 
     public void setUserCafeBoardList(Collection<UserCafeBoardVO> userCafeBoardList) {
 	this.userCafeBoardList = userCafeBoardList;
+    }
+    
+    public long getCafeLeaveDate() {
+        return cafeLeaveDate;
+    }
+
+    public void setCafeLeaveDate(long cafeLeaveDate) {
+        this.cafeLeaveDate = cafeLeaveDate;
     }
 
     @Override
