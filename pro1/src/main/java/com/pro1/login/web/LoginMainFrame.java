@@ -1,5 +1,7 @@
 package com.pro1.login.web;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -82,4 +84,18 @@ public class LoginMainFrame {
 	userService.doUpdateUser(uservo, response);
     }
 
+    @RequestMapping("/doLogin")
+    public void doLogin(HttpServletResponse response) {
+	
+	// 로그인 정보가 없는 상태에서 로그인이 필요한 URL에 접근한 경우..
+	// 로그인 페이지로 redirect
+	try (PrintWriter writer = response.getWriter();){
+	    response.setContentType("text/html; charset=UTF-8");
+	    writer.println("<script>alert('로그인후 이용해 주세요.'); window.location.href='/login';</script>");
+	} catch (Exception e) {
+	    logger.error("Error process in doLogin > {}", e.getMessage(), e);
+	}
+    }
+    
+    
 }

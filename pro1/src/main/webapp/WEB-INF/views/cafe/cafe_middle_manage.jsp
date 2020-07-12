@@ -24,6 +24,21 @@
 
 <div>
 	<div class="mycafe_manage">
+		<!--  탈퇴 게시글 볼때만 노출-->
+		<div class="secede_cafe_title" style="display: none;">
+			<strong class="tit">6시그마 뽀개기</strong>
+			<div class="common_btn_form fr">
+				<a href="#" class="btn2">탈퇴 카페 목록</a>
+			</div>
+		</div>
+		<!--  탈퇴 게시글 볼때만 노출 -->
+		<div class="manage_article" style="display: none;">
+			<strong class="tit">작성글 관리(게시글)</strong>
+			<div class="my_article">
+				<a class="on">게시글</a>
+				<a href="#">댓글</a>
+			</div>
+		</div>
 		<!-- SELECT BOXES -->
 		<!--  -->
 		<div class="mycafe_top">
@@ -73,6 +88,7 @@
 				</div>
 			</c:if>
 			<table class="mycafe_list">
+				<!-- backUp 
 				<caption>
 					<span class="blind">내 카페 관리</span>
 				</caption>
@@ -91,12 +107,32 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!--  내가 가입/만든 카페에서 즐겨찾기, 운영, 카페이름, nickName, 메일 여부 값을 긁어옴 -->
 				</tbody>
+				 -->
 			</table>
 			<!---->
 		</div>
+		<div class="mycafe_bottom" style="dispaly: none">
+			<div class='check_box'>
+				<input type='checkbox' id='chk_all_article'>
+				<label>전체선택</label>
+			</div>
+			<div class='common_btn_form fr'>
+				<button class='btn2'>삭제</button>
+			</div>
+		</div>
 	</div>
+	<!-- 
+	<div class="mycafe_bottom" style="dispaly: none">
+		<div class='check_box'>
+			<input type='checkbox' id='chk_all_article'>
+			<label>전체선택</label>
+		</div>
+		<div class='common_btn_form fr'>
+			<button class='btn2'>삭제</button>
+		</div>
+	</div>
+	 -->
 	<div class="common_page">(TODO) 페이지 넘버링</div>
 </div>
 

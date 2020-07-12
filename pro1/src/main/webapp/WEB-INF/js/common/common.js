@@ -3,7 +3,6 @@
  * login page
  */
 var common = {};
-
 // load page (이동할 페이지 , 현재 페이지 , pushState여부)
 //common.sync = function(method, url, data, nodeId) {
 common.sync = function(requestParams) {
@@ -93,7 +92,12 @@ common.sync = function(requestParams) {
 				cafeManage.getCafeManageList(json.cafeManageForm);
 			} else if (url.indexOf("/manage/modCafeUserRole.json") != -1){
 				window.location.href="./";
+			} else if (url.indexOf("/manage/cafeSecedeBoardList.json") != -1){
+				// test
+				cafeManage.getCafeSecedeBoardList(json.cafeManageForm);
 			}
+			
+			// cafeSecedeBoardList
 		}
 		
 		if (loadNode === undefined || loadNode ==null) {
@@ -253,12 +257,13 @@ common.latestExpr = function (currentTime,beforeTime) {
 		//하루가 넘을때
 		var format = new Date(beforeTime);
 		var year = format.getFullYear();
-	    var month = (month < 10)? '0' + (format.getMonth() + 1) : format.getMonth() + 1;
-	    var date = (date < 10)? '0' + format.getDate() : format.getDate();
-	    var hour = (hour < 10)? '0' + format.getHours() : format.getHours();
-	    var min = (min < 10)? '0' + format.getMinutes() : format.getMinutes();
-	    var sec = (sec < 10)? '0' + format.getSeconds() : format.getSeconds();
-		
+	    var month = (format.getMonth() < 10)? '0' + (format.getMonth() + 1) : format.getMonth() + 1;
+	    var date = (format.getDate() < 10)? '0' + format.getDate() : format.getDate();
+	    /*
+	    var hour = (format.getHours() < 10)? '0' + format.getHours() : format.getHours();
+	    var min = (format.getMinutes() < 10)? '0' + format.getMinutes() : format.getMinutes();
+	    var sec = (format.getSeconds() < 10)? '0' + format.getSeconds() : format.getSeconds();
+		*/
 		return year + '/' + month + '/' + date + ' ';
 	}
 	

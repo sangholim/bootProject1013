@@ -236,3 +236,166 @@ a {
     height: 10px;
     vertical-align: baseline;
 }	
+
+.mycafe_bottom {
+    position: relative;
+    margin-top: 8px;
+}
+
+.mycafe_bottom .check_box {
+    margin: 7px 0 0 4px;
+}
+
+.mycafe_bottom .common_btn_form.fr {
+    float: right;
+}
+
+.check_box input {
+    -webkit-appearance: none;
+    float: left;
+    width: 0;
+    opacity: 0;
+}
+
+.mycafe_bottom .check_box label {
+    font-size: 13px;
+    color: #222;
+}
+
+.check_box label {
+    background-color: #fff;
+    color: #000;
+    line-height: 15px;
+    vertical-align: top !important;
+}
+
+.mycafe_bottom .check_box label:before {
+    margin-right: 8px;
+}
+
+.check_box input + label:before {
+    content: '';
+    margin-right: 5px;
+    background-position: -255px -257px;
+    width: 16px;
+    height: 16px;
+}
+
+.common_btn_form .btn2 {
+    display: inline-block;
+    height: 30px;
+    padding: 0 16px;
+    border: 1px solid #d3d3d3;
+    line-height: 28px;
+    background: #fff;
+    font-size: 13px;
+    vertical-align: top;
+    color: #222;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.mycafe_manage + .common_page {
+    margin-top: 50px;
+}
+
+.common_btn_form {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 0;
+}
+
+.check_box {
+    display: inline-block;
+}
+
+.mycafe_manage .secede_cafe_title {
+    padding: 8px 0;
+    border-bottom: 1px solid #d8d8d8;
+    font-size: 16px;
+}
+
+.mycafe_manage .secede_cafe_title .tit {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 16px;
+    color: #222;
+}
+
+.mycafe_manage .secede_cafe_title:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.mycafe_manage .manage_article {
+    padding: 32px 0 7px;
+}
+
+.mycafe_manage .manage_article .tit {
+    font-size: 13px;
+    color: #222;
+}
+
+.mycafe_manage .manage_article .my_article {
+    display: inline-block;
+    float: right;
+}
+
+.mycafe_manage .manage_article a.on {
+    color: #03c75a;
+    font-weight: bold;
+}
+
+.mycafe_manage .manage_article a {
+    display: inline-block;
+    font-size: 13px;
+    color: #222;
+}
+
+.mycafe_manage .manage_article a:last-of-type:before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 13px;
+    margin: 0 8px 0 6px;
+    background-color: #e1e1e1;
+    vertical-align: -2px;
+}
+
+.common_btn_form.fr {
+    float: right;
+}
+
+.mycafe_list.type2 td.check, .mycafe_list.type2 td.view, .mycafe_list.type2 td.date {
+    vertical-align: top;
+}
+
+.mycafe_list.type2 tbody td.tit {
+    padding-left: 8px;
+}
+
+.mycafe_list .check_box {
+    vertical-align: middle;
+}
+
+.check_box.only_box label:before {
+    margin: 0;
+}
+
+.mycafe_list tr:last-of-type td {
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.mycafe_list.type2 tbody td {
+    padding: 10px 0 9px;
+}
+
+.mycafe_list tr:first-of-type td {
+    border-top: 0;
+}
+
+.mycafe_list td.check {
+    text-align: center;
+    vertical-align: middle;
+}

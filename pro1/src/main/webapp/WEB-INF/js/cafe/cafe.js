@@ -644,14 +644,19 @@ var cafe = {
 
 		// cafe 상위 메뉴 UI에서 카페홈/ 주제별/ 지역별/ 랭킹/  공통 기능
 		// ui a 태그의 href 부분과 상위 변수 'path'가 포함되면 색깔 변하게 처리
-		// 카페관리 페이지에서는 수행하지 않음.
+		var cafe_top_list = document.getElementsByClassName("lnb_link");
+
+		// 카페 url 경로에서 manage가 포함된경우, 카페홈을 기본으로 선택되도록 처리
 		if (path.indexOf("manage") > 0) {
+			var li = cafe_top_list[0].parentElement;
+			li.classList.add("on");
+			var span = document.createElement("span"); 
+			span.classList.add('blind');
+			span.innerText = "선택됨";
+			li.append(span);
 			return;
 		}
-		
-		var cafe_top_list = document.getElementsByClassName("lnb_link");
-		
-		
+
 		for(var i = 0; i < cafe_top_list.length; i++) {
 			var href = cafe_top_list[i].href;
 			var li = cafe_top_list[i].parentElement;
@@ -664,7 +669,7 @@ var cafe = {
 				break;
 			}
 		}
-	
+		
 		var container = document.getElementById("container");
 		var bodyTag = document.getElementById("content");
 		

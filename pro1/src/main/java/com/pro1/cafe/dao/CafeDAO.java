@@ -79,7 +79,7 @@ public class CafeDAO extends CommonDBSession {
 	    Query query = null;
 	    if (userUid != -1) {
 		// 유저가 가입한 카페리스트 출력
-		query = session.createQuery(userCafeJoin, UserCafeVO.class);
+		query = session.createQuery(userCafeJoin+" and userRole != -2", UserCafeVO.class);
 		query.setParameter("userUid", userUid);
 		cafeForm.setUserCafeList(query.getResultList());
 		List<UserCafeVO> userCafeList = cafeForm.getUserCafeList();

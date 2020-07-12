@@ -277,5 +277,40 @@ public class CafeMainAsync {
 	}
 	return resultMap;
     }
+    
+    /**
+     * TEST
+     * @param authetication
+     * @param cafeManageForm
+     * @return
+     */
+    @RequestMapping(value = "/manage/cafeSecedeBoardList.json")
+    public Map<String, Object> cafeSecedeBoardList(Authentication authetication,
+	    @RequestBody CafeManageForm cafeManageForm) {
+	
+	/*
+	 * 현재 카페 설정에서 카페 탈퇴시, user_cafe > userRole = -2 갱신
+	 * 차후, 다른 userState 변경시에도 썻으면 좋겟다.
+	 */
+	Map<String, Object> resultMap = new HashMap<>();
+	String code = "code";
+	String result = "result";
+	resultMap.put(code, 500);
+	resultMap.put(result, "즐겨 찾기 추가중 문제 발생");
+
+	try {
+
+	    CustomAuthentication customAuthentication = (CustomAuthentication) authetication;
+	    // cafeManager.modCafeUserRole(customAuthentication.getUid(), cafeManageForm);
+	    // 클릭한 카페탭에 따라 카페리스트 호출
+	    resultMap.put(code, 200);
+	    resultMap.put("cafeManageForm", cafeManageForm);
+
+	} catch (Exception e) {
+	    // TODO: handle exception
+	    logger.warn("ERROR Getting CafeList > MSG: {}", e.getMessage(), e);
+	}
+	return resultMap;
+    }
 
 }
