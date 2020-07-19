@@ -396,7 +396,8 @@
                 
                 <div id="join_editor" style="visibility: hidden; height:1px;">
                     <jsp:include page="./commonBoardJoin.jsp" flush="true"/>
-                </div>
+                	<script type="text/javascript" src="/js/board/boardMemberJoin.js?${applicationScope.cachetype}"></script>
+				</div>
             </div>
         </div>
         <!--  footer -->
@@ -416,6 +417,7 @@
     </div>
 	<div id="cafe_info">
         <input type="hidden" name="cafeUid" value="${boardSimpleInfo.cafeUid}" />
+        <input type="hidden" name="cafeOfficial" value="${boardSimpleInfo.cafeOfficial}" />
         <input type="hidden" name="cafeUrl" value="${cafe_url}"/>
     </div>
     <script class="personal_js" type="text/javascript" src="/js/board/board.js?${applicationScope.cachetype}" ></script>

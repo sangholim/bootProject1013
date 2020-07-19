@@ -13,6 +13,7 @@ import com.pro1.common.utils.CommonUtils;
 import com.pro1.common.vo.DbSessionInfo;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,8 +172,12 @@ public class BoardManager extends CommonDBSession {
 	    boardSimpleInfoForm.setCafeMemberCnt(MemberCnt);
 	    boardSimpleInfoForm.setCafeUid(cafeUid);
 	    boardSimpleInfoForm.setDesc(cafeVO.getDesc());
-	    // 카페 닉네임이 없으면, 회원가입시 생성한 닉네임을 이용한다.
-	    boardSimpleInfoForm.setUserNickName((userCafeMember.getCafeNicName().isEmpty())? userNickName : userCafeMember.getCafeNicName());
+	    boardSimpleInfoForm.setCafeOfficial(userCafeAdmin.getCafeOfficial());
+	    // 카페 가입한 회원인경우, 카페전용 닉네임 및 유저 전체 닉네임을 변수로 저장
+	    if (userCafeMember != null) {
+		// 카페 닉네임이 없으면, 회원가입시 생성한 닉네임을 이용한다.
+		boardSimpleInfoForm.setUserNickName((userCafeMember.getCafeNicName().isEmpty())? userNickName : userCafeMember.getCafeNicName());
+	    }
 	    boardSimpleInfoForm.setCafeBoardCnt(cafeBoardCnt);
 	    boardSimpleInfoForm.setCafeUser(isCafeUser);
 	} catch (Exception e) {
@@ -224,12 +229,37 @@ public class BoardManager extends CommonDBSession {
     }
 
     /**
-     * 카페 ??
-     * 
+     * 카페 멤버 가입
+     * deprecated
      * @param vo
      * @throws Exception
      */
-    public void cafeSignUp(UserCafeVO userCafe) throws Exception {
-	processHibernateSession(userCafe, DBQueryType.UPDATE);
+    public void memberJoin(BoardSimpleInfoForm boardSimpleInfoForm, long userUid) throws Exception {
+
+	UserCafeVO cafeMemeber = new UserCafeVO();
+	cafeMemeber.setCafeUid(boardSimpleInfoForm.getCafeUid());
+	cafeMemeber.setCafeOfficial(boardSimpleInfoForm.getCafeOfficial());
+	cafeMemeber.setCafeLevel(boardSimpleInfoForm.getCafeLevel());
+	cafeMemeber.setCafeNicName(boardSimpleInfoForm.getCafeNicName());
+	cafeMemeber.setUserUid(userUid);
+	processHibernateSession(cafeMemeber, DBQueryType.INSERT);
+    }
+    
+    public boolean existCafeNickName(BoardSimpleInfoForm boardSimpleInfoForm) throws Exception {
+	// 카페 uid를 통해 url 정보를 얻는다.
+	DbSessionInfo sessionInfo = processHibernateSession(null, DBQueryType.SELECT);
+	try (Session session = sessionInfo.getSession()) {
+	    
+	    StringBuilder builder = cafeDAO.getUserCafeQueryBuilder(boardSimpleInfoForm.getCafeUid(), -1);
+	    builder.append(" and uc.cafeNicName = '"+boardSimpleInfoForm.getCafeNicName() +"'");
+	    Query<UserCafeVO> query = session.createQuery(builder.toString(), UserCafeVO.class);
+	    if (query.getResultList().isEmpty()) {
+		return false;
+	    }
+	} catch (Exception e) {
+	    logger.warn("ERROR WHILE Excuete Database Query > {}", e.getMessage(), e);
+	}
+	
+	return true;
     }
 }

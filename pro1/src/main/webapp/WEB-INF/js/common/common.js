@@ -95,9 +95,26 @@ common.sync = function(requestParams) {
 			} else if (url.indexOf("/manage/cafeSecedeBoardList.json") != -1){
 				// test
 				cafeManage.getCafeSecedeBoardList(json.cafeManageForm);
+			} else if (url.indexOf("/board/existCafeNickName.json") != -1) {
+				// 카페 멤버 닉네임 중복성 검사. 
+				var nickNameInput = document.getElementById('cafeCheckNicknameButton');
+				var responseCode = json.code;
+				if (responseCode == 200) {
+					nickNameInput.classList.remove("invalid");
+					alert(json.result);
+				} else {
+					nickNameInput.classList.add("invalid");
+					alert(json.result);
+				}
+			} else if (url.indexOf("/board/memberJoin.json") != -1) {
+				
+				var responseCode = json.code;
+				if (responseCode == 200) {
+					alert(json.result);
+					document.getElementById("front-cafe").children[0]
+					window.location.href = document.getElementById("front-cafe").children[0].href;
+				}
 			}
-			
-			// cafeSecedeBoardList
 		}
 		
 		if (loadNode === undefined || loadNode ==null) {

@@ -26,6 +26,8 @@ public class BoardSimpleInfoForm {
     private long cafeBoardCnt;
     // 카페 가입된 유저인지 체크
     private boolean isCafeUser;
+    // 공식 카페 flag
+    private int cafeOfficial;
 
     public long getCafeUid() {
 	return cafeUid;
@@ -113,6 +115,14 @@ public class BoardSimpleInfoForm {
 
     public void setCafeNicName(String cafeNicName) {
 	this.cafeNicName = cafeNicName;
+    }
+
+    public int getCafeOfficial() {
+        return cafeOfficial;
+    }
+
+    public void setCafeOfficial(int cafeOfficial) {
+        this.cafeOfficial = cafeOfficial;
     }
 
 }

@@ -88,51 +88,12 @@
 				</div>
 			</c:if>
 			<table class="mycafe_list">
-				<!-- backUp 
-				<caption>
-					<span class="blind">내 카페 관리</span>
-				</caption>
-				<colgroup>
-					<col width="46px">
-					<col width="*">
-					<col width="145px">
-					<col width="56px">
-				</colgroup>
-				<thead class="blind">
-					<tr>
-						<th scope="col">즐겨찾기</th>
-						<th scope="col">카페명</th>
-						<th scope="col">메일 설정</th>
-						<th scope="col">탈퇴</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-				 -->
 			</table>
 			<!---->
 		</div>
-		<div class="mycafe_bottom" style="dispaly: none">
-			<div class='check_box'>
-				<input type='checkbox' id='chk_all_article'>
-				<label>전체선택</label>
-			</div>
-			<div class='common_btn_form fr'>
-				<button class='btn2'>삭제</button>
-			</div>
+		<div class="mycafe_bottom" style="">
 		</div>
-	</div>
-	<!-- 
-	<div class="mycafe_bottom" style="dispaly: none">
-		<div class='check_box'>
-			<input type='checkbox' id='chk_all_article'>
-			<label>전체선택</label>
-		</div>
-		<div class='common_btn_form fr'>
-			<button class='btn2'>삭제</button>
-		</div>
-	</div>
-	 -->
+ 	</div>
 	<div class="common_page">(TODO) 페이지 넘버링</div>
 </div>
 

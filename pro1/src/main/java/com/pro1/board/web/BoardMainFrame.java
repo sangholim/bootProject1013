@@ -239,6 +239,7 @@ public class BoardMainFrame {
      * @return
      * @throws Exception
      */
+    /*
     @RequestMapping(value = "/commonBoardJoin/{cafe_url}", method = RequestMethod.GET)
     public String boardJoin(Authentication authentication, Model model, @PathVariable String cafe_url)
 	    throws Exception {
@@ -255,7 +256,7 @@ public class BoardMainFrame {
 
 	return (isSuccess) ? "/board/commonBoardJoin" : "redirect:/board/sub_main/";
     }
-
+    */
     /**
      * 게시판 리스트 클릭시 내용 보기 이벤트
      * 
@@ -283,26 +284,65 @@ public class BoardMainFrame {
      * @throws Exception
      */
     @ResponseBody
-    @RequestMapping(value = "/MemberJoin.json", method = RequestMethod.POST)
-    public Map CafeJoinPost(Authentication authetication, @RequestBody UserCafeVO userCafeVO) throws Exception {
+    @RequestMapping(value = "/memberJoin.json", method = RequestMethod.POST)
+    public Map memberJoin(Authentication authetication, @RequestBody BoardSimpleInfoForm boardSimpleInfoForm) throws Exception {
 
 	CustomAuthentication userAuth = (CustomAuthentication) authetication;
 
 	Map<String, Object> resultMap = new HashMap<>();
-
+	
 	String code = "code";
 	String result = "result";
-
+	
 	resultMap.put(code, 500);
-	resultMap.put(result, "카페 가입중 문제 발생!");
-
-	userCafeVO.setUserUid(userAuth.getUid());
-	boardManager.cafeSignUp(userCafeVO);
-
-	resultMap.put(code, 200);
-	resultMap.put(result, "정상적으로 카페에 가입되었습니다.");
-	// resultMap.put(cafeUrl,userCafeVO.getCafeUrl());
+	resultMap.put(result, "카페 가입중 문제가 발생하였습니다.");
+	try {
+	    boardManager.memberJoin(boardSimpleInfoForm, userAuth.getUid());
+	    resultMap.put(code, 200);
+	    resultMap.put(result, "카페 멤버가 되신걸 환영합니다.");
+			    
+	} catch (Exception e) {
+	    logger.warn("ERROR SHOWING CAFE MemberJoin > MSG: {}", e.getMessage(), e);
+	}
 
 	return resultMap;
     }
+
+    
+    /**
+     * 카페 가입
+     * 
+     * @param authetication
+     * @param userCafeVO
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = "/existCafeNickName.json", method = RequestMethod.POST)
+    public Map existCafeNickName(Authentication authetication, @RequestBody BoardSimpleInfoForm boardSimpleInfoForm) throws Exception {
+
+	Map<String, Object> resultMap = new HashMap<>();
+	
+	String code = "code";
+	String result = "result";
+	
+	resultMap.put(code, 500);
+	resultMap.put(result, "이미 존재하는 유저입니다.");
+	try {
+	    
+	    // 카페에 닉네임이 이미 존재하면 return
+	    if(boardManager.existCafeNickName(boardSimpleInfoForm)) {
+		return resultMap;
+	    }
+	    resultMap.put(code, 200);
+	    resultMap.put(result, "사용할수 있는 카페 닉네임입니다.");
+		    
+	} catch (Exception e) {
+	    logger.warn("ERROR SHOWING CAFE existCafeNickName > MSG: {}", e.getMessage(), e);
+	}
+
+	return resultMap;
+    }
+    
+    
 }

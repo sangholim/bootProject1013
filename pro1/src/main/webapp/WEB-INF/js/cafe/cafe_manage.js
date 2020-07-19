@@ -27,6 +27,8 @@ var cafeManage = {
 		var mycafe_manage = document.getElementsByClassName("mycafe_manage")[0];
 		var cafeListWrapper = mycafe_manage.getElementsByClassName("mycafe_list")[0];
 		document.getElementsByClassName("mycafe_bottom")[0].style.display = "none";
+		document.getElementsByClassName("mycafe_bottom")[0].innerHTML = "";
+		
 		//cafeListWrapper.getElementsByTagName("tbody")[0].innerHTML = "";
 		var pageUI = document.getElementsByClassName("common_page")[0];
 		pageUI.innerHTML = "";
@@ -75,6 +77,7 @@ var cafeManage = {
 
 			// 전체삭제 UI 추가
 			document.getElementsByClassName("mycafe_bottom")[0].style.display = "";
+			document.getElementsByClassName("mycafe_bottom")[0].innerHTML = cafeManage.cafeAllDeleteFormat;
 		}
 
 		cafeListWrapper = cafeListWrapper.getElementsByTagName("tbody")[0];
@@ -94,11 +97,6 @@ var cafeManage = {
 			cafeTdTag = cafeTrTag.getElementsByClassName("check_box")[0];
 			// 탈퇴 탭을 클릭시 발생하는 체크박스 처리
 			if (cafeTdTag !== undefined) {
-				/*
-				 * "<div class='check_box only_box'>"+ "<input type='checkbox'
-				 * id='chk_21819796'>"+ "<label for='chk_21819796'>"+ "<span
-				 * class='blind'>선택</span>"+ "</label>"+ "</div>"+
-				 */
 				cafeTdTag.getElementsByTagName("input")[0].id = 'chk_' + i;
 				cafeTdTag.getElementsByTagName("label")[0].htmlFor = 'chk_' + i;
 			}
@@ -121,8 +119,13 @@ var cafeManage = {
 			cafeTdTag = cafeTrTag.getElementsByClassName("member")[0];
 			if (cafeTdTag !== undefined) {
 				// TODO: 카페 회원수 구현
-			}
+			}	
+			// 내카페 탭이고, 카페를 만든 사람이면 email UI, 탈퇴 UI를 노출하지 않음..
+			if (myCafeTabPath.indexOf("mycafe", 2) > 0 && myCafe.userRole == '7') {
+				cafeTrTag.getElementsByClassName("mail_set")[0].innerHTML = "";
+				cafeTrTag.getElementsByClassName("btns")[0].innerHTML = "";
 
+			}
 			cafeTdTag = cafeTrTag.getElementsByClassName("date")[0];
 			if (cafeTdTag !== undefined) {
 				// 카페 탈퇴날짜 구현 date
@@ -146,9 +149,7 @@ var cafeManage = {
 			cafeListWrapper.append(cafeTrTag);
 		}
 
-		/*
-		 * 페이지 번호 구현
-		 */
+		// 페이지 번호 구현
 		cafeManage.baseParam.showPageMinimumCount = cafeList.showPageMinimumCount;
 		cafeManage.baseParam.showPageMaximumCount = cafeList.showPageMaximumCount;
 
@@ -257,10 +258,12 @@ var cafeManage = {
 			+ "</td>" + "<td class='date'></td>" + "<td class='btns'>"
 			+ "<button class='btn_set'>작성글 관리</button>" + "</td>",
 	cafeAllDeleteFormat : "<div class='check_box'>"
-			+ "<input type='checkbox' id='chk_all_article'>"
-			+ "<label>전체선택</label>" + "</div>"
-			+ "<div class='common_btn_form fr'>"
-			+ "<button class='btn2'>삭제</button>" + "</div>",
+							+ "<input type='checkbox' id='chk_all'>"
+							+ "<label>전체선택</label>"
+						+ "</div>"
+						+ "<div class='common_btn_form fr'>"
+							+ "<button class='btn2'>삭제</button>" 
+						+ "</div>",
 	cafeSecedeBoardFormat : "<tr>"+
 							  "<td class='check'>"+
 							    "<div class='check_box only_box'>"+
@@ -410,10 +413,13 @@ var cafeManage = {
 										"/cafe/manage/modCafeUserRole.json",
 										json, null);
 								common.sync(requestParams);
+							} else if (selectedTag.textContent === '탈퇴 카페 목록') {
+								// 작성글관리 UI 에서 탈퇴 카페 목록 클릭시.. 다시 탈퇴된 카페리스트 호출
+								window.location.href = "/cafe/manage/secede";
 							} else if (selectedTag.classList
 									.contains("btn_set")
 									&& selectedTag.textContent === '작성글 관리') {
-								// 탈퇴 버튼을 누르면, 내카페에 사라지고 탈퇴된 카페 UI로 이동.
+								// 탈퇴 된 카페리스트중 작성글관리를 누르면 작성글 list가 있는 UI 호출
 								var cafeUrl = selectedTag.parentElement.parentElement
 										.getElementsByClassName("cafe_info")[0]
 										.getElementsByTagName("a")[0].href;
@@ -428,8 +434,19 @@ var cafeManage = {
 										json, null);
 								common.sync(requestParams);
 							
-							}
-
+							} else if (selectedTag.tagName == 'LABEL'  && selectedTag.textContent === '전체선택') {
+								// 전체선택 체크박스 기능 활성화
+								var checkBox = selectedTag.previousElementSibling;
+								checkBox.checked = !checkBox.checked;
+								// 카페에 있는 체크박스에 동기화
+								var inputs = document.getElementsByClassName("mycafe_list")[0].getElementsByTagName("input");
+								for (var i=0; i < inputs.length; i++) {
+									var input = inputs[i];
+									if(input.type === 'checkbox' && input.id.indexOf('chk_') > -1) {
+										input.checked = checkBox.checked;
+									}
+								}
+							} 
 							if (!selectedTag.classList.contains("btn_select")
 									|| !selectedTag.parentElement.classList
 											.contains("common_select")) {

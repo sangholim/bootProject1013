@@ -53,8 +53,8 @@ public class UserCafeBoardDAO extends CommonDBSession {
 		    
 	}
  	query.setParameter("cafeUid", cafe_uid);
-	
-	return query.getSingleResult();
+ 	
+	return (query.getResultList().isEmpty())? null : query.getSingleResult();
 
     }
     /*

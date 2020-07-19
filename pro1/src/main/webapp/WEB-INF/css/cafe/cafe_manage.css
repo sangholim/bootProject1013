@@ -273,14 +273,6 @@ a {
     margin-right: 8px;
 }
 
-.check_box input + label:before {
-    content: '';
-    margin-right: 5px;
-    background-position: -255px -257px;
-    width: 16px;
-    height: 16px;
-}
-
 .common_btn_form .btn2 {
     display: inline-block;
     height: 30px;
@@ -398,4 +390,25 @@ a {
 .mycafe_list td.check {
     text-align: center;
     vertical-align: middle;
+}
+
+.mycafe_list .date {
+    font-size: 13px;
+    color: #999;
+    text-align: center;
+}
+
+
+.check_box input + label:before {
+    content: '';
+    margin-right: 5px;
+    background-position: -255px -257px;
+    width: 16px;
+    height: 16px;
+}
+
+.check_box input:checked + label:before {
+    background-position: -296px -4px;
+    width: 16px;
+    height: 16px;
 }

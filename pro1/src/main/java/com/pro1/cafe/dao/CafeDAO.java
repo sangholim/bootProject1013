@@ -302,6 +302,11 @@ public class CafeDAO extends CommonDBSession {
     
     public UserCafeVO getUserCafeQuery(Session session, long cafeUid, long userUid) throws Exception {
 
+	return session.createQuery(getUserCafeQueryBuilder(cafeUid, userUid).toString(), UserCafeVO.class).getSingleResult();
+    }
+    
+    public StringBuilder getUserCafeQueryBuilder(long cafeUid, long userUid) throws Exception {
+
 	StringBuilder stringBuilder = new StringBuilder(getUserCafeQuery);
 	if(userUid != -1) {
 	    stringBuilder.append(userCafe_userUid_condition).append(userUid);   
@@ -314,7 +319,7 @@ public class CafeDAO extends CommonDBSession {
 	    stringBuilder.append(userCafe_cafeUid_condition).append(cafeUid);
 	}
 	
-	return session.createQuery(stringBuilder.toString(), UserCafeVO.class).getSingleResult();
+	return stringBuilder;
     }
     
     public int updateUserCafeQuery(Session session, long cafeUid, long userUid, int cafeFav) throws Exception {

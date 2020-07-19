@@ -27,7 +27,8 @@
 			<tr><td height="15"></td></tr>
 			<tr><td colspan="2" height="5"></td></tr>
 			<tr valign="top">
-				<td class="m-tcol-c ln15" style="width: 100%"><input id="cafeNickNameInput" type="text" name="nickname" class="input-txt border-sub vm" style="width:140px;height:20px;" value="${boardSimpleInfoForm.userNickName}" title="카페별명입력" aria-describedby="nickname">
+				<td class="m-tcol-c ln15" style="width: 100%">
+					<input id="cafeNickNameInput" type="text" name="nickname" class="input-txt border-sub vm" style="width:140px;height:20px;" value="${boardSimpleInfoForm.userNickName}" title="카페별명입력" aria-describedby="nickname">
 					<a id="cafeCheckNicknameButton" href="#" onclick="return false;" role="button"><img src="https://cafe.pstatic.net/img/nickname/btn_chck_overlap.gif" width="57" height="23" style="vertical-align:middle;margin: 0 3px 0 2px" alt="중복확인"></a>
 					<span id="showLengthArea" class="p11 m-tcol-c ls0 filter-50">4/20bytes</span>
 					<span class="m-tcol-c filter-50" style="margin:0 0 0 10px;">※ <span class="p11" id="nickname">한글 1~10자, 영문 대소문자 2~20자, 숫자를 사용할 수 있습니다. (혼용가능)&nbsp;</span></span>
