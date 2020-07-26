@@ -540,7 +540,7 @@ var cafe = {
 		
 		// 결과 리스트 만큼 데이터 생성
 		for (var i = 0; i < cafeDataSize; i++) {
-			var cafeResult = cafedataList[i].cafe;
+			var cafeResult = cafedataList[i];
 			var cafeDataWrapper = document.createElement('li');
 			cafeDataWrapper.innerHTML = cafe.cafedataForm;
 			// 카페 url

@@ -166,8 +166,7 @@ public class BoardManager extends CommonDBSession {
 	    // 관리자 닉네임,카페레벨 담기
 	    boardSimpleInfoForm = new BoardSimpleInfoForm();
 	    // 운영자가 카페 전용 닉네임이 없으면, 네이버 회원 가입시에 썻던 닉네임으로 이용한다.
-	    boardSimpleInfoForm.setAdminUserNicName(
-		    (userCafeAdmin.getCafeNicName().isEmpty()) ? userCafeAdmin.getUser().getUserNickName() : userCafeAdmin.getCafeNicName());
+	    boardSimpleInfoForm.setAdminUserNicName(userCafeAdmin.getCafeNicName());
 	    boardSimpleInfoForm.setCafeLevel(userCafeAdmin.getCafeLevel());
 	    boardSimpleInfoForm.setCafeMemberCnt(MemberCnt);
 	    boardSimpleInfoForm.setCafeUid(cafeUid);

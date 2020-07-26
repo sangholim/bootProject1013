@@ -78,20 +78,20 @@ public class CafeVO {
     private String desc = "";
 
     @Column(name = "useShortCut")
-    private int useShortCut = 0;
+    private String useShortCut = "0";
 
     // @Transient
     @Column(name = "createDate")
     private long createDate = 0l;
-
+    
     @OneToMany
     @JoinTable(name = "cafe")
     private List<UserCafeVO> usercafeList = new ArrayList<>();
-
-    public CafeVO() {
-
+	
+    public CafeVO () {
+	
     }
-
+    
     public CafeVO(long uid, String name, String icon, String url) {
         this.uid = uid;
         this.name = name;
@@ -105,7 +105,7 @@ public class CafeVO {
         this.memberCnt = memberCnt;
         this.desc = desc;
     }
-
+    
     public List<UserCafeVO> getUsercafeList() {
         return usercafeList;
     }
@@ -113,7 +113,7 @@ public class CafeVO {
     public void setUsercafeList(List<UserCafeVO> usercafeList) {
         this.usercafeList = usercafeList;
     }
-
+	
     public long getUid() {
         return uid;
     }
@@ -250,11 +250,11 @@ public class CafeVO {
         this.desc = desc;
     }
 
-    public int getUseShortCut() {
+    public String getUseShortCut() {
         return useShortCut;
     }
 
-    public void setUseShortCut(int useShortCut) {
+    public void setUseShortCut(String useShortCut) {
         this.useShortCut = useShortCut;
     }
 

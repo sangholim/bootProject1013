@@ -31,8 +31,10 @@ public class CafeForm extends SearchForm {
     private List<UserCafeVO> userCafeBoardList;
 
     // 유저가 가입하지 않은 카페 리스트
-    private List<UserCafeVO> showCafeList;
-
+    // private List<UserCafeVO> showCafeList;
+    
+    private List<CafeVO> showCafeList;
+    
     public CafeVO getCafeVO() {
 	return cafeVO;
     }
@@ -56,13 +58,14 @@ public class CafeForm extends SearchForm {
     public void setUserCafeList(List<UserCafeVO> userCafeList) {
 	this.userCafeList = userCafeList;
     }
-
-    public List<UserCafeVO> getShowCafeList() {
-	return showCafeList;
+    
+    
+    public List<CafeVO> getShowCafeList() {
+        return showCafeList;
     }
 
-    public void setShowCafeList(List<UserCafeVO> showCafeList) {
-	this.showCafeList = showCafeList;
+    public void setShowCafeList(List<CafeVO> showCafeList) {
+        this.showCafeList = showCafeList;
     }
 
     public List<UserCafeVO> getUserCafeBoardList() {

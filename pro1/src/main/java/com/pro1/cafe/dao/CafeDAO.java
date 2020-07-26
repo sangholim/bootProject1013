@@ -1,6 +1,9 @@
 package com.pro1.cafe.dao;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -48,18 +51,23 @@ public class CafeDAO extends CommonDBSession {
     private final String cafeList = "select NEW UserCafeVO(0l, 0l, uc.cafeOfficial, uc.cafe.uid, uc.cafe.name, uc.cafe.icon, uc.cafe.url, uc.cafe.desc, uc.cafe.title_mainSort, uc.cafe.title_subSort, uc.cafe.region_mainSort, uc.cafe.memberCnt) from \n"
 	    + "UserCafeVO uc join uc.cafe c ";
 
-    private final String cafeListCount = "select count(c) from \n" + "UserCafeVO uc join uc.cafe c ";
+    private final String cafeListCount = "select count(c) from UserCafeVO uc join uc.cafe c ";
+
+    private final String cafeListCountMig = "select count(c) from cafe c where ";
 
     private final String cafeMainCondition = "where uc.userUid != %s %s order by createDate";
+    // private final String cafeMainConditionMig = "where uc.userUid != %s %s order by createDate";
 
     private final String cafeUrlForm1 = "select NEW cafe(cv.uid, cv.name, cv.icon, cv.url) from cafe cv where cv.url = :url";
+
+    private final String cafeQuery1 = "select NEW cafe(c.uid, c.name, c.icon, c.url) from cafe c";
 
     private final String getCafeQuery = "select c from cafe c where ";
     
     private final String getUserCafeQuery = "select uc from UserCafeVO uc where ";
     
     private final String updateUserCafeQuery = "update UserCafeVO set ";
-    
+
     /**
      * 유저가 로그인후 볼수있는 cafe들을 추출 (추천 카페들 , 내가 가입한 카페들)
      *
@@ -77,62 +85,54 @@ public class CafeDAO extends CommonDBSession {
 	try (Session session = sessionInfo.getSession()) {
 	    CafeVO cafeVO = cafeForm.getCafeVO();
 	    Query query = null;
-	    if (userUid != -1) {
-		// 유저가 가입한 카페리스트 출력
-		query = session.createQuery(userCafeJoin+" and userRole != -2", UserCafeVO.class);
-		query.setParameter("userUid", userUid);
-		cafeForm.setUserCafeList(query.getResultList());
-		List<UserCafeVO> userCafeList = cafeForm.getUserCafeList();
-
-		// 유저가 가입한 카페중 글출력
-		if (userCafeList != null && !userCafeList.isEmpty()) {
-		    for (UserCafeVO userCafe : userCafeList) {
-			// 유저가 가입한 카페가 존재하는지 질의
-			query = session.createQuery(userCafeBoardQuery, UserCafeBoardVO.class);
-			query.setParameter("cafeUid", userCafe.getCafeUid());
-			query.setFirstResult(0);
-			query.setMaxResults(3);
-			userCafe.setUserCafeBoardList(query.getResultList());
-		    }
+	    // 유저가 가입한 카페리스트 출력
+	    query = session.createQuery(userCafeJoin + " and userRole != -2", UserCafeVO.class);
+	    query.setParameter("userUid", userUid);
+	    cafeForm.setUserCafeList(query.getResultList());
+	    List<UserCafeVO> userCafeList = cafeForm.getUserCafeList();
+	    Set<Long> userCafeUids = new HashSet<>();
+	    // 유저가 가입한 카페중 글출력
+	    if (userCafeList != null && !userCafeList.isEmpty()) {
+		for (UserCafeVO userCafe : userCafeList) {
+		    // 유저가 가입 카페 uid 저장 
+		    userCafeUids.add(userCafe.getCafeUid());
+		    // 유저가 가입한 카페에서 게시글 저장
+		    query = session.createQuery(userCafeBoardQuery, UserCafeBoardVO.class);
+		    query.setParameter("cafeUid", userCafe.getCafeUid());
+		    query.setFirstResult(0);
+		    query.setMaxResults(3);
+		    userCafe.setUserCafeBoardList(query.getResultList());
 		}
-
 	    }
-
+	    
 	    int cafeType = -1;
 	    int cafeSubType = -1;
-	    String condition = "";
-	    String subCondition = "";
+	    
+	    String subCondition = (userCafeUids.isEmpty())? "" : " c.uid NOT IN :uids ";
+	    
+	    // 상세 카테고리 조건 추기
 	    if (urlType.toLowerCase().equals("sub_area")) {
 		cafeType = cafeVO.getRegion_mainSort();
-		// 부조건 생성
-		subCondition = " and uc.cafe.region_mainSort = " + cafeType;
+		subCondition += " and c.region_mainSort = " + cafeType;
 		cafeSubType = cafeVO.getRegion_subSort();
 		if (cafeSubType > -1) {
-		    subCondition += " and uc.cafe.region_subSort = " + cafeSubType;
+		    subCondition += " and c.region_subSort = " + cafeSubType;
 		}
 	    } else {
 		cafeType = cafeVO.getTitle_mainSort();
-		// 부조건 생성
-		subCondition = " and uc.cafe.title_mainSort = " + cafeType;
+		subCondition += " and c.title_mainSort = " + cafeType;
 		cafeSubType = cafeVO.getTitle_subSort();
 		if (cafeSubType > -1) {
-		    subCondition += " and uc.cafe.title_subSort = " + cafeSubType;
+		    subCondition += " and c.title_subSort = " + cafeSubType;
 		}
 	    }
-
 	    // 주분류, 소분류가 없다면 카페 리스트 가져오지 않음
-	    if (cafeType == -1) {
+	    if (cafeType < 1) {
 		return;
 	    }
-
-	    condition = String.format(cafeMainCondition, userUid, subCondition);
-
-	    /*
-	     * 1. 카페 페이지는 최대 총 10페이지로 구성한다. 2. 카페 페이지에 보여주는 내용은 8개 3. 최신순으로 카페페이지를 뽑아낸다.
-	     * select count(*) from cafe where title_mainSort = #{title_mainSort}
-	     *
-	     */
-	    query = session.createQuery(cafeListCount + condition);
+	    // 유저가 가입하지 않은 카페 갯수 질의
+	    query = session.createQuery(cafeListCountMig + subCondition);
+	    query.setParameter("uids", userCafeUids);
 	    // 존재하는 카페 리스트 총 갯수 구하기
 	    List resultList = query.getResultList();
 	    long maxPageCount = 0;
@@ -143,17 +143,14 @@ public class CafeDAO extends CommonDBSession {
 			: maxPageCount / cafeForm.getShowDataListCount() + 1;
 
 	    }
-
 	    // 총 카운트가 0보다 작거나 같으면, 카페리스트를 호출하지 않음
 	    if (maxPageCount <= 0) {
 		return;
 	    }
-
 	    // 총 페이지수 = maxPageCount
 	    if (cafeForm.getMaxPageCount() <= 0) {
 		cafeForm.setMaxPageCount(maxPageCount);
 	    }
-
 	    // UI나타나는 최대 페이지수 [ex: 총 페이지수 : 20, UI에서 보여줄 페이지 묶음:6 일때, 현재 1페이지면 최대 페이지는
 	    // 6페이지이다.]
 	    int getShowPageMaximumCount = cafeForm.getShowPageMinimumCount() * cafeForm.getShowPageNumCount();
@@ -161,16 +158,16 @@ public class CafeDAO extends CommonDBSession {
 		    : getShowPageMaximumCount;
 	    // UI에서 보여지는 페이지중 마지막 페이지
 	    cafeForm.setShowPageMaximumCount(getShowPageMaximumCount);
-
 	    // 카페리스트 호출
-	    query = session.createQuery(cafeList + condition);
+	    query = session.createQuery(getCafeQuery + subCondition);
+	    query.setParameter("uids", userCafeUids);
 	    // UI상에서 페이지
 	    // (현재페이지 -1)*(페이지당 보여줄 리스트 개수)
 	    query.setFirstResult((cafeForm.getSelectedPageNum() - 1) * cafeForm.getShowDataListCount());
 	    // setMaxResults 검색 시작 데이터로부터 + count 만큼 조회
 	    query.setMaxResults(cafeForm.getShowDataListCount());
 	    cafeForm.setShowCafeList(query.getResultList());
-
+	    
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
@@ -268,7 +265,8 @@ public class CafeDAO extends CommonDBSession {
 	     */
 	    if (result) {
 		userCafeVO.setCafeUid(cafeVO.getUid());
-		userCafeVO.setUserRole(6);
+		userCafeVO.setUserRole(7);
+		userCafeVO.setCafeNicName("슈퍼 관리자");
 		result = processHibernateSession(currentSession, DBQueryType.INSERT, userCafeVO);
 	    }
 
