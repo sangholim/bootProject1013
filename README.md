@@ -1,2 +1,2 @@
-# bootProject1013
-Spring boot 2 project 
+# Spring Boot 카페 Toy Project
+Spring Boot 카페 Toy Project
