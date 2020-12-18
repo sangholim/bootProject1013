@@ -1,4 +1,4 @@
-# bootProject1013
+# Spring Boot 카페 Toy Project
 Spring Boot Toy Project
 
 언어: Java, JavaScript(Not use Jquery), JSP
